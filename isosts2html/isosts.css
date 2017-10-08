@@ -1,0 +1,408 @@
+.normal {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    font-weight: normal;
+    max-width: 800px;
+}
+div.sts-standard {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    font-weight: normal;
+    max-width: 800px;
+}
+
+div.sts-sub-part h1 {
+    font-family: Helvetica, Arial, sans-serif;
+	  font-size: 16pt;
+    padding-top: 20px;
+    color: black;
+    font-weight: bold;
+    max-width: 800px;    
+    clear: both;
+}
+
+div.sts-section,
+div.sts-section p,
+div.sts-section td,
+div.sts-copyright,
+div.sts-app {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    max-width: 800px;
+    clear: both;
+}
+
+div.sts-p {
+    clear: both;
+    margin: 10px 0 10px 0;
+}
+div.sts-section h1,
+div.sts-app h1 {
+    font-size: 12pt;
+    padding-top: 20px;
+    color: black;
+    font-weight: bold;
+}
+div.sts-section h2 {
+    font-size: 11pt;
+    padding-top: 10px;
+    color: black;
+    font-weight: bold;
+}
+div.sts-section h3, 
+div.sts-section h4,
+div.sts-section h5,
+div.sts-section h6,
+div.sts-section h7 {
+    font-size: 10pt;
+    padding-top: 5px;
+    font-weight: bold;
+}
+span.sts-section-label {
+	font-weight: bold;
+}
+div.sts-caption {
+    margin: 10px;
+    font-weight: bold;
+}
+/* figures */
+div.sts-fig,
+div.sts-fig-group {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    clear: both;
+}
+div.sts-fig-group-content {
+    display: inline-block;
+}
+div.sts-fig.float-left {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    clear: none;
+}
+div.sts-fig table {
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0;
+}
+
+/* index tables */
+div.sts-table-wrap.fig-index, 
+div.sts-table-wrap.fig-index table,
+div.sts-table-wrap.formula-index, 
+div.sts-table-wrap.formula-index table {
+    text-align: left;
+    margin-left: 10px;
+}
+
+/* fig footnotes and non-normative-note */
+div.sts-fig div.sts-non-normative-note,
+div.sts-fig div.footnote {
+    text-align: left;
+    margin-left: 20px;
+}
+span.sts-non-normative-note-label {
+    margin-right: 10px;
+}
+
+/* formal tables */
+div.sts-table-wrap {
+    margin-top: 25px;
+    text-align: center;
+}
+div.sts-table-wrap table {
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0;
+}
+
+/* ref lists */
+table.sts-ref-list {
+    border: none;
+}
+
+table.sts-ref-list td {
+    vertical-align: text-top;
+    padding-bottom: 10px;    
+}
+
+table.sts-ref-list td.sts-label {
+    width: 30px;    
+}
+
+ul.sts-ref-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul.sts-ref-list li {
+    padding-bottom: 10px;
+}
+
+span.sts-std-title {
+    font-style: italic;
+}
+
+/* formal formula */
+div.sts-disp-formula-label {
+    text-align: right;
+}
+/* tbx */
+div.sts-tbx-sec {
+    margin-top: 15px;
+}
+div.sts-tbx-label,
+div.sts-tbx-term {
+    font-weight: bold;
+    clear: both;
+}
+
+div.sts-tbx-term.admittedTerm {
+    font-weight: normal;
+    clear: both;
+}
+
+.sts-tbx-entailedTerm,
+.sts-tbx-entailedTerm a,
+span.sts-tbx-crossReference, 
+span.sts-tbx-crossReference a {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;    
+}
+
+.sts-tbx-entailedTerm a:hover,
+.sts-tbx-crossReference a:hover,
+.sts-tbx-see a:hover {
+    background-color: lightgrey;
+}
+
+.sts-tbx-entailedTerm-num,
+.sts-tbx-entailedTerm-num a {
+    font-weight: normal;
+}
+
+div.sts-tbx-example-label {
+    float: left;
+    padding-right: 15px;
+}
+
+div.sts-tbx-example-content {
+    float: left;    
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+div.sts-tbx-note,
+div.sts-tbx-example,
+div.sts-tbx-see,
+div.sts-tbx-source,
+div.sts-tbx-crossReference {
+    margin-top: 10px;
+    clear: both;
+}
+
+.sts-tbx-see a {
+    text-decoration: none;
+    color: #013568;
+}
+
+/* appendixes */
+.sts-app-header {
+    text-align: center;
+}
+
+a.sts-std-ref {
+    text-decoration: none;
+    color: #013568;
+}
+
+a.sts-std-ref:hover {
+    background-color: lightgrey;
+}
+
+/* footnotes */
+.footnote,
+.footnote p {
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: left;
+    font-size: 8pt;
+    color: black;
+}
+
+/* cross refs */
+a.sts-xref {
+    text-decoration: none;
+    color: #013568;
+}
+a.sts-xref:hover {
+    background-color: lightgrey;
+}
+
+/* lists */
+.list li > div.sts-p {
+    text-indent: -1.2em;
+}
+
+/* non-normative-note */
+.sts-non-normative-note {
+    text-align: left;
+    margin: 10px 0 10px 0;
+}
+
+.sts-non-normative-note p, 
+.sts-non-normative-note pre {
+    font-size: 9pt;
+}
+
+/* preformat */
+.sts-preformat {
+    margin: 0;
+}
+
+.sts-preformat.code-allow-wrap {
+    white-space: normal;
+}
+
+/* boxed-text */
+.sts-boxed-text {
+    border-style: solid;
+    border-width: 2px;
+    padding: 5px;
+}
+
+/* p-styles */
+.sts-p.align-center {
+    text-align: center;
+}
+.sts-p.align-right {
+    text-align: center;
+}
+.sts-p.align-left {
+    text-align: center;
+}
+.sts-p.align-left.valign-top {
+    vertical-align: top;
+}
+.sts-p.valign-bottom {
+    vertical-align: bottom;
+}
+.sts-p.valign-middle {
+    vertical-align: middle;
+}
+.sts-p.indent {
+    margin-left: 10px;
+}
+
+.sts-partial-display-note {
+	max-width: 800px;
+	text-align: center;
+}
+.sts-partial-display-note-text {
+    padding: 10px;
+    background-color: #AFC6E1;    
+    border: 3px solid #E8EDF0;
+    text-align: center;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5x;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.sts-protected-content-note {
+    margin-top: 10px;
+	clear: both;
+    max-width: 800px;
+    background-color: #AFC6E1;    
+}
+.sts-protected-content-note-top {
+    background: url(images/text-break-top.png);
+    background-repeat: repeat-x;
+    background-position: top;
+    height: 14px;
+}
+.sts-protected-content-note-bottom {
+    background: url(images/text-break-bottom.png);
+    background-repeat: repeat-x;
+    background-position: bottom;
+    height: 14px;
+}
+.sts-protected-content-note-text {
+	margin: 2px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.sts-protected-content-inpreview-text {
+	margin-bottom: 10px;
+	text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+}
+
+/* unknown elements */
+.sts-unknown-element {
+    color: red;
+}
+
+.sts-table-wrap td {
+    padding: 3px;
+}
+
+.sts-footnotes hr {
+    width: 200px;
+    text-align: left;
+    margin-left: 0;
+}
+.sts-copyright {
+    text-align: right;
+}
+
+/* needed for iframe content */
+.iframe-body {
+    overflow: auto; 
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    border: 0;
+}
+
+#scrollwrapper {
+   overflow: scroll;
+   -webkit-overflow-scrolling: touch; 
+}
+
+.hit {
+  /*background-color: yellow;*/
+  background: #fff200;
+}
+
+.currhit {
+  background-color: orange;
+}
+
+.sts-table-wrap table {
+    border-color: black;
+}
+.sts-table-wrap th {
+    font-weight: normal;
+}
+
+div.dimension {
+	text-align: right;
+	font-weight: normal;
+}
+
+div.sts-fn {
+    margin-top: 5px;
+}
+
+img.math {
+    vertical-align: middle;
+    border: 0;
+}
