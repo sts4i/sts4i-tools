@@ -1,0 +1,169 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS National Body Metadata Module              -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS Metadata for National Bodies v1.1 20130701//EN"
+     Delivered as file "ISOSTS-nat-metadata.ent"                     
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-nat-metadata.ent
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    This module defines elements for metadata         -->
+<!--             specific to individual national bodies which may  -->
+<!--             work with ISO standards encoded in this DTD.      -->
+<!--             In the current version of this DTD, the content   -->
+<!--             of nat-meta is following the iso-meta model.      -->
+<!--                                                               --> 
+<!-- CONTAINS:   1) Definition of nat-meta                         -->
+<!--             2) Definitions of parameter entities to allow     -->
+<!--                   easy modification and customization of      -->
+<!--                   content models and attribute lists.         -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             May 2011                                          -->
+<!--                                                               -->
+<!-- CREATED BY: C. M. Sperberg-McQueen                            -->
+<!--             B. Tommie Usdin                                   -->
+<!--             (Mulberry Technologies, Inc.)                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+   
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 11. Update version number and public identifiers to 1.1
+ 10. Define content model (use same as iso-meta except is-proof)
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+  9. Updated version number for issue of version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+  8. Update version number.
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+   
+  7. No changes for version 0.6
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-09-23)
+   
+  6. Update version number.
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+   
+  5. Change name from ISDTS to ISOSTS, update version number
+
+     =============================================================
+     Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+  
+  4. Factor out the metadata elements into modules, for
+     design consistency with JATS.
+
+  3. Suppress the XX-elements parameter entities for elements
+     whose descriptions make clear that they should never 
+     have child elements (project ID, stage code, etc.)
+
+  2. Reformat to follow house style.
+
+     =============================================================
+     Version 0.1                       (MSM/BTU) v0.1 (2011-05-12)
+  
+  1. First rough draft, based on JATS 0.4.
+                                                                   -->
+
+<!-- ============================================================= -->
+<!--                    NATIONAL-BODY METADATA ELEMENT             -->
+<!-- ============================================================= -->
+
+
+<!--                    NATIONAL-BODY METADATA CONTENT MODEL       -->
+<!--                    One or more custom metadata groups.  
+                        Each custom metadata group contains one 
+                        or more custom metadata elements. 
+                        Each custom metadata element contains  
+                        the name of a metadata property and a 
+                        value for that property.                   -->
+<!ENTITY % nat-meta-model 
+                        "(title-wrap+, doc-ident, std-ident,
+                         content-language+, std-ref+, doc-ref, 
+                         pub-date?, release-date, meta-date*,
+                         comm-ref, secretariat+, ics*, page-count?,
+                         std-xref*, permissions*, 
+                         custom-meta-group*)"                        >
+
+
+<!--                    NATIONAL-BODY METADATA ATTRIBUTES          -->
+<!ENTITY % nat-meta-atts 
+             "id         ID                                #IMPLIED
+              originator CDATA                             #REQUIRED">
+
+
+<!--                    NATIONAL-BODY METADATA                     -->
+<!ELEMENT  nat-meta     %nat-meta-model;                             >
+<!ATTLIST  nat-meta     
+             %nat-meta-atts;                                         >
+
+<!--ELEM  title-wrap    Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  doc-ident     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-ident     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  content-language
+                        Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-ref       Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  doc-ref       Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  pub-date      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  release-date  Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  meta-date     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  comm-ref      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  secretariat   Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  ics           Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-xref      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  permissions,custom-meta-group
+                        Defined in %common0.ent;"                  -->
+
+<!-- ================== End ISOSTS NAT Metadata Module =========== -->

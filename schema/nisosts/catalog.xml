@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+  <public publicId="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v0.2 20170331//EN" 
+    uri="NISO-STS-interchange-0-2-MathML3-DTD/NISO-STS-interchange-1-mathml3.dtd"/>
+  <public publicId="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v0.1 20161031//EN" 
+    uri="NISO-STS-interchange-0-2-MathML3-DTD/NISO-STS-interchange-1-mathml3.dtd"/>
+
+</catalog>

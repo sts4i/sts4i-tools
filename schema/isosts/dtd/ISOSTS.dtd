@@ -1,0 +1,745 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISO Standards Tag Set (ISOSTS) DTD                -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISO Standards Tag Set (ISOSTS) DTD v1.1 20130701//EN"
+     Delivered as file "ISOSTS.dtd"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS.dtd 
+                                                                   -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    DTD for publication of ISO documents              -->
+<!--                                                               -->
+<!--             This subset of the Journal Archiving and          -->
+<!--             Interchange DTD is intended for the tagging       -->
+<!--             of draft standards for ISO, CEN, and similar      -->
+<!--             bodies.                                           -->
+<!--                                                               -->
+<!--             Based in part on, but not fully compatible with,  -->
+<!--             the NISO Z39.96 Journal Article Tag Suite.        -->
+<!--             (Most of the body is compatible; the top level    -->
+<!--             and the metadata are customized and not           -->
+<!--             necessarily compatible.)                          -->
+<!--                                                               -->
+<!--             This DTD was constructed using the modules in the -->
+<!--             Archiving and Interchange DTD Suite.              -->
+<!--                                                               -->
+<!-- CONTAINS:   1) This introductory comment with background      -->
+<!--                information                                    -->
+<!--             2) Revision history                               -->
+<!--             3) A comment on design considerations             -->
+<!--             4) Declaration and invocation of 'module of       -->
+<!--                modules' for publication-DTD-specific and      -->
+<!--                general-use JATS modules.  These declare       -->
+<!--                standard JATS modules but do not invoke        -->
+<!--                them (%journalpubcustom-modules.ent; and       -->
+<!--                %modules.ent;)                                 -->
+<!--             5) Declaration and invocation of ISOSTS           -->
+<!--                'module of modules', which declares            -->
+<!--                modules specific to the ISOSTS DTD but does    -->
+<!--                not invoke them                                -->
+<!--                (%ISOSTS-specific-modules.ent;)                -->
+<!--             6) Invocations of relevant modules                -->
+<!--                a) Journal-publishing-specific customizations  -->
+<!--                   (%journlpubcustom-classes.ent;)             -->
+<!--                b) Default element classes module              -->
+<!--                   (%default-classes.ent;)                     --> 
+<!--                c) Journal-publishing-specific mixes           -->
+<!--                   (%journlpubcustom-mixes.ent;)               -->
+<!--                d) Default mix customizations                  -->
+<!--                   (%default-mixes.ent;)                       --> 
+<!--                e) Journal-publishing-specific content models  -->
+<!--                   (%journlpubcustom-models.ent;)              -->
+<!--                f) Common declarations                         -->
+<!--                   (%common.ent;)                              -->
+<!--                b) Class Modules (from JATS Suite):  back      -->
+<!--                   matter, display elements, formatting        -->
+<!--                   elements, funding elements, links, lists,   -->
+<!--                   math, citations, paragraph-level elements,  -->
+<!--                   phrase-level elements, references, related  -->
+<!--                   objects, sections, MathML, XHTML tables,    -->
+<!--                   character entities, notations.              -->
+<!--             7) Parameter Entities for attribute values used   -->
+<!--                in this module (DTD-specific definitions)      -->
+<!--             8) Definition of document element (<standard>)    -->
+<!--             9) Definition of Front Matter <front>             -->
+<!--            10) Definition of Body Matter <body>               -->
+<!--            11) Definition of Back Matter <back>               -->
+<!--            12) Invocation of ISOSTS-specific modules:         -->
+<!--                a) ISO-specific metadata (%iso-meta.ent;)      -->
+<!--                b) Placeholder for CEN-specific metadata       -->
+<!--                   (%iso-meta.ent;)                            -->
+<!--                c) Placeholder for metadata specific to        -->
+<!--                   particular national bodies ($nat-meta.ent;) -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © ISO, All rights reserved                        -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             May 2011                                          -->
+<!--                                                               -->
+<!-- CREATED BY: C. M. Sperberg-McQueen                            -->
+<!--             B. Tommie Usdin                                   -->
+<!--             (Mulberry Technologies, Inc.)                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 21. Update version number and public identifiers to 1.1
+ 20. Change cen-meta to reg-meta 
+ 19. Align reg-meta for CEN requirements 
+ 18. Provide nat-meta content model (same as iso-meta)
+ 17. Allow more ISOSTS elements in tbx
+ 16. Allow break inside p
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+ 15. Updated version number and public identifiers for issue of 
+     version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+ 14. Update version number and public identifiers to 0.7.
+
+    =============================================================
+     Version 0.6                       (BTU/MSM) v0.6 (2011-12-21)
+
+ 13. Changed sub-part 'sec-type' attribute to 'part-type'.
+
+ 12. Added sub-part element.
+
+    =============================================================
+     Version 0.5                       (TRG/MSM) v0.5 (2011-10-06)
+
+ 11. Added ISOSTS-mixes module, to override default mixes.
+
+ 10. Added @content-type attribute to <non-normative-note> (via 
+     %non-normative-note-atts;)
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-09-23)
+   
+  9. Add 'num' element.
+
+  8. Modify definition of 'term-sec' to require a tbx:termEntry
+     and to forbid normal 'sec' elements to nest in a 'term-sec' 
+     element.
+
+  7. Require 'front' element at at least one metadata block.
+
+  6. Add 'originator' attribute to 'standard' element and others.
+   
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+   
+  5. Change name from ISDTS to ISOSTS, update version number passim
+   
+     =============================================================
+     Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+  
+  4. Factor out the metadata elements into a module, for
+     design consistency with JATS.
+
+  3. Suppress the XX-elements parameter entities for elements
+     whose descriptions make clear that they should never 
+     have child elements (project ID, stage code, etc.)
+
+  2. Reformat to follow house style.
+
+     =============================================================
+     Version 0.1                       (MSM/BTU) v0.1 (2011-05-12)
+  
+  1. First rough draft, based on JATS 0.4.
+                                                                   -->
+
+
+<!-- ============================================================= -->
+<!--                    DESIGN CONSIDERATIONS                      -->
+<!-- ============================================================= -->
+
+
+<!-- This DTD is a customization of the NLM / JATS 'Blue'
+     (Publishing) DTD now published as NISO Z39.96.  The main
+     design considerations are these:
+
+     The default journal- and article-level metadata is not
+     relevant to standards documents and has been suppressed.
+     Instead, metadata relevant to ISO and other standards bodies
+     has been placed in the front matter.  Elements <iso-meta>,
+     <cen-meta>, and <nat-meta> are provided to hold metadata for
+     the ISO, CEN, and national-body contexts.  The ISO metadata
+     contains information customized to the ISO context.  The
+     slots for CEN and national-body metadata are generic
+     name-value pairs using the <custom-meta>
+     and <custom-meta-group> elements; the CEN and national-body
+     modules can be customized as needed.
+
+     The JATS markup for tagging the body of the document has not
+     been modified and in particular has not been made more (or
+     less) restrictive to reflect ISO publication rules.  The
+     design assumption is that the ISO Directives and other
+     publication rules are enforced by other means; the job of the
+     DTD is to enable markup of documents produced by the work
+     flow, not to check them for compliance to the Directives.
+
+     Like the underlying JATS DTD, the ISOSTS DTD is built to be
+     easily modifiable; it uses the same extension mechanisms and
+     parameter-entity conventions as the JATS DTD.                 -->
+
+
+<!-- ============================================================= -->
+<!--                    MODULES OF MODULES INVOKED                 -->
+<!-- ============================================================= -->
+
+
+<!--                    MODULE TO NAME ISOSTS DTD-SPECIFIC MODULES -->
+<!--                    Names all ISOSTS DTD-specific external 
+                        modules                                    -->
+<!ENTITY % ISOSTS-modules.ent  
+                        PUBLIC
+"-//ISO//DTD ISOSTS Module of Modules v1.0 20120423//EN"
+"ISOSTS-modules.ent"                                                 >
+%ISOSTS-modules.ent;
+
+
+<!--                    MODULE TO NAME JATS DTD-SPECIFIC MODULES   -->
+<!--                    Names all JATS DTD-specific external 
+                        modules                                    -->
+<!ENTITY % journalpubcustom-modules.ent
+                        PUBLIC
+"-//NLM//DTD JATS (Z39.96) Journal Publishing DTD-Specific Modules v0.4 20110131//EN"
+"JATS-journalpubcustom-modules0.ent"                                 >
+%journalpubcustom-modules.ent;
+
+
+<!--                    MODULE TO NAME THE MODULES                 -->
+<!--                    Declares all the external modules that are
+                        part of the modular Journal Archiving and
+                        Interchange DTD Suite library. Thus it does
+                        NOT declare itself; the DTD-specific
+                        module-of-modules; or the DTD-specific class,
+                        mix, or model over-ride modules. Those are
+                        declared in the DTD-specific module of modules.
+                           Since this module declares but does not
+                        invoke modules, this DTD invokes any modules
+                        it uses by referencing the external
+                        Parameter Entities defined in the Module of
+                        Modules. To include a set of elements (such
+                        as all the lists or the MathML elements) this
+                        module defines the external Parameter Entity
+                        for the module(s) that contains the MathML
+                        declarations and the DTD references that
+                        entity.                                    -->
+<!ENTITY % modules.ent  PUBLIC
+"-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Module of Modules v0.4 20110131//EN"
+"JATS-modules0.ent"                                                  >
+%modules.ent;
+
+
+<!-- ============================================================= -->
+<!--                    CUSTOMIZATION MODULES INVOKED              -->
+<!--                    Note: These modules must be called after   -->
+<!--                    all Module of Modules but before any other -->
+<!--                    modules. Unlike any other grouping, order  -->
+<!--                    of these modules matters.                  -->
+<!-- ============================================================= -->
+
+
+<!--                    ISOSTS CLASS CUSTOMIZATIONS                -->
+<!--                    Names the module that holds DTD-specific
+                        class definitions for the ISOSTS DTD, which
+                        will over-ride classes in the JATS 
+                        Publishing DTD.
+                        (Defined in %ISOSTS-modules.ent;)          -->
+%ISOSTS-classes.ent;
+
+
+<!--                    JATS PUBLISHING CLASS CUSTOMIZATIONS       -->
+<!--                    Names the module that holds the DTD-specific
+                        class definitions for the Journal Publishing
+                        DTD that will over-ride classes in the Suite.
+                        (Defined in %journalpubcustom-modules.ent;)-->
+%journalpubcustom-classes.ent;
+
+
+<!--                    DEFAULT ELEMENT CLASSES                    -->
+<!--                    Names the module that holds the standard
+                        class definitions for the Journal Archiving
+                        and Interchange DTD Suite.                 -->
+%default-classes.ent;
+
+
+<!--                    ISOSTS MIX CUSTOMIZATIONS                  -->
+<!--                    Overrides some element mixes in the JATS
+                        Publishing DTD.
+                        (Defined in %ISOSTS-modules.ent;)          -->
+%ISOSTS-mixes.ent;
+
+<!--                    JATS PUBLISHING MIX CUSTOMIZATIONS         -->
+<!--                    Set up the Parameter Entities and element
+                        class definitions that will be used to
+                        over-ride some element mixes in this DTD.
+                        (Defined in %journalpubcustom-modules.ent;)-->
+%journalpubcustom-mixes.ent;
+
+
+<!--                    DEFAULT MIX CUSTOMIZATIONS MODULE          -->
+<!--                    Names the module that holds the standard
+                        mix definitions for the Journal Archiving
+                        and Interchange DTD Suite.                 -->
+%default-mixes.ent;
+
+
+<!--                    ISOSTS DTD MODELS/ATTRIBUTES CUSTOMIZATIONS 
+                        MODULE                                     -->
+<!--                    Names the module that holds the ISOSTS 
+                        over-rides of content models, attribute 
+                        lists, elements lists to be used in content 
+                        models, and attribute values. These are 
+                        DTD-specific.
+                        (Defined in %ISOSTS-modules.ent;)          -->
+%ISOSTS-models.ent;
+
+
+<!--                    JATS PUBLISHING MODELS/ATTRIBUTES 
+                        CUSTOMIZATIONS MODULE                      -->
+<!--                    Names the module that holds the over-rides
+                        of content models, attribute lists, elements
+                        lists to be used in content models, and
+                        attribute values. These are DTD-specific.
+                        (Defined in %journalpubcustom-modules.ent;)-->
+%journalpubcustom-models.ent;
+
+
+
+<!-- ============================================================= -->
+<!--                    COMMON (SHARED) ELEMENTS MODULE INVOKED    -->
+<!-- ============================================================= -->
+
+
+<!--                    COMMON (SHARED) DECLARATIONS               -->
+<!--                    Declarations for elements, attributes,
+                        entities, and Notations that are shared by
+                        more than one class module. Note: Must be
+                        called before any of the class modules.    -->
+%common.ent;
+
+
+<!-- ============================================================= -->
+<!--                    CLASS ELEMENTS (alpha)                     -->
+<!-- ============================================================= -->
+
+
+<!--                    ARTICLE METADATA ELEMENTS                  -->
+%articlemeta.ent;
+
+
+<!--                    BACK MATTER ELEMENTS                       -->
+%backmatter.ent;
+
+
+<!--                    DISPLAY (GRAPHICAL) ELEMENTS               -->
+%display.ent;
+
+
+<!--                    FORMATTING ELEMENT CLASSES                 -->
+<!--                    Elements that change rendition/display.    -->
+%format.ent;
+
+
+<!--                    FUNDING ELEMENTS                           -->
+<!--                    Elements that describe the sponsorship or
+                        open access                                -->
+%funding.ent;
+
+
+<!--                    LINK CLASS ELEMENTS                        -->
+%link.ent;
+
+
+<!--                    LIST CLASS ELEMENTS                        -->
+%list.ent;
+
+
+<!--                    MATH ELEMENTS                              -->
+%math.ent;
+
+
+<!--                    NLM CITATION ELEMENT                       -->
+%nlmcitation.ent;
+
+
+<!--                    PARAGRAPH-LEVEL ELEMENTS                   -->
+%para.ent;
+
+
+<!--                    PHRASE-LEVEL ELEMENTS                      -->
+%phrase.ent;
+
+
+<!--                    BIBLIOGRAPHIC REFERENCE (CITATION)
+                        CLASS ELEMENTS                             -->
+%references.ent;
+
+
+<!--                    RELATED OBJECT ELEMENT                     -->
+<!--                    Defines the <related-object> element to
+                        describe a related object such as a
+                        related book or a dataset.                 -->
+%related-object.ent;
+
+
+<!--                    SECTION ELEMENTS                           -->
+%section.ent;
+
+
+<!-- ============================================================= -->
+<!--                    THE REST OF THE EXTERNAL MODULES INVOKED   -->
+<!-- ============================================================= -->
+
+
+<!--                    MATHML SETUP MODULE                        -->
+<!--                    Invoke the MathML modules                  -->
+%mathmlsetup.ent;
+
+
+<!--                    XHTML TABLE SETUP MODULE                   -->
+<!--                    Set up the necessary Parameter Entity values
+                        and then invoke XHTML (HTML 4.0) table
+                        module                                     -->
+%XHTMLtablesetup.ent;
+
+
+<!--                    SPECIAL CHARACTERS DECLARATIONS            -->
+<!--                    Standard XML special character entities
+                        used in this DTD                           -->
+%xmlspecchars.ent;
+
+
+<!--                    CUSTOM SPECIAL CHARACTERS DECLARATIONS     -->
+<!--                    Custom special character entities created
+                        specifically for use in this DTD Suite     -->
+%chars.ent;
+
+
+<!--                    NOTATION DECLARATIONS MODULE               -->
+%notat.ent;
+
+
+<!-- ============================================================= -->
+<!--                    ISOSTS-SPECIFIC MODULES                    -->
+<!-- ============================================================= -->
+
+
+<!--                    ISOSTS ISO METADATA MODULE                 -->
+%ISOSTS-iso-meta.ent;
+
+
+<!--                    ISOSTS REG METADATA MODULE                 -->
+%ISOSTS-reg-meta.ent;
+
+
+<!--                    ISOSTS NATIONAL-BODY METADATA MODULE       -->
+%ISOSTS-nat-meta.ent;
+
+
+<!--                    ISOSTS TBX MODULE                          -->
+%ISOSTS-tbx-setup.ent;
+
+
+
+<!-- ============================================================= -->
+<!--                    PARAMETER ENTITIES FOR ATTRIBUTE LISTS     -->
+<!-- ============================================================= -->
+
+
+<!--                    DTD VERSION                                -->
+<!--                    What version of this DTD was used to make
+                        the document instance under consideration.
+                        Note that this is a fixed value that should
+                        change every time the DTD changes versions 
+                        or revisions.                              -->
+<!ENTITY % dtd-version
+            "dtd-version
+                        CDATA                          #FIXED '1.1'" >
+
+
+<!--                    STANDARD ATTRIBUTES                        -->
+<!--                    Attributes for the top-level element
+                        <standard>                                 -->
+<!ENTITY % standard-atts
+            "%dtd-version;
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           'en'
+             %XLINK.xmlns.attrib;
+             %MATHML.xmlns.attrib;
+             %TBX.xmlns.attrib;
+             %Schema.xmlns.attrib;"                                  >
+
+
+<!--                    BODY ATTRIBUTES                            -->
+<!--                    Attributes for the <body> element          -->
+<!ENTITY % body-atts
+            "specific-use
+                        CDATA                             #IMPLIED"  >
+
+
+<!--                    SUB-PART ATTRIBUTES                        -->
+<!--                    Attribute list for sub-part element        -->
+<!--                    (similar to sec element)                   -->
+<!ENTITY % sub-part-atts
+            "id         ID                                 #IMPLIED
+             xml:lang   NMTOKEN                            #IMPLIED
+             part-type  CDATA                              #IMPLIED
+             specific-use
+                        CDATA                              #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    TERMINOLOGY SECTION ATTRIBUTES             -->
+<!--                    Attribute list for term-sec element        -->
+<!--                    (same as for sec element)                  -->
+<!ENTITY % term-sec-atts
+            "id         ID                                 #IMPLIED
+             xml:lang   NMTOKEN                            #IMPLIED
+             sec-type   CDATA                              #IMPLIED
+             specific-use
+                        CDATA                              #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!-- ============================================================= -->
+<!--                    STANDARD                                   -->
+<!--                    Root element for any standards document    -->
+<!-- ============================================================= -->
+
+
+<!--                    STANDARD                                   -->
+<!ELEMENT  standard     (front, body, back?)                         >
+<!ATTLIST  standard
+             %standard-atts;                                         >
+
+
+<!-- ============================================================= -->
+<!--                    FRONT MATTER ELEMENTS                      -->
+<!-- ============================================================= -->
+
+
+<!--                    FRONT MATTER MODEL                         -->
+<!--                    Model for the <front> matter (the header
+                        metadata) of a standard)                   -->
+<!ENTITY % front-model "(((iso-meta, reg-meta*, nat-meta*)
+                        | (reg-meta+, nat-meta*) | nat-meta+),
+                        (%front-back.class;)?, sec*)"                >
+
+
+<!--                    FRONT MATTER                               -->
+<!--                    The metadata concerning a standard, such as
+                        the originating body, the reference number 
+                        and date, etc.  Everything needed to
+                        produce the front matter and back cover
+                        goes here.
+                                                                   -->
+<!ELEMENT  front        %front-model;                                >
+
+
+<!-- ============================================================= -->
+<!--                    BODY ELEMENTS                              -->
+<!-- ============================================================= -->
+
+
+<!--                    BODY MODEL                                 -->
+<!--                    Content model for the Body (main textual
+                        content) of a standard.                    -->
+<!ENTITY % body-model  "((%para-level;)*, (%sec-level; |
+                        %sub-part.class;)*, sig-block?)"             >
+
+
+<!--                    BODY OF THE STANDARD                       -->
+<!--                    The main textual portion of the document,
+                        that conveys the content.
+                        Details at:
+                        http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=body
+                                                                   -->
+<!ELEMENT  body         %body-model;                                 >
+<!ATTLIST  body
+             %body-atts;                                             >
+
+<!--                    SUB-PART MODEL                             -->
+<!--                    Content model for sub-parts with their own
+                        toc and page numbering.                    -->
+<!ENTITY % sub-part-model  
+                       "(label?, title, body, back?)"                >
+
+<!ELEMENT  sub-part     %sub-part-model;                             >
+<!ATTLIST  sub-part
+             %sub-part-atts;                                         >
+
+<!--                    TERM-SEC MODEL                             -->
+<!--                    Content model for terminology sections in 
+                        a standard.                                -->
+<!ENTITY % term-sec-model  
+                       "(label?, tbx:termEntry, term-display*, 
+                        (%para-level;)*, (%term-sec.class;)*,
+                        (%sec-back-matter-mix;)* )"                 >
+
+<!--                    TERM-SEC (terminology section)             -->
+<!--                    A section that contains a term entry
+                        and/or subordinate terminology sections    -->
+
+<!ELEMENT  term-sec     %term-sec-model;                             >
+<!ATTLIST  term-sec
+             %term-sec-atts;                                         >
+
+<!--                    TERM-DISPLAY MODEL                         -->
+<!--                    Content model for term-display element     -->
+<!ENTITY % term-display-model  
+                       "(title*, (%para-level;)*)"                   >
+
+<!--                    TERM-DISPLAY ATTRIBUTES                    -->
+<!ENTITY % term-display-atts
+            "id         ID                                #IMPLIED
+             xml:lang   NMTOKEN                           'en'"      >
+
+
+<!--                    TERM-DISPLAY                               -->
+<!--                    Appearance-oriented tagging for term 
+                        entries as supplement or alternative to
+                        tbx:termEntry                              -->
+
+<!ELEMENT  term-display
+                        %term-display-model;                         >
+<!ATTLIST  term-display
+             %term-display-atts;                                     >
+
+
+<!--                    NON-NORMATIVE-NOTE MODEL                   -->
+<!--                    Content model for non-normative-note       -->
+<!ENTITY % non-normative-note-model  
+                       "(label?, (%para-level;)*)"                   >
+
+<!--                    NON-NORMATIVE-NOTE ATTRIBUTES              -->
+<!ENTITY % non-normative-note-atts
+            "content-type
+                        CDATA                             #IMPLIED 
+             id         ID                                #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    NON-NORMATIVE-NOTE                         -->
+<!--                    Non-normative text in a standard, labeled
+                        'NOTE'.  (There are no normative notes in
+                        ISO standards, so we could perhaps just 
+                        call this 'note', but that would conflict
+                        with the existing JATS element of that 
+                        name.  So we use the longer form.)         -->
+
+<!ELEMENT  non-normative-note
+                        %non-normative-note-model;                   >
+<!ATTLIST  non-normative-note
+             %non-normative-note-atts;                               >
+
+
+<!--                    NON-NORMATIVE-EXAMPLE MODEL                -->
+<!--                    Content model for non-normative-example    -->
+<!ENTITY % non-normative-example-model  
+                       "(label?, (%para-level;)*)"                   >
+
+<!--                    NON-NORMATIVE-EXAMPLE ATTRIBUTES           -->
+<!ENTITY % non-normative-example-atts
+            "id         ID                                #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    NON-NORMATIVE-EXAMPLE                      -->
+<!--                    Non-normative text in a standard, labeled
+                        'EXAMPLE.  (There are no normative 
+                        examples in ISO standards; we use the
+                        name 'non-normative-example' to stress the
+                        parallel with non-normative-note.          -->
+
+<!ELEMENT  non-normative-example
+                        %non-normative-example-model;                >
+<!ATTLIST  non-normative-example
+             %non-normative-example-atts;                            >
+
+<!--                    NUMBER                                     -->
+<!--                    A number in running text.  The 'num' 
+                        element is provided in order to allow
+                        the decimal and group separators used to
+                        be identified.                             -->
+
+<!--                    ATTRIBUTES FOR NUM ELEMENT                 -->
+<!--                    Attributes are dsep and gsep.              -->
+<!ENTITY % num-atts
+            "dsep       CDATA                             #IMPLIED
+             gsep       CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED"  >
+
+<!ELEMENT  num          (#PCDATA)                                    >
+<!ATTLIST  num          %num-atts;                                   >
+
+
+<!-- ============================================================= -->
+<!--                    BACK MATTER ELEMENTS                       -->
+<!-- ============================================================= -->
+
+
+<!--                    BACK MATTER MODEL                          -->
+<!--                    Content model for the Back Matter 
+                        (ancillary material such as annexes) of a
+                        standard                                   -->
+<!ENTITY % back-model  "(label?, title*, (%doc-back-matter-mix;)* )" >
+
+
+<!--                    BACK MATTER                                -->
+<!--                    Ancillary or supporting material not included
+                        as part of the main textual content of a
+                        standard, for example annexes.
+                        Details at:
+                        http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=back
+                                                                   -->
+<!ELEMENT  back         %back-model;                                 >
+
+<!--                    ANNEX-TYPE                                 -->
+<!-- Expected values:  "(normative)" or "(informative)".  Strictly 
+     redundant with the app/@content-type attribute, whose 
+     expected values are 'norm-annex' and 'inform-annex'.          -->
+<!ELEMENT  annex-type   (#PCDATA)                                    >
+
+
+<!-- ================== End ISO document DTD ===================== -->

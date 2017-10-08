@@ -1,0 +1,191 @@
+--              ISO STANDARDS TAG SET (ISOSTS) DTD              --
+--                        incorporating                         --
+--              ARCHIVING AND INTERCHANGE DTD SUITE             --
+--              MODULAR LIBRARY (NISO Version 0.4)              --
+--              OASIS SOCAT FILE                                --
+--                                                              --
+--              With DTDs for Publishing, Archiving, Authoring, --
+--              Book, Book Collection, and Historical DTDs      --
+--                                                              --
+--   Change History:                                            --
+--                                                              --
+--                                                              --
+--   *********************************************************  --
+--                                                              --
+--              ISO STANDARDS TAG SET (ISOSTS) DTD              --
+
+PUBLIC "-//ISO//DTD ISO Standards Tag Set (ISOSTS) DTD v1.0 20120423//EN" "ISOSTS.dtd"
+
+PUBLIC "-//ISO//DTD ISOSTS Module of Modules v1.0 20120423//EN" "ISOSTS-modules.ent"                                        
+PUBLIC "-//ISO//DTD ISOSTS DTD Customize Classes v1.0 20120423//EN" "ISOSTS-classes.ent"
+PUBLIC "-//ISO//DTD ISOSTS DTD Customize Mixes v1.0 20120423//EN" "ISOSTS-mixes.ent"
+PUBLIC "-//ISO//DTD ISOSTS DTD Customize Content and Attributes v1.0 20120423//EN" "ISOSTS-models.ent"
+PUBLIC "-//ISO//DTD ISOSTS ISO-specific Metadata v1.0 20120423//EN" "ISOSTS-iso-metadata.ent"        
+PUBLIC "-//ISO//DTD ISOSTS CEN Metadata Block v1.0 20120423//EN" "ISOSTS-cen-metadata.ent"  
+PUBLIC "-//ISO//DTD ISOSTS Metadata for National Bodies v1.0 20120423//EN" "ISOSTS-nat-metadata.ent"     
+PUBLIC "-//ISO//DTD ISOSTS TBX Terminology Setup Module v1.0 20120423//EN" "ISOSTS-tbx-setup.ent" 
+PUBLIC "-//ISO//DTD ISOSTS TBX Terminology Module v1.0 20120423//EN" "ISOSTS-tbx-namespace.ent"
+
+
+--   *********************************************************  --
+--                                                              --
+--              JOURNAL PUBLISHING DTD (BLUE)                   --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v0.4 20110131//EN" "JATS-journalpublishing0.dtd"
+
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD-Specific Modules v0.4 20110131//EN" "JATS-journalpubcustom-modules0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Classes Module v0.4 20110131//EN" "JATS-journalpubcustom-classes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Mixes Module v0.4 20110131//EN" "JATS-journalpubcustom-mixes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Content and Attributes Module v0.4 20110131//EN" "JATS-journalpubcustom-models0.ent"
+
+PUBLIC  "-//NLM//DTD JATS (Z39.96) NLM Citation v0.4 20110131//EN" "JATS-nlmcitation0.ent"
+
+--   *********************************************************  --
+
+
+--              JOURNAL ARCHIVING AND INTERCHANGE DTD (Green)    --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v0.4 20110131//EN" "JATS-archivearticle0.dtd"
+
+--              JOURNAL ARCHIVING AND INTERCHANGE DTD CUSTOMIZATIONS --
+
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD-Specific Modules v0.4 20110131//EN" "JATS-archivecustom-modules0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD Customize Classes Module v0.4 20110131//EN" "JATS-archivecustom-classes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD Customize Mixes Module v0.4 20110131//EN" "JATS-archivecustom-mixes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD Customize Content and Attributes Module v0.4 20110131//EN" "JATS-archivecustom-models0.ent"
+
+--   *********************************************************  --
+--                                                              --
+--              JOURNAL AUTHORING DTD (PUMPKIN)                 --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Article Authoring DTD v0.4 20110131//EN" "JATS-articleauthoring0.dtd"
+
+--              JOURNAL AUTHORING DTD CUSTOMIZATIONS            --
+
+PUBLIC "-//NLM//DTD JATS (Z39.96) Article Authoring DTD-Specific Modules v0.4 20110131//EN" "JATS-articleauthcustom-modules0.ent"
+PUBLIC "-//NLM//DTD JATS (Z39.96) Article Authoring DTD Over-ride Classes Module v0.4 20110131//EN" "JATS-articleauthcustom-classes0.ent"
+PUBLIC "-//NLM//DTD JATS (Z39.96) Article Authoring DTD Over-ride Mixes Module v0.4 20110131//EN" "JATS-articleauthcustom-mixes0.ent"
+PUBLIC "-//NLM//DTD JATS (Z39.96) Article Authoring DTD Over-ride Content and Attribute Module v0.4 20110131//EN" "JATS-articleauthcustom-models0.ent"
+-- Also uses NLM Citation  --
+
+--   *********************************************************  --
+--                                                              --
+--              NCBI BOOK DTD AND BOOK COLLECTION DTD (PURPLE)  --
+PUBLIC  "-//NLM//DTD Book DTD v3.1 20110131//EN" "book.dtd"
+PUBLIC  "-//NLM//DTD NCBI Book Collection DTD v3.1 20110131//EN" "bookcollection3.dtd"
+
+PUBLIC  "-//NLM//DTD Book DTD Module of Modules v3.1 20110131//EN" "bookcustom-modules3.ent"
+PUBLIC  "-//NLM//DTD NCBI Book DTD Over-ride Classes Module v3.1 20110131//EN" "bookcustom-classes3.ent"
+PUBLIC  "-//NLM//DTD NCBI Book DTD Over-ride Mixes Module v3.1 20110131//EN" "bookcustom-mixes3.ent"
+PUBLIC  "-//NLM//DTD NCBI Book DTD Content and Attribute Over-ride Module v3.1 20110131//EN" "bookcustom-models3.ent"
+
+PUBLIC  "-//NLM//DTD NCBI Book Image Map Elements v3.1 20110131//EN" "bookimagemap3.ent"
+
+PUBLIC  "-//NLM//DTD NCBI Book DTD Book Metadata Elements v3.1 20110131//EN" "bookmeta3.ent"
+PUBLIC  "-//NLM//DTD NCBI Book Multi-link Elements v3.1 20110131//EN" "bookmultilink3.ent"
+PUBLIC  "-//NLM//DTD NCBI Book DTD Book Component Metadata Elements v3.1 20110131//EN" "bookpart3.ent"
+
+
+--   *********************************************************  --
+--                                                              --
+--              JOURNAL ARTICLE ARCHIVING OASIS DTD             --
+--                 comment out the original modules             --
+--                 which use the XHTML table model              --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD (OASIS Tables) v0.4 20110131//EN" "JATS-archive-oasis-article0.dtd"
+
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD-Specific Modules (OASIS Tables) v0.4 20110131//EN" "JATS-archive-oasis-custom-modules0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD Customize Classes Module (OASIS Tables) v0.4 20110131//EN" "JATS-archive-oasis-custom-classes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Archiving DTD Customize Mixes Module (OASIS Tables) v0.4 20110131//EN" "JATS-archive-oasis-custom-mixes0.ent"
+
+
+--   *********************************************************  --
+--                                                              --
+--              JOURNAL ARTICLE PUBLISHING OASIS DTD             --
+--                 comment out the original modules             --
+--                 which use the XHTML table model              --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD (OASIS Tables) v0.4 20110131//EN" "JATS-journalpublishing-oasis0.dtd"
+
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD-Specific Modules (OASIS Tables) v0.4 20110131//EN" "JATS-journalpub-oasis-custom-modules0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Classes Module (OASIS Tables) v0.4 20110131//EN" "JATS-journalpub-oasis-custom-classes0.ent"
+
+--   *********************************************************  --
+
+--                                                              --
+--              ARCHIVING AND INTERCHANGE DTD SUITE             --
+--              MODULAR LIBRARY                                 --
+--              DEFINE CLASSES, MIXES, AND MODULES              --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Module of Modules v0.4 20110131//EN" "JATS-modules0.ent"
+--                                                              --
+--              CLASSES AND MIXES                               --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Default Element Classes Module v0.4 20110131//EN" "JATS-default-classes0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Default Element Mixes Module v0.4 20110131//EN" "JATS-default-mixes0.ent"
+--                                                              --
+--              ELEMENT COMMON (SHARED) ELEMENTS                --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Common (Shared) Elements Module v0.4 20110131//EN" "JATS-common0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Notation Declarations v0.4 20110131//EN" "JATS-notat0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite XML Special Characters Module v0.4 20110131//EN" "JATS-xmlspecchars0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Custom Special Characters Module v0.4 20110131//EN" "JATS-chars0.ent"
+--                                                              --
+--              DEFINE A CLASS MODULES                          --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Back Matter Elements v0.4 20110131//EN" "JATS-backmatter0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Display Class Elements v0.4 20110131//EN" "JATS-display0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Formatting Element Classes v0.4 20110131//EN" "JATS-format0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Funding Elements v0.4 20110131//EN" "JATS-funding0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Journal Article Metadata Elements v0.4 20110131//EN" "JATS-articlemeta0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Journal Metadata Elements v0.4 20110131//EN" "JATS-journalmeta0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Link Class Elements v0.4 20110131//EN" "JATS-link0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite List Class Elements v0.4 20110131//EN" "JATS-list0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Math Class Elements v0.4 20110131//EN" "JATS-math0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Paragraph-Like Elements v0.4 20110131//EN" "JATS-para0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Section Class Elements v0.4 20110131//EN" "JATS-section0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Bibliographic Reference (Citation) Class Elements v0.4 20110131//EN" "JATS-references0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Related Object Element v0.4 20110131//EN" "JATS-related-object0.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Subject Phrase Class Elements v0.4 20110131//EN" "JATS-phrase0.ent"
+--                                                              --
+--              XHTML TABLE ENTITIES                            --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite XHTML Table Setup Module v0.4 20110131//EN" "JATS-XHTMLtablesetup0.ent"
+PUBLIC  "-//W3C//ELEMENTS XHTML Tables 1.0//EN" "xhtml-table-1.mod"
+PUBLIC  "-//W3C//ENTITIES XHTML Inline Style 1.0//EN" "xhtml-inlstyle-1.mod"
+--                                                              --
+--              MATHML MODULES                                  --
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite MathML Setup Module v0.4 20110131//EN" "JATS-mathmlsetup0.ent"
+PUBLIC  "-//W3C//DTD MathML 2.0//EN" "mathml2.dtd"
+PUBLIC  "-//W3C//ENTITIES MathML 2.0 Qualified Names 1.0//EN" "mathml2-qname-1.mod"
+PUBLIC  "-//W3C//ENTITIES Extra for MathML 2.0//EN" "mathml/mmlextra.ent"
+PUBLIC  "-//W3C//ENTITIES Aliases for MathML 2.0//EN" "mathml/mmlalias.ent"
+--                                                              --
+--              ISO SPECIAL CHARACTER ENTITIES (MATHML SET)     --
+--                                                              --
+--                ENTITIES FROM SGML NOT USED IN MATHML         --
+PUBLIC  "-//W3C//ENTITIES Greek Letters//EN" "xmlchars/isogrk1.ent"
+PUBLIC  "-//W3C//ENTITIES Monotoniko Greek//EN" "xmlchars/isogrk2.ent"
+PUBLIC  "-//W3C//ENTITIES Alternative Greek Symbols//EN" "xmlchars/isogrk4.ent"
+--                                                              --
+--                ENTITIES FROM SGML (ISO 8879)USED IN MATHML   --
+--                                                              --
+PUBLIC  "-//W3C//ENTITIES Box and Line Drawing for MathML 2.0//EN" "iso8879/isobox.ent"
+PUBLIC  "-//W3C//ENTITIES Russian Cyrillic for MathML 2.0//EN" "iso8879/isocyr1.ent"
+PUBLIC  "-//W3C//ENTITIES Non-Russian Cyrillic for MathML 2.0//EN" "iso8879/isocyr2.ent"
+PUBLIC  "-//W3C//ENTITIES Diacritical Marks for MathML 2.0//EN" "iso8879/isodia.ent"
+PUBLIC  "-//W3C//ENTITIES Added Latin 1 for MathML 2.0//EN" "iso8879/isolat1.ent"
+PUBLIC  "-//W3C//ENTITIES Added Latin 2 for MathML 2.0//EN" "iso8879/isolat2.ent"
+PUBLIC  "-//W3C//ENTITIES Numeric and Special Graphic for MathML 2.0//EN" "iso8879/isonum.ent"
+PUBLIC  "-//W3C//ENTITIES Publishing for MathML 2.0//EN" "iso8879/isopub.ent"
+--                                                              --
+--                ENTITIES FROM ISO 9573-13 USED IN MATHML      --
+--                                                              --
+PUBLIC  "-//W3C//ENTITIES General Technical for MathML 2.0//EN" "iso9573-13/isotech.ent"
+PUBLIC  "-//W3C//ENTITIES Greek Symbols for MathML 2.0//EN" "iso9573-13/isogrk3.ent"
+PUBLIC  "-//W3C//ENTITIES Math Alphabets: Script for MathML 2.0//EN" "iso9573-13/isomscr.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Arrow Relations for MathML 2.0//EN" "iso9573-13/isoamsa.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Binary Operators for MathML 2.0//EN" "iso9573-13/isoamsb.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Delimiters for MathML 2.0//EN" "iso9573-13/isoamsc.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Negated Relations for MathML 2.0//EN" "iso9573-13/isoamsn.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Ordinary for MathML 2.0//EN" "iso9573-13/isoamso.ent"
+PUBLIC  "-//W3C//ENTITIES Added Math Symbols: Relations for MathML 2.0//EN" "iso9573-13/isoamsr.ent"
+PUBLIC  "-//W3C//ENTITIES Math Alphabets: Fraktur for MathML 2.0//EN" "iso9573-13/isomfrk.ent"
+PUBLIC  "-//W3C//ENTITIES Math Alphabets: Open Face for MathML 2.0//EN" "iso9573-13/isomopf.ent"
+--                                                                     --
+--              OASIS EXCHANGE TABLE ENTITIES (UNUSED IN VERSION 2.0)  --
+PUBLIC  "-//OASIS//DTD XML Exchange Table Model 19990315//EN" "oasis-exchange.ent"
+PUBLIC  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite OASIS XML Table Setup Module v0.4 20110131//EN" "JATS-oasis-tablesetup0.ent"
+
+--                                                                           --
+-- ******** END ISO STANDARDS TAG SET (ISOSTS) DTD CATALOG ***************** --

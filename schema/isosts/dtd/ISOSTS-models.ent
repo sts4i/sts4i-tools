@@ -1,0 +1,869 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS DTD Custom Content and Attributes Module   -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS DTD Customize Content and Attributes v1.1 20130701//EN"
+     Delivered as file "ISOSTS-models.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-models.ent
+                                                                   -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISOSTS DTD Suite                                  -->
+<!--                                                               -->
+<!-- PURPOSE:    To declare the Parameter Entities (PEs) used to   -->
+<!--             over-ride content models or parts of content      -->
+<!--             models when making a new DTD from the modules of  -->
+<!--             the JATS (Z39.96) Journal Publishing DTD          -->
+<!--                                                               -->
+<!--             Or-groups within models should use mixes or       -->
+<!--             classes rather than name elements directly.       -->
+<!--                                                               -->
+<!--             Note: Since PEs must be declared before they      -->
+<!--             are used, this module must be called before the   -->
+<!--             content modules that declare elements.            -->
+<!--                                                               -->
+<!-- CONTAINS:   1) PEs that define complete content models.       -->
+<!--                (names ending in the suffix "-model")          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             International Organization for Standardization    -->
+<!--             (ISO), Geneva.                                    -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             May 2011                                          -->
+<!--                                                               -->
+<!-- CREATED BY: B. Tommie Usdin (Mulberry Technologies, Inc.)     -->
+<!--             C. M. Sperberg-McQueen (Mulberry Technologies,    -->
+<!--               Inc.)                                           -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+   
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 17. Update version number and public identifiers to 1.1
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+ 16. Updated version number for issue of version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+ 15. Allow non-normative.class to appear after any member of
+     sec-back-matter.mix, so that notes can appear at the very
+     end of sections.  
+
+ 14. Add simple-link.class to label, to allow footnote references
+     from section or annex labels.
+
+ 13. Add simple-link.class and citation.class to preformat-elements,
+     to allow references to standards and to other sections of
+     a document to be tagged within preformatted material (e.g.
+     ASN.1 declarations).
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+
+ 12. Add style-type attribute to p element.
+
+ 11. Add fn-group.class and fn-link.class to fig-model, to allow
+     fn and fn-group inside of fig elements.
+
+ 10. Revise sec-model to allow title to be omitted, if label is
+     supplied (but otherwise to remain required).
+
+  9. Make fig/@position be CDATA, overriding attribute specification
+     in %display-atts;.
+
+  8. Include citation-elements, to add break and xref to the
+     elements legal inside element-citation and mixed-citation
+     (by adding break.class and simple-link.class).
+
+  7. Add non-normative.class to ref-model.
+   
+  6. In 'app', make 'annex-type' optional.
+   
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-10-13)
+
+  5. In 'array', use %table.class, not %tbody.class.
+   
+  4. Allow 'originator' attribute on section and all paragraph-level
+     children of section.
+
+  3. Add %std-elements, %std-ref-elements, %label-elements.
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+   
+  2. Change name from ISDTS to ISOSTS, update version number
+
+     =============================================================
+     Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+   
+  1. Made this module as part of preparing version 0.2 of the DTD.
+                                                                   -->
+
+
+
+<!-- ============================================================= -->
+<!--                    OVER-RIDES OF JATS BASE SUITE MODELS       -->
+<!-- ============================================================= -->
+
+
+<!--                    BOXED TEXT MODEL                           -->
+<!--                    Complete content model for the boxed text
+                        element <boxed-text>.
+                        Removed <sec-meta>                         -->
+<!ENTITY % boxed-text-model
+                        "((%id.class;)*, label?, caption?,
+                          (%para-level;)*, (%sec-level;)*,
+                          (%sec-back-matter-mix;)*,
+                          (%display-back-matter.class;)* )"          >
+
+
+<!--                    CONTENT MODEL FOR AN UNTITLED SECTION      -->
+<!--                    The model for a section-like structure that
+                        may or may not have an initial title. 
+                        Removed <sec-meta>                         -->
+<!ENTITY % sec-opt-title-model
+                        "(label?, title?, (%para-level;)*,
+                          (%sec-level;)*,
+                          ((%sec-back-matter-mix;), 
+                          (%non-normative.class;)*)* )"              >
+                          
+
+
+<!--                    PUB DATE MODEL                             -->
+<!--                    In ISOSTS, dates within pub-data are given
+                        in ISO 8601 form, so no sub-part tagging is
+                        required (or allowed).                     -->
+<!ENTITY % pub-date-model 
+                        "(#PCDATA)*"                                 >
+
+
+<!--                    ARRAY CONTENT MODEL                        -->
+<!--                    Content model for the <array> element      -->
+<!--                    Made this use table.class, not tbody.class -->
+<!ENTITY % array-model  "(label?,
+                          (%access.class; | %address-link.class;)*,
+                          ( (%just-base-display.class;)* |
+                            %table.class; ),
+                          (%display-back-matter.class;)* )"          >
+
+
+<!--                    CITATION ELEMENTS                          -->
+<!--                    Content for both types of citation. These
+                        elements may be mixed with #PCDATA in the
+                        <mixed-citation> element (in which all
+                        punctuation and spacing are left intact), and
+                        they also constitute the choices that can be
+                        used to form the all-element-content of the
+                        <element-citation> element (in which
+                        punctuation and spacing are removed).      -->
+<!--                    Added break.class and simple-link.class    -->
+<!ENTITY % citation-elements
+                        "%break.class; | %emphasis.class; | 
+			 %inline-display.class; |
+                         %inline-math.class; | %label.class; |
+                         %phrase.class; | %references.class; |
+			 %simple-link.class; | %subsup.class;"       >
+
+
+<!-- ============================================================= -->
+<!--                    OVER-RIDES OF JATS JOURNAL PUBLISHING      -->
+<!--                    CUSTOM MODELS                              -->
+<!-- ============================================================= -->
+
+
+<!--                    CONTENT MODEL FOR A STRUCTURAL SECTION     -->
+<!--                    The model for a section that requires that 
+                        a <title> or a <label> must be present. 
+                        Removed <sec-meta>                         -->
+<!ENTITY % sec-model    "(((label, title?) | (title)), 
+                          (%para-level;)*, (%sec-level;)*,
+                          ((%sec-back-matter-mix;), 
+                          (%non-normative.class;)*)* )"              >
+
+
+<!--                    APPENDIX MODEL                             -->
+<!--                    Content model for the <app> element.       -->
+<!--                    Added annex-type.                          -->
+<!ENTITY % app-model    "(((label, annex-type?, title?)
+                         | (annex-type?, title)),
+                         (%para-level;)*, (%sec-level;)*,
+                         (%sec-back-matter-mix;)*,
+                         permissions?)"                              >
+
+
+<!--                    REFERENCE ITEM MODEL                       -->
+<!--                    Content model for the <ref> element
+                        Removed %note.class; (<note>)              -->
+<!ENTITY % ref-model    "(label?, (%citation.class; | 
+                        %non-normative.class;)+ )"                   >
+
+
+<!--                    ACKNOWLEDGMENTS MODEL                      -->
+<!--                    Content model for the <ack> element        -->
+<!--                    Made this use sec-opt-title model          -->
+<!ENTITY % ack-model    "%sec-opt-title-model;"                      >
+
+
+<!--                    STANDARD ELEMENTS                          -->
+<!--                    The elements that can be included along with
+                        data characters inside the content model of
+                        <std>
+                        Added std-ref and title.
+                        Design Note: this inline mix begins with
+                        an OR bar.                                 -->
+<!ENTITY % std-elements "| %std-content.class; %rendition-plus;"     >
+
+<!--                    STANDARDS TYPES                            -->
+<!--                    Possible values for the 'type' attribute
+                        of the 'std' element.                      -->
+<!ENTITY % std-type-values
+                        "(dated | undated | multipart)"              >
+
+<!--                    STANDARDS ATTRIBUTES                       -->
+<!--                    Attributes for the <std> element           -->
+<!ENTITY % std-atts
+            "type       %std-type-values;                 #IMPLIED
+             std-id     CDATA                             #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED"  >
+
+<!--                    STD-REF ELEMENTS                           -->
+<!--                    The elements that can be included along with
+                        data characters inside the content model of
+                        <std-ref>                                  -->
+<!ENTITY % std-ref-elements 
+                        "| %std-ref-content.class;"                  >
+
+
+<!--                    LABEL ELEMENTS                             -->
+<!--                    The elements that can be included along with
+                        data characters inside the content model of
+                        the <label> element.
+                        Added %phrase.content to allow named-content
+                        within a label.                            -->
+<!ENTITY % label-elements
+                        "| %emphasis.class; | %inline-display.class; |
+                         %inline-math.class; | 
+                         %phrase-content.class; | 
+                         %simple-link.class; | %subsup.class;"       >
+
+
+<!--                    FIGURE-LIKE CONTENT MODEL                  -->
+<!--                    Content model for the Figure element and any
+                        similarly structured elements
+                        Made <label> and <caption> non-repeatable. -->
+<!ENTITY % fig-model    "((%id.class;)*, label?, (%caption.class;)?,
+                          (%access.class; | %address-link.class;)*,
+                          (%block-math.class; |
+                           %chem-struct-wrap.class; |
+                           %fn-group.class; | %fn-link.class; | 
+                           %intable-para.class; |
+                           %just-table.class; | %just-para.class; |
+                           %list.class; | %simple-display.class;)*,
+                          (%display-back-matter.class;)* )"          >
+
+
+<!-- ============================================================= -->
+<!--                    OVER-RIDE DISP-FORMULA-ELEMENTS            -->
+<!-- ============================================================= -->
+<!--                    DISPLAY FORMULA ELEMENTS                   -->
+<!--                    Elements for use in the <disp-formula>
+                        element.
+                        Added $non-normative.class.                -->
+<!ENTITY % disp-formula-elements
+                        "| %access.class; | %address-link.class; |
+                         %break.class; | %emphasis.class; |
+                         %inline-display-noalt.class; |
+                         %inline-math.class; | %label.class; |
+                         %non-normative.class; |
+                         %phrase-content.class; |
+                         %math.class; |  %simple-display.class; |
+                         %subsup.class;"                             >
+
+
+<!-- ============================================================= -->
+<!--                    OVER-RIDE PREFORMAT-ELEMENTS               -->
+<!-- ============================================================= -->
+<!--                    PREFORMATTED TEXT ELEMENTS                 -->
+<!--                    Elements that may be used, along with data
+                        characters, inside the content model for the
+                        <preformat> element, in which white space,
+                        such as tabs, line feeds, and spaces will
+                        be preserved                               -->
+<!ENTITY % preformat-elements
+                        "| %access.class; | %address-link.class; |
+                         %citation.class; | 
+                         %display-back-matter.class; |
+                         %emphasis.class; | %phrase.class; |
+                         %simple-link.class; | %subsup.class;"       >
+
+
+<!-- ============================================================= -->
+<!--                    ADDING 'ORIGINATOR' ATTRIBUTE TO SEC       -->
+<!--                    AND ITS CHILDREN                           -->
+<!-- ============================================================= -->
+
+<!--                    'ORIGINATOR' ATTRIBUTE                     -->
+<!--                    The 'originator' attribute allows sections -->
+<!--                    and other material added by a second SDO   -->
+<!--                    (e.g. when adopting the standard) to be    -->
+<!--                    marked so as to allow the new and the      -->
+<!--                    original text to be distinguished. Its     -->
+<!--                    values are not constrained.                -->
+<!ENTITY % originator-attribute
+            "originator CDATA                             #IMPLIED"  >
+
+
+<!--                    XLINK LINK ATTRIBUTES                      -->
+<!--                    Attributes for any element that must be a
+                        link                                       -->
+<!--                    This declaration is not modified but
+                        copied verbatim from 
+                        JATS-journalpubcustom-models0.ent; it
+                        needs to be here because some of the 
+                        attribute-lists below refer to it.         -->
+<!ENTITY % link-atts
+            "xmlns:xlink CDATA                            #FIXED
+                                     'http://www.w3.org/1999/xlink'
+             xlink:type  (simple)                   #FIXED 'simple'
+             xlink:href  CDATA                            #REQUIRED
+             xlink:role  CDATA                            #IMPLIED
+             xlink:title CDATA                            #IMPLIED
+             xlink:show  (embed | new | none | other | replace)
+                                                          #IMPLIED
+             xlink:actuate
+                         (none | onLoad | onRequest | other)
+                                                          #IMPLIED"  >
+
+
+<!--                    MIGHT LINK XLINK ATTRIBUTES                -->
+<!--                    Used for elements which may need to link to
+                        external sources or other objects within
+                        the document, but may not necessarily act
+                        as a link at all.  The attribute
+                        "xlink:href" identifies the object to which
+                        the link points.                           -->
+<!--                    This declaration is not modified but
+                        copied verbatim from 
+                        JATS-journalpubcustom-models0.ent; it
+                        needs to be here because some of the 
+                        attribute-lists below refer to it.         -->
+<!ENTITY % might-link-atts
+            "xmlns:xlink CDATA                            #FIXED
+                                     'http://www.w3.org/1999/xlink'
+             xlink:type  (simple)                   #FIXED 'simple'
+             xlink:href  CDATA                            #IMPLIED
+             xlink:role  CDATA                            #IMPLIED
+             xlink:title CDATA                            #IMPLIED
+             xlink:show  (embed | new | none | other | replace)
+                                                          #IMPLIED
+             xlink:actuate
+                         (none | onLoad | onRequest | other)
+                                                          #IMPLIED"  >
+
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-common0.ent                      -->
+<!-- ============================================================= -->
+
+<!--                    ADDRESS ATTRIBUTES                         -->
+<!--                    Attributes for the <address> element       -->
+<!ENTITY % address-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+<!--                    ALTERNATIVES ATTRIBUTES                    -->
+<!--                    Attributes for the <alternatives> element  -->
+<!ENTITY % alternatives-atts
+            "%originator-attribute;"                                 >
+
+<!--                    RELATED ARTICLE ATTRIBUTES                 -->
+<!--                    Attributes for <related-article>           -->
+<!ENTITY % related-article-atts
+            "id        ID                                 #IMPLIED
+             related-article-type
+                        CDATA                             #REQUIRED
+             ext-link-type
+                       CDATA                              #IMPLIED
+             vol       CDATA                              #IMPLIED
+             page      CDATA                              #IMPLIED
+             issue     CDATA                              #IMPLIED
+             elocation-id
+                       CDATA                              #IMPLIED
+             journal-id
+                       CDATA                              #IMPLIED
+             journal-id-type
+                        CDATA                             #IMPLIED
+             specific-use
+                       CDATA                              #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %might-link-atts;
+             %originator-attribute;"                                 >
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-display0.ent                     -->
+<!-- ============================================================= -->
+
+<!--                    DISPLAY ATTRIBUTES                         -->
+<!--                    Attributes used for several of the block
+                        display elements                           -->
+<!--                    This declaration is not modified but
+                        copied verbatim from JATS-display0.ent; it
+                        needs to be here because some of the 
+                        attribute-lists below refer to it.         -->
+<!--                    Note:  fig-atts uses this parameter entity
+                        but overrides the definition of 'position'.
+                        So changes in 'position' won't affect fig.
+                        Other changes to display-atts should
+                        affect fig normally.                       -->
+<!ENTITY % display-atts
+            "position   (anchor | background | float | margin)
+                                                          'float'
+             orientation
+                        (portrait | landscape)            'portrait'
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED"  >
+
+
+<!--                    TABLE WRAPPER ATTRIBUTES                   -->
+<!--                    Attributes to be added to the regular NLM
+                        table attributes, for example, when the
+                        Elsevier or OASIS Exchange table models are
+                        used.                                      -->
+<!--                    This declaration is not modified but
+                        copied verbatim from JATS-display0.ent; it
+                        needs to be here because some of the 
+                        attribute-lists below refer to it.         -->
+<!ENTITY % other-table-wrap-atts
+             ""                                                      >
+
+
+<!--                    ARRAY ATTRIBUTES                           -->
+<!--                    Attributes for the <array> element         -->
+<!ENTITY % array-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             orientation
+                        (portrait | landscape)            'portrait'
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    BOXED TEXT ATTRIBUTES                      -->
+<!--                    Attributes for the <boxed-text> element    -->
+<!ENTITY % boxed-text-atts
+            "id         ID                                #IMPLIED
+             %display-atts;
+             content-type
+                        CDATA                             #IMPLIED
+             %originator-attribute;"                                 >
+
+<!--                    CHEMICAL STRUCTURE WRAPPER ATTRIBUTES      -->
+<!--                    Attributes for the <chem-struct-wrap>
+                        element, the outer wrapper around one or more
+                        block-level chemical structures            -->
+<!ENTITY % chem-struct-wrap-atts
+            "id         ID                                #IMPLIED
+             %display-atts;
+             content-type
+                        CDATA                             #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    FIGURE ATTRIBUTES                          -->
+<!--                    Attributes for Figures <fig>               -->
+<!--                    N.B. orientation, specific-use, and xml:lang
+                        are the same as in display-atts.  But
+                        position is overridden locally.            
+
+                        (Technical note for the maintenance staff:
+                        position is specified twice for fig, once 
+                        here in the text of fig-atts and once
+                        in the text of display-atts, which is 
+                        referenced here.  This works because XML
+                        [unlike ISO 8879:1986] allows the same 
+                        attribute name to occur more than once in the 
+                        ATTLISTs for an element; the first 
+                        specification wins.
+
+                        So in this case, the specification here
+                        using CDATA is the effective one, not the
+                        specification in display-atts, with its
+                        enumerated list of values. 
+
+                        Bottom line:  the double specification of
+                        position is not an error; don't delete it
+                        unless you know what you are doing.)       -->
+<!--<!ENTITY % fig-atts
+            "id         ID                                #IMPLIED
+             position   CDATA                             'float'
+             %display-atts;
+             fig-type   CDATA                             #IMPLIED
+             %originator-attribute;"                                 >
+-->
+
+<!--                    FIGURE GROUP ATTRIBUTES                    -->
+<!--                    Attributes for Figure Groups <fig-group>   -->
+<!ENTITY % fig-group-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED 
+              %originator-attribute;"                                >
+
+
+<!--                    GRAPHIC ATTRIBUTES                         -->
+<!--                    Attributes for the <graphic> element       -->
+<!ENTITY % graphic-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED
+              mime-subtype
+                        CDATA                             #IMPLIED
+              mimetype  CDATA                             #IMPLIED
+              %link-atts;
+              %originator-attribute;"                                >
+
+<!--                    MEDIA ATTRIBUTES                           -->
+<!--                    Attributes for the <media> element         -->
+<!ENTITY % media-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED
+              mimetype  CDATA                             #IMPLIED
+              mime-subtype
+                        CDATA                             #IMPLIED
+              %link-atts;
+              %originator-attribute;"                                >
+
+
+<!--                   PREFORMATTED TEXT ATTRIBUTES                -->
+<!--                   Attributes for the <preformat> element      -->
+<!ENTITY % preformat-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              preformat-type
+                        CDATA                             #IMPLIED
+              xml:space (default | preserve)     #FIXED 'preserve'
+              %originator-attribute;"                                >
+
+
+<!--                    SUPPLEMENTARY INFORMATION ATTRIBUTES       -->
+<!--                    Attributes for Supplementary Material
+                        <supplementary-material>                   -->
+<!ENTITY % supplementary-material-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED
+              mimetype  CDATA                             #IMPLIED
+              mime-subtype
+                        CDATA                             #IMPLIED
+              %might-link-atts;
+              %originator-attribute;"                                >
+
+<!--                    TABLE GROUP ATTRIBUTES                     -->
+<!--                    Attributes for groups of <table-wrap>
+                        elements <table-wrap-group>                -->
+<!ENTITY % table-wrap-group-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED
+              %other-table-wrap-atts;
+              %originator-attribute;"                                >
+
+
+<!--                    TABLE WRAPPER ATTRIBUTES                   -->
+<!--                    Attributes for the <table-wrap> element,
+                        the container for <table>s                 -->
+<!ENTITY % table-wrap-atts
+             "id        ID                                #IMPLIED
+              %display-atts;
+              content-type
+                        CDATA                             #IMPLIED
+              %other-table-wrap-atts;
+              %originator-attribute;"                                >
+
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-math0.ent                        -->
+<!-- ============================================================= -->
+
+<!--                    DISPLAY FORMULA ATTRIBUTES                 -->
+<!--                    Attributes for the <disp-formula> element  -->
+<!ENTITY % disp-formula-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    DISPLAY FORMULA GROUP ATTRIBUTES           -->
+<!--                    Attributes for the <disp-formula-group>
+                        element                                    -->
+<!ENTITY % disp-formula-group-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+<!--                    tex:math would also belong in this list
+                        and would also need to have the originator
+                        attribute, if it were not being suppressed -->
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-para0.ent                        -->
+<!-- ============================================================= -->
+
+<!--                    DISPLAY QUOTE ATTRIBUTES                   -->
+<!--                    Attribute list for the <disp-quote> element-->
+<!ENTITY % disp-quote-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    PARAGRAPH ATTRIBUTES                       -->
+<!--                    Attribute list for the <p> element         -->
+<!--                    In addition to adding 'originator', also
+                        add style-type.                            -->
+<!ENTITY % p-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;
+             style-type
+                        CDATA                             #IMPLIED"  >
+
+<!--                    SPEECH ATTRIBUTES                          -->
+<!--                    Attribute list for the <speech> element    -->
+<!ENTITY % speech-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    STATEMENT ATTRIBUTES                       -->
+<!--                    Attribute list for the <statement> element -->
+<!ENTITY % statement-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    VERSE GROUP ATTRIBUTES                     -->
+<!--                    Attribute list for the <verse-group> element
+                                                                   -->
+<!ENTITY % verse-group-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-list0.ent                        -->
+<!-- ============================================================= -->
+
+<!--                    DEFAULT DEFINITION LIST ATTRIBUTES         -->
+<!--                    Default attribute lists to be used for
+                        Definition (2-part) lists                  -->
+<!ENTITY % def-list-atts
+            "id         ID                                #IMPLIED
+             list-type  CDATA                             #IMPLIED
+             prefix-word
+                        CDATA                             #IMPLIED
+             list-content
+                        CDATA                             #IMPLIED
+             continued-from
+                        IDREF                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    DEFAULT LIST CLASS ATTRIBUTES              -->
+<!--                    Default attribute lists to be used for most
+                        of the types of lists.                     -->
+<!ENTITY % list-atts
+            "id         ID                                #IMPLIED
+             list-type  CDATA                             #IMPLIED
+             prefix-word
+                        CDATA                             #IMPLIED
+             list-content
+                        CDATA                             #IMPLIED
+             continued-from
+                        IDREF                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-related-objects0.ent             -->
+<!-- ============================================================= -->
+
+<!--                    RELATED OBJECT ATTRIBUTES                  -->
+<!--                    Attributes for <related-object>            -->
+<!ENTITY % related-object-atts
+            "id         ID                                #IMPLIED
+             link-type  CDATA                             #IMPLIED
+             source-id  CDATA                             #IMPLIED
+             source-id-type
+                        CDATA                             #IMPLIED
+             source-type
+                        CDATA                             #IMPLIED
+             document-id
+                        CDATA                             #IMPLIED
+             document-id-type
+                        CDATA                             #IMPLIED
+             document-type
+                        CDATA                             #IMPLIED
+             object-id  CDATA                             #IMPLIED
+             object-id-type
+                        CDATA                             #IMPLIED
+             object-type
+                        CDATA                             #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-backmatter.ent                   -->
+<!-- ============================================================= -->
+
+<!--                    FOOTNOTE GROUP ATTRIBUTES                  -->
+<!--                    Attributes for the Footnote Group <fn-group>
+                        element                                    -->
+<!ENTITY % fn-group-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!--                    GLOSSARY ATTRIBUTES                        -->
+<!--                    Attributes for the Glossary <glossary>
+                        element                                    -->
+<!ENTITY % glossary-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-references.ent                   -->
+<!-- ============================================================= -->
+
+<!--                    REFERENCE LIST ATTRIBUTES                  -->
+<!--                    Attributes for the <ref-list> element      -->
+<!ENTITY % ref-list-atts
+            "id         ID                                #IMPLIED
+             content-type
+                        CDATA                             #IMPLIED
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           #IMPLIED
+             %originator-attribute;"                                 >
+
+
+<!-- ============================================================= -->
+<!--                    FROM JATS-journalpubcustom-models0.ent     -->
+<!-- ============================================================= -->
+
+<!--                    SECTION ATTRIBUTES                         -->
+<!--                    Attribute list for Section element         -->
+<!ENTITY % sec-atts
+            "id         ID                                 #IMPLIED
+             xml:lang   NMTOKEN                            #IMPLIED
+             sec-type   CDATA                              #IMPLIED
+             specific-use
+                        CDATA                              #IMPLIED
+             %originator-attribute;"                                 >
+
+
+
+<!-- ================== End ISOSTS Content/Attr Override ========= -->

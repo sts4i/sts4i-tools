@@ -1,0 +1,142 @@
+<!-- ============================================================= -->
+<!--  MODULE:    TBX DTD SETUP MODULE                              -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS TBX Terminology Setup Module v1.1 20130701//EN"
+     Delivered as file "ISOSTS-tbx-setup.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-tbx-setup.ent
+                                                                   -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    Provides the organization for using the           -->
+<!--             namespace-qualified version of the TBX DTD        -->
+<!--                                                               -->
+<!-- CONTAINS:   1) Overrides for standard parameter entities      -->
+<!--                in the TBX DTD module                          -->
+<!--             2) Call to the TBX DTD module                     -->
+<!--                                                               -->
+<!-- MODULES REQUIRED:                                             -->
+<!--             1) ISOSTS-tbx-namespace.ent                       -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!--             module to redefine the many Parameter Entities.   -->
+<!--             Do not modify the suite directly or redistribute  -->
+<!--             modified versions of the suite.                   -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             July 2011                                         -->
+<!--                                                               -->
+<!-- CREATED BY: C. M. Sperberg-McQueen                            -->
+<!--             B. Tommie Usdin                                   -->
+<!--             (Mulberry Technologies, Inc.)                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+  7. Update version number and public identifiers to 1.1
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+  6. Updated version number for issue of version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+  5. Update version number to 0.7.
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+
+  4. No changes for version 0.6.
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-11-01)
+
+  3. Change value parameter entity TBX.xmlns from 
+     "urn:iso:std:iso:30042:ed-1:v1:en" to
+     "urn:iso:std:iso:30042:ed-1" (as suggested by HA 20 Oct 2011)
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-09-23)
+
+  2. Update version number
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+
+  1. Created this module as part of creation of version 0.3        -->
+
+<!-- ============================================================= -->
+<!--                    SET UP FOR THE TBX MODULE                  -->
+<!-- ============================================================= -->
+
+
+<!--                    TBX DTD                                    -->
+<!--                    The official version of the TBX DTD can
+                        be found in Annex A of ISO 30042.
+
+                        The TBX module pointed to here has been
+                        modified to be namespace-qualified.
+                                                                   -->
+
+
+<!-- ============================================================= -->
+<!--                    SET UP THE TBX NAMESPACE                   -->
+<!-- ============================================================= -->
+
+
+<!--                    MAKE PREFIX EQUAL "tbx"                    -->
+<!ENTITY % TBX.prefix
+                        "tbx"                                        >
+
+<!--                    SET UP NAMESPACE FOR TBX                   -->
+<!--                    ISO 30042 defines the TBX vocabulary, but
+                        does not specify a namespace name for 
+                        the vocabulary.  We use the ISO URN for 
+                        ISO 30042 itself as the namespace name.    -->
+<!ENTITY % TBX.xmlns "urn:iso:std:iso:30042:ed-1"                    >
+
+<!--                    DEFINE TBX namespace declaration           -->
+<!ENTITY % TBX.xmlns.attrib
+     "xmlns:%TBX.prefix;     CDATA          #FIXED '%TBX.xmlns;'"    >
+
+
+<!-- ============================================================= -->
+<!--                    TBX INVOCATION                             -->
+<!-- ============================================================= -->
+
+%ISOSTS-tbx-namespace.ent;
+
+
+<!-- ================== End TBX Setup Module ===================== -->

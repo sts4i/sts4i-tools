@@ -1,0 +1,454 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS TBX Terminology Module                     -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS TBX Terminology Module v1.1 20130701//EN"
+     Delivered as file "ISOSTS-tbx-namespace.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-tbx-namespace.ent
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    This module defines a namespace-qualified,        -->
+<!--             TBX (TermBase eXchange) compatible vocabulary     -->
+<!--             derived from ISO 30042.                           -->
+<!--                                                               --> 
+<!-- CONTAINS:   1) Parameter entities for the TBX namespace       -->
+<!--                prefix                                         -->
+<!--             2) Parameter entities for element names           -->
+<!--             3) Standard content models and content-model      -->
+<!--                fragments                                      -->
+<!--             4) Standard attribute sets                        -->
+<!--             5) Elements used for text markup                  -->
+<!--             6) Elements needed for terminological entries     -->
+<!--                (in alphabetical order)                        -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             July 2011                                         -->
+<!--                                                               -->
+<!-- CREATED BY: C. M. Sperberg-McQueen                            -->
+<!--             B. Tommie Usdin                                   -->
+<!--             (Mulberry Technologies, Inc.)                     -->
+<!--             Kara Warburton                                    -->
+<!--             (The Language Automation Company)                 -->
+<!--             Nathan E. Rasmussen                               -->
+<!--             (LTAC Global)                                     -->
+<!--             Holger Apel (ISO)                                 -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 8.  Update version number and public identifiers to 1.1
+ 7.  Allow elements from address-link.class and 
+     inline-display-noalt.class to be used by highlight-elements
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+  6. Updated version number for issue of version 1.0.
+
+
+     =============================================================
+     Version 0.6                             (HA) v0.6 (2012-02-12)
+     
+  5. add attribute xtarget to tbx:source
+
+     =============================================================
+     Version 0.5                             (HA) v0.5 (2011-11-22)
+     
+  4. allow a number of ISOSTS markup within highlight-elements
+
+     =============================================================
+     Version 0.4a                         (MSM) v0.4a (2011-11-01)
+
+  3. Changed TBX namespace from "urn:iso:std:iso:30042:ed-1:v1:en"
+     to "urn:iso:std:iso:30042:ed-1" (following Holger Apel's note 
+     of 20 Oct 2011).
+
+     =============================================================
+     Version 0.4                        (KW/NER) v0.2 (2011-11-22)
+
+  2. Namespace qualification adopted from previous version.  Other
+     modifications from ISO 30042 Annex A as follows:
+
+     a) Elements enclosing termEntry have been omitted as superfluous.
+
+     b) Content definitions for termEntry and its children have
+        been subsetted, omitting structures and data categories
+        not necessary in this application.
+
+     c) A particular set of data categories has been imposed. 
+
+     d) Meta data elements such as descrip have been replaced by
+        elements that represent a single data category. Where the
+        value of the data category must be drawn from a picklist, 
+        it has been moved from element content to an attribute. 
+        These changes allow a DTD to validate data category usage.
+
+     e) The partOfSpeech element has been made mandatory in every
+        tig (Term Information Group). Most other term-level data
+        categories have been constrained to occur once at most. 
+        As a side effect, they now must occur in a fixed order.
+
+     f) A script attribute has been added to most elements. An 
+        xtarget (external target) attribute has been added to
+        entailedTerm and replaces the target attribute on external
+        references. The type attribute has been made mandatory on
+        external references, correcting an oversight in ISO 30042. 
+
+     i) The markup-encapsulating elements have been removed as 
+        superfluous. Elements that previously had access to them
+        through the noteText content model have been downgraded
+        to basicText.
+
+     g) MathML and JATS formatting elements have been added to 
+        the basicText content model, supplying lists, tables, and 
+        inline formatting, and superseding TBX-based highlighting 
+        elements other than entailedTerm.
+
+     h) A new content model, simpleText, provides this formatting
+        but not entailedTerm. It has been applied to all fields
+        that contain plain terms, upgrading some from PCDATA and
+        downgrading others from basicText.
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.1 (2011-05-12)
+
+  1. First version of this namespace-qualified TBX.  The material
+     here is based on ISO 30042 Annex A, but has been modified
+     in the following ways:
+
+     a) The definitions of the parameter entities TBX.prefix, 
+        TBX.xmlns, and TBX.xmlns.attrib have been added.
+
+     b) Parameter entities have been defined for the names of
+        all elements in the TBX vocabulary.
+
+     c) All references to elements in the TBX vocabulary have
+        been changed to use these parameter entities.
+
+     d) The declarations have been reformatted for legibility.
+
+     e) Annex A of ISO 30042 says of its content "When reformatted
+        as a separate file, it should be named TBXcoreStructV02.dtd
+        (TBX Core DTD Version 02)."  This DTD module is NOT called
+        TBXcoreStructV02.dtd, because it is NOT textually
+        identical with the content of ISO 30042 Annex A.
+
+                                                                   -->
+
+<!-- The following material was derived from Annex A of ISO 30042,
+     with the changes listed above in the change log.
+                                                                   -->
+
+<!-- ============================================================= -->
+<!--                    PARAMETER ENTITIES FOR THE                 -->
+<!--                    TBX NAMESPACE PREFIX                       -->
+<!-- ============================================================= -->
+
+
+<!--                    MAKE PREFIX EQUAL "tbx"                    -->
+<!ENTITY % TBX.prefix
+                        "tbx"                                        >
+
+<!--                    SET UP NAMESPACE FOR TBX                   -->
+<!--                    ISO 30042 defines the TBX vocabulary, but
+                        does not specify a namespace name for 
+                        the vocabulary.  We use the ISO URN for 
+                        ISO 30042 itself as the namespace name.    -->
+<!ENTITY % TBX.xmlns "urn:iso:std:iso:30042:ed-1"              >
+
+<!--                    DEFINE TBX namespace declaration           -->
+<!ENTITY % TBX.xmlns.attrib
+     "xmlns:%TBX.prefix;     CDATA          #FIXED '%TBX.xmlns;'"    >
+
+
+<!-- ============================================================= -->
+<!--                    TBX ELEMENT NAMES                          -->
+<!--                 (in alphabetical order)                       -->
+<!-- ============================================================= -->
+
+<!ENTITY % TBX.bpt "%TBX.prefix;:bpt"                                >
+<!ENTITY % TBX.crossReference "%TBX.prefix;:crossReference"          >
+<!ENTITY % TBX.definition "%TBX.prefix;:definition"                  >
+<!ENTITY % TBX.entailedTerm "%TBX.prefix;:entailedTerm"              >
+<!ENTITY % TBX.ept "%TBX.prefix;:ept"                                >
+<!ENTITY % TBX.example "%TBX.prefix;:example"                        >
+<!ENTITY % TBX.externalCrossReference 
+           "%TBX.prefix;:externalCrossReference"                     >
+<!ENTITY % TBX.geographicalUsage "%TBX.prefix;:geographicalUsage"    >
+<!ENTITY % TBX.grammaticalGender "%TBX.prefix;:grammaticalGender"    >
+<!ENTITY % TBX.grammaticalNumber "%TBX.prefix;:grammaticalNumber"    >
+<!ENTITY % TBX.langSet "%TBX.prefix;:langSet"                        >
+<!ENTITY % TBX.normativeAuthorization 
+           "%TBX.prefix;:normativeAuthorization"                     >
+<!ENTITY % TBX.note "%TBX.prefix;:note"                              >
+<!ENTITY % TBX.partOfSpeech "%TBX.prefix;:partOfSpeech"              >
+<!ENTITY % TBX.ph "%TBX.prefix;:ph"                                  >
+<!ENTITY % TBX.pronunciation "%TBX.prefix;:pronunciation"            >
+<!ENTITY % TBX.see "%TBX.prefix;:see"                                >
+<!ENTITY % TBX.source "%TBX.prefix;:source"                          >
+<!ENTITY % TBX.subjectField "%TBX.prefix;:subjectField"              >
+<!ENTITY % TBX.term "%TBX.prefix;:term"                              >
+<!ENTITY % TBX.termEntry "%TBX.prefix;:termEntry"                    >
+<!ENTITY % TBX.termType "%TBX.prefix;:termType"                      >
+<!ENTITY % TBX.tig "%TBX.prefix;:tig"                                >
+<!ENTITY % TBX.usageNote "%TBX.prefix;:usageNote"                    >
+<!ENTITY % TBX.xGraphic "%TBX.prefix;:xGraphic"                      >
+<!ENTITY % TBX.xMathML "%TBX.prefix;:xMathML"                        >
+<!ENTITY % TBX.xSource "%TBX.prefix;:xSource"                        >
+
+<!-- ============================================================= -->
+<!-- SOME USEFUL ENTITIES THAT ARE REFERENCED BELOW:               -->
+<!-- STANDARD CONTENT MODELS AND CONTENT-MODEL FRAGMENTS           -->
+<!-- NOTE: %simple-link.class; cannot be used since it contains    -->
+<!--       already tbx:entailedTerm                                -->
+<!-- ============================================================= -->
+                        
+<!ENTITY % highlight-elements
+                       "| %block-math.class; | %inline-math.class;
+                        | %simple-math.class; | %emphasis.class;
+                        | %subsup.class; | %list.class; 
+                        | fn | target | xref | %citation.class; 
+                        | %break.class;
+                        | %phrase-content.class; 
+                        | %block-display.class;
+                        | %address-link.class;
+                        | %inline-display-noalt.class;"              >
+
+<!ENTITY % basicText-model
+                       "(#PCDATA %highlight-elements; 
+                         | %TBX.entailedTerm;)*"                     >
+
+<!ENTITY % simpleText-model
+                       "(#PCDATA %highlight-elements;)*"             >
+
+<!-- ============================================================= -->
+<!-- ENTITIES THAT DEFINE COMMON SETS OF ATTRIBUTES                --> 
+<!-- ============================================================= -->
+
+<!ENTITY % impIDLangScrpt-atts "
+             id         ID                                 #IMPLIED
+             xml:lang   CDATA                              #IMPLIED
+             script     CDATA                              #IMPLIED" >
+
+<!ENTITY % tbx-xref-atts "
+             id         ID                                 #IMPLIED  
+             xtarget    CDATA                              #REQUIRED">
+
+<!-- ============================================================= -->
+<!-- ELEMENTS USED FOR TEXT MARKUP: HIGHLIGHT-BASED ELEMENTS       -->
+<!-- ============================================================= --> 
+
+<!--                    ENTAILED TERM                              -->
+<!ELEMENT  %TBX.entailedTerm; 
+                        %simpleText-model;                           >
+<!ATTLIST  %TBX.entailedTerm;
+             script     CDATA                              #IMPLIED
+             target     IDREF                              #IMPLIED
+             xml:lang   CDATA                              #IMPLIED 
+             xtarget    CDATA                              #IMPLIED  >
+
+<!-- ============================================================= -->
+<!-- ELEMENTS NEEDED FOR TERMINOLOGICAL ENTRIES                    -->
+<!-- (in alphabetical order)                                       -->
+<!-- ============================================================= -->
+
+<!--                    CROSS REFERENCE                            -->
+<!ELEMENT  %TBX.crossReference; 
+                        %simpleText-model;                           >
+<!ATTLIST  %TBX.crossReference;
+             xml:lang   CDATA                              #IMPLIED
+             target     IDREF                              #IMPLIED
+             script     CDATA                              #IMPLIED  >
+
+<!--                    DEFINITION                                 -->
+<!ELEMENT  %TBX.definition; 
+                        %basicText-model;                            >
+<!ATTLIST  %TBX.definition;
+             %impIDLangScrpt-atts;                                   >
+
+<!--                    EXAMPLE                                    -->
+<!ELEMENT  %TBX.example;
+                        %basicText-model;                            >
+<!ATTLIST  %TBX.example;
+             %impIDLangScrpt-atts;                                   >
+
+<!--                    EXTERNAL CROSS REFERENCE                   -->
+<!ELEMENT  %TBX.externalCrossReference; 
+                        %simpleText-model;                           >
+<!ATTLIST  %TBX.externalCrossReference;
+             xml:lang   CDATA                              #IMPLIED
+             xtarget    CDATA                              #REQUIRED
+             script     CDATA                              #IMPLIED  >
+
+<!--                    GEOGRAPHICAL USAGE                         -->
+<!ELEMENT  %TBX.geographicalUsage; 
+                        (#PCDATA)                                    >
+<!ATTLIST  %TBX.geographicalUsage;
+             xml:lang   CDATA                              #IMPLIED
+             script     CDATA                              #IMPLIED  >
+
+<!--                    GRAMMATICAL GENDER                         -->
+<!ELEMENT  %TBX.grammaticalGender; 
+                        EMPTY                                        >
+<!ATTLIST  %TBX.grammaticalGender;
+             value      (masculine | feminine | neuter)    #REQUIRED >
+
+<!--                    GRAMMATICAL NUMBER                         -->
+<!ELEMENT  %TBX.grammaticalNumber; 
+                        EMPTY                                        >
+<!ATTLIST  %TBX.grammaticalNumber;
+             value      (singular | plural)                #REQUIRED >
+
+<!--                    LANGUAGE SET                               -->
+<!ELEMENT  %TBX.langSet; 
+                        ((%TBX.crossReference; | %TBX.definition; |
+                          %TBX.example; | 
+                          %TBX.externalCrossReference; | %TBX.note; |
+                          %TBX.see; | %TBX.source; | 
+                          %TBX.subjectField; | %TBX.xGraphic; |
+                          %TBX.xMathML; | %TBX.xSource;)*, 
+                        (%TBX.tig;)+ )                               >
+<!ATTLIST  %TBX.langSet;
+             id         ID                                 #IMPLIED
+             script     CDATA                              #IMPLIED 
+             xml:lang   CDATA                              #REQUIRED >
+
+<!--                    NORMATIVE AUTHORIZATION                    -->
+<!ELEMENT  %TBX.normativeAuthorization; 
+                        EMPTY                                        >
+<!ATTLIST  %TBX.normativeAuthorization;
+             value      (preferredTerm | admittedTerm | 
+                         deprecatedTerm)                   #REQUIRED >
+
+<!--                    NOTE                                       -->
+<!ELEMENT  %TBX.note;   %basicText-model;                            >
+<!ATTLIST  %TBX.note;
+             id         ID                                 #IMPLIED
+             xml:lang   CDATA                              #IMPLIED   
+             script     CDATA                              #IMPLIED  >
+
+<!--                    PART OF SPEECH                             -->
+<!ELEMENT  %TBX.partOfSpeech; 
+                        EMPTY                                        >
+<!ATTLIST  %TBX.partOfSpeech;
+             value      (noun | verb | adj | adv)          #REQUIRED >
+
+<!--                    PRONUNCIATION                              -->
+<!ELEMENT  %TBX.pronunciation; 
+                        %simpleText-model;                           >
+<!ATTLIST  %TBX.pronunciation;                                       >
+
+<!--                    SEE                                        -->
+<!ELEMENT  %TBX.see;    %simpleText-model;                           >
+<!ATTLIST  %TBX.see;
+             xml:lang   CDATA                              #IMPLIED
+             target     IDREF                              #IMPLIED
+             script     CDATA                              #IMPLIED  >
+
+<!--                    SOURCE                                     -->
+<!ELEMENT  %TBX.source; %simpleText-model;                           >
+<!ATTLIST  %TBX.source;
+             id         ID                                 #IMPLIED
+             xml:lang   CDATA                              #IMPLIED             
+             script     CDATA                              #IMPLIED
+             xtarget    CDATA                              #IMPLIED  >
+
+<!--                    SUBJECT FIELD                              -->
+<!ELEMENT  %TBX.subjectField; 
+                        (#PCDATA)                                    >
+<!ATTLIST  %TBX.subjectField;
+             id         ID                                 #IMPLIED
+             xml:lang   CDATA                              #IMPLIED
+             script     CDATA                              #IMPLIED  >
+
+
+<!--                    TERM                                       -->
+<!ELEMENT  %TBX.term;   %simpleText-model;                           >
+<!ATTLIST  %TBX.term;
+             id         ID                                 #IMPLIED
+             script     CDATA                              #IMPLIED  >
+
+<!--                    TERM ENTRY (CONCEPT ENTRY)                 -->
+<!ELEMENT  %TBX.termEntry; 
+                        ((%TBX.externalCrossReference; | 
+                          %TBX.xGraphic; | %TBX.xMathML; | 
+                          %TBX.xSource;)*, 
+                        (%TBX.langSet;)+ )                           >
+<!ATTLIST  %TBX.termEntry;
+             %TBX.xmlns.attrib;
+             id         ID                                 #IMPLIED  >
+
+<!--                    TERM TYPE                                  -->
+<!ELEMENT  %TBX.termType; 
+                        EMPTY                                        >
+<!ATTLIST  %TBX.termType;
+             value      (acronym | abbreviation | fullForm | symbol | 
+                         variant | formula | equation)     #REQUIRED >
+
+<!--                    TIG (TERM INFORMATION GROUP)               -->
+<!ELEMENT  %TBX.tig;    (%TBX.term;, %TBX.partOfSpeech;, 
+                         (%TBX.geographicalUsage;)?,
+                         (%TBX.grammaticalGender;)?,
+                         (%TBX.grammaticalNumber;)?,
+                         (%TBX.normativeAuthorization;)?,
+                         (%TBX.pronunciation;)?, (%TBX.termType;)?,
+                         (%TBX.usageNote;)* )                        >
+<!ATTLIST  %TBX.tig;
+             id         ID                                 #IMPLIED  >
+
+<!--                    USAGE NOTE                                 -->
+<!ELEMENT  %TBX.usageNote; 
+                        %basicText-model;                            >
+<!ATTLIST  %TBX.usageNote;
+             %impIDLangScrpt-atts;                                   >
+
+<!--                    EXTERNAL GRAPHIC                           -->
+<!ELEMENT  %TBX.xGraphic; 
+                        (#PCDATA)                                    >
+<!ATTLIST  %TBX.xGraphic;
+             %tbx-xref-atts;                                         >
+
+<!--                    EXTERNAL MATHML                            -->
+<!ELEMENT  %TBX.xMathML; 
+                        (#PCDATA)                                    >
+<!ATTLIST  %TBX.xMathML;
+             %tbx-xref-atts;                                         >
+
+<!--                    EXTERNAL SOURCE                            -->
+<!ELEMENT  %TBX.xSource; 
+                        (#PCDATA)                                    >
+<!ATTLIST  %TBX.xSource;
+             %tbx-xref-atts;                                         >
+
+
+<!-- ================== End ISOSTS TBX Terminology Module ======== -->

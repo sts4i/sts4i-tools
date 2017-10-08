@@ -1,0 +1,277 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS DTD Customize Classes Module               -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS DTD Customize Classes v1.1 20130701//EN"
+     Delivered as file "ISOSTS-classes.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-classes.ent
+                                                                   -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISOSTS DTD Suite                                  -->
+<!--                                                               -->
+<!-- PURPOSE:    To declare the Parameter Entities (PEs) used to   -->
+<!--             over-ride named element classes in the underlying -->
+<!--             JATS (Z39.96) Journal Publishing DTD              -->
+<!--                                                               -->
+<!--             Note: Since PEs must be declared before they      -->
+<!--             are used, this module must be called before the   -->
+<!--             content modules that declare elements.            -->
+<!--                                                               -->
+<!-- CONTAINS:   1) PEs for changing the contents of the default   -->
+<!--                element classes (names ending in '.class')     -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             International Organization for Standardization    -->
+<!--             (ISO), Geneva.                                    -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             July 2011                                         -->
+<!--                                                               -->
+<!-- CREATED BY: B. Tommie Usdin (Mulberry Technologies, Inc.)     -->
+<!--             C. M. Sperberg-McQueen (Mulberry Technologies,    -->
+<!--               Inc.)                                           -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 14. Update version number and public identifiers to 1.1
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+ 13. Updated version number for issue of version 1.0.
+   
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+ 12. Define std-ref.class, containing just std-ref.
+
+ 11. Define figures.class, containing fig and fig-group.
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+
+ 10. Add year back into std-ref-content.class.
+
+  9. Alphabetize entity declarations here for easier navigation.
+
+  7. Add tbx:entailedTerm to simple-link.class.
+
+  7. Define sub-part.class.
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-10-14)
+
+  6. Add non-normative.class and only-para.class; add 
+     non-normative-note and non-normative-example to just-para.class
+     (despite the name).
+
+  5. In std-ref-content.class, remove year, add edition.  In
+     std-content.class, add fn, xref.
+
+  4. Add std-content.class for possible content of std element.
+
+  3. Include citation.class (to add std), emphasis.class (to add
+     num), math.class (to suppress tex-math).  
+        
+  2. Add term-sec.class (for use in term-sec itself: once you go
+     into a term-sec, there is no going back to normal sections)
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+   
+  1. Made this module as part of preparing version 0.3 of the DTD. 
+
+                                                                   -->
+<!-- Entities are in alphabetical order.                           -->
+
+<!-- ============================================================= -->
+<!--                    BLOCK-DISPLAY CLASS                        -->
+<!-- ============================================================= -->
+<!--                    DISPLAY CLASS ELEMENTS                     -->
+<!--                    Graphical or other image-related elements.
+                        The display elements may occur within
+                        the text of a table cell or paragraph
+                        although they are typically at the same
+                        hierarchical level as a paragraph.
+                        Added 'non-normative-note' and 
+                        'non-normative-example' elements.          -->
+<!ENTITY % block-display.class
+                       "address | alternatives | array |
+                        boxed-text | chem-struct-wrap |
+                        fig | fig-group | graphic | media |
+                        non-normative-note | non-normative-example |
+                        preformat | supplementary-material |
+                        table-wrap | table-wrap-group"               >
+
+
+<!-- ============================================================= -->
+<!--                    CITATION CLASS                             -->
+<!-- ============================================================= -->
+<!--                    CITATION CLASS ELEMENTS                    -->
+<!--                    Reference to an external document, as used
+                        within, for example, the text of a
+                        paragraph                                  -->
+<!ENTITY % citation.class
+                       "element-citation | mixed-citation | std"     >
+
+
+<!-- ============================================================= -->
+<!--                    EMPHASIS CLASS                             -->
+<!-- ============================================================= -->
+<!--                    EMPHASIS RENDITION ELEMENTS                -->
+<!--                    Add 'num'. It doesn't fit perfectly 
+                        here, but it is sometimes used to put
+                        numeric data into a different font.  And
+                        the only other class as ubiquitous as 
+                        %emphasis.class is %subsup.class, which 
+                        is not more suitable.                      -->
+<!ENTITY % emphasis.class
+                        "bold | italic | monospace | num | 
+                         overline | roman |  sans-serif | sc | 
+                         strike | underline"                         >
+
+
+<!-- ============================================================= -->
+<!--                    FIGURES CLASS                              -->
+<!-- ============================================================= -->
+<!ENTITY % figures.class
+                       "fig | fig-group"                             >
+
+
+<!-- ============================================================= -->
+<!--                    JUST-PARA CLASS                            -->
+<!-- ============================================================= -->
+<!--                    See also only-para.class.                  -->
+<!ENTITY % just-para.class
+                       "p | non-normative-note | 
+                        non-normative-example"                       >
+
+
+<!-- ============================================================= -->
+<!--                    NON-NORMATIVE CLASS                        -->
+<!-- ============================================================= -->
+<!ENTITY % non-normative.class
+                       "non-normative-note | non-normative-example"  >
+
+
+<!-- ============================================================= -->
+<!--                    MATH CLASS                                 -->
+<!-- ============================================================= -->
+<!--                    Suppress tex:math here                     -->
+<!--                    MATHEMATICAL EXPRESSIONS CLASS ELEMENTS    -->
+<!ENTITY % math.class   "mml:math"                                   >
+
+
+<!-- ============================================================= -->
+<!--                    ONLY-PARA CLASS                            -->
+<!-- ============================================================= -->
+<!--                    Since we are adding elements to the
+                        just-para class, we need a new class for
+                        the one place where we really do want 
+                        p and only p to be a member of the class.  -->
+<!ENTITY % only-para.class
+                       "p"                                           >
+
+
+<!-- ============================================================= -->
+<!--                    SECTION CLASS                              -->
+<!-- ============================================================= -->
+<!--                    SECTION CLASS ELEMENTS                     -->
+<!--                    Information for the reader that is at the
+                        same structural level as a Section, which
+                        is a headed structure full of smaller
+                        elements such as paragraphs.
+
+                        Added 'term-sec', a section containing
+                        terminological data.                       -->
+
+<!ENTITY % sec.class    "sec | term-sec"                             >
+
+
+<!-- ============================================================= -->
+<!--                    SIMPLE-LINK CLASS                          -->
+<!-- ============================================================= -->
+<!--                    SIMPLE LINKS/CROSS-REFERENCES CLASS        -->
+<!--                    The smaller and simpler linking elements
+                        that might be inside, for example, a
+                        Keyword <kwd>                              -->
+<!ENTITY % simple-link.class
+                        "fn | target | tbx:entailedTerm | xref"      >
+
+
+<!-- ============================================================= -->
+<!--                    STD-CONTENT CLASS                          -->
+<!-- ============================================================= -->
+<!--                    STD-CONTENT CLASS ELEMENTS                 -->
+<!--                    Elements that can occur within an 'std'
+                        element and are not otherwise provided for -->
+<!ENTITY % std-content.class
+                       "std-ref | title | fn | xref"                 >
+
+
+<!-- ============================================================= -->
+<!--                    STD-REF CLASS                              -->
+<!-- ============================================================= -->
+<!--                    STD-REF CLASS                              -->
+<!--                    Elements that can occur where 'std-ref'
+                        can occur (initially only std-ref itself)  -->
+<!ENTITY % std-ref.class
+                       "std-ref"                                     >
+
+
+<!-- ============================================================= -->
+<!--                    STD-REF-CONTENT CLASS                      -->
+<!-- ============================================================= -->
+<!--                    STD-REF-CONTENT CLASS ELEMENTS             -->
+<!--                    Elements that can occur within a 'std-ref'
+                        element                                    -->
+<!ENTITY % std-ref-content.class
+                       "originator | doc-type | doc-number | 
+                        part-number | edition | suppl-type | 
+                        suppl-number | year"                         >
+
+
+<!-- ============================================================= -->
+<!--                    SUB-PART CLASS                             -->
+<!-- ============================================================= -->
+<!--                    SUB-PART CLASS ELEMENTS                    -->
+<!--                    Elements that can occur where a 'sub-part'
+                        can occur.                                 -->
+<!ENTITY % sub-part.class
+                       "sub-part"                                    >
+
+
+<!-- ============================================================= -->
+<!--                    TERM-SECTION CLASS                         -->
+<!-- ============================================================= -->
+<!--                    TERM-SECTION CLASS ELEMENTS                -->
+<!--                    Specialized sections for terminological 
+                        data, excluding normal sections.           -->
+
+<!ENTITY % term-sec.class
+                       "term-sec"                                    >
+
+
+<!-- ================== End ISOSTS Class Overrides =============== -->

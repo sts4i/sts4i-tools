@@ -1,0 +1,207 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS Module of Modules                          -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS Module of Modules v1.1 20130701//EN"
+     Delivered as file "ISOSTS-modules.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-modules.ent
+                                                                   -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISOSTS DTD Suite                                  -->
+<!--                                                               -->
+<!-- PURPOSE:    For naming all the external customization modules -->
+<!--             (except this module itself) that are part of      -->
+<!--             the ISO Standards Tag Set (ISOSTS) modular DTD    -->
+<!--             library.                                          -->
+<!--             Modules which are not specific to ISOSTS are      -->
+<!--             named in the normal JATS module of modules,       -->
+<!--             not here.                                         -->
+<!--                                                               -->
+<!-- CONTAINS:   1)  Entity declarations and public names for all  -->
+<!--                 the ISOSTS-specific modules. Note: The        -->
+<!--                 modules are NOT referenced (called/invoked)   -->
+<!--                 in this module, they are merely defined.      -->
+<!--                 The DTD or a setup module (such as for the    -->
+<!--                 XHTML tables) will invoke the external        -->
+<!--                 parameter entity to call the module.          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             International Organization for Standardization    -->
+<!--             (ISO), Geneva.                                    -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             May 2011                                          -->
+<!--                                                               -->
+<!-- CREATED BY: B. Tommie Usdin (Mulberry Technologies, Inc.)     -->
+<!--             C. M. Sperberg-McQueen (Mulberry Technologies,    -->
+<!--               Inc.)                                           -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+   
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 9.  Update version number and public identifiers to 1.1
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+  8. Updated public identifiers and version number for issue of 
+     version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+
+  7. Update version number and public identifiers to 0.7.
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+   
+  6. Update public identifiers for version 0.6
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-10-19)
+   
+  5. Add ISOSTS-mixes.ent module.
+
+  4. Update version numbers in public identifiers to 0.5; update
+     dates in public identifiers.
+
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+   
+  3. Add ISOSTS-tbx-setup.ent and ISOSTS-tbx-namespace.ent
+
+  2. Change name from ISDTS to ISOSTS, update version number
+     passim
+
+     =============================================================
+     Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+   
+  1. Made this module as part of preparing version 0.2 of the DTD.
+                                                                   -->
+
+
+<!-- ============================================================= -->
+<!--                    CUSTOMIZATION MODULES DECLARED             -->
+<!-- ============================================================= -->
+
+
+<!--                    ISOSTS DTD CUSTOMIZE CLASSES MODULE        -->
+<!--                    Set up the Parameter Entities for element 
+                        class overrides. These PEs will over-ride 
+                        selected class definitions in the JATS
+                        Journal Publishing DTD.                    -->
+<!ENTITY % ISOSTS-classes.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS DTD Customize Classes v1.0 20120423//EN"
+"ISOSTS-classes.ent"                                                 >
+
+
+<!--                    ISOSTS DTD CUSTOMIZE MIXES MODULE          -->
+<!--                    Set up the Parameter Entities for mixes.
+                        These PEs will over-ride selected 
+                        definitions in the JATS
+                        Journal Publishing DTD.                    -->
+<!ENTITY % ISOSTS-mixes.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS DTD Customize Mixes v1.0 20120423//EN"
+"ISOSTS-mixes.ent"                                                   >
+
+
+<!--                    ISOSTS DTD CUSTOMIZE CONTENT AND ATTRIBUTES 
+                        MODULE                                     -->
+<!--                    Set up the Parameter Entities for element-
+                        specific element groups, complete content
+                        models, and attribute list and value over-
+                        rides. These PEs will over-ride selected
+                        content models and attribute lists in the
+                        JATS (Z39.96) DTD Suite.                   -->
+<!ENTITY % ISOSTS-models.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS DTD Customize Content and Attributes v1.0 20120423//EN"
+"ISOSTS-models.ent"                                                  >
+
+
+<!-- ============================================================= -->
+<!--                    ISOSTS-SPECIFIC ELEMENTS AND CHARACTERS    -->
+<!-- ============================================================= -->
+
+
+<!--                    ISOSTS ISO METADATA MODULE                 -->
+<!--                    Define the iso-meta element and its 
+                        contents.                                  -->
+<!ENTITY % ISOSTS-iso-meta.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS ISO-specific Metadata v1.0 20120423//EN"
+"ISOSTS-iso-metadata.ent"                                            >
+
+
+<!--                    ISOSTS REG METADATA MODULE                 -->
+<!--                    Define the reg-meta element and its 
+                        contents.  (By default, the only content
+                        is the JATS custom-meta-group element,
+                        but a distinct module is provided to make
+                        it easy to change this.                    -->
+
+<!ENTITY % ISOSTS-reg-meta.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS REG Metadata Block v1.0 20130418//EN"
+"ISOSTS-reg-metadata.ent"                                            >
+
+
+<!--                    ISOSTS NATIONAL-BODY METADATA MODULE       -->
+<!--                    Define the nat-meta element and its 
+                        contents.  (By default, the only content
+                        is the JATS custom-meta-group element,
+                        but a distinct module is provided to make
+                        it easy to change this.                    -->
+
+<!ENTITY % ISOSTS-nat-meta.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS Metadata for National Bodies v1.0 20120423//EN"
+"ISOSTS-nat-metadata.ent"                                            >
+
+
+<!--                    ISOSTS TBX SETUP MODULE                    -->
+<!--                    Sets up all parameter entites (etc.) 
+                        needed by the TBX module.                  -->
+
+<!ENTITY % ISOSTS-tbx-setup.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS TBX Terminology Setup Module v1.0 20120423//EN"
+"ISOSTS-tbx-setup.ent"                                               >
+
+
+<!--                    ISOSTS TBX MODULE                          -->
+<!--                    Define the TBX (TermBase eXchange)  
+                        vocabulary, based on ISO 30042:2008(E)
+                        Annex A, but modified to make all elements
+                        be namespace-qualified.                    -->
+
+<!ENTITY % ISOSTS-tbx-namespace.ent
+                        PUBLIC
+"-//ISO//DTD ISOSTS TBX Terminology Module v1.0 20120423//EN"
+"ISOSTS-tbx-namespace.ent"                                           >
+
+
+<!-- =================== End ISOSTS Module of Modules ============ -->

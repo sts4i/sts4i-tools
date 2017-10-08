@@ -1,0 +1,765 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS ISO Metadata Module                        -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      July 2013                                         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS ISO-specific Metadata v1.1 20130701//EN"
+     Delivered as file "ISOSTS-iso-metadata.ent"                   
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-iso-metadata.ent
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    This module defines ISO-specific metadata,        -->
+<!--             specifically (1) the iso-meta element and its     -->
+<!--             contents, and (2) parameter entities for          -->
+<!--             customization of content models and attribute     -->
+<!--             lists.                                            -->
+<!--                                                               --> 
+<!-- CONTAINS:   1) Definition of iso-meta                         -->
+<!--             2) Definitions of parameter entities to allow     -->
+<!--                   easy modification and customization of      -->
+<!--                   content models and attribute lists.         -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © 2011, 2012 ISO, All rights reserved             -->
+<!--                                                               -->
+<!--             module to redefine the many Parameter Entities.   -->
+<!--             Do not modify the suite directly or redistribute  -->
+<!--             modified versions of the suite.                   -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             May 2011                                          -->
+<!--                                                               -->
+<!-- CREATED BY: C. M. Sperberg-McQueen                            -->
+<!--             B. Tommie Usdin                                   -->
+<!--             (Mulberry Technologies, Inc.)                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                            (HA) v1.1 (2013-07-01)
+
+ 20. Update version number and public identifiers to 1.1
+
+     =============================================================
+     Version 1.0                           (MSM) v1.0 (2012-04-23)
+
+ 19. Updated version number for issue of version 1.0.
+
+     =============================================================
+     Version 0.7                       (MSM/BTU) v0.7 (2012-02-13)
+
+ 18. Made <permissions> optional repeatable in <iso-meta>.
+
+
+ 17. Update version number.
+
+     =============================================================
+     Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+
+ 16. Make 'page-count' optional.
+ 
+ 15. Add 'permissions' to iso-meta.
+
+     =============================================================
+     Version 0.5                       (TRG) v0.5 (2011-10-06)
+
+ 14. Changed @type attribute on <std-ref> (via %std-ref-atts;) 
+     to optional attribute (so no redundant info when <std-ref> 
+     used within <std>). 
+
+ 13. Changed content model (%iso-meta-model;) for <iso-meta> to 
+     make <pub-date> an optional element (draft standards have no 
+     <pub-date>).
+
+     =============================================================
+     Version 0.5                       (MSM/BTU) v0.5 (2011-09-23)
+
+ 12. Allow std-ref to have child elements; add 'short' to its
+     possible value for its 'type' attribute.
+
+ 11. In doc-ident, make urn optional.
+
+ 10. In iso-meta, drop number-of-tech-pages and replace with 
+     page-count.  Add meta-date and std-xref.
+   
+     =============================================================
+     Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+
+  9. Make part- and supplement-specific information optional.
+     Make ics indexing information optional.
+   
+  8. Restructure standardReference / std-ident somewhat as suggested
+     by Holger Apel, move std-ref, comm-ref, and secretariat out of 
+     it.  Add doc-ref, pub-date, release-date, and release-version
+     elements.  Suppress stage and stageDate. Also rename some 
+     elements:  
+
+        docLanguage        becomes content-language
+        standardReference  becomes std-ident
+        reference          becomes std-ref
+        committee          becomes comm-ref
+
+  6. Change naming convention from camel case to 
+     lowercase-plus-hyphen (isProof becomes is-proof, etc.)
+
+  5. Change name from ISDTS to ISOSTS, update version number
+
+     =============================================================
+     Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+
+  4. Factor out the metadata elements into modules, for
+     design consistency with JATS.
+
+  3. Suppress the XX-elements parameter entities for elements
+     whose descriptions make clear that they should never 
+     have child elements (project ID, stage code, etc.)
+
+  2. Reformat to follow house style.
+
+     =============================================================
+     Version 0.1                       (MSM/BTU) v0.1 (2011-05-12)
+
+  1. First rough draft, based on JATS 0.4.
+                                                                   -->
+
+
+<!-- ============================================================= -->
+<!--                    ISO METADATA ELEMENT                       -->
+<!-- ============================================================= -->
+
+
+<!--                    ISO METADATA CONTENT MODEL                 -->
+<!--                    The <iso-meta> element contains one or
+                        more titles (typically en and fr), a
+                        document-identity section, the standard
+                        identity section, standard reference forms
+                        for the standard and for this particular
+                        document, publication date, administrative
+                        information (e.g.  committee and
+                        secretariat information), ICS
+                        classifications, an is-proof flag, and
+                        optionally more custom metadata.           -->
+
+<!ENTITY % iso-meta-model 
+                       "(title-wrap+, doc-ident, std-ident,
+                         content-language+, std-ref+, doc-ref, 
+                         pub-date?, release-date, meta-date*,
+                         comm-ref, secretariat+, ics*, page-count?,
+                         is-proof?, std-xref*, permissions*,
+                         custom-meta-group*)"                        >
+
+
+<!--                    ISO METADATA ATTRIBUTES                    -->
+<!ENTITY % iso-meta-atts 
+            "id         ID                                #IMPLIED"  >
+
+
+<!--                    ISO METADATA                               -->
+<!--                    <iso-meta> contains ISO-specific metadata  -->
+<!--                    for this standard.                         -->
+<!ELEMENT  iso-meta     %iso-meta-model;                             >
+<!ATTLIST  iso-meta     
+             %iso-meta-atts;                                         >
+
+
+<!--                    TITLE WRAPPER MODEL                        -->
+<!ENTITY % title-wrap-model 
+                       "(intro?, main, compl?, full)"                >
+
+
+<!--                    TITLE WRAPPER ATTRIBUTES                   -->
+<!ENTITY % title-wrap-atts 
+            "id         ID                                 #IMPLIED
+             xml:lang   NMTOKEN                            #IMPLIED" >
+
+
+<!--                    TITLE WRAPPER                              -->
+<!--                    <title-wrap> contains the title of the 
+                        document, both in parts and in full.       -->
+<!ELEMENT  title-wrap   %title-wrap-model;                           >
+<!ATTLIST  title-wrap   
+             %title-wrap-atts;                                       >
+
+
+<!--                    TITLE-PART ELEMENTS                        -->
+<!--                    The %title-part-elements; parameter entity 
+                        lists the elements legal in any part of 
+                        a title.                                   -->
+<!ENTITY % title-part-elements 
+                       "%simple-phrase; | %break.class; |
+                        %citation.class;"                            >
+
+
+<!--                    INTRODUCTORY TITLE PART MODEL              -->
+<!ENTITY % intro-model "(#PCDATA %title-part-elements;)*"            >
+
+
+<!--                    INTRODUCTORY TITLE PART                    -->
+<!--                    <intro> is the optional first part of a
+                        title, indicating the broad context of the 
+                        standard.                                  -->
+<!ELEMENT  intro        %intro-model;                                >
+
+
+<!--                    MAIN TITLE PART MODEL                      -->
+<!ENTITY % main-model  "(#PCDATA %title-part-elements;)*"            >
+
+
+<!--                    MAIN TITLE PART                            -->
+<!--                    <main> is the required main part of the 
+                        standard's title.                          -->
+<!ELEMENT  main         %main-model;                                 >
+
+
+<!--                    COMPLEMENTARY TITLE PART MODEL             -->
+<!ENTITY % compl-model "(#PCDATA %title-part-elements;)*"            >
+
+
+<!--                    COMPLEMENTARY TITLE PART                   -->
+<!--                    <compl> is the optional final part of a 
+                        standard's title.  For parts of a 
+                        multi-part standard, <compl> is the title 
+                        of the part (without the label 'Part n')   -->
+<!ELEMENT  compl        %compl-model;                                >
+
+
+<!--                    FULL TITLE MODEL                           -->
+<!ENTITY % full-model  "(#PCDATA %title-part-elements;)*"            >
+
+
+<!--                    FULL TITLE                                 -->
+<!--                    <full> contains the full title of the 
+                        standard.  Normally, its value should be 
+                        the values of intro, main, and compl, in 
+                        order, separated by a space, an em-dash, 
+                        and a space; in that case, this element 
+                        is redundant; it is provided anyway, in 
+                        case of special cases.                     -->
+<!ELEMENT  full         %full-model;                                 >
+
+
+<!--                    DOCUMENT IDENTIFICATION SECTION MODEL      -->
+<!ENTITY % doc-ident-model 
+                       "(sdo, proj-id, language, release-version, 
+                         urn?)"                                      >
+
+
+<!--                    DOCUMENT IDENTIFICATION SECTION            -->
+<!--                    <doc-ident> contains information which 
+                        uniquely identifies this document for ISO 
+                        purposes.
+                        The sub-elements are closely related to
+                        the fields of ISO URNs as documented in 
+                        RFC 5141 (from which some of the text 
+                        describing them is borrowed).              -->
+<!ELEMENT  doc-ident    %doc-ident-model;                            >
+
+
+<!--                    SDO MODEL                                  -->
+<!ENTITY % sdo-model   "(#PCDATA)*"                                  >
+
+
+<!--                    STANDARDS DEVELOPMENT ORGANIZATION         -->
+<!--                    <sdo> identifies the standards-development 
+                        organization from which this standard 
+                        emanates.  Expected values are:
+                          iso (International Organization for 
+                              Standardization)
+                          iec (International Electro-Technical
+                              Commission)
+                          iso-iec (ISO/IEC joint work)
+                          iso-cie (ISO/CIE joint work)
+                          iso-astm (ISO/ASTM joint work)
+                          iso-ieee (ISO/IEEE joint work)           -->
+<!ELEMENT  sdo          %sdo-model;                                  >
+
+
+<!--                    PROJECT IDENTIFIER MODEL                   -->
+<!--                    <proj-id> gives the ISO project number for
+                        this document.  It is required, but it is
+                        not expected that authors will always 
+                        provide it, so software consuming document
+                        using this vocabulary should be prepared for
+                        the empty string as a value.               -->
+<!ENTITY % proj-id-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    PROJECT IDENTIFIER                         -->
+<!--                    <proj-id> gives the project identifier
+                        for the (ISO) project within which this 
+                        document was developed.                    -->
+<!ELEMENT  proj-id      %proj-id-model;                              >
+
+
+<!--                    LANGUAGE MODEL                             -->
+<!ENTITY % language-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    LANGUAGE                                   -->
+<!--                    <language> gives the official language(s)
+                        used in this document.  Legal values for
+                        monolingual documents are currently: en,
+                        fr, ru, es, ar
+                        
+                        For bilingual documents, use 'en,fr', 
+                        'en,ru', 'fr,ru'
+                        
+                        For trilingual documents, use 'en,fr,ru'.
+                        
+                        Only one <language> element will appear in 
+                        any document. Cf. content-language, below. -->
+<!ELEMENT  language     %language-model;                             >
+
+
+<!--                    RELEASE-VERSION MODEL                      -->
+<!ENTITY % release-version-model
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    RELEASE-VERSION                            -->
+<!--                    <release-version> identifies the version 
+                        of the document represented by the current
+                        XML document, in terms of the standard
+                        maturity stages.
+                        
+                        Expected values are:
+
+                        CD committee draft
+                        DIS draft International Standard
+                        FDIS final draft International Standard
+                        IS International Standard
+
+                                                                   -->
+<!ELEMENT  release-version
+                        %release-version-model;                      >
+
+
+<!--                    UNIFORM RESOURCE NAME MODEL                -->
+<!ENTITY % urn-model   "(#PCDATA)*"                                  >
+
+
+<!--                    UNIFORM RESOURCE NAME                      -->
+<!--                    <urn> gives a Uniform Resource Name (URN) 
+                        for this document, as specified by RFC 
+                        5141.                                      -->
+<!ELEMENT  urn          %urn-model;                                  >
+
+
+<!--                    CONTENT LANGUAGE MODEL                     -->
+<!ENTITY % content-language-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    CONTENT LANGUAGE                           -->
+<!--                    <content-language> identifies the official 
+                        language(s) used in this document.
+
+                        There is one occurrence of the
+                        <content-language> element for each
+                        language.  (So for monolingual documents,
+                        <content-language> and <language> will
+                        have the same value, while for bilingual
+                        or trilingual documents, the single
+                        <language> element will have a value
+                        containing commas, while there will be two
+                        or three <content-language> elements.      -->
+
+<!ELEMENT  content-language  
+                        %content-language-model;                     >
+
+
+<!--                    STANDARD IDENTIFICATION MODEL              -->
+<!ENTITY % std-ident-model 
+                       "(originator, doc-type, doc-number, 
+                         part-number?, edition, version, 
+                         suppl-type?, suppl-number?, 
+                         suppl-version?)"                            >
+
+
+<!--                    STD-IDENT (STANDARD IDENTIFICATION BLOCK)  -->
+<!--                    The <std-ident> element gives the basic
+                        information from which the standard
+                        reference to this document is constructed:
+                        full standard reference for the document;
+                        the child elements identify the various
+                        pieces of the reference and may give other
+                        information. The full form of the
+                        reference is given by the std-ref and
+                        doc-ref elements, which are siblings (not
+                        children) of std-ident.
+
+                        When things are simple, the reference
+                        could be constructed by putting the pieces
+                        together in the prescribed way, but it's
+                        sometimes simpler to do it by hand than to
+                        try to make the software understand all
+                        the rules.                                 -->
+
+<!ELEMENT  std-ident 
+                        %std-ident-model;                            >
+
+
+<!--                    ICS MODEL                                  -->
+<!ENTITY % ics-model   "(#PCDATA)*"                                  >
+
+
+<!--                    ICS                                        -->
+<!--                    <ics> identifies the subject matter of the
+                        standard using codes from the 
+                        International Classification for
+                        Standards.  When there is more than one
+                        ICS code, it appears more than once.       -->
+                        
+<!ELEMENT  ics          %ics-model;                                  >
+
+
+<!--                    IS-PROOF MODEL                             -->
+<!ENTITY % is-proof-model 
+                       "EMPTY"                                       >
+
+
+<!--                    IS-PROOF                                   -->
+<!--                    The <is-proof> element is always empty. If 
+                        it appears, it signals that the draft 
+                        document is being processed as proof.  No 
+                        ballot is required and so a special 
+                        coverpage must be produced.                -->
+<!ELEMENT  is-proof     %is-proof-model;                             >
+
+
+<!--                    ORIGINATOR MODEL                           -->
+<!ENTITY % originator-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    ORIGINATOR                                 -->
+<!--                    The <originator> element indicates the
+                        standards development organization from
+                        which the document emanates.  E.g. iso, 
+                        iec, iso-iec, iso-cie, iso-astm, iso-ieee  -->
+<!ELEMENT  originator   %originator-model;                           >
+
+
+<!--                    DOCUMENT TYPE MODEL                        -->
+<!ENTITY % doc-type-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    DOCUMENT TYPE                              -->
+<!--                    The <doc-type> element indicates what kind 
+                        of document this document is.
+                        
+                        Current values are:
+                          guide 
+                          is (international standard)
+                          isp (international standardized profile)
+                          iwa (international workshop agreement)
+                          pas (publicly available specification)
+                          r (recommendation [obsolete]) 
+                          tr (technical report)  
+                          ts (technical specification)  
+                          tta (technology trends assessment)
+                          
+                        The following value is for a class of
+                        documents no longer being produced, so it
+                        will not normally appear (but is listed 
+                        here for completeness and in case this tag
+                        set is ever used for older documents):
+                          data                                     -->
+<!ELEMENT  doc-type     %doc-type-model;                             >
+
+
+<!--                    DOCUMENT NUMBER MODEL                      -->
+<!ENTITY % doc-number-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    DOCUMENT NUMBER                            -->
+<!--                    <doc-number> gives the document-number part 
+                        of the document's reference.  Its value is 
+                        a sequence of digits.                      -->
+<!ELEMENT  doc-number   %doc-number-model;                           >
+
+
+<!--                    DOCUMENT PART NUMBER MODEL                 -->
+<!ENTITY % part-number-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    DOCUMENT PART NUMBER                       -->
+<!--                    <part-number> gives the part number of the 
+                        document, for individual parts of
+                        multipart documents.  Its value is one or 
+                        more alphanumeric characters or hyphens.
+                        
+                        In a document reference, the part number
+                        is normally preceded by a hyphen (as in 
+                        "ISO 8859-1", part 1 of ISO 8859).  But no
+                        leading hyphen is needed here, and none
+                        should be used.                            -->
+<!ELEMENT  part-number  %part-number-model;                          >
+
+
+<!--                    EDITION                                    -->
+<!--                    <edition> indicates which edition of the 
+                        standard is represented (or constituted)
+                        by the current document.  Its value is a
+                        sequence of decimal digits.
+                        
+                        The <edition> element may also occur in
+                        the main body of the document (in 
+                        bibliographic citations) and is defined in 
+                        the appropriate module (references).       -->
+<!--ELEM   edition      Defined in %references.ent;"               -->
+
+
+<!--                    VERSION MODEL                              -->
+<!ENTITY % version-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    VERSION                                    -->
+<!--                    <version> gives the version number for 
+                        this document.
+                        
+                        The value is expected to be a simple 
+                        version number (1, 2, ...).
+                
+                        RFC 5141 describes a more complicated form
+                        of version number, consisting of a
+                        concatenation of a base version number (as
+                        in the simple case) and a series of
+                        strings indicating supplements included,
+                        e.g. 1-amd1.v1-cor3 for version 1 as
+                        amended by version 1 of Amendment 1 and
+                        the latest version 1 of Technical
+                        Corrigendum 3.  But it is not expected
+                        that this more complicated form will ever
+                        be needed or encountered in documents
+                        encoded using this vocabulary.             -->
+                        
+<!ELEMENT  version      %version-model;                              >
+
+
+<!--                    SUPPLEMENT TYPE MODEL                      -->
+<!ENTITY % suppl-type-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    SUPPLEMENT TYPE                            -->
+<!--                    <suppl-type> identifies what kind of
+                        alteration or addition is represented by
+                        this document.  Applicable to in  
+                        supplements only; in other documents, it 
+                        should be empty.
+                        
+                        Values currently used:
+                          amd (Amendment)
+                          cor (Technical Corrigendum) 
+                          add (Addendum).
+                          
+                        Some published addenda are still valid,
+                        but they are no longer being published so
+                        'add' will probably never be encountered.  -->
+<!ELEMENT  suppl-type   %suppl-type-model;                           >
+
+
+<!--                    SUPPLEMENT NUMBER MODEL                    -->
+<!ENTITY % suppl-number-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    SUPPLEMENT NUMBER                          -->
+<!--                    <suppl-number> gives the number of the 
+                        supplement.  Its value is a sequence of 
+                        decimal digits.  For non-supplements, it 
+                        should be present (it's required by the 
+                        DTD) and empty.  If the element is empty 
+                        for a document which IS a supplement, the
+                        value defaults to 1.                       -->
+<!ELEMENT  suppl-number %suppl-number-model;                         >
+
+
+<!--                    SUPPLEMENT VERSION MODEL                   -->
+<!ENTITY % suppl-version-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    SUPPLEMENT VERSION                         -->
+<!--                    <suppl-version> gives the version number of 
+                        the supplement.  Its value, when present, 
+                        is a sequence of decimal digits.  For  
+                        non-supplements it should be empty.  For a  
+                        supplement, the default value is 1.        -->
+<!ELEMENT  suppl-version 
+                        %suppl-version-model;                        >
+
+
+<!--                    std-ref MODEL                              -->
+<!ENTITY % std-ref-model 
+                       "(#PCDATA %std-ref-elements;)*"               >
+
+<!--                    STANDARD-REFERENCE ATTRIBUTES              -->
+<!ENTITY % std-ref-atts 
+            "type       (dated | undated | short)          #IMPLIED" >
+
+
+<!--                    STD-REF                                    -->
+<!--                    <std-ref> gives the full reference of the
+                        document. Normally this is redundant and 
+                        could be constructed from other  
+                        information present.  But it's convenient 
+                        to have it all together.
+
+                        There are two forms of reference:  dated
+                        and undated; they are distinguished using 
+                        the 'type' attribute.                      -->
+<!ELEMENT  std-ref      %std-ref-model;                              >
+<!ATTLIST  std-ref      %std-ref-atts;                               >
+
+
+<!--                    DOC-REF MODEL                              -->
+<!ENTITY % doc-ref-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    DOC-REF                                    -->
+<!--                    <doc-ref> gives the full reference form of 
+                        this particular document, as one form of
+                        the standard.                              -->
+<!ELEMENT  doc-ref      %doc-ref-model;                              >
+
+<!--                    PUB DATE MODEL                             -->
+<!ENTITY % pub-date-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    PUB DATE                                   -->
+<!--                    <pub-date> gives the date this standard was
+                        published (for published standards, this
+                        means the date the project reached stage
+                        60.60 and the IS was first published.  For
+                        the first publication, this will be the
+                        same as release-date; for later
+                        publications (corrections, new editions,
+                        versions in other languages), the pub-date
+                        will be earlier than the release-date (and
+                        will be the same across all versions of a
+                        given standard).                           -->
+
+<!--ELEM   pub-date     Defined in %articlemeta.ent;               -->
+
+<!--                    RELEASE DATE MODEL                         -->
+<!ENTITY % release-date-model 
+                       "(#PCDATA)*"                                  >
+
+<!--                    RELEASE DATE                               -->
+<!--                    <release-date> gives the date this
+                        particular document was published.  For
+                        the first publication of an IS, this will
+                        be the same as pub-date, but for later
+                        editions, versions in other official
+                        languages, etc., the pub-date remains the
+                        same but the release-date is the date of
+                        the corrected / translated version.        -->
+
+<!ELEMENT  release-date %release-date-model;                         >
+
+<!--                    OTHER METADATA DATE MODEL                  -->
+<!ENTITY % meta-date-model 
+                       "(#PCDATA)*"                                  >
+
+<!--                    OTHER METADATA DATE ATTRIBUTES             -->
+<!ENTITY % meta-date-atts 
+            "type       CDATA                             #REQUIRED"  >
+
+<!--                    OTHER METADATA DATE                        -->
+<!--                    <meta-date> gives the date of some event
+                        relevant for this document was published; 
+                        the kind of event is given by the 'type'
+                        attribute.  The values of 'type' are
+                        not formally constrained; possible values 
+                        might include 'ratification', 'withdrawal',
+                        etc.  Publication and release dates should
+                        be tagged as pub-date and release-date,
+                        not meta-date.                             -->
+
+<!ELEMENT  meta-date    %meta-date-model;                            >
+<!ATTLIST  meta-date    
+             %meta-date-atts;                                        >
+
+
+
+<!--                    COMM-REF MODEL                             -->
+<!ENTITY % comm-ref-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    COMM-REF                                   -->
+<!--                    <comm-ref> identifies the ISO group 
+                        responsible for the document.  E.g. ISO/TC   
+                        27/SC 4.                                   -->
+<!ELEMENT  comm-ref     %comm-ref-model;                             >
+
+
+<!--                    SECRETARIAT MODEL                          -->
+<!ENTITY % secretariat-model 
+                       "(#PCDATA)*"                                  >
+
+
+<!--                    SECRETARIAT                                -->
+<!--                    <secretariat> identifies the organization 
+                        which serves as secretariat for the ISO 
+                        group responsible for the document.        
+                        Sometimes repeats.                         -->
+<!ELEMENT  secretariat  %secretariat-model;                          >
+
+
+<!--                    STD-XREF                                   -->
+<!--                    <std-xref> identifies links to other 
+                        standards.                                 -->
+<!ENTITY % std-xref-model 
+                       "(std-ident?, std-ref, release-date?)"        >
+
+<!--                    STD-XREF ATTRIBUTES                        -->
+<!--         type       what is the relation between the two
+                        standards?  Sample values:  "amends",
+                        "revises"                                  -->
+<!ENTITY % std-xref-atts 
+            "type       CDATA                             #IMPLIED"  >
+
+<!ELEMENT std-xref      %std-xref-model;                             >
+
+<!ATTLIST std-xref      
+            %std-xref-atts;                                          >
+
+<!--ELEM  permissions,custom-meta-group
+                        Defined in %common0.ent;"                  -->
+
+<!-- ================== End ISOSTS ISO Metadata Module =========== -->

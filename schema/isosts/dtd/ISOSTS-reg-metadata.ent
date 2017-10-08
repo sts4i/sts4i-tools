@@ -1,0 +1,156 @@
+<!-- ============================================================= -->
+<!--  MODULE:    ISOSTS Regional Body Metadata Module              -->
+<!--  VERSION:   ISOSTS 1.1                                        -->
+<!--  DATE:      April 2013                                        -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//ISO//DTD ISOSTS Metadata for Regional Bodies v1.1 20130701//EN"
+     Delivered as file "ISOSTS-reg-metadata.ent"
+     Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-reg-metadata.ent
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal          -->
+<!--             Publishing DTD of the Journal Archiving and       -->
+<!--             Interchange DTD Suite (JATS)                      -->
+<!--                                                               -->
+<!-- PURPOSE:    This module defines elements for SDO-specific     -->
+<!--             metadata, for SDOs which are classified as        -->
+<!--             regional.                                         -->
+<!--             In the current version of this DTD, the content   -->
+<!--             of reg-meta is based on the iso-meta model        -->
+<!--             extended the CEN requirement for a                --> 
+<!--             release-version-id.                               -->
+<!--                                                               --> 
+<!-- CONTAINS:   1) Definition of reg-meta                         -->
+<!--             2) Definitions of parameter entities to allow     -->
+<!--                   easy modification and customization of      -->
+<!--                   content models and attribute lists.         -->
+<!--                                                               -->
+<!-- TAG SET SPONSOR                                               -->
+<!--             International Organization for Standardization    -->
+<!--                (ISO)                                          -->
+<!--                                                               -->
+<!-- CREATED FOR:                                                  -->
+<!--             ISO and similar bodies                            -->
+<!--                                                               -->
+<!--             © ISO, All rights reserved                        -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             April 2013                                        -->
+<!--                                                               -->
+<!-- CREATED BY: H. Apel (ISO)                                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+
+     =============================================================
+     Version 1.1                           (HA) v1.1 (2013-07-01)
+
+ 1.  First version based on cen-meta model
+                                                                   -->
+
+<!-- ============================================================= -->
+<!--                    REG METADATA ELEMENT                       -->
+<!-- ============================================================= -->
+
+
+<!--                    REG METADATA CONTENT MODEL                 -->
+<!--                    The reg-meta content model is (by design)
+                        very similar to that of iso-meta.          -->
+                        
+<!ENTITY % reg-meta-model 
+                       "(title-wrap+, doc-ident, std-ident,
+                         content-language+, std-ref+, doc-ref, 
+                         pub-date?, release-date, meta-date*,
+                         wi-number, comm-ref, secretariat+, ics*, 
+                         page-count?, std-xref*, release-version-id?,
+                         permissions*, custom-meta-group*)"          >
+
+
+<!--                    REG METADATA ATTRIBUTES                    -->
+<!ENTITY % reg-meta-atts 
+             "id         ID                                #IMPLIED
+              originator CDATA                             #REQUIRED">
+
+
+<!--                    REG METADATA                               -->
+<!ELEMENT  reg-meta     %reg-meta-model;                             >
+<!ATTLIST  reg-meta     
+             %reg-meta-atts;                                         >
+
+<!--                    WORK-ITEM NUMBER CONTENT MODEL             -->
+<!--                    The wi-number element holds the work-item
+                        number for this document.                  -->
+<!ENTITY % wi-number-model 
+                       "(#PCDATA)*"                                  >
+
+<!--                    WORK-ITEM NUMBER ATTRIBUTES                -->
+<!ENTITY % wi-number-atts 
+             "id        ID                                #IMPLIED"  >
+
+
+<!--                    WORK-ITEM NUMBER                           -->
+<!ELEMENT  wi-number    %wi-number-model;                            >
+<!ATTLIST  wi-number     
+             %wi-number-atts;                                        >
+
+<!--                    RELEASE-VERSION ID CONTENT MODEL           -->
+<!--                    The release version id holds ...
+                                                                   -->
+<!ENTITY % release-version-id-model 
+                       "(#PCDATA)*"                                  >
+
+<!--                    RELEASE-VERSION ID ATTRIBUTES              -->
+<!ENTITY % release-version-id-atts 
+             "id        ID                                #IMPLIED"  >
+
+
+<!--                    RELEASE VERSION ID                         -->
+<!ELEMENT  release-version-id    %release-version-id-model;          >
+<!ATTLIST  release-version-id     
+             %release-version-id-atts;                               >
+
+
+<!--ELEM  title-wrap    Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  doc-ident     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-ident     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  content-language
+                        Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-ref       Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  doc-ref       Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  pub-date      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  release-date  Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  meta-date     Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  comm-ref      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  secretariat   Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  ics           Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  std-xref      Defined in %ISOSTS-iso-meta.ent;"          -->
+
+<!--ELEM  permissions,custom-meta-group
+                        Defined in %common0.ent;"                  -->
+
+<!-- ================== End ISOSTS REG Metadata Module =========== -->
