@@ -1,0 +1,88 @@
+div.sts-section .sts-title {
+  margin-left:0;
+  font-weight: bold;
+}
+
+div.sts-titlepage {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    max-width: 800px;
+    clear: both;
+}
+
+div.sts-titlepage p, div.sts-titlepage div.sts-p {
+  margin-left: 0;
+}
+
+
+div.sts-titlepage h1 {
+    font-size: 16pt;
+    padding-top: 20px;
+}
+
+
+
+td.def-term {
+  vertical-align: top;
+}
+
+.sts-change {
+  color:blue;
+}
+
+.sts-fn .sts-label {
+  vertical-align: super;
+  font-size:smaller;
+}
+
+.sts-warning {
+  font-weight: bold;
+}
+
+.sts-legend {
+  text-align:left;
+  margin-left: 30%;
+}
+
+.sts-label {
+  margin-right: 1em;
+}
+
+.sts-rowsep {
+  border-bottom: 1px solid;
+}
+
+.sts-colsep {
+  border-right: 1px solid;
+}
+
+.sts-norowsep {
+  border-bottom: white none 0px;
+}
+
+.sts-nocolsep {
+  border-right: white none 0px;
+}
+
+.sts-legend-title, div.sts-p.legend-title {
+  font-weight: bold;
+}
+
+div.sts-legend table.def-list {
+  margin-left: 0;
+}
+
+div.sts-legend table.def-list td p, div.sts-legend table.def-list td div.sts-p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+div.sts-legend table.def-list td.def-term p {
+  margin-right: 1em;
+}
+
+div.list > ul {
+  padding-left:1.5em;
+}

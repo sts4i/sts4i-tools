@@ -37,6 +37,10 @@
 
     saxon -xsl:nisosts2html/nisosts2html.xsl -s:/path/to/your/nisosts.xml
     
+    The purpose of the 'postprocess' passes is to treat links to other sections differently when only individual sections
+    are processed, to optionally include the referenced CSS files and several other tasks, mostly related to snippet-wise
+    output (include footnotes at the end of the snippet that they belong to, rather than at the end of the document, etc.). 
+    
     Please see below for parameters. You might need to turn an absolute path into an URI on Windows. Example:
     -s:file:/C:/path/to/your/nisosts.xml
     
@@ -143,8 +147,6 @@
                     </xsl:when>
                   </xsl:choose>
                 </xsl:with-param>
-                  <!--    select="/standard/front/*[contains(name(), '-meta')][last()]
-                              | /adoption/adoption-front/std-meta" tunnel="yes"-->
                 <xsl:with-param name="section-id" as="xs:string?" select="$section-id" tunnel="yes"/>
                 <xsl:with-param name="doc-lang" as="xs:string" tunnel="yes" select="$doc-lang"/>
               </xsl:call-template>
@@ -170,9 +172,9 @@
             <xsl:apply-templates select="$sec" mode="id">
               <xsl:with-param name="doc-lang" as="xs:string" tunnel="yes" select="$doc-lang"/>
             </xsl:apply-templates>
-            <p class="{string-join((sts-title, concat('sts-tr--h', $level)), ' ')}">
+            <xsl:element name="h{$level}">
               <xsl:if test="normalize-space($sec/label)">
-                <span class="sts-tr--label">
+                <span class="sts-label">
                   <xsl:apply-templates select="$sec/label/node()" mode="#default"/>
                 </span>
               </xsl:if>
@@ -180,7 +182,7 @@
                 <xsl:with-param name="doc-lang" as="xs:string" tunnel="yes" select="$doc-lang"/>
                 <xsl:with-param name="section-id" as="xs:string?" select="$section-id" tunnel="yes"/>
               </xsl:apply-templates>
-            </p>
+            </xsl:element>
             <xsl:variable name="snippet-secs" as="element(*)*"
               select="key('element-by-id', $section-id)/(node() except (label | title | processing-instruction() | comment())
                                                          | following-sibling::*[empty(. intersect $snippet-roots)]
@@ -284,10 +286,6 @@
         <xsl:apply-templates select="$meta-elements" mode="#default">
           <xsl:with-param name="is-main-meta" tunnel="yes" select="true()"/>
         </xsl:apply-templates>
-        <!--<xsl:apply-templates select="//adoption-front | //front" mode="#current"/>-->
-        <!--<xsl:call-template name="frontmatter-for-niso-sts">
-          <xsl:with-param name="meta-elements" as="element(*)" select="$meta-elements" tunnel="yes"/>
-        </xsl:call-template>-->
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -581,7 +579,7 @@
   </xsl:template>
   
   <xsl:template match="@content-type" mode="table-copy">
-    <xsl:attribute name="class" select="for $v in tokenize(., '\s+') return concat('sts-tr--', $v)" separator=" "/>
+    <xsl:attribute name="class" select="for $v in tokenize(., '\s+') return concat('sts-', $v)" separator=" "/>
   </xsl:template>
   
   <xsl:template match="table/@rules" mode="table-copy">
@@ -631,7 +629,7 @@
   </xsl:template>
   
   <xsl:template match="def-list[@list-type = 'callout']/title" mode="#default">
-    <p class="sts-tr--legend-title">
+    <p class="sts-legend-title">
       <xsl:apply-templates mode="#current"/>
     </p>
   </xsl:template>
@@ -678,7 +676,7 @@
   </xsl:template>
   
   <xsl:template match="label" mode="label-fn">
-    <span class="sts-tr--label">
+    <span class="sts-label">
       <xsl:apply-templates/>  
     </span>
   </xsl:template>
@@ -694,7 +692,7 @@
   </xsl:template>
   
   <xsl:template match="named-content/@content-type[. = 'label']" mode="#default" priority="2">
-    <xsl:attribute name="class" select="'sts-tr--label'"/>
+    <xsl:attribute name="class" select="'sts-label'"/>
   </xsl:template>
   
   <xsl:function name="isosts:contains-token" as="xs:boolean">
@@ -947,7 +945,7 @@
   <xsl:template name="legend">
     <xsl:variable name="legendary-stuff" as="element(*)*" select="caption/*[not(self::title)]"/>
     <xsl:if test="exists($legendary-stuff)">
-      <div class="sts-tr--legend">
+      <div class="sts-legend">
         <xsl:apply-templates select="$legendary-stuff" mode="#current"/>
       </div>
     </xsl:if>
