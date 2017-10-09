@@ -86,3 +86,8 @@ div.sts-legend table.def-list td.def-term p {
 div.list > ul {
   padding-left:1.5em;
 }
+
+td.def-def {
+  padding-left: 1em;
+  text-align: left;
+}
