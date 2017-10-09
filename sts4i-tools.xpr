@@ -36,6 +36,10 @@
                         <Boolean>true</Boolean>
                     </entry>
                     <entry>
+                        <String>key.schematron.option.pane</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
                         <String>key.xml.catalog.option.pane</String>
                         <Boolean>true</Boolean>
                     </entry>
