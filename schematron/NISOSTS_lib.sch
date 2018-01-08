@@ -52,7 +52,7 @@
     <xsl:sequence select="key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)"/>
   </xsl:function>
 
-  <pattern id="figure_keys">
+  <pattern id="NISOSTS_lib_figure_keys">
     <rule id="key_location" context="fig/*[not(name() = ('label', 'caption'))]">
       <report test="title = isosts:i18n-strings('key-heading', .)" role="warning">
         Put the figure key (a.k.a. legend) in the caption, either as a table-wrap[@content-type='key'] or as a def-list[@list-type='key']. 
