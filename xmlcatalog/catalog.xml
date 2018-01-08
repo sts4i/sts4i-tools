@@ -4,4 +4,5 @@
   <public publicId="-//ISO//DTD ISO Standards Tag Set (ISOSTS) DTD v1.1 20130701//EN" uri="../schema/isosts/dtd/ISOSTS.dtd"/>
   <nextCatalog catalog="../schema/nisosts/catalog.xml"/>
   <rewriteURI uriStartString="http://www.iso.org/schema/isosts/resources/" rewritePrefix="../isosts2html/"/>
+  <rewriteURI uriStartString="http://niso-sts.org/sts4i-tools/" rewritePrefix="../"/>
 </catalog>
