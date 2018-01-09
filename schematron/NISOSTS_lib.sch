@@ -57,8 +57,9 @@
     <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
     <p>There is no optimal or canonical way to place keys to figures yet.</p>
     <rule id="key_location" context="fig/*[not(name() = ('label', 'caption'))]">
-      <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning">
-        Shouldn’t this p be a title?
+      <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning" id="NISOSTS_lib_figure_keys_r1" 
+        diagnostics="NISOSTS_lib_figure_keys_r1_de">
+        Shouldn’t this p be a title (of a key)?
       </report>
       <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning">
         Put the figure key (a.k.a. legend) in the caption, either as a table-wrap[@content-type='key'] or as a def-list[@list-type='key']. 
@@ -66,4 +67,9 @@
       </report>
     </rule>
   </pattern>
+  
+  <diagnostics>
+    <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
+  </diagnostics>
+  
 </schema>
