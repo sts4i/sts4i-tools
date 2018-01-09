@@ -29,6 +29,7 @@
           <isosts:documentation>The heading of figure keys</isosts:documentation>
           <isosts:translation xml:lang="en">Key</isosts:translation>
           <isosts:translation xml:lang="de">Legende</isosts:translation>
+          <isosts:translation xml:lang="fr">Légende</isosts:translation>
         </isosts:string>
       </isosts:i18n>    
     </xsl:document>
@@ -53,15 +54,16 @@
   </xsl:function>
 
   <pattern id="NISOSTS_lib_figure_keys">
+    <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
+    <p>There is no optimal or canonical way to place keys to figures yet.</p>
     <rule id="key_location" context="fig/*[not(name() = ('label', 'caption'))]">
-      <report test="title = isosts:i18n-strings('key-heading', .)" role="warning">
+      <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning">
+        Shouldn’t this p be a title?
+      </report>
+      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning">
         Put the figure key (a.k.a. legend) in the caption, either as a table-wrap[@content-type='key'] or as a def-list[@list-type='key']. 
         For validity reasons, it must be wrapped in a paragraph.
       </report>
-      <report test="p = isosts:i18n-strings('key-heading', .)" role="warning">
-        Shouldn’t this p be a title?
-      </report>
     </rule>
   </pattern>
-  
 </schema>
