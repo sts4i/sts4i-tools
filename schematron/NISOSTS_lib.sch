@@ -68,6 +68,16 @@
     </rule>
   </pattern>
   
+  <pattern id="NISOSTS_lib_subfigs_in_array">
+    <title></title>
+    <rule id="NISOSTS_lib_rule01" context="fig[array|table-wrap]">
+      <report test="exists((array|table-wrap)//tr//graphic)">
+        For subfigure arrangements use an outside tabular construction with the subfigures in the cells.
+      </report>
+    </rule>
+    
+  </pattern>
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
   </diagnostics>
