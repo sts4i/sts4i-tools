@@ -71,13 +71,31 @@
   <pattern id="NISOSTS_lib_subfigs_in_array">
     <title></title>
     <rule id="NISOSTS_lib_rule01" context="fig[array|table-wrap]">
-      <report test="exists((array|table-wrap)//tr//graphic)">
+      <report test="exists((array|table-wrap)//tr//graphic)" role="warning">
         For subfigure arrangements use an outside tabular construction with the subfigures in the cells.
       </report>
     </rule>
-    
   </pattern>
   
+  
+  <pattern id="NISOSTS_lib_ref-list_title_pattern">
+    <rule id="ref-list_title" context="ref-list[parent::app|parent::sec]">
+      <report role="warning" test="title">ref-list with title found. Please move title to the surrounding sec or app.</report>
+    </rule>
+    <rule id="NISOSTS_lib_ref-list_title_back" context="ref-list[parent::back]">
+      <report role="warning" test="title">ref-list with title found. 
+        Please move the ref-list to an app and attach the title to the app.</report>
+    </rule>
+  </pattern>
+  
+
+  <pattern id="NISOSTS_lib_std-meta_pattern">
+    <rule id="std-meta" context="standard/front/iso-meta | standard/front/reg-meta | standard/front/nat-meta"> <!-- oder muss es front[parent::standard] lauten? -->
+      <report role="warning" test="true()"><name/> is deprecated in NISO STS. Please replace it with std-meta.</report>
+    </rule>
+  </pattern>
+
+
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
   </diagnostics>
