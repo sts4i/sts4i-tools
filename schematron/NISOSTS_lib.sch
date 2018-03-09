@@ -31,6 +31,12 @@
           <isosts:translation xml:lang="de">Legende</isosts:translation>
           <isosts:translation xml:lang="fr">Légende</isosts:translation>
         </isosts:string>
+        <isosts:string name="annex-name">
+          <isosts:documentation>The heading of figure keys</isosts:documentation>
+          <isosts:translation xml:lang="en">Annex</isosts:translation>
+          <isosts:translation xml:lang="de">Anhang</isosts:translation>
+          <isosts:translation xml:lang="fr">Annexe</isosts:translation>
+        </isosts:string>
       </isosts:i18n>    
     </xsl:document>
   </xsl:variable>
@@ -94,10 +100,22 @@
       <report role="warning" test="true()"><name/> is deprecated in NISO STS. Please replace it with std-meta.</report>
     </rule>
   </pattern>
+  
+  <pattern id="NISOSTS_iso-like-ids">
+    <rule id="NISOSTS_iso-like-ids_1" context="sec[label[text()]] | app[label[text()]]">
+      <let name="annex-name" value="isosts:i18n-strings('annex-name', label)"/>
+      <let name="strip-adornments" value="replace(label, concat('^(', $annex-name, ')[\s\p{Zs}]+'), '')"/>
+      <assert test="@id = string-join(('sec', $strip-adornments), '_')" role="warning" id="NISOSTS_iso-like-ids_1_1" 
+        diagnostics="NISOSTS_iso-like-ids_1_1_de">A section or appendix id must be 'sec_' + label (modulo 
+      text such as 'Annex ').</assert>
+    </rule>
+  </pattern>
 
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
+    <diagnostic id="NISOSTS_iso-like-ids_1_1_de" xml:lang="de">Eine sec- oder app-ID muss wie folgt gebildet werden:
+    'sec_' + der Inhalt von label (ohne Text wie z.B. 'Anhang ').</diagnostic>
   </diagnostics>
   
 </schema>
