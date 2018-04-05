@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2" xml:lang="en"
   xmlns:isosts="http://www.iso.org/ns/isosts" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:sc="http://transpect.io/schematron-config"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
   
   <!-- Copyright 2017 ISO and contributors
