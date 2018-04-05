@@ -111,6 +111,21 @@
     </rule>
   </pattern>
 
+  <pattern id="NISOSTS_fn-in-fn-group">
+    <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
+      <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
+        fn-groups. </assert>
+
+    </rule>
+  </pattern>
+
+  <pattern sc:alternative-id="NISOSTS_fn-in-fn-group">
+    <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
+      <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
+        fn-groups. </assert>
+
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
