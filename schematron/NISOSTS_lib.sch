@@ -129,6 +129,12 @@
   
   <pattern  id="NISOSTS_fn-in-fn-group-optional" sc:alternative-for="NISOSTS_fn-in-fn-group"> 
   </pattern>
+  
+  <pattern id="fn-in-metadata">
+    <rule  id="fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta">
+      <report test="true()">Fn are not allowed in metadata elements.</report>
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
