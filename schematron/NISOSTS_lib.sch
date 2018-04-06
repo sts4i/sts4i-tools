@@ -97,7 +97,7 @@
   
 
   <pattern id="NISOSTS_lib_std-meta_pattern">
-    <rule id="std-meta" context="standard/front/iso-meta | standard/front/reg-meta | standard/front/nat-meta"> <!-- oder muss es front[parent::standard] lauten? -->
+    <rule id="std-meta" context="standard/front/iso-meta | standard/front/reg-meta | standard/front/nat-meta">
       <report role="warning" test="true()"><name/> is deprecated in NISO STS. Please replace it with std-meta.</report>
     </rule>
   </pattern>
@@ -116,14 +116,12 @@
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups. </assert>
-
     </rule>
   </pattern>
 
   <pattern  id="NISOSTS_fn-not-in-fn-group" sc:alternative-for="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-not-in-fn-group_1" context="fn">
       <report test="exists(ancestor::fn-group)" id="NISOSTS_fn-not-in-fn-group_2" role="warning">Fn in fn-group found. Fn must not be grouped in fn-groups. </report>
-
     </rule>
   </pattern>
   

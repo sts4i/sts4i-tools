@@ -4,6 +4,10 @@
   exclude-result-prefixes="xs"
   version="2.0">
   
+  <!-- If you need to use different version of the DTD, you need to create new XSLT variants that import
+    the XSLTs in question and replace the xsl:output instruction. In addition, you might need to provide
+  the DTDs and appropriate catalog resolution (see xmlcatalog/catalog.xml). -->
+  
   <xsl:output
     doctype-public="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v0.2 20170331//EN"
     doctype-system="NISO-STS-interchange-1-mathml3.dtd"/>
