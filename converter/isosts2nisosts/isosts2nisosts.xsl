@@ -26,7 +26,7 @@
    See the License for the specific language governing permissions and
    limitations under the License. -->
 
-  <!-- Doctype set to actual version of NISO STS with MathML 2.0 -->
+  <!-- Doctype set to actual version of NISO STS Interchange Tag Set with MathML 2.0 -->
   <xsl:output
     method="xml"
     version="1.0"
