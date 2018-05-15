@@ -98,13 +98,7 @@
     <!-- Corrected version -->
     <!-- No room in ISOSTS to fit it properly, this is solved in NISO STS -->
     <xsl:if test="//iso-meta/std-ident/version[text()='2']">
-      <xsl:choose>
-        <xsl:when test="//std-ident/suppl-type[text()='amd']"/>
-        <xsl:when test="contains(//std-ref[@type='dated'],'.2')"/>
-        <xsl:otherwise>
-          <release-date date-type="editorial-change" std-type="IS" iso-8601-date="{//release-date}"><xsl:value-of select="//release-date"/></release-date>
-        </xsl:otherwise>
-      </xsl:choose>
+      <release-date date-type="editorial-change" std-type="IS" iso-8601-date="{//release-date}"><xsl:value-of select="//release-date"/></release-date>
     </xsl:if>
   </xsl:template>
 
