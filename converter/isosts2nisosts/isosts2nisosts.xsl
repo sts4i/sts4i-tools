@@ -6,10 +6,7 @@
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:tbx="urn:iso:std:iso:30042:ed-1"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:mle="http://www.iso.org/ns/mle"
-  xmlns:isosts="http://www.iso.org/ns/isosts"
-  xmlns:loc="http://www.iso.org/ns/localization"
-  exclude-result-prefixes="xs xlink mml tbx xhtml isosts loc mle"
+  exclude-result-prefixes="xs xlink mml tbx xhtml"
   version="2.0">
 
   <!-- Copyright 2018 ISO and contributors
