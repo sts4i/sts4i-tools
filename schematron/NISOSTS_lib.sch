@@ -129,7 +129,7 @@
   </pattern>
   
   <pattern id="fn-in-metadata">
-    <rule  id="fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta">
+    <rule  id="fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta]">
       <report test="true()">Fn are not allowed in metadata elements.</report>
     </rule>
   </pattern>
