@@ -125,8 +125,6 @@
     </rule>
   </pattern>
   
-  <pattern  id="NISOSTS_fn-in-fn-group-optional" sc:alternative-for="NISOSTS_fn-in-fn-group"> 
-  </pattern>
   
   <pattern id="fn-in-metadata">
     <rule  id="fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta">

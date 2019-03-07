@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:sc="http://transpect.io/schematron-config"
+  exclude-result-prefixes="sc xs" version="2.0">
 
   <xsl:import href="identity.xsl"/>
 
@@ -28,6 +30,18 @@
 
 
   <!-- Mode: group-fn -->
+  
+  <xsl:param name="fn-group-granularity" select="'back'"/>
+  
+  <sc:documentation param="fn-group-granularity">
+    <sc:choice type="xs:string">
+      <sc:param-value val="back">create a single <code>fn-group</code> only in back (table footnotes are still per topmost
+        table-wrap). Create a <code>back</code> element if necessary.</sc:param-value>
+      <sc:param-value val="top-app-or-sec">create fn-groups per in an <code>app</code> or in top-level
+        <code>body/sec</code></sc:param-value>
+      <sc:param-value val="innermost-sec">create <code>fn-group</code>s at the lowermost sectioning element</sc:param-value>
+    </sc:choice> 
+  </sc:documentation>
   
   <xsl:variable name="footnote-roots" as="xs:string+"
     select="('body','app','back','fig','notes','sec','supplementary-material','term-sec','table-wrap')"/>
@@ -122,7 +136,7 @@
         </xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-        <xref ref-type="fn">
+        <xref ref-type="{if (ancestor::table-wrap) then 'table-fn' else 'fn'}">
           <xsl:apply-templates select="@* except @id" mode="#current"/>
           <xsl:attribute name="rid" select="$generated-id"/>
           <sup>
