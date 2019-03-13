@@ -4,7 +4,7 @@
   xmlns:sc="http://transpect.io/schematron-config"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
   
-  <!-- Copyright 2017 ISO and contributors
+  <!-- Copyright 2017–2019 ISO and contributors
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
     implementation -->
   
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
+  
+  <let name="inline-element-names" value="('bold', 'italic', 'named-content', 'styled-content')"/>
   
   <xsl:variable name="i18n-strings" as="document-node(element(isosts:i18n))">
     <xsl:document>
@@ -131,11 +133,21 @@
       <report test="true()">Fn are not allowed in metadata elements.</report>
     </rule>
   </pattern>
+  
+  <pattern id="NISOSTS_table-cell-paras">
+    <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
+      <report test="text()[normalize-space()] | *[name() = $inline-element-names]" 
+        role="error" diagnostics="NISOSTS_table-cell-paras_mixed-p_de">Table cells must
+      not contain both paragraphs and inline elements or text.</report>
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
     <diagnostic id="NISOSTS_iso-like-ids_1_1_de" xml:lang="de">Eine sec- oder app-ID muss wie folgt gebildet werden:
     'sec_' + der Inhalt von label (ohne Text wie z.B. 'Anhang ').</diagnostic>
+    <diagnostic id="NISOSTS_table-cell-paras_mixed-p_de" xml:lang="de">Tabellenzellen dürfen nicht sowohl Absätze als 
+      auch Inline-Elemente oder Text enthalten.</diagnostic>
   </diagnostics>
   
 </schema>

@@ -22,4 +22,7 @@
    </xsl:copy>
   </xsl:template>
   
+  <xsl:variable name="inline-element-names" as="xs:string+" 
+    select="('bold', 'italic', 'named-content', 'styled-content')"/>
+  
 </xsl:stylesheet>
