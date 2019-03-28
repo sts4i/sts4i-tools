@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS Non-TBX Terms and Definitions Section -->
+<!-- VERSION:   ANSI/NISO Z39.102-2017, STS: -->
+<!-- Standards Tag Suite (Version 1.0) -->
+<!-- DATE:      October 2017 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS Non-TBX Terms and Definitions Sections v1.0 20171031//EN"
+       Delivered as file "NISO-STS-terms-n-def1.ent"
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- This new module extends the capabilities of -->
+<!-- ISO STS V1.1 DTD. -->
+<!---->
+<!-- PURPOSE:    Defines a simpler model for Terms and Definitions -->
+<!-- for organizations where the TBX model is overly -->
+<!-- complex. Allows terms and definitions to be -->
+<!-- captured semantically, but in ordinary reading -->
+<!-- sequence, or not captured semantically at all. -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by ASME -->
+<!-- (American Society of Mechanical Engineers) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- This module is licensed under a Creative Commons -->
+<!-- Attribution 4.0 International License (CC BY). -->
+<!-- An organization may share or adapt its own DTD -->
+<!-- from the suite for any purpose, including -->
+<!-- commercial, without explicit permission. -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+-->
+<!-- ============================================================= -->
+<!-- TERM AND DEFINITION SECTION DESIGN NOTE -->
+<!-- ============================================================= -->
+<!--
+  There are two very different ways the term and 
+  definitions in a standard may be tagged. Both occur 
+  optionally inside a Term Section (<term-sec>):
+  
+    - <tbx:termEntry> models a term using the 
+      TBX-namespaced vocabulary and ontology for terms.
+  
+   - <term-display> uses natural language to describe terms,
+      which may OR MAY NOT incorporate semantic term 
+      elements such as definition and related term. Semantic 
+      tagging is encouraged, but nothing is enforced.
+  
+  This module expands the ISO STS <term-display> model,
+  instead of adding a 3rd model for terms and definitions, 
+  so there will be TBX and <term-display> as alternative 
+  ways to tag terms and definitions.
+  
+  The goals of the revised <term-display> model are to: 
+  
+   - Enable tagging term and definition content in the 
+     sequence in which they appear in the display document
+  
+   - Enable, but not require, tagging of the principle semantic 
+     content of term and definition sections, and specifically 
+     to enable tagging that will allow extraction of terms and 
+     definitions for use in glossaries containing terms and 
+     definitions from multiple Standards
+  
+   - Make tagging existing terms and definitions easy
+  
+   - Be backward compatible with ISO STS V1.1.
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE VALUES -->
+<!-- ============================================================= -->
+<!-- NORMATIVE PARTS OF SPEECH -->
+<!--
+  Note: the part of speech list is restricted,
+  but this is for the attribute value only. The
+  content of <part-of-speech> may list any
+  value in any language.
+-->
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="norm-parts-of-speech">
+    <choice>
+      <value>noun</value>
+      <value>verb</value>
+      <value>adj</value>
+      <value>adv</value>
+    </choice>
+  </define>
+  <!-- TYPES OF RELATED TERMS -->
+  <define name="related-term-types">
+    <choice>
+      <value>acronym</value>
+      <value>contrast-with</value>
+      <value>deprecatedTerm</value>
+      <value>see</value>
+      <value>see-also</value>
+      <value>synonym</value>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+  <!-- ============================================================= -->
+  <!-- TERMINOLOGY SECTION ATTRIBUTES -->
+  <!-- Attribute list for term-sec element -->
+  <!-- (same as for sec element) -->
+  <define name="term-sec-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="sec-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- TERM-DISPLAY ATTRIBUTES -->
+  <define name="term-display-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <define name="part-of-speech-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="norm-part-of-speech">
+        <choice>
+          <ref name="norm-parts-of-speech"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <define name="pronunciation-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <define name="related-term-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <attribute name="related-term-type">
+      <choice>
+        <ref name="related-term-types"/>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <define name="term-source-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ATTRIBUTES FOR NUM ELEMENT -->
+  <!-- Attributes are dsep and gsep. -->
+  <define name="num-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="dsep"/>
+    </optional>
+    <optional>
+      <attribute name="gsep"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- TERM SECTION ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- TERMS AND DEFINITIONS SECTION MODEL -->
+  <!--
+    Content model for terminology sections in 
+    a standards document (<term-sec>.
+  -->
+  <!--
+    Remarks: Although <term-display> is allowed
+    to repeat inside a <term-sec>, best practice
+    is to place one <term-display> per <term-sec>,
+    either alone or as a complement to a
+    <tbx:termEntry>. (Nested terms and 
+    definitions should be inside their own 
+    <term-sec>s, nested inside a parent 
+    <term-sec>.)
+  -->
+  <define name="term-sec-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="inside-term-sec.mix"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="term-sec.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec-back.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- TERMS AND DEFINITIONS CONTAINER/SECTION -->
+  <!--
+    Content model for terminology sections in 
+    a standards document, which may include
+    TBX-based terminology sections or just
+    natural language <term-display> elements that
+    describe term and definition material.
+      Remarks: A <term-sec> is not, in spite of
+    its English name, a "Section" (like <sec>)
+    within a standard. A <term-sec> is a 
+    container element that holds TBX entries 
+    and/or <term-display> terms. A <term-sec> 
+    should always be used inside a Section
+    that has a @sec-type such as 'term'
+       (<sec sec-type-"terms">)
+    Best Practice: Although <term-sec> is allowed
+    directly inside the many elements such as 
+    <body> and <back>, these are historical 
+    remnants, and <term-sec> should be restricted
+    to terminology sections in the front matter or
+    body. That is, a <term-sec> should only be used 
+    inside <sec> elements that contain terms and
+    definitions or recursively inside another
+    <term-sec>.
+  -->
+  <define name="term-sec">
+    <element name="term-sec">
+      <ref name="term-sec-attlist"/>
+      <ref name="term-sec-model"/>
+    </element>
+  </define>
+  <define name="term-sec-attlist" combine="interleave">
+    <ref name="term-sec-atts"/>
+  </define>
+  <!-- TERM-DISPLAY MODEL -->
+  <!-- Content model for term-display element -->
+  <define name="term-display-model">
+    <zeroOrMore>
+      <ref name="title"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="inside-term-display.mix"/>
+    </zeroOrMore>
+  </define>
+  <!-- TERM-DISPLAY -->
+  <!--
+    Non-TBX tagging of  term and definition
+    entries, which may be appearance-oriented
+    or tagged semantically with terms, 
+    definitions, parts of speech, etc.
+    Remarks: Intended to be tagged in the order
+    of the appearance, as a supplement or
+    alternative to <tbx:termEntry>
+  -->
+  <define name="term-display">
+    <element name="term-display">
+      <ref name="term-display-attlist"/>
+      <ref name="term-display-model"/>
+    </element>
+  </define>
+  <define name="term-display-attlist" combine="interleave">
+    <ref name="term-display-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- LOWER LEVEL TERM AND DEFINITION ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- PART OF SPEECH -->
+  <!--
+    One part-of-speech associated with a
+    term.
+    Remarks: The @norm-part-of-speech attribute
+    can be used to name a normative or base part
+    of speech, such as 'verb' when the actual 
+    part of speech has more detail, such as 
+    transitive verb or to provide an English
+    gloss for a part-of-speech in another
+    language.
+  -->
+  <define name="part-of-speech">
+    <element name="part-of-speech">
+      <ref name="part-of-speech-attlist"/>
+      <zeroOrMore>
+        <text/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="part-of-speech-attlist" combine="interleave">
+    <ref name="part-of-speech-atts"/>
+  </define>
+  <!-- PRONUNCIATION ELEMENTS -->
+  <!--
+    Elements that may be mixed with #PCDATA 
+    (data characters) inside a <pronunciation> 
+    element.
+  -->
+  <define name="pronunciation-elements">
+    <choice>
+      <ref name="bold-italic.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- PRONUNCIATION -->
+  <!-- One way to pronounce the term. -->
+  <define name="pronunciation">
+    <element name="pronunciation">
+      <ref name="pronunciation-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="pronunciation-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="pronunciation-attlist" combine="interleave">
+    <ref name="pronunciation-atts"/>
+  </define>
+  <!-- RELATED TERM ELEMENTS -->
+  <!--
+    Elements that may be mixed with #PCDATA 
+    (data characters) inside a <related-term> 
+    element. 
+    Note: This model taken directly from JATS.
+  -->
+  <define name="related-term-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+      <ref name="fn.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="math.class"/>
+      <ref name="styled-content.class"/>
+    </choice>
+  </define>
+  <!-- RELATED TERM ELEMENTS -->
+  <!--
+    A term that is related to the <term> in the
+    term and definition, by being a synonym,
+    see or see also, etc.
+    Remarks: The related-term-type attribute
+    describes the relationship.
+  -->
+  <define name="related-term">
+    <element name="related-term">
+      <ref name="related-term-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="related-term-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="related-term-attlist" combine="interleave">
+    <ref name="related-term-atts"/>
+  </define>
+  <!-- TERM SOURCE ELEMENTS -->
+  <!--
+    Elements that may be mixed with #PCDATA 
+    (data characters) inside a <term-source> 
+    element.
+  -->
+  <define name="term-source-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- TERM SOURCE ELEMENTS -->
+  <!-- Origination of the term -->
+  <define name="term-source">
+    <element name="term-source">
+      <ref name="term-source-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="term-source-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="term-source-attlist" combine="interleave">
+    <ref name="term-source-atts"/>
+  </define>
+  <!-- NUMBER -->
+  <!--
+    A number in running text.  The 'num' 
+    element is provided in order to allow
+    the decimal and group separators used to
+    be identified.
+  -->
+  <define name="num">
+    <element name="num">
+      <ref name="num-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="num-attlist" combine="interleave">
+    <ref name="num-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NISO STS Terms and Definitions ======= -->

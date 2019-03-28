@@ -1,0 +1,143 @@
+<!-- ============================================================= -->
+<!--  MODULE:    NISO STS Adopting Standard Wrapper                -->
+<!--  VERSION:   ANSI/NISO Z39.102-2017, STS:                      --> 
+<!--             Standards Tag Suite (Version 1.0)                 --> 
+<!--  DATE:      October 2017                                      -->
+<!--                                                               -->
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//NISO//DTD NISO STS Adopting Standard Wrapper v1.0 20171031//EN"
+     Delivered as file "NISO-STS-adoption1.ent"
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS)               -->
+<!--                                                               -->
+<!--             This new module extends the capabilities of       -->
+<!--             ISO STS V1.1 DTD.                                 -->
+<!--                                                               -->
+<!-- PURPOSE:    Defines elements for the second document element  -->
+<!--             possible in this tag set: <adoption>.             -->
+<!--             An <adoption> holds an adopting standard that     -->
+<!--             contains its own material as well as a <standard>.-->
+<!--                                                               -->
+<!-- CREATED BY: Mulberry Technologies, Inc.                       -->
+<!--             Deborah Aleyne Lapeyre and B. Tommie Usdin        -->
+<!--             in support of NISO and the NISO STS Committee.    -->
+<!--             Mulberry Technologies work was supported by the   -->
+<!--             American Society of Mechanical Engineers (ASME)   -->
+<!--             and ASTM International.                           -->
+<!--                                                               -->
+<!-- COPYRIGHT AND LICENSE:                                        -->
+<!--             Copyright © 2017 by ISO, the American Society of  -->
+<!--             Mechanical Engineers (ASME), ASTM International,  -->
+<!--             Mulberry Technologies, Inc., and the National     -->
+<!--             Information Standards Organization. This work is  -->
+<!--             made available under a Creative Commons           -->
+<!--             Attribution-ShareAlike 4.0 International License:-->
+<!--                http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--                                                               -->
+<!--             This work is licensed under a Creative Commons    -->
+<!--             Attribution-ShareAlike 4.0 International License. -->
+<!--             To view a copy of this license, visit             -->
+<!--                http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--             or send a letter to Creative Commons, PO Box 1866,-->
+<!--             Mountain View, CA 94042, USA                      -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             October 2016                                      -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+   
+     =============================================================
+                                                                   -->
+
+<!-- ============================================================= -->
+<!--                    ADOPTION WRAPPER ATTRIBUTES                -->
+<!-- ============================================================= -->
+
+
+<!--                    ADOPTION WRAPPER ATTRIBUTES                -->
+<!--                    Attributes used with the <adoption> element,
+                        which is a document-level element that
+                        contains its own material and one or more
+                        <standard> elements.                       -->
+<!ENTITY % adoption-atts
+            "%jats-common-atts;  
+             %dtd-version;
+             specific-use
+                        CDATA                             #IMPLIED
+             xml:lang   NMTOKEN                           'en'
+             %XLINK.xmlns.attrib;
+             %MATHML.xmlns.attrib;
+             %xinclude.xmlns.attrib;
+             %ali.xmlns.attrib;
+             %Schema.xmlns.attrib;
+             %TBX.xmlns.attrib;"                                     >
+
+
+<!-- ============================================================= -->
+<!--                    ADOPTION WRAPPER                           -->
+<!-- ============================================================= -->
+
+
+<!--                    ADOPTION WRAPPER MODEL                     -->
+<!--                    Content model for the <adoption-wrap> a
+                        document-level element.                    -->
+<!ENTITY % adoption-model
+                        "(adoption-front, 
+                          ( (back, (%adoption-content.class;)+ ) |
+                            ( (%adoption-content.class;)+, back?) )
+                         )"                                          >
+
+
+<!--                    ADOPTION WRAPPER                           -->
+<!--                    The <adoption> element is a wrapper for a
+                        document-level element that contain its
+                        own metadata, front matter, and back matter,
+                        as well as one or more <standard> elements.
+                                                                   -->
+<!ELEMENT  adoption     %adoption-model;                             >
+<!ATTLIST  adoption 
+             %adoption-atts;                                         >
+
+
+<!-- ============================================================= -->
+<!--                    ADOPTION WRAPPER FRONT MATTER ELEMENTS     -->
+<!-- ============================================================= -->
+
+
+<!--                    ADOPTION WRAPPER FRONT MATTER MODEL        -->
+<!--                    Model for the <front> matter (the header
+                        metadata and some narrative front sections   
+                        of an adopting standard (<adoption>)).     -->
+<!ENTITY % adoption-front-model 
+                        "(std-doc-meta?, std-meta?,
+                          (%front-back.class; | %sec-only.class; |
+                          %xinclude.class;)*  )"                     >
+
+
+<!--                    FRONT MATTER                               -->
+<!--                    The metadata and some beginning narrative 
+                        material concerning an adopting standard
+                        (<adoption>), such as the adopting body, 
+                        the document title for the adopted standard,
+                        and release date, etc.  Everything needed to
+                        produce the front matter and back cover
+                        goes here.
+                        Note: A <standard> will have its own <front>.
+                                                                   -->
+<!ELEMENT  adoption-front
+                        %adoption-front-model;                       >
+
+
+
+<!-- ================== End NISO STS Adopting Standard Wrappers == -->
