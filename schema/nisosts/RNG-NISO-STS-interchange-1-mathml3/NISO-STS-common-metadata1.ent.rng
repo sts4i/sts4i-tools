@@ -1,0 +1,2255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS Common Metadata Module -->
+<!-- VERSION:   ANSI/NISO Z39.102-2017, STS: -->
+<!-- Standards Tag Suite (Version 1.0) -->
+<!-- DATE:      October 2017 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS Common Metadata Module v1.0 20171031//EN"
+       Delivered as file "NISO-STS-common-metadata.ent"
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- This new module extends the capabilities of -->
+<!-- ISO STS V1.1 DTD. -->
+<!---->
+<!-- PURPOSE:    This module defines ISO-specific metadata, -->
+<!-- specifically (1) the iso-meta element and its -->
+<!-- contents, and (2) parameter entities for -->
+<!-- customization of content models and attribute -->
+<!-- lists. -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by the -->
+<!-- American Society of Mechanical Engineers (ASME) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- COPYRIGHT AND LICENSE: -->
+<!-- Copyright © 2017 by ISO, the American Society of -->
+<!-- Mechanical Engineers (ASME), ASTM International, -->
+<!-- Mulberry Technologies, Inc., and the National -->
+<!-- Information Standards Organization. This work is -->
+<!-- made available under a Creative Commons -->
+<!--              Attribution-ShareAlike 4.0 International License: -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!---->
+<!-- This work is licensed under a Creative Commons -->
+<!-- Attribution-ShareAlike 4.0 International License. -->
+<!-- To view a copy of this license, visit -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--              or send a letter to Creative Commons, PO Box 1866, -->
+<!-- Mountain View, CA 94042, USA -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+  
+-->
+<!-- ============================================================= -->
+<!-- STANDARDS DOCUMENT METADATA MODEL -->
+<!-- ============================================================= -->
+<!-- STANDARDS DOCUMENT METADATA MODEL -->
+<!-- Content model for the element <std-doc-meta> -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="std-doc-meta-model">
+    <zeroOrMore>
+      <ref name="title-wrap"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="release-version"/>
+    </optional>
+    <optional>
+      <ref name="std-ident"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="std-org"/>
+        <ref name="std-org-group"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="content-language"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="std-ref"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="doc-ref"/>
+    </optional>
+    <optional>
+      <ref name="pub-date"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="release-date"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="meta-date"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="comm-ref"/>
+        <ref name="comm-ref-group"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="accrediting-organization"/>
+    </optional>
+    <optional>
+      <ref name="authorization"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="secretariat"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="ics"/>
+        <ref name="ics-wrap"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="subj-group"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="page-count"/>
+    </optional>
+    <optional>
+      <ref name="counts"/>
+    </optional>
+    <optional>
+      <ref name="is-proof"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-xref"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="permissions"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="self-uri"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="meta-note"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="custom-meta-group"/>
+    </zeroOrMore>
+  </define>
+  <!-- STANDARDS DOCUMENT METADATA ATTRIBUTES -->
+  <define name="std-doc-meta-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="std-org-type"/>
+    </optional>
+    <optional>
+      <attribute name="std-meta-type"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STANDARDS DOCUMENT METADATA -->
+  <!--
+    The <std-doc-meta> is a container element for
+    metadata that pertains to the entire standards
+    document. By design, the elements inside 
+    <std-doc-meta> are the elements that all the
+    standards organizations share. The elements 
+    may be overridden by any of the four 
+    organization-specific metadata elements:
+    <std-meta>, <iso-meta>, <nat-meta>, and 
+    <reg-meta>.
+  -->
+  <define name="std-doc-meta">
+    <element name="std-doc-meta">
+      <ref name="std-doc-meta-attlist"/>
+      <ref name="std-doc-meta-model"/>
+    </element>
+  </define>
+  <define name="std-doc-meta-attlist" combine="interleave">
+    <ref name="std-doc-meta-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STANDARDS DOCUMENT TITLES -->
+  <!-- ============================================================= -->
+  <!-- TITLE WRAPPER ATTRIBUTES -->
+  <define name="title-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- INTRODUCTORY TITLE PART ATTRIBUTES -->
+  <define name="intro-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="level"/>
+    </optional>
+  </define>
+  <!-- INTRODUCTORY TITLE WRAPPER ATTRIBUTES -->
+  <define name="intro-title-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="level"/>
+    </optional>
+  </define>
+  <!-- MAIN TITLE PART ATTRIBUTES -->
+  <define name="main-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- MAIN TITLE WRAPPER ATTRIBUTES -->
+  <define name="main-title-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- COMPLEMENTARY TITLE PART ATTRIBUTES -->
+  <define name="compl-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="level"/>
+    </optional>
+  </define>
+  <!-- COMPLEMENTARY TITLE WRAPPER ATTRIBUTES -->
+  <define name="compl-title-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="level"/>
+    </optional>
+  </define>
+  <!-- FULL TITLE ATTRIBUTES -->
+  <define name="full-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TITLE WRAPPER MODEL -->
+  <define name="title-wrap-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="intro"/>
+        <ref name="intro-title-wrap"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <choice>
+        <ref name="main"/>
+        <ref name="main-title-wrap"/>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="compl"/>
+        <ref name="compl-title-wrap"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="full"/>
+    </optional>
+  </define>
+  <!-- TITLE WRAPPER -->
+  <!--
+                        Container element to hold all the titles of a 
+    standards document, both titles which are
+    divided into parts as well as a full title.
+  -->
+  <define name="title-wrap">
+    <element name="title-wrap">
+      <ref name="title-wrap-attlist"/>
+      <ref name="title-wrap-model"/>
+    </element>
+  </define>
+  <define name="title-wrap-attlist" combine="interleave">
+    <ref name="title-wrap-atts"/>
+  </define>
+  <!-- INTRODUCTORY TITLE PART MODEL -->
+  <define name="intro-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- INTRODUCTORY TITLE PART -->
+  <!--
+    <intro> is the optional first part of a
+    title, typically indicating the broad context
+    of the standard.
+  -->
+  <define name="intro">
+    <element name="intro">
+      <ref name="intro-attlist"/>
+      <ref name="intro-model"/>
+    </element>
+  </define>
+  <define name="intro-attlist" combine="interleave">
+    <ref name="intro-atts"/>
+  </define>
+  <!-- INTRODUCTORY TITLE WRAPPER MODEL -->
+  <define name="intro-title-wrap-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <ref name="intro"/>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+  </define>
+  <!-- INTRODUCTORY TITLE WRAPPER -->
+  <!--
+    Wrapper element to hold an <intro> title
+    and its component parts, when the <intro>
+    title has additional parts such as a label 
+    or subtitle.
+  -->
+  <define name="intro-title-wrap">
+    <element name="intro-title-wrap">
+      <ref name="intro-title-wrap-attlist"/>
+      <ref name="intro-title-wrap-model"/>
+    </element>
+  </define>
+  <define name="intro-title-wrap-attlist" combine="interleave">
+    <ref name="intro-title-wrap-atts"/>
+  </define>
+  <!-- MAIN TITLE PART MODEL -->
+  <define name="main-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- MAIN TITLE PART -->
+  <!--
+    Main element of the standard's title, 
+    indicating the principal subject of the 
+    document.
+  -->
+  <define name="main">
+    <element name="main">
+      <ref name="main-attlist"/>
+      <ref name="main-model"/>
+    </element>
+  </define>
+  <define name="main-attlist" combine="interleave">
+    <ref name="main-atts"/>
+  </define>
+  <!-- MAIN TITLE WRAPPER MODEL -->
+  <define name="main-title-wrap-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <ref name="main"/>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+  </define>
+  <!-- MAIN TITLE WRAPPER -->
+  <!--
+    Wrapper element to hold the <main> title
+    and its component parts, when the <main>
+    title has additional parts such as a label 
+    or subtitle.
+  -->
+  <define name="main-title-wrap">
+    <element name="main-title-wrap">
+      <ref name="main-title-wrap-attlist"/>
+      <ref name="main-title-wrap-model"/>
+    </element>
+  </define>
+  <define name="main-title-wrap-attlist" combine="interleave">
+    <ref name="main-title-wrap-atts"/>
+  </define>
+  <!-- COMPLEMENTARY TITLE PART MODEL -->
+  <define name="compl-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- COMPLEMENTARY TITLE PART -->
+  <!--
+    The optional complementary title(s), which
+    are the optional final part(s) of a 
+    standard's title. Complementary titles 
+    follow the <main> part of the title and 
+    (typically) provide details concerning which
+    particular aspect of the general topic is 
+    treated by the standards document.
+    ISO Note: For individual parts of multi-part 
+    standards documents, the complementary title
+    is the title of the Part (without the label 
+    'Part n').
+  -->
+  <define name="compl">
+    <element name="compl">
+      <ref name="compl-attlist"/>
+      <ref name="compl-model"/>
+    </element>
+  </define>
+  <define name="compl-attlist" combine="interleave">
+    <ref name="compl-atts"/>
+  </define>
+  <!-- COMPLEMENTARY TITLE WRAPPER MODEL -->
+  <define name="compl-title-wrap-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <ref name="compl"/>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+  </define>
+  <!-- COMPLEMENTARY TITLE WRAPPER -->
+  <!--
+    Wrapper element to hold a <compl> title
+    and its component parts, when the <compl>
+    title has additional parts such as a label 
+    or subtitle.
+  -->
+  <define name="compl-title-wrap">
+    <element name="compl-title-wrap">
+      <ref name="compl-title-wrap-attlist"/>
+      <ref name="compl-title-wrap-model"/>
+    </element>
+  </define>
+  <define name="compl-title-wrap-attlist" combine="interleave">
+    <ref name="compl-title-wrap-atts"/>
+  </define>
+  <!-- FULL TITLE MODEL -->
+  <define name="full-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- FULL TITLE -->
+  <!--
+    Contains the full title of the 
+    standard.  Normally, its value should be 
+    the values of intro, main, and compl, 
+    titles, in order, with each title separated 
+    from the others by a space, an em-dash, 
+    and a space, a semicolon, or similar 
+    separator.
+      Remarks:
+    When there is no additional text beyond what
+    is contained in the component titles, 
+    this element is slightly redundant. But 
+    it is best practice always to provide a 
+    full title for display convenience, searching,
+    and to handle special cases.
+  -->
+  <define name="full">
+    <element name="full">
+      <ref name="full-attlist"/>
+      <ref name="full-model"/>
+    </element>
+  </define>
+  <define name="full-attlist" combine="interleave">
+    <ref name="full-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ISO-SPECIFIC STANDARDS DOCUMENT METADATA -->
+  <!-- ============================================================= -->
+  <!--
+    ISO-SPECIFIC DOCUMENT IDENTIFICATION SECTION
+    MODEL
+  -->
+  <define name="doc-ident-model">
+    <optional>
+      <ref name="sdo"/>
+    </optional>
+    <optional>
+      <ref name="proj-id"/>
+    </optional>
+    <optional>
+      <ref name="language"/>
+    </optional>
+    <optional>
+      <ref name="release-version"/>
+    </optional>
+    <optional>
+      <ref name="urn"/>
+    </optional>
+  </define>
+  <!--
+    ISO-SPECIFIC DOCUMENT IDENTIFICATION SECTION
+    ATTRIBUTES
+  -->
+  <define name="doc-ident-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ISO-SPECIFIC DOCUMENT IDENTIFICATION SECTION -->
+  <!--
+    <doc-ident> contains information which 
+    uniquely identifies this document for ISO 
+    purposes. Non-ISO organizations are advised
+    to avoid this element. 
+    Remarks: This element (and thus the elements 
+    within) it may be used only in <iso-meta>, 
+    <reg-meta>, or <nat-meta> for 
+    backwards-compatibility purposes.
+    The sub-elements are closely related to
+    the fields of ISO URNs as documented in 
+    RFC 5141 (from which some of the text 
+    describing them is borrowed).
+  -->
+  <define name="doc-ident">
+    <element name="doc-ident">
+      <ref name="doc-ident-attlist"/>
+      <ref name="doc-ident-model"/>
+    </element>
+  </define>
+  <define name="doc-ident-attlist" combine="interleave">
+    <ref name="doc-ident-atts"/>
+  </define>
+  <!-- SDO MODEL -->
+  <define name="sdo-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- SDO ATTRIBUTES -->
+  <define name="sdo-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!--
+    ISO-specific NAME for a STANDARDS DEVELOPMENT
+    ORGANIZATION
+  -->
+  <!--
+    Remarks: This element may be used only inside
+    <doc-ident> within <iso-meta>, 
+    <reg-meta>, or <nat-meta>. The element is
+    retained for backwards-compatibility purposes.
+    The sub-elements are closely related to
+    the fields of ISO URNs as documented in 
+    RFC 5141 (from which some of the text 
+    describing them is borrowed).       
+    FOR ISO, <sdo> identifies the 
+    standards-development 
+    organization from which this standard 
+    emanates.  Expected values are:
+      iso (International Organization for 
+          Standardization)
+      iec (International Electro-Technical
+          Commission)
+      iso-iec (ISO/IEC joint work)
+      iso-cie (ISO/CIE joint work)
+      iso-astm (ISO/ASTM joint work)
+      iso-ieee (ISO/IEEE joint work)
+  -->
+  <define name="sdo">
+    <element name="sdo">
+      <ref name="sdo-attlist"/>
+      <ref name="sdo-model"/>
+    </element>
+  </define>
+  <define name="sdo-attlist" combine="interleave">
+    <ref name="sdo-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC PROJECT IDENTIFIER MODEL -->
+  <!-- Content model for the <proj-id> element. -->
+  <define name="proj-id-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- ISO-SPECIFIC PROJECT IDENTIFIER -->
+  <define name="proj-id-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC PROJECT IDENTIFIER -->
+  <!--
+    <proj-id> gives the ISO project number for
+    for the (ISO) project within which this 
+    document was developed.                                                       Remarks: This element may be used only inside
+    <doc-ident> within <iso-meta>, 
+    <reg-meta>, or <nat-meta>. The element is
+    retained for backwards-compatibility purposes.
+    Remarks: In ISO STS, a <proj-id> was 
+    required, but it was not expected that authors
+    will always provide it, so software consuming 
+    software using the ISO STS vocabulary should
+    be prepared for the empty string as a value.
+  -->
+  <define name="proj-id">
+    <element name="proj-id">
+      <ref name="proj-id-attlist"/>
+      <ref name="proj-id-model"/>
+    </element>
+  </define>
+  <define name="proj-id-attlist" combine="interleave">
+    <ref name="proj-id-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC LANGUAGE ELEMENTS -->
+  <!--
+    Elements that may be mixed, along with #PCDATA
+    inside the model of <language>
+  -->
+  <define name="language-elements">
+    <notAllowed/>
+  </define>
+  <!-- ISO-SPECIFIC LANGUAGE ATTRIBUTES -->
+  <define name="language-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- OFFICIAL ISO LANGUAGE DESIGNATION -->
+  <!--
+    <language> gives the official ISO language(s)
+    used in this document.
+    Remarks: This element may be used only inside
+    <doc-ident> within <iso-meta>, 
+    <reg-meta>, or <nat-meta>. The element is
+    retained for backwards-compatibility purposes.
+    Note: Only one <language> element was allowed
+    in an ISO document. A NISO STS document
+    would record the language in the
+    <content-language> element.           
+    Remarks: Legal values for ISO monolingual 
+    <language> element are: 
+       en, fr, ru, es, ar
+    
+    For ISO bilingual documents, use
+    comma separated values. 
+      'en,fr', 'en,ru', 'fr,ru'
+    
+    For ISO trilingual documents, use
+    comma separated values. 
+      'en,fr,ru'.
+  -->
+  <define name="language">
+    <element name="language">
+      <ref name="language-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="language-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="language-attlist" combine="interleave">
+    <ref name="language-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC RELEASE-VERSION ATTRIBUTES -->
+  <define name="release-version-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC RELEASE-VERSION ELEMENTS -->
+  <!--
+    Elements that may be mixed, along with #PCDATA
+    inside the model of <release-version>
+  -->
+  <define name="release-version-elements">
+    <notAllowed/>
+  </define>
+  <!-- ISO-SPECIFIC RELEASE-VERSION -->
+  <!--
+    The ISO <release-version> identifies the  
+    version of the document represented by the 
+    current XML document, in terms of the ISO 
+    standard maturity stages.                                                     Remarks: This element may be used only
+    inside <doc-ident> within <iso-meta>, 
+    <reg-meta>, or <nat-meta>. The element is
+    retained for backwards-compatibility purposes.
+     Remarks: Expected ISO values are:
+     - CD committee draft
+     - DIS draft International Standard
+     - DIS final draft International Standard
+     - IS International Standard
+  -->
+  <define name="release-version">
+    <element name="release-version">
+      <ref name="release-version-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="release-version-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="release-version-attlist" combine="interleave">
+    <ref name="release-version-atts"/>
+  </define>
+  <!-- ISO-SPECIFIC UNIFORM RESOURCE ELEMENTS -->
+  <!--
+    Elements that may be mixed, along with #PCDATA
+    inside the model of <urn>
+  -->
+  <define name="urn-elements">
+    <notAllowed/>
+  </define>
+  <!-- ISO-SPECIFIC UNIFORM RESOURCE NAME -->
+  <!--
+    <urn> gives a, ISO Uniform Resource Name (URN) 
+    for this document, as specified by RFC 
+    5141.
+    Remarks: This element may be used only inside
+    <doc-ident> within <iso-meta>, 
+    <reg-meta>, or <nat-meta>. The element is
+    retained for backwards-compatibility purposes.
+  -->
+  <define name="urn">
+    <element name="urn">
+      <ref name="urn-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="urn-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="urn-attlist" combine="interleave">
+    <ref name="release-version-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STANDARDS ORGANIZATION METADATA -->
+  <!-- ============================================================= -->
+  <!-- STANDARDS ORGANIZATION GROUP MODEL -->
+  <!-- Content model for <std-org-group> element. -->
+  <define name="std-org-group-model">
+    <oneOrMore>
+      <ref name="std-org"/>
+    </oneOrMore>
+  </define>
+  <!-- STANDARDS DOCUMENT METADATA ATTRIBUTES -->
+  <define name="std-org-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- STANDARDS ORGANIZATION GROUP -->
+  <!--
+    Container element to hold the one or more
+    standards organizations associated with
+    producing a standard.
+  -->
+  <define name="std-org-group">
+    <element name="std-org-group">
+      <ref name="std-org-group-attlist"/>
+      <ref name="std-org-group-model"/>
+    </element>
+  </define>
+  <define name="std-org-group-attlist" combine="interleave">
+    <ref name="std-org-group-atts"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION MODEL -->
+  <!-- Content model for <std-org> element. -->
+  <define name="std-org-model">
+    <optional>
+      <ref name="std-org-name"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-org-abbrev"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="std-org-loc"/>
+    </zeroOrMore>
+  </define>
+  <!-- STANDARDS DOCUMENT METADATA ATTRIBUTES -->
+  <define name="std-org-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="std-org-type"/>
+    </optional>
+    <optional>
+      <attribute name="std-org-role"/>
+    </optional>
+    <optional>
+      <attribute name="std-org-level"/>
+    </optional>
+  </define>
+  <!-- STANDARDS ORGANIZATION -->
+  <!--
+    Description of a standards organization
+    associated with producing a standard. 
+    (This is analogous to Publisher for a journal
+    article.)
+      Remarks: The @org-role can be used to
+    record what part the standards organization
+    played in the standard, such as "lead",
+    "co-producer", etc.
+  -->
+  <define name="std-org">
+    <element name="std-org">
+      <ref name="std-org-attlist"/>
+      <ref name="std-org-model"/>
+    </element>
+  </define>
+  <define name="std-org-attlist" combine="interleave">
+    <ref name="std-org-atts"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION NAME ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <std-org-name> element.
+  -->
+  <define name="std-org-name-elements">
+    <ref name="subsup.class"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION NAME ATTRIBUTES -->
+  <define name="std-org-name-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STANDARDS ORGANIZATION NAME -->
+  <!-- Name of the standards organization. -->
+  <define name="std-org-name">
+    <element name="std-org-name">
+      <ref name="std-org-name-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-org-name-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-org-name-attlist" combine="interleave">
+    <ref name="std-org-name-atts"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION ABBREVIATION ELEMS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <std-org-abbrev> element.
+  -->
+  <define name="std-org-abbrev-elements">
+    <ref name="subsup.class"/>
+  </define>
+  <!--
+    STANDARDS ORGANIZATION ABBREVIATION 
+    ATTRIBUTES
+  -->
+  <define name="std-org-abbrev-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STANDARDS ORGANIZATION NAME -->
+  <!-- Name of the standards organization. -->
+  <define name="std-org-abbrev">
+    <element name="std-org-abbrev">
+      <ref name="std-org-abbrev-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-org-abbrev-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-org-abbrev-attlist" combine="interleave">
+    <ref name="std-org-abbrev-atts"/>
+  </define>
+  <!-- STANDARDS ORGANIZATION LOCATION ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <std-org-loc> element.
+  -->
+  <define name="std-org-loc-elements">
+    <choice>
+      <ref name="address.class"/>
+      <ref name="address-link.class"/>
+    </choice>
+  </define>
+  <!-- STANDARDS ORGANIZATION LOCATION ATTRIBUTES -->
+  <!-- STANDARDS ORGANIZATION LOCATION -->
+  <!--
+    Physical location(s) of a standards
+    organization.
+  -->
+  <define name="std-org-loc">
+    <element name="std-org-loc">
+      <ref name="std-org-loc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-org-loc-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-org-loc-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ISO-Specific DOCUMENT IDENTIFICATION ELEMS -->
+  <!-- ============================================================= -->
+  <!-- CONTENT LANGUAGE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <content-language> element.
+  -->
+  <define name="content-language-elements">
+    <notAllowed/>
+  </define>
+  <!-- CONTENT LANGUAGE ATTRIBUTES -->
+  <define name="content-language-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CONTENT LANGUAGE -->
+  <!--
+    <content-language> identifies one of the
+    official language(s) used in this document.
+    There is one occurrence of the
+    <content-language> element for each
+    language.  
+    Remarks: For monolingual documents,
+    <content-language> and <language> will
+    have the same value, while for bilingual
+    or trilingual documents, the single
+    <language> element will have a value
+    containing commas, while there will be two
+    or three <content-language> elements.
+  -->
+  <define name="content-language">
+    <element name="content-language">
+      <ref name="content-language-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="content-language-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="content-language-attlist" combine="interleave">
+    <ref name="content-language-atts"/>
+  </define>
+  <!-- STANDARD IDENTIFICATION MODEL -->
+  <!-- Content model for the element <std-ident>. -->
+  <define name="std-ident-model">
+    <optional>
+      <ref name="originator"/>
+    </optional>
+    <optional>
+      <ref name="doc-type"/>
+    </optional>
+    <optional>
+      <ref name="doc-number"/>
+    </optional>
+    <optional>
+      <ref name="part-number"/>
+    </optional>
+    <optional>
+      <ref name="edition"/>
+    </optional>
+    <optional>
+      <ref name="version"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-id-group"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="isbn"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="issn"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="issn-l"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="suppl-type"/>
+    </optional>
+    <optional>
+      <ref name="suppl-number"/>
+    </optional>
+    <optional>
+      <ref name="suppl-version"/>
+    </optional>
+    <optional>
+      <ref name="year"/>
+    </optional>
+  </define>
+  <!-- STANDARD IDENTIFICATION ATTRIBUTES -->
+  <define name="std-ident-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STD-IDENT (STANDARD IDENTIFICATION BLOCK) -->
+  <!--
+    The <std-ident> element gives the basic
+    information from which the standard
+    reference to this document is constructed:
+    full standard reference for the document;
+    the child elements identify the various
+    pieces of the reference and may give other
+    information. The full form of the
+    reference is given by the std-ref and
+    doc-ref elements, which are siblings (not
+    children) of std-ident.
+    
+    When things are simple, the reference
+    could be constructed by putting the pieces
+    together in the prescribed way, but it's
+    sometimes simpler to do it by hand than to
+    try to make the software understand all
+    the rules.
+  -->
+  <define name="std-ident">
+    <element name="std-ident">
+      <ref name="std-ident-attlist"/>
+      <ref name="std-ident-model"/>
+    </element>
+  </define>
+  <define name="std-ident-attlist" combine="interleave">
+    <ref name="std-ident-atts"/>
+  </define>
+  <!-- ICS CODE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <ics> element.
+  -->
+  <define name="ics-elements">
+    <notAllowed/>
+  </define>
+  <!-- ICS CODE ATTRIBUTES -->
+  <!-- Attribute list for the element <ics>. -->
+  <define name="ics-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+  </define>
+  <!-- ICS CODE -->
+  <!--
+    <ics> identifies the subject matter of the
+    standard using the "International 
+    Classification for Standards" numeric code.  
+    When there is more than one
+    ICS code, <ics> appears more than once.
+  -->
+  <define name="ics">
+    <element name="ics">
+      <ref name="ics-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="ics-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="ics-attlist" combine="interleave">
+    <ref name="ics-atts"/>
+  </define>
+  <!-- ICS WRAP MODEL -->
+  <!-- Content model for a <ics-wrap> element. -->
+  <define name="ics-wrap-model">
+    <oneOrMore>
+      <ref name="ics"/>
+      <zeroOrMore>
+        <ref name="ics-desc"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="ics-wrap"/>
+    </zeroOrMore>
+  </define>
+  <!-- ICS WRAP ATTRIBUTES -->
+  <!-- Attribute list for the element <ics-wrap>. -->
+  <define name="ics-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ICS WRAP -->
+  <!--
+    <ics-wrap> is a container element that holds
+    an International Classification for
+    Standards (ICS) Code <ics> and its ICS 
+    name/title/descriptor.<ics-wrap> elements
+    are recursive so that hierarchies of
+    of ICS codes can be built.
+  -->
+  <define name="ics-wrap">
+    <element name="ics-wrap">
+      <ref name="ics-wrap-attlist"/>
+      <ref name="ics-wrap-model"/>
+    </element>
+  </define>
+  <define name="ics-wrap-attlist" combine="interleave">
+    <ref name="ics-wrap-atts"/>
+  </define>
+  <!-- ICS DESCRIPTION ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <ics-desc> element.
+  -->
+  <define name="ics-desc-elements">
+    <notAllowed/>
+  </define>
+  <!-- ICS DESCRIPTION ATTRIBUTES -->
+  <!-- Attribute list for the element <ics-desc>. -->
+  <define name="ics-desc-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ICS DESCRIPTION -->
+  <!--
+    <ics-desc> identifies the subject matter of  
+    the standard using the text/name/title/
+    description of a code from the International 
+    Classification for Standards.
+  -->
+  <define name="ics-desc">
+    <element name="ics-desc">
+      <ref name="ics-desc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="ics-desc-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="ics-desc-attlist" combine="interleave">
+    <ref name="ics-desc-atts"/>
+  </define>
+  <!-- IS-PROOF MODEL -->
+  <define name="is-proof-model">
+    <empty/>
+  </define>
+  <!-- IS-PROOF ATTRIBUTES -->
+  <define name="is-proof-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- IS-PROOF -->
+  <!--
+    A flag element, whose presence signals that
+    a draft document is being processed as proof.
+    Remarks: The <is-proof> element is always 
+    empty. If it appears in a document, it signals
+    that the draft document is being processed as 
+    proof.
+    Note: For ISO processing, no ballot is 
+    required for an is-proof document, and so 
+    a special coverpage must be produced.
+  -->
+  <define name="is-proof">
+    <element name="is-proof">
+      <ref name="is-proof-attlist"/>
+      <ref name="is-proof-model"/>
+    </element>
+  </define>
+  <define name="is-proof-attlist" combine="interleave">
+    <ref name="is-proof-atts"/>
+  </define>
+  <!-- ORIGINATOR ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <originator> element.
+  -->
+  <define name="originator-elements">
+    <notAllowed/>
+  </define>
+  <!-- ORIGINATOR ATTRIBUTES -->
+  <define name="originator-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- ORIGINATOR -->
+  <!--
+    The <originator> element indicates the
+    standards development organization from
+    which the document emanates.  E.g. iso, 
+    iec, iso-iec, iso-cie, iso-astm, iso-ieee
+  -->
+  <define name="originator">
+    <element name="originator">
+      <ref name="originator-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="originator-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="originator-attlist" combine="interleave">
+    <ref name="originator-atts"/>
+  </define>
+  <!-- DOCUMENT TYPE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <doc-type> element.
+  -->
+  <define name="doc-type-elements">
+    <notAllowed/>
+  </define>
+  <!-- DOCUMENT TYPE ATTRIBUTES -->
+  <define name="doc-type-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- DOCUMENT TYPE -->
+  <!--
+    The <doc-type> element indicates what kind 
+    of document this document is.
+    
+    Current values are:
+       guide 
+       is (international standard)
+       isp (international standardized profile)
+       iwa (international workshop agreement)
+       pas (publicly available specification)
+       r (recommendation [obsolete]) 
+       tr (technical report)  
+       ts (technical specification)  
+       tta (technology trends assessment)
+    
+    The following value is for a class of
+    documents no longer being produced, so it
+    will not normally appear (but is listed 
+    here for completeness and in case this tag
+    set is ever used for older documents):
+      data
+  -->
+  <define name="doc-type">
+    <element name="doc-type">
+      <ref name="doc-type-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="doc-type-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="doc-type-attlist" combine="interleave">
+    <ref name="doc-type-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- NUMBERS, VERSIONS, AND IDENTIFIERS -->
+  <!-- ============================================================= -->
+  <!-- DOCUMENT NUMBER ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <doc-number> element.
+  -->
+  <define name="doc-number-elements">
+    <notAllowed/>
+  </define>
+  <!-- DOCUMENT NUMBER ATTRIBUTES -->
+  <define name="doc-number-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- DOCUMENT NUMBER -->
+  <!--
+    <doc-number> gives the document-number part 
+    of the document's reference.  Its value is 
+    a sequence of digits.
+  -->
+  <define name="doc-number">
+    <element name="doc-number">
+      <ref name="doc-number-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="doc-number-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="doc-number-attlist" combine="interleave">
+    <ref name="doc-number-atts"/>
+  </define>
+  <!-- DOCUMENT PART NUMBER ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <part-number> element.
+  -->
+  <define name="part-number-elements">
+    <notAllowed/>
+  </define>
+  <!-- DOCUMENT PART NUMBER ATTRIBUTES -->
+  <define name="part-number-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- DOCUMENT PART NUMBER -->
+  <!--
+    <part-number> gives the part number of the 
+    document, for individual parts of
+    multipart documents.  Its value is one or 
+    more alphanumeric characters or hyphens.
+    
+    In a document reference, the part number
+    is normally preceded by a hyphen (as in 
+    "ISO 8859-1", part 1 of ISO 8859).  But no
+    leading hyphen is needed here, and none
+    should be used.
+  -->
+  <define name="part-number">
+    <element name="part-number">
+      <ref name="part-number-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="part-number-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="part-number-attlist" combine="interleave">
+    <ref name="part-number-atts"/>
+  </define>
+  <!-- EDITION -->
+  <!--
+    <edition> indicates which edition of the 
+    standard is represented (or constituted)
+    by the current document.  Its value is a
+    sequence of decimal digits.
+    
+    The <edition> element may also occur in
+    the main body of the document (in 
+    bibliographic citations) and is defined in 
+    the appropriate module (references).
+  -->
+  <!-- ELEM   edition      Defined in %references.ent;" -->
+  <!-- STANDARD ID GROUP MODEL -->
+  <!-- Content model for <std-id-group> element. -->
+  <define name="std-id-group-model">
+    <oneOrMore>
+      <ref name="std-id.class"/>
+    </oneOrMore>
+  </define>
+  <!-- STANDARD ID GROUP ATTRIBUTES -->
+  <define name="std-id-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="std-relationship-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- STANDARD ID GROUP -->
+  <!--
+    A container element that holds several
+    standards identifiers (<std-id>s) to indicate 
+    that they are alternative identifiers for 
+    the same standard, for example, a DOI and 
+    also a URN.
+  -->
+  <define name="std-id-group">
+    <element name="std-id-group">
+      <ref name="std-id-group-attlist"/>
+      <ref name="std-id-group-model"/>
+    </element>
+  </define>
+  <define name="std-id-group-attlist" combine="interleave">
+    <ref name="std-id-group-atts"/>
+  </define>
+  <!-- STANDARD ID ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <std-id> element.
+  -->
+  <define name="std-id-elements">
+    <notAllowed/>
+  </define>
+  <!-- STANDARD ID ATTRIBUTES -->
+  <define name="std-id-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <attribute name="std-id-type"/>
+    <optional>
+      <attribute name="std-id-link-type"/>
+    </optional>
+    <optional>
+      <attribute name="std-relationship-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- STANDARD ID -->
+  <!--
+    One identifier (such as a DOI, URN, or
+    document abbreviation) for a standard, using
+    the @std-id-type attribute to name the type. 
+    These identifiers are grouped into a 
+    <std-id-group> which may also be typed.
+  -->
+  <define name="std-id">
+    <element name="std-id">
+      <ref name="std-id-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-id-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-id-attlist" combine="interleave">
+    <ref name="std-id-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- SUPPLEMENTS -->
+  <!-- ============================================================= -->
+  <!-- SUPPLEMENT TYPE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <suppl-type> element.
+  -->
+  <define name="suppl-type-elements">
+    <notAllowed/>
+  </define>
+  <!-- SUPPLEMENT TYPE ATTRIBUTES -->
+  <define name="suppl-type-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- SUPPLEMENT TYPE -->
+  <!--
+    <suppl-type> identifies what kind of
+    alteration or addition is represented by
+    this document.  Applicable to in  
+    supplements only; in other documents, it 
+    should be empty.
+    
+    Values currently used:
+      amd (Amendment)
+      cor (Technical Corrigendum) 
+      add (Addendum).
+    
+    Some published addenda are still valid,
+    but they are no longer being published so
+    'add' will probably never be encountered.
+  -->
+  <define name="suppl-type">
+    <element name="suppl-type">
+      <ref name="suppl-type-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="suppl-type-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="suppl-type-attlist" combine="interleave">
+    <ref name="suppl-type-atts"/>
+  </define>
+  <!-- SUPPLEMENT NUMBER ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <suppl-number> element.
+  -->
+  <define name="suppl-number-elements">
+    <notAllowed/>
+  </define>
+  <!-- SUPPLEMENT NUMBER ATTRIBUTES -->
+  <define name="suppl-number-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- SUPPLEMENT NUMBER -->
+  <!--
+    <suppl-number> gives the number of the 
+    supplement.  Its value is a sequence of 
+    decimal digits.  For non-supplements, it 
+    should be present (it's required by the 
+    DTD) and empty.  If the element is empty 
+    for a document which IS a supplement, the
+    value defaults to 1.
+  -->
+  <define name="suppl-number">
+    <element name="suppl-number">
+      <ref name="suppl-number-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="suppl-number-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="suppl-number-attlist" combine="interleave">
+    <ref name="suppl-number-atts"/>
+  </define>
+  <!-- SUPPLEMENT VERSION ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <suppl-version> element.
+  -->
+  <define name="suppl-version-elements">
+    <notAllowed/>
+  </define>
+  <!-- SUPPLEMENT VERSION ATTRIBUTES -->
+  <define name="suppl-version-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- SUPPLEMENT VERSION -->
+  <!--
+    <suppl-version> gives the version number of 
+    the supplement.  Its value, when present, 
+    is a sequence of decimal digits.  For  
+    non-supplements it should be empty.  For a  
+    supplement, the default value is 1.
+  -->
+  <define name="suppl-version">
+    <element name="suppl-version">
+      <ref name="suppl-version-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="suppl-version-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="suppl-version-attlist" combine="interleave">
+    <ref name="suppl-version-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STANDARD REFERENCES -->
+  <!-- ============================================================= -->
+  <!-- STANDARD-REFERENCE ATTRIBUTES -->
+  <define name="std-ref-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="type">
+        <choice>
+          <value>dated</value>
+          <value>undated</value>
+          <value>short</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STD-REF ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <std-ref>
+  -->
+  <define name="std-ref-elements">
+    <ref name="std-ref-content.class"/>
+  </define>
+  <!-- STANDARD NOMENCLATURE -->
+  <!--
+    <std-ref> holds a pre-combined convenience
+    form of the full standard nomenclature 
+    reference number for a standard, for example,
+    "ISO 9000", which is typically provided twice:
+    in dated form and in undated form. 
+    Strictly speaking, this identifier could
+    probably be constructed from information
+    present in <std-ident>, but since the rules
+    for constructing this identifier are both
+    complex and organization-specific, it is 
+    convenient to have it all place.
+    Remarks: The several forms of identifying 
+    number (dated, short, etc,) should be
+    distinguished using the '@type' attribute.
+  -->
+  <define name="std-ref">
+    <element name="std-ref">
+      <ref name="std-ref-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-ref-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-ref-attlist" combine="interleave">
+    <ref name="std-ref-atts"/>
+  </define>
+  <!-- DOC-REF ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <doc-ref> element.
+  -->
+  <define name="doc-ref-elements">
+    <notAllowed/>
+  </define>
+  <!-- DOC-REF ATTRIBUTES -->
+  <define name="doc-ref-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- DOC-REF -->
+  <!--
+    <doc-ref> gives the full reference form of 
+    this particular document, as one form of
+    the standard.
+  -->
+  <define name="doc-ref">
+    <element name="doc-ref">
+      <ref name="doc-ref-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="doc-ref-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="doc-ref-attlist" combine="interleave">
+    <ref name="doc-ref-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- DATES FOR PUBLICATION AND OTHER HISTORY -->
+  <!-- ============================================================= -->
+  <!-- PUB DATE -->
+  <!--
+    The <pub-date> was used in ISO STS to name
+    the date this standard was (or was to be)
+    published. This element has been superseded
+    by <release-date> but may still appear in 
+    documents for backward compatibility with 
+    ISO STS.
+      Remarks: While this element may still be
+    used, for better JATS compatibility, the
+    date of initial publication should be
+    recorded using <release-date> with the
+    appropriate attributes.
+      Remarks: For ISO STS published standards,
+    the <pub-date> recorded the date on which
+    the project reached ISO stage 60, and the
+    IS was first published. For the initial
+    publication, the <pub-date> and the
+    <release-date> were the same. For later ISO
+     publications (corrections, new editions,
+    versions in other languages), the <pub-date>
+    would be earlier than the <release-date> (and
+    was be the same across all versions of a
+    given standard).
+  -->
+  <!-- ELEM   pub-date     Defined in %articlemeta.ent; -->
+  <!-- RELEASE DATE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <release-date> element.
+  -->
+  <define name="release-date-elements">
+    <notAllowed/>
+  </define>
+  <!-- RELEASE DATE ATTRIBUTES -->
+  <define name="release-date-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="date-type"/>
+    </optional>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="std-type"/>
+    </optional>
+    <optional>
+      <attribute name="iso-8601-date"/>
+    </optional>
+  </define>
+  <!-- RELEASE DATE -->
+  <!--
+    Date on which q particular version of the 
+    standards document is (or is to be) published.
+        Remarks: There may be multiple release
+    dates for a standard, which should be
+    differentiated using the @date-type and 
+    @std-type attributes. Dates in the life-cycle
+    of a standards document (published date, 
+    reaffirmed date, retracted date, etc.) should
+    be described using the @date-type attribute.
+    The life-cycle event for the standard
+    (new-standard, addenda, corrigendum, etc.)
+    should be described by the @std-type attribute.
+    Historical Note: The element <pub-date> was
+    use in ISO STS to name the date of 
+    publication, but dues to conflicts with JATS,
+    <release-date> is the preferred tag to name
+    a date of publication.
+  -->
+  <define name="release-date">
+    <element name="release-date">
+      <ref name="release-date-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="release-date-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="release-date-attlist" combine="interleave">
+    <ref name="release-date-atts"/>
+  </define>
+  <!-- OTHER METADATA DATE ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <meta-date> element.
+  -->
+  <define name="meta-date-elements">
+    <notAllowed/>
+  </define>
+  <!-- OTHER METADATA DATE ATTRIBUTES -->
+  <define name="meta-date-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="date-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="iso-8601-date"/>
+    </optional>
+  </define>
+  <!-- OTHER METADATA DATE -->
+  <!--
+    <meta-date> gives the date of some event
+    relevant to this document or standard, for 
+    all document production and/or lifecycle dates
+    that are not covered by the <relesase-date> 
+    element, for example internal dates that are
+    unique to a particular standards producing
+    organization.
+       Remarks: There may be many <meta-date>
+    dates recorded. The kind of event should be 
+    named in the @type attribute. The values of
+    @type are not formally constrained, since
+    they are typically organization-specific,
+    for example 'rescinded'. 
+    Original publication date and other
+    release dates should be tagged as 
+    <release-date> dates, not as <meta-date> 
+    dates.
+  -->
+  <define name="meta-date">
+    <element name="meta-date">
+      <ref name="meta-date-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="meta-date-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="meta-date-attlist" combine="interleave">
+    <ref name="meta-date-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- COMMITTEES AND SECRETARIAT -->
+  <!-- ============================================================= -->
+  <!-- ACCREDITING ORGANIZATION ELEMENTS -->
+  <!--
+    Elements that may be mixed with #PCDATA
+    inside an <accrediting-organization> 
+    element.
+  -->
+  <define name="accrediting-organization-elements">
+    <notAllowed/>
+  </define>
+  <!-- ACCREDITING ORGANIZATION ATTRIBUTES -->
+  <define name="accrediting-organization-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="accredit-acronym"/>
+    </optional>
+  </define>
+  <!-- ACCREDITING ORGANIZATION -->
+  <!--
+    American SDOs can be formally "accredited"
+    by ANSI to publish standards. Part of that
+    accreditation is that an SDO must follow
+    ANSI rules, and there are regular audits to
+    ensure compliance. 
+      Not all organizations that publish standards 
+    in America are accredited. Not all documents 
+    published by ANSI accredited organizations are 
+    authorized as "An American National Standard". 
+    Thus accredited American SDOs need a way to 
+    record in the XML metadata that they are 
+    accredited and that this standards document 
+    has been authorized.
+      The content of this element is expected to
+    be a text phrase that may be, but need not be, 
+    displayed as part of the standards document, 
+    such as
+        "Accredited by the American National 
+         Standards Institute"
+  -->
+  <define name="accrediting-organization">
+    <element name="accrediting-organization">
+      <ref name="accrediting-organization-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="accrediting-organization-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="accrediting-organization-attlist" combine="interleave">
+    <ref name="accrediting-organization-atts"/>
+  </define>
+  <!-- AUTHORIZATION ELEMENTS -->
+  <!--
+    Elements that may be mixed with #PCDATA
+    inside an <authorization> element.
+  -->
+  <define name="authorization-elements">
+    <notAllowed/>
+  </define>
+  <!-- ACCREDITING ORGANIZATION ATTRIBUTES -->
+  <define name="authorization-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="authorize-acronym"/>
+    </optional>
+  </define>
+  <!-- ACCREDITING ORGANIZATION -->
+  <!--
+    American SDOs can be formally "accredited"
+    by ANSI to publish standards. Part of that
+    accreditation is that an SDO must follow
+    ANSI rules, and there are regular audits to
+    ensure compliance. 
+      Not all organizations that publish standards 
+    in America are accredited. Not all documents 
+    published by ANSI accredited organizations are 
+    authorized as "An American National Standard". 
+    Thus accredited American SDOs need a way to 
+    record in the XML metadata that they are 
+    accredited and that this standards document 
+    has been authorized.
+      The content of this element is expected to
+    be a text phrase that may be, but need not be, 
+    displayed as part of the standards document, 
+    such as
+        "An American National Standard"
+  -->
+  <define name="authorization">
+    <element name="authorization">
+      <ref name="authorization-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="authorization-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="authorization-attlist" combine="interleave">
+    <ref name="authorization-atts"/>
+  </define>
+  <!-- COMM-REF-GROUP MODEL -->
+  <!--
+    Content model for the <comm-ref-group> 
+    element.
+  -->
+  <define name="comm-ref-group-model">
+    <oneOrMore>
+      <ref name="comm-ref"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="comm-ref-group"/>
+    </zeroOrMore>
+  </define>
+  <!-- COMM-REF-GROUP ATTRIBUTES -->
+  <define name="comm-ref-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="comm-ref-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="level"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- COMMITTEE REFERENCE (HIERARCHICAL) -->
+  <!--
+    Identifies groups (such as Committees
+    and subcommittees) that are responsible for 
+    the  standards document. A hierarchy of
+    groups is possible as this element may contain
+    a <comm-ref> element to name itself, a series
+    of <comm-ref>s, as well as lower-level
+    <comm-ref-groups>.
+  -->
+  <define name="comm-ref-group">
+    <element name="comm-ref-group">
+      <ref name="comm-ref-group-attlist"/>
+      <ref name="comm-ref-group-model"/>
+    </element>
+  </define>
+  <define name="comm-ref-group-attlist" combine="interleave">
+    <ref name="comm-ref-group-atts"/>
+  </define>
+  <!-- COMM-REF ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <comm-ref> element.
+  -->
+  <define name="comm-ref-elements">
+    <notAllowed/>
+  </define>
+  <!-- COMM-REF ATTRIBUTES -->
+  <define name="comm-ref-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- COMMITTEE REFERENCE -->
+  <!--
+    Identifies the group (such as a Committee
+    or subcommittee) that is responsible for the 
+    standards document.  E.g. 
+     'ISO/TC 27/SC 4'.
+    Remarks: To allow for a hierarchy of groups,
+    a <comm-ref-group> element has been
+    created to hold multiple <conm-ref>s or
+    nested <comm-ref-groups>
+  -->
+  <define name="comm-ref">
+    <element name="comm-ref">
+      <ref name="comm-ref-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="comm-ref-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="comm-ref-attlist" combine="interleave">
+    <ref name="comm-ref-atts"/>
+  </define>
+  <!-- SECRETARIAT ELEMENTS -->
+  <!--
+    Elements that can be mixed with #PCDATA inside
+    a <secretariat> element.
+  -->
+  <define name="secretariat-elements">
+    <notAllowed/>
+  </define>
+  <!-- SECRETARIAT ATTRIBUTES -->
+  <define name="secretariat-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- SECRETARIAT -->
+  <!--
+    <secretariat> identifies the organization 
+    which serves as secretariat for the ISO 
+    group responsible for the document.        
+    Sometimes repeats.
+  -->
+  <define name="secretariat">
+    <element name="secretariat">
+      <ref name="secretariat-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="secretariat-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="secretariat-attlist" combine="interleave">
+    <ref name="secretariat-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STANDARD CROSS-REFERENCE -->
+  <!-- ============================================================= -->
+  <!-- STD-XREF -->
+  <!--
+    <std-xref> identifies links to other 
+    standards.
+  -->
+  <define name="std-xref-model">
+    <oneOrMore>
+      <choice>
+        <ref name="std-ident"/>
+        <ref name="std-ref"/>
+        <ref name="std-id-group"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="release-date"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="meta-date"/>
+    </zeroOrMore>
+  </define>
+  <!-- STD-XREF ATTRIBUTES -->
+  <!--
+    type       what is the relation between the two
+    standards?  Sample values:  "amends",
+    "replaces"
+  -->
+  <define name="std-xref-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="type"/>
+  </define>
+  <!-- STANDARD CROSS-REFERENCE -->
+  <!--
+    <std-xref> identifies links to other 
+    standards.
+  -->
+  <define name="std-xref">
+    <element name="std-xref">
+      <ref name="std-xref-attlist"/>
+      <ref name="std-xref-model"/>
+    </element>
+  </define>
+  <define name="std-xref-attlist" combine="interleave">
+    <ref name="std-xref-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ANNEX-TYPE -->
+  <!-- ============================================================= -->
+  <!-- ANNEX-TYPE -->
+  <!--
+    Is this <annex> normative or informative
+    (non-normative). Content is expected to be
+    "(normative)" or "(informative)".  Strictly 
+    redundant with the app/@content-type 
+    attribute, whose expected values are 
+    'norm-annex' and 'inform-annex'.
+  -->
+  <define name="annex-type">
+    <element name="annex-type">
+      <ref name="annex-type-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="annex-type-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- EDITING INSTRUCTION -->
+  <!-- ============================================================= -->
+  <!-- EDITING INSTRUCTION MODEL -->
+  <!--
+    Content model for the 
+    <editing-instruction> element.
+  -->
+  <define name="editing-instruction-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- EDITING INSTRUCTION ATTRIBUTES -->
+  <!--
+    Attributes for the <editing-instruction> 
+    element.
+  -->
+  <define name="editing-instruction-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- EDITING INSTRUCTION -->
+  <!--
+    <editing-instruction> describes the
+    alteration or addition should be made to the
+    document.
+  -->
+  <define name="editing-instruction">
+    <element name="editing-instruction">
+      <ref name="editing-instruction-attlist"/>
+      <ref name="editing-instruction-model"/>
+    </element>
+  </define>
+  <define name="editing-instruction-attlist" combine="interleave">
+    <ref name="editing-instruction-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- METADATA NOTES -->
+  <!-- ============================================================= -->
+  <!-- METADATA NOTE ATTRIBUTES -->
+  <!-- Attributes for the <meta-note> element. -->
+  <define name="meta-note-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- METADATA NOTE MODEL -->
+  <define name="meta-note-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="p"/>
+    </oneOrMore>
+  </define>
+  <!-- METADATA NOTE -->
+  <!--
+    Notes within the metadata of a standards
+    document (as opposed to within the <front> 
+    matter) used to hold prose for phrases and 
+    blurbs describing a standard. This material 
+    is typically displayed on the cover, the
+    copyright page, or amongst similar metadata.
+  -->
+  <define name="meta-note">
+    <element name="meta-note">
+      <ref name="meta-note-attlist"/>
+      <ref name="meta-note-model"/>
+    </element>
+  </define>
+  <define name="meta-note-attlist" combine="interleave">
+    <ref name="meta-note-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NISO STS ISO Metadata Module ========= -->

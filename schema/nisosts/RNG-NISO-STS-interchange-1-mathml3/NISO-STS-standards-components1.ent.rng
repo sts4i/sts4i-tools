@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS STD Metadata Module -->
+<!-- VERSION:   ANSI/NISO Z39.102-2017, STS: -->
+<!-- Standards Tag Suite (Version 1.0) -->
+<!-- DATE:      October 2017 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS Common Standards Document Components Module v1.0 20171031//EN"
+       Delivered as file "NISO-STS-standards-components1.ent" 
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- This new module consolidates separate models from -->
+<!-- ISO STS V1.1 DTD. -->
+<!---->
+<!-- PURPOSE:    This module defines large structural component -->
+<!-- elements, such as <front> and <back> for use in -->
+<!-- any of the NISO STS Tag Sets. -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by the -->
+<!-- American Society of Mechanical Engineers (ASME) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- COPYRIGHT AND LICENSE: -->
+<!-- Copyright © 2017 by ISO, the American Society of -->
+<!-- Mechanical Engineers (ASME), ASTM International, -->
+<!-- Mulberry Technologies, Inc., and the National -->
+<!-- Information Standards Organization. This work is -->
+<!-- made available under a Creative Commons -->
+<!--              Attribution-ShareAlike 4.0 International License: -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!---->
+<!-- This work is licensed under a Creative Commons -->
+<!-- Attribution-ShareAlike 4.0 International License. -->
+<!-- To view a copy of this license, visit -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--              or send a letter to Creative Commons, PO Box 1866, -->
+<!-- Mountain View, CA 94042, USA -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+-->
+<!-- ============================================================= -->
+<!-- STANDARDS BODY AND BACK MATTER ATTRIBUTES -->
+<!-- ============================================================= -->
+<!-- BODY ATTRIBUTES -->
+<!-- Attributes for the <body> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="body-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- BACK MATTER ATTRIBUTES -->
+  <!-- Attributes for the <back> element -->
+  <!--
+    The IDREFS can be used to point to the
+    standards organization responsible for
+    the back matter.
+  -->
+  <define name="back-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SUB-PART ATTRIBUTES -->
+  <!-- Attribute list for sub-part element -->
+  <!-- (similar to sec element) -->
+  <define name="sub-part-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="part-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FRONT MATTER ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- FRONT MATTER MODEL -->
+  <!--
+    Model for the <front> matter (the header
+    metadata and some narrative front sections   
+    of a standard)
+  -->
+  <define name="front-model">
+    <optional>
+      <ref name="std-doc-meta"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="std-meta"/>
+        <ref name="iso-meta"/>
+        <ref name="reg-meta"/>
+        <ref name="nat-meta"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="front-back.class"/>
+        <ref name="sec-only.class"/>
+        <ref name="xinclude.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- FRONT MATTER -->
+  <!--
+    The metadata and some begging narrative 
+    material concerning a standard, such as
+    the originating body, the document title,
+    and release date, etc.  Everything needed to
+    produce the front matter and back cover
+    goes here.
+  -->
+  <define name="front">
+    <element name="front">
+      <ref name="front-attlist"/>
+      <ref name="front-model"/>
+    </element>
+  </define>
+  <define name="front-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BODY ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- BODY MODEL -->
+  <!--
+    Content model for the Body (main textual
+    content) of a standard.
+  -->
+  <define name="body-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="para-level"/>
+        <ref name="ref-list.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="sec-level"/>
+        <ref name="sub-part.class"/>
+        <ref name="xinclude.class"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="sig-block"/>
+    </optional>
+  </define>
+  <!-- BODY OF THE STANDARD -->
+  <!--
+    The main textual portion of the document,
+    that conveys the content.
+  -->
+  <define name="body">
+    <element name="body">
+      <ref name="body-attlist"/>
+      <ref name="body-model"/>
+    </element>
+  </define>
+  <define name="body-attlist" combine="interleave">
+    <ref name="body-atts"/>
+  </define>
+  <!-- SUB-PART MODEL -->
+  <!--
+    Content model for sub-parts with their own
+    toc and page numbering.
+  -->
+  <define name="sub-part-model">
+    <choice>
+      <group>
+        <optional>
+          <ref name="label"/>
+        </optional>
+        <ref name="title"/>
+      </group>
+      <ref name="std-meta"/>
+    </choice>
+    <ref name="body"/>
+    <optional>
+      <ref name="back"/>
+    </optional>
+  </define>
+  <define name="sub-part">
+    <element name="sub-part">
+      <ref name="sub-part-attlist"/>
+      <ref name="sub-part-model"/>
+    </element>
+  </define>
+  <define name="sub-part-attlist" combine="interleave">
+    <ref name="sub-part-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BACK MATTER ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- BACK MATTER MODEL -->
+  <!--
+    Content model for the Back Matter 
+    (ancillary material such as annexes) of a
+    standard                                          
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="back-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="title"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="doc-back-matter-mix"/>
+        <ref name="xinclude.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- BACK MATTER -->
+  <!--
+    Ancillary or supporting material not included
+    as part of the main textual content of a
+    standard, for example annexes.
+  -->
+  <define name="back">
+    <element name="back">
+      <ref name="back-attlist"/>
+      <ref name="back-model"/>
+    </element>
+  </define>
+  <define name="back-attlist" combine="interleave">
+    <ref name="back-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NISO STS Standards Components ======== -->

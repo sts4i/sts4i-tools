@@ -1,0 +1,94 @@
+<!-- ============================================================= -->
+<!--  MODULE:    NISO STS TBX Terminology Setup Module             -->
+<!--  VERSION:   ANSI/NISO Z39.102-2017, STS:                      --> 
+<!--             Standards Tag Suite (Version 1.0)                 --> 
+<!--  DATE:      October 2017                                      -->
+<!--                                                               -->
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                        TYPICAL INVOCATION                     -->
+<!--
+"-//NISO//DTD NISO STS TBX Terminology Setup Module v1.0 20171031//EN"
+     Delivered as file "NISO-STS-tbx-setup1.ent"
+                                                                   -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS)               -->
+<!--                                                               -->
+<!-- PURPOSE:    Provides the organization for using the           -->
+<!--             namespace-qualified version of the TBX DTD        -->
+<!--                                                               -->
+<!-- CONTAINS:   1) Overrides for standard parameter entities      -->
+<!--                used to construct the TBX namespace            -->
+<!--                                                               -->
+<!-- CREATED BY: Mulberry Technologies, Inc.                       -->
+<!--             Deborah Aleyne Lapeyre and B. Tommie Usdin        -->
+<!--             in support of NISO and the NISO STS Committee.    -->
+<!--             Mulberry Technologies work was supported by the   -->
+<!--             American Society of Mechanical Engineers (ASME)   -->
+<!--             and ASTM International.                           -->
+<!--                                                               -->
+<!-- COPYRIGHT AND LICENSE:                                        -->
+<!--             Copyright © 2017 by ISO, the American Society of  -->
+<!--             Mechanical Engineers (ASME), ASTM International,  -->
+<!--             Mulberry Technologies, Inc., and the National     -->
+<!--             Information Standards Organization. This work is  -->
+<!--             made available under a Creative Commons           -->
+<!--             Attribution-ShareAlike 4.0 International License:-->
+<!--                http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--                                                               -->
+<!--             This work is licensed under a Creative Commons    -->
+<!--             Attribution-ShareAlike 4.0 International License. -->
+<!--             To view a copy of this license, visit             -->
+<!--                http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--             or send a letter to Creative Commons, PO Box 1866,-->
+<!--             Mountain View, CA 94042, USA                      -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             October 2016                                      -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    DTD VERSION/CHANGE HISTORY                 -->
+<!-- ============================================================= -->
+<!--
+Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+ 
+    =============================================================
+                                                                   -->
+
+<!-- ============================================================= -->
+<!--                    SET UP FOR THE TBX MODULE                  -->
+<!-- ============================================================= -->
+
+
+<!--                    TBX DTD                                    -->
+<!--                    The official version of the TBX DTD can
+                        be found in Annex A of ISO 30042.
+
+                        The TBX module pointed to here has been
+                        modified to be namespace-qualified.        -->
+
+
+<!-- ============================================================= -->
+<!--                    SET UP THE TBX NAMESPACE                   -->
+<!-- ============================================================= -->
+
+
+<!--                    MAKE PREFIX EQUAL "tbx"                    -->
+<!ENTITY % TBX.prefix
+                        "tbx"                                        >
+
+<!--                    SET UP NAMESPACE FOR TBX                   -->
+<!--                    ISO 30042 defines the TBX vocabulary, but
+                        does not specify a namespace name for 
+                        the vocabulary.  We use the ISO URN for 
+                        ISO 30042 itself as the namespace name.    -->
+<!ENTITY % TBX.xmlns    "urn:iso:std:iso:30042:ed-1"                 >
+
+
+<!--                    DEFINE TBX namespace declaration           -->
+<!ENTITY % TBX.xmlns.attrib
+     "xmlns:%TBX.prefix;     CDATA          #FIXED '%TBX.xmlns;'"    >
+
+<!-- ================== End NISO STS TBX NAMESPACE Module ======== -->

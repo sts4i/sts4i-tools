@@ -1,0 +1,2608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS DTD Customize Content and Attributes -->
+<!-- VERSION:   ANSI/NISO Z39.102-2017, STS: -->
+<!-- Standards Tag Suite (Version 1.0) -->
+<!-- DATE:      October 2017 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS DTD Customize Content and Attributes v1.0 20171031//EN"
+       Delivered as file "NISO-STS-models.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- This new module extends the capabilities of -->
+<!-- ISO STS V1.1 DTD. -->
+<!---->
+<!-- PURPOSE:    To declare the Parameter Entities (PEs) used to -->
+<!-- over-ride content models or parts of content -->
+<!-- models when making a new DTD from the modules of -->
+<!-- the JATS (Z39.96) Journal Publishing DTD, -->
+<!-- The JATS Suite, or BITS Suite. -->
+<!---->
+<!-- Or-groups within models should use mixes or -->
+<!-- classes rather than name elements directly. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called before the -->
+<!-- content modules that declare elements. -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by the -->
+<!-- American Society of Mechanical Engineers (ASME) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- COPYRIGHT AND LICENSE: -->
+<!-- Copyright © 2017 by ISO, the American Society of -->
+<!-- Mechanical Engineers (ASME), ASTM International, -->
+<!-- Mulberry Technologies, Inc., and the National -->
+<!-- Information Standards Organization. This work is -->
+<!-- made available under a Creative Commons -->
+<!--              Attribution-ShareAlike 4.0 International License: -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!---->
+<!-- This work is licensed under a Creative Commons -->
+<!-- Attribution-ShareAlike 4.0 International License. -->
+<!-- To view a copy of this license, visit -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--              or send a letter to Creative Commons, PO Box 1866, -->
+<!-- Mountain View, CA 94042, USA -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)  
+       =============================================================
+-->
+<!-- ============================================================= -->
+<!-- OVER-RIDES OF ATTRIBUTE VALUE LISTS -->
+<!-- ============================================================= -->
+<!-- CITED STANDARD TYPES -->
+<!--
+  Possible values for the @type attribute
+  on the <std> element.
+-->
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="cited-std-type-values">
+    <choice>
+      <value>dated</value>
+      <value>multipart</value>
+      <value>undated</value>
+    </choice>
+  </define>
+  <!-- FORM TYPE VALUES -->
+  <!--
+    Possible values for the @form-type attribute
+    on many of the block display elements.
+  -->
+  <define name="form-type-values">
+    <choice>
+      <value>blank</value>
+      <value>exemplar</value>
+      <value>instructions</value>
+      <value>unspecified</value>
+    </choice>
+  </define>
+  <!-- IS THIS ELEMENT A FORM VALUES -->
+  <!--
+    Possible values for the @is-form attribute
+    on many of the block display elements.
+  -->
+  <define name="is-form-values">
+    <choice>
+      <value>form</value>
+      <value>noform</value>
+    </choice>
+  </define>
+  <!-- TERM STATUS TYPES -->
+  <!--
+    Possible values for the @term-status attribute
+    on the <term> element.
+  -->
+  <define name="term-status-values">
+    <choice>
+      <value>preferred</value>
+      <value>non-preferred</value>
+      <value>admitted</value>
+    </choice>
+  </define>
+  <!-- TERM TYPE TYPES -->
+  <!--
+    Possible values for the @term-type attribute
+    on the <term> element (taken from TBX)
+  -->
+  <define name="term-type-values">
+    <choice>
+      <value>acronym</value>
+      <value>abbreviation</value>
+      <value>fullForm</value>
+      <value>symbol</value>
+      <value>variant</value>
+      <value>formula</value>
+      <value>equation</value>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF JATS METADATA MODELS -->
+  <!-- ============================================================= -->
+  <!-- ABSTRACT MODEL -->
+  <!--
+    Abstracts may contain one or more paragraphs
+    (as a typical abstract does) or titled
+    sections, as is done in many physics
+    articles.
+    Unlike the default model in the base DTD
+    Suite, this <abstract> requires that all
+    sections in the abstract start with titles.
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="abstract-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- AFFILIATION ELEMENTS -->
+  <!-- Elements for use in the <aff> element -->
+  <define name="aff-elements">
+    <choice>
+      <ref name="address.class"/>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="label.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- COPYRIGHT STATEMENT ELEMENTS -->
+  <!-- Content model for <copyright-statement> -->
+  <define name="copyright-statement-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- FUNDING STATEMENT ELEMENTS -->
+  <!-- Model for the <funding-statement> element -->
+  <define name="funding-statement-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- INSTITUTION NAME ELEMENTS -->
+  <!--
+    Elements for use in the <institution>
+    element
+  -->
+  <define name="institution-elements">
+    <choice>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- KEYWORD CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a keyword <kwd>.
+  -->
+  <define name="kwd-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- KEYWORD GROUP MODEL -->
+  <!--
+    Content model for a <kwd-group> element
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="kwd-group-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="kwd.class"/>
+    </oneOrMore>
+  </define>
+  <!-- LINK ELEMENTS -->
+  <!--
+    Elements for use in the linking elements
+    such as <xref>, <target>, and <ext-link>
+  -->
+  <define name="link-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- PUB DATE MODEL -->
+  <!-- Content model for the <pub-date> element -->
+  <!--
+    In NISO STS, dates within the <pub-date>  
+    element are given in ISO 8601 form, so no 
+    sub-part tagging is required (or allowed)
+    and no @iso-8601 attribute is required.
+  -->
+  <define name="pub-date-model">
+    <text/>
+  </define>
+  <!-- PUBLISHER'S LOCATION ELEMENTS -->
+  <!--
+    Elements for use in the Publisher Location
+    <publisher-loc> element
+  -->
+  <define name="publisher-loc-elements">
+    <choice>
+      <ref name="address.class"/>
+      <ref name="address-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- RELATED ARTICLE ELEMENTS -->
+  <!-- Elements allowed inside <related-article> -->
+  <define name="related-article-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="journal-id.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="references.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- RELATED OBJECT ELEMENTS -->
+  <!-- Elements allowed inside <related-object> -->
+  <define name="related-object-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="references.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- TITLE-PART ELEMENTS -->
+  <!--
+    The %title-part-elements; parameter entity 
+    lists the elements legal in any part of 
+    a title.
+    Developer's Note: used in <subtitle>         
+    model below.
+  -->
+  <define name="title-part-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+      <ref name="break.class"/>
+      <ref name="citation.class"/>
+    </choice>
+  </define>
+  <!-- TRANSLATED ABSTRACT MODEL -->
+  <!--
+    Content model for an <trans-abstract>
+    element                                    
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="trans-abstract-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="sec.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- SIGNATURE ELEMENTS -->
+  <!--
+    Elements to be mixed with data characters
+    inside the content model for the
+    <sig> element.
+  -->
+  <define name="sig-elements">
+    <choice>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="just-base-display-noalt.class"/>
+    </choice>
+  </define>
+  <!-- STANDARDS ORGANIZATION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <std-organization>.
+  -->
+  <define name="std-organization-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="institution-wrap.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- SUBTITLE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a paragraph <subtitle>.
+    An earlier version of this tag set used the
+    parameter entity %title-elements; for many
+    title elements including <subtitle>.
+  -->
+  <define name="subtitle-elements">
+    <ref name="title-part-elements"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF JATS SECTION MODELS -->
+  <!-- ============================================================= -->
+  <!-- CONTENT MODEL FOR A STRUCTURAL SECTION -->
+  <!--
+    The model for a section that requires that 
+    a <title> or a <label> must be present. 
+    ISO STS Change: Remove <sec-meta>
+    NISO STS Change: Add <editing-instruction>
+  -->
+  <define name="sec-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <choice>
+      <group>
+        <ref name="label"/>
+        <optional>
+          <ref name="title"/>
+        </optional>
+      </group>
+      <ref name="title"/>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="para-level"/>
+        <ref name="sec-back-matter-mix"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <oneOrMore>
+        <ref name="sec-level"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec-back-matter-mix"/>
+          <ref name="all-notes.class"/>
+        </choice>
+      </zeroOrMore>
+    </optional>
+  </define>
+  <!--
+     old sec-model 
+    "          ( (%editing-instructions.class;)*,
+                 ( (label, title?) | title ),
+                 (%para-level;)*, 
+                 (%sec-level;)*,
+                 ( (%sec-back-matter-mix;),   
+                   (%all-notes.class;)* )* )"             >
+  -->
+  <!-- CONTENT MODEL FOR AN UNTITLED SECTION -->
+  <!--
+    The model for a section-like structure that
+    may or may not have an initial title. 
+    ISO STS Change: Remove <sec-meta>
+    NISO STS Change: Add <editing-instruction>
+      Add all note-types after allcontent
+  -->
+  <define name="sec-opt-title-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="para-level"/>
+        <ref name="sec-back-matter-mix"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <oneOrMore>
+        <ref name="sec-level"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec-back-matter-mix"/>
+          <ref name="all-notes.class"/>
+        </choice>
+      </zeroOrMore>
+    </optional>
+  </define>
+  <!--
+    old sec-opt-title
+    
+    "(label?, title?,
+      ( ( (%para-level; | %ref-list.class;)+, 
+              (%sec-level;)*) |
+           (%sec-level;)+ ),
+      ( (%sec-back-matter-mix;), 
+        (%all-notes.class;)* )* )"               >
+  -->
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF JATS JOURNAL PUBLISHING -->
+  <!-- STRUCTURAL MODELS -->
+  <!-- ============================================================= -->
+  <!-- ACKNOWLEDGMENTS MODEL -->
+  <!-- Content model for the <ack> element -->
+  <!-- Made this use sec-opt-title model -->
+  <define name="ack-model">
+    <ref name="sec-opt-title-model"/>
+  </define>
+  <!-- CAPTION MODEL -->
+  <!--
+    Content model for the <caption> element 
+    NISO STS Change: add <editing-instruction>
+  -->
+  <define name="caption-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- APPENDIX MODEL -->
+  <!-- Content model for the <app> element. -->
+  <!--
+    ISO STS Change" Added annex-type. 
+    NISO STS Change: add <editing-instruction>
+  -->
+  <define name="app-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <choice>
+      <group>
+        <ref name="label"/>
+        <optional>
+          <ref name="annex-type"/>
+        </optional>
+        <optional>
+          <ref name="title"/>
+        </optional>
+      </group>
+      <group>
+        <optional>
+          <ref name="annex-type"/>
+        </optional>
+        <ref name="title"/>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="para-level"/>
+        <ref name="sec-back-matter-mix"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <oneOrMore>
+        <ref name="sec-level"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec-back-matter-mix"/>
+          <ref name="all-notes.class"/>
+        </choice>
+      </zeroOrMore>
+    </optional>
+    <optional>
+      <ref name="permissions"/>
+    </optional>
+  </define>
+  <!--
+    old app model
+     "( (%editing-instructions.class;)*,
+      ( (label, annex-type?, title?) |
+        (annex-type?, title) ),
+    ( ( (%para-level; | %ref-list.class;)+, 
+        (%sec-level; | %xinclude.class;)*) |
+      (%sec-level; | %xinclude.class;)+ ),
+    ( (%sec-back-matter-mix;),    
+      (%all-notes.class;)* )*, 
+    permissions?)"                             >
+    
+    
+  -->
+  <!-- APPENDIX GROUP MODEL -->
+  <!-- Content model for the <app-group> element -->
+  <define name="app-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="app.class"/>
+        <ref name="ref-list.class"/>
+        <ref name="xinclude.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- LABEL ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the <label> element.
+    Added %phrase.content to allow named-content
+    within a label.
+  -->
+  <define name="label-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- REFERENCE ITEM MODEL -->
+  <!--
+    Content model for the <ref> element
+    ISO STS Change: Removed %note.class; (<note>)
+    NISO STS Change: add <editing-instruction>
+    and all normative and non-normative notes 
+    and examples.
+  -->
+  <define name="ref-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="citation.class"/>
+        <ref name="all-notes.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDES OF JATS JOURNAL PUBLISHING -->
+  <!-- ELEMENTS FOR CITATIONS -->
+  <!-- ============================================================= -->
+  <!-- CITATION ELEMENTS -->
+  <!--
+    Content for both types of citation. These
+    elements may be mixed with #PCDATA in the
+    <mixed-citation> element (in which all
+    punctuation and spacing are left intact), and
+    they also constitute the choices that can be
+    used to form the all-element-content of the
+    <element-citation> element (in which
+    punctuation and spacing are removed).
+  -->
+  <!-- Added break.class and simple-link.class -->
+  <define name="citation-elements">
+    <choice>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="label.class"/>
+      <ref name="phrase.class"/>
+      <ref name="references.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- STANDARD ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <std>
+    Added std-ref and title.
+    Design Note: this inline mix begins with
+    an OR bar inside rendition-plus.
+  -->
+  <define name="std-elements">
+    <choice>
+      <ref name="std-content.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDE BLOCK DISPLAY ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ARRAY CONTENT MODEL -->
+  <!-- Content model for the <array> element -->
+  <!--
+    ISO STS Change: Made this use table.class,
+    not tbody.class  
+    NISO STS change: add <editing-instruction>
+    Remarks: <table> is non-preferred, use 
+    <tbody>
+  -->
+  <define name="array-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="just-base-display.class"/>
+        <ref name="table.class"/>
+        <ref name="tbody.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- BOXED TEXT MODEL -->
+  <!--
+    Complete content model for the boxed text
+    element <boxed-text>.
+    ISO STS Change: Remove <sec-meta> 
+    Note: Adding <editing-instruction>
+    would blow determinism rules.
+  -->
+  <define name="boxed-text-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="para-level"/>
+        <ref name="sec-back-matter-mix"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <oneOrMore>
+        <ref name="sec-level"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="sec-back-matter-mix"/>
+          <ref name="all-notes.class"/>
+        </choice>
+      </zeroOrMore>
+    </optional>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    old boxed-text-model
+    
+    "( (%id.class;)*, label?, caption?,
+        ( ( (%para-level; | %ref-list.class;)+,
+                (%sec-level;)*) |
+          (%sec-level;)+ ),
+        (%sec-back-matter-mix;)*,
+        (%display-back-matter.class;)* )"         >
+    
+  -->
+  <!-- CHEMICAL STRUCTURE ELEMENTS -->
+  <!--
+    Those elements that may mix with the data
+    characters inside a Chemical Structure
+    <chem-struct>
+  -->
+  <define name="chem-struct-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="label.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="simple-display.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- DEFINITION LIST MODEL -->
+  <!--
+    Content model for the <def-list> element 
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="def-list-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <optional>
+      <ref name="term-head"/>
+    </optional>
+    <optional>
+      <ref name="def-head"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="def-item.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="def-list.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- CHEMICAL STRUCTURE WRAPPER MODEL -->
+  <!--
+    Content model for the Chemical Structure
+    Wrapper <chem-struct-wrap> element
+    NISO STS Change: Added normative-notes, 
+    normative-notes and notes-group and 
+    add ed<editing-instruction> and 
+    removed abstracts and keywords.
+  -->
+  <define name="chem-struct-wrap-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="inside-chem-struct-wrap.class"/>
+        <ref name="all-notes.class"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- CODE ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters, inside the content model for the
+    <code> element
+  -->
+  <define name="code-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="citation.class"/>
+      <ref name="display-back-matter.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- DISPLAY FORMULA ELEMENTS -->
+  <!--
+    Elements for use in the <disp-formula>
+    element.
+    NISO STS Change: Added normative-notes, 
+    normative-notes and notes-group and
+    removed abstracts and keywords.
+  -->
+  <define name="disp-formula-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="label.class"/>
+      <ref name="all-notes.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="math.class"/>
+      <ref name="simple-display.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- FORMULA, DISPLAY GROUP MODEL -->
+  <!-- Content model for an <disp-formula-group> -->
+  <!--
+    NISO STS added normative-notes, 
+    normative-notes and notes-group and
+    removed abstracts and keywords.
+  -->
+  <define name="disp-formula-group-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="all-notes.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="block-math.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- FIGURE-LIKE CONTENT MODEL -->
+  <!--
+    Content model for the Figure element and any
+    similarly structured elements
+    Made <label> and <caption> non-repeatable.
+  -->
+  <define name="fig-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="block-math.class"/>
+        <ref name="chem-struct-wrap.class"/>
+        <ref name="fn-group.class"/>
+        <ref name="fn-link.class"/>
+        <ref name="intable-para.class"/>
+        <ref name="just-table.class"/>
+        <ref name="just-para.class"/>
+        <ref name="list.class"/>
+        <ref name="simple-display.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- FOOTNOTE GROUP MODEL -->
+  <!--
+    Content model for the <fn-group> element
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="fn-group-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="fn-link.class"/>
+    </oneOrMore>
+  </define>
+  <!-- LIST MODEL -->
+  <!--
+    Content model for the <list> element       
+    NISO STS change: add <editing-instruction>
+  -->
+  <define name="list-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="list-item.class"/>
+    </oneOrMore>
+  </define>
+  <!-- PREFORMATTED TEXT ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters, inside the content model for the
+    <preformat> element, in which white space,
+    such as tabs, line feeds, and spaces will
+    be preserved.
+    Remarks: Since this model is a large OR 
+    group, any editing instructions should be
+    placed outside the <preformat-element>.
+  -->
+  <define name="preformat-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="citation.class"/>
+      <ref name="display-back-matter.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-text.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- STATEMENT, FORMAL MODEL -->
+  <!--
+    Content model for the <statement> element       
+    NISO STS change: add <editing-instruction> 
+    and removed abstracts and keywords.
+  -->
+  <define name="statement-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="just-para.class"/>
+        <ref name="statement.class"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- TABLE WRAPPER CONTENT MODEL -->
+  <!--
+    Content model for the container element that
+    surrounds the standard table models for row
+    and columns.
+  -->
+  <!--
+    NISO STS added normative-notes, 
+    normative-notes and notes-group and
+    editing-instruction and 
+    removed abstracts and keywords.
+  -->
+  <define name="table-wrap-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="inside-table-wrap"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="table-foot.class"/>
+        <ref name="display-back-matter.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- TABLE WRAPPER GROUP MODEL -->
+  <!--
+    Content model for the <table-wrap-group>
+    element
+  -->
+  <!--
+    NISO STS added normative-notes, 
+    normative-notes and notes-group and
+    editing-instruction and 
+    removed abstracts and keywords.
+  -->
+  <define name="table-wrap-group-model">
+    <zeroOrMore>
+      <ref name="editing-instructions.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="all-notes.class"/>
+        <ref name="just-table.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ADDING 'ORIGINATOR' ATTRIBUTE -->
+  <!-- ============================================================= -->
+  <!-- 'ORIGINATOR' ATTRIBUTE -->
+  <!-- The 'originator' attribute allows sections -->
+  <!-- and other material added by a second SDO -->
+  <!-- (e.g. when adopting the standard) to be -->
+  <!-- marked so as to allow the new and the -->
+  <!-- original text to be distinguished. Its -->
+  <!-- values are not constrained. -->
+  <define name="originator-attribute">
+    <optional>
+      <attribute name="originator"/>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- REPEATED HERE FOR USE BELOW -->
+  <!-- ============================================================= -->
+  <!-- XLINK LINK ATTRIBUTES -->
+  <!--
+    Attributes for any element that must be a
+    link
+  -->
+  <!--
+    This declaration is not modified but
+    copied verbatim from 
+    JATS-journalpubcustom-models1.ent; it
+    needs to be here because some of the 
+    attribute-lists below refer to it.
+  -->
+  <define name="link-atts">
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value>simple</value>
+      </attribute>
+    </optional>
+    <attribute name="xlink:href"/>
+    <optional>
+      <attribute name="xlink:role"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:title"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:show">
+        <choice>
+          <value>embed</value>
+          <value>new</value>
+          <value>none</value>
+          <value>other</value>
+          <value>replace</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:actuate">
+        <choice>
+          <value>none</value>
+          <value>onLoad</value>
+          <value>onRequest</value>
+          <value>other</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- MIGHT LINK XLINK ATTRIBUTES -->
+  <!--
+    Used for elements which may need to link to
+    external sources or other objects within
+    the document, but may not necessarily act
+    as a link at all.  The attribute
+    "xlink:href" identifies the object to which
+    the link points.
+  -->
+  <!--
+    This declaration is not modified but
+    copied verbatim from 
+    JATS-journalpubcustom-models1.ent; it
+    needs to be here because some of the 
+    attribute-lists below refer to it.
+  -->
+  <define name="might-link-atts">
+    <optional>
+      <attribute name="xlink:type" a:defaultValue="simple">
+        <value>simple</value>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:href"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:role"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:title"/>
+    </optional>
+    <optional>
+      <attribute name="xlink:show">
+        <choice>
+          <value>embed</value>
+          <value>new</value>
+          <value>none</value>
+          <value>other</value>
+          <value>replace</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xlink:actuate">
+        <choice>
+          <value>none</value>
+          <value>onLoad</value>
+          <value>onRequest</value>
+          <value>other</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-common1.ent -->
+  <!-- ============================================================= -->
+  <!-- ADDRESS ATTRIBUTES -->
+  <!-- Attributes for the <address> element -->
+  <define name="address-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ALTERNATIVES ATTRIBUTES -->
+  <!-- Attributes for the <alternatives> element -->
+  <define name="alternatives-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- RELATED ARTICLE ATTRIBUTES -->
+  <!-- Attributes for <related-article> -->
+  <define name="related-article-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="related-article-type"/>
+    <optional>
+      <attribute name="ext-link-type"/>
+    </optional>
+    <optional>
+      <attribute name="vol"/>
+    </optional>
+    <optional>
+      <attribute name="page"/>
+    </optional>
+    <optional>
+      <attribute name="issue"/>
+    </optional>
+    <optional>
+      <attribute name="elocation-id"/>
+    </optional>
+    <optional>
+      <attribute name="journal-id"/>
+    </optional>
+    <optional>
+      <attribute name="journal-id-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- STANDARDS ATTRIBUTES -->
+  <!-- Attributes for the <std> element -->
+  <define name="std-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="type">
+        <choice>
+          <ref name="cited-std-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="std-id"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-display1.ent -->
+  <!-- ============================================================= -->
+  <!-- DISPLAY ATTRIBUTES -->
+  <!--
+    Attributes used for several of the block
+    display elements
+  -->
+  <!--
+    This declaration is not modified but
+    copied verbatim from JATS-display1.ent; it
+    needs to be here because some of the 
+    attribute-lists below refer to it.
+  -->
+  <!--
+    Note:  fig-atts uses this parameter entity
+    but overrides the definition of 'position'.
+    So changes in 'position' won't affect fig.
+    Other changes to display-atts should
+    affect fig normally.
+  -->
+  <define name="display-atts">
+    <optional>
+      <attribute name="position" a:defaultValue="float">
+        <choice>
+          <value>anchor</value>
+          <value>background</value>
+          <value>float</value>
+          <value>margin</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="orientation" a:defaultValue="portrait">
+        <choice>
+          <value>portrait</value>
+          <value>landscape</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TABLE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes to be added to the regular NLM
+    table attributes, for example, when the
+    Elsevier or OASIS Exchange table models are
+    used.
+  -->
+  <!--
+    This declaration is not modified but
+    copied verbatim from JATS-display1.ent; it
+    needs to be here because some of the 
+    attribute-lists below refer to it.
+  -->
+  <define name="other-table-wrap-atts">
+    <empty/>
+  </define>
+  <!-- ARRAY ATTRIBUTES -->
+  <!-- Attributes for the <array> element -->
+  <define name="array-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="orientation" a:defaultValue="portrait">
+        <choice>
+          <value>portrait</value>
+          <value>landscape</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- BOXED TEXT ATTRIBUTES -->
+  <!-- Attributes for the <boxed-text> element -->
+  <define name="boxed-text-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- CHEMICAL STRUCTURE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes for the <chem-struct-wrap>
+    element, the outer wrapper around one or more
+    block-level chemical structures
+  -->
+  <define name="chem-struct-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- FIGURE ATTRIBUTES -->
+  <!-- Attributes for Figures <fig> -->
+  <!--
+    N.B. orientation, specific-use, and xml:lang
+    are the same as in display-atts.  But
+    position is overridden locally. The
+    specification here using CDATA is the 
+    effective one.
+  -->
+  <define name="fig-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="position" a:defaultValue="float"/>
+    </optional>
+    <optional>
+      <attribute name="orientation" a:defaultValue="portrait">
+        <choice>
+          <value>portrait</value>
+          <value>landscape</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="fig-type"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- FIGURE GROUP ATTRIBUTES -->
+  <!-- Attributes for Figure Groups <fig-group> -->
+  <define name="fig-group-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- GRAPHIC ATTRIBUTES -->
+  <!-- Attributes for the <graphic> element -->
+  <define name="graphic-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="mime-subtype"/>
+    </optional>
+    <optional>
+      <attribute name="mimetype"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="link-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- MEDIA ATTRIBUTES -->
+  <!-- Attributes for the <media> element -->
+  <define name="media-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="mimetype"/>
+    </optional>
+    <optional>
+      <attribute name="mime-subtype"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="link-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- PREFORMATTED TEXT ATTRIBUTES -->
+  <!-- Attributes for the <preformat> element -->
+  <define name="preformat-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="preformat-type"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:space" a:defaultValue="preserve">
+        <value>preserve</value>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- INLINE SUPPLEMENTARY MATERIAL -->
+  <!--
+    Attribute list for inline supplementary
+    material
+  -->
+  <define name="inline-supplementary-material-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="mimetype"/>
+    </optional>
+    <optional>
+      <attribute name="mime-subtype"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="might-link-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- SUPPLEMENTARY INFORMATION ATTRIBUTES -->
+  <!--
+    Attributes for Supplementary Material
+    <supplementary-material>
+  -->
+  <define name="supplementary-material-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="mimetype"/>
+    </optional>
+    <optional>
+      <attribute name="mime-subtype"/>
+    </optional>
+    <ref name="might-link-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- TABLE GROUP ATTRIBUTES -->
+  <!--
+    Attributes for groups of <table-wrap>
+    elements <table-wrap-group>
+  -->
+  <define name="table-wrap-group-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <ref name="other-table-wrap-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- TABLE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes for the <table-wrap> element,
+    the container for <table>s
+  -->
+  <define name="table-wrap-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="is-form">
+        <choice>
+          <ref name="is-form-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form-type">
+        <choice>
+          <ref name="form-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <ref name="other-table-wrap-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-math1.ent -->
+  <!-- ============================================================= -->
+  <!-- DISPLAY FORMULA ATTRIBUTES -->
+  <!-- Attributes for the <disp-formula> element -->
+  <define name="disp-formula-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- DISPLAY FORMULA GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the <disp-formula-group>
+    element
+  -->
+  <define name="disp-formula-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!--
+    tex:math would also belong in this list
+    and would also need to have the originator
+    attribute, if it were not being suppressed
+  -->
+  <!-- ============================================================= -->
+  <!-- FROM JATS-para1.ent -->
+  <!-- ============================================================= -->
+  <!-- DISPLAY QUOTE ATTRIBUTES -->
+  <!--                     Attribute list for the <disp-quote> element -->
+  <define name="disp-quote-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- PARAGRAPH ATTRIBUTES -->
+  <!-- Attribute list for the <p> element -->
+  <!--
+    In addition to adding 'originator', also
+    add style-type.
+  -->
+  <define name="p-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+    <optional>
+      <attribute name="style-type"/>
+    </optional>
+  </define>
+  <!-- SPEECH ATTRIBUTES -->
+  <!-- Attribute list for the <speech> element -->
+  <define name="speech-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- STATEMENT ATTRIBUTES -->
+  <!-- Attribute list for the <statement> element -->
+  <define name="statement-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- VERSE GROUP ATTRIBUTES -->
+  <!-- Attribute list for the <verse-group> element -->
+  <define name="verse-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-link1.ent -->
+  <!-- ============================================================= -->
+  <!-- FOOTNOTE ATTRIBUTES -->
+  <!--
+    Attribute list for Footnote element
+    NISO STS: revert to CDATA for fn-types.
+  -->
+  <define name="fn-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="symbol"/>
+    </optional>
+    <optional>
+      <attribute name="fn-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-list1.ent -->
+  <!-- ============================================================= -->
+  <!-- DEFAULT DEFINITION LIST ATTRIBUTES -->
+  <!--
+    Default attribute lists to be used for
+    Definition (2-part) lists
+  -->
+  <define name="def-list-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="list-type"/>
+    </optional>
+    <optional>
+      <attribute name="prefix-word"/>
+    </optional>
+    <optional>
+      <attribute name="list-content"/>
+    </optional>
+    <optional>
+      <attribute name="continued-from">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- DEFAULT LIST CLASS ATTRIBUTES -->
+  <!--
+    Default attribute lists to be used for most
+    of the types of lists.
+  -->
+  <define name="list-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="list-type"/>
+    </optional>
+    <optional>
+      <attribute name="prefix-word"/>
+    </optional>
+    <optional>
+      <attribute name="list-content"/>
+    </optional>
+    <optional>
+      <attribute name="continued-from">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-related-objects1.ent -->
+  <!-- ============================================================= -->
+  <!-- RELATED OBJECT ATTRIBUTES -->
+  <!-- Attributes for <related-object> -->
+  <define name="related-object-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="link-type"/>
+    </optional>
+    <optional>
+      <attribute name="source-id"/>
+    </optional>
+    <optional>
+      <attribute name="source-id-type"/>
+    </optional>
+    <optional>
+      <attribute name="source-type"/>
+    </optional>
+    <optional>
+      <attribute name="document-id"/>
+    </optional>
+    <optional>
+      <attribute name="document-id-type"/>
+    </optional>
+    <optional>
+      <attribute name="document-type"/>
+    </optional>
+    <optional>
+      <attribute name="object-id"/>
+    </optional>
+    <optional>
+      <attribute name="object-id-type"/>
+    </optional>
+    <optional>
+      <attribute name="object-type"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-backmatter.ent -->
+  <!-- ============================================================= -->
+  <define name="app-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="app-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- FOOTNOTE GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the Footnote Group <fn-group>
+    element
+  -->
+  <define name="fn-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- GLOSSARY ATTRIBUTES -->
+  <!--
+    Attributes for the Glossary <glossary>
+    element
+  -->
+  <define name="glossary-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-references.ent -->
+  <!-- ============================================================= -->
+  <!-- REFERENCE LIST ATTRIBUTES -->
+  <!-- Attributes for the <ref-list> element -->
+  <define name="ref-list-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FROM JATS-journalpubcustom-models1.ent -->
+  <!-- ============================================================= -->
+  <!-- SECTION ATTRIBUTES -->
+  <!-- Attribute list for Section element -->
+  <define name="sec-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="sec-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OTHER METADATA ATTRIBUTE OVERRIDES -->
+  <!--
+    Complete lists are given here rather than
+    just adding an attribute because 1) 
+    DTD maintenance is easier, particularly if 
+    JATS adds a similar (or the same named)
+    attribute and 2) Some older XML tools still 
+    do not (2016) handle duplicate attribute 
+    lists properly. Sigh.
+  -->
+  <!-- ============================================================= -->
+  <!-- ABSTRACT ATTRIBUTES -->
+  <!-- Attributes for the <abstract> element -->
+  <define name="abstract-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="abstract-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- CUSTOM METADATA GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the <custom-meta-group>
+    element
+  -->
+  <define name="custom-meta-group-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ISBN ATTRIBUTES -->
+  <!-- Attributes for the <isbn> element -->
+  <define name="isbn-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ISSN ATTRIBUTES -->
+  <!-- Attribute list for the <issn> element -->
+  <define name="issn-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="pub-type"/>
+    </optional>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ISSN-L (INKING ISSN) ATTRIBUTES -->
+  <!-- Attribute list for the <issn-l> element -->
+  <define name="issn-l-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVERRIDES FOR KEYWORDS, SUBJECTS, ROLE, -->
+  <!-- and NAMED-CONTENT to ADD VOCAB ATTRIBUTES -->
+  <!-- (from JATS 1.1d1 since NISO STS is based -->
+  <!-- on JATS 1.1) -->
+  <!-- ============================================================= -->
+  <!-- COMPOUND KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <compound-kwd> element -->
+  <define name="compound-kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- COMPOUND SUBJECT ATTRIBUTES -->
+  <!-- Attributes for the <compound-subject> element -->
+  <define name="compound-subject-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <kwd> element -->
+  <define name="kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- KEYWORD GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the <kwd-group> element  
+    NISO STS: Adds @originator and copies the
+    NISO JATS 1.1d1 vocab attributes.
+  -->
+  <define name="kwd-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="kwd-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <define name="named-content-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <attribute name="content-type"/>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- NESTED KEYWORD ATTRIBUTES -->
+  <!-- Attributes for the <nested-kwd> element -->
+  <define name="nested-kwd-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- ROLE ATTRIBUTES -->
+  <!-- Attributes for the <role> element -->
+  <define name="role-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SUBJECT ATTRIBUTES -->
+  <!-- Attributes for the <subject> element -->
+  <define name="subject-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+  </define>
+  <!-- SUBJECT GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the <subj-group> element
+    NISO STS: Adds @originator and copies the
+    NISO JATS 1.1d1 vocab attributes.
+  -->
+  <define name="subj-group-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="subj-group-type"/>
+    </optional>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="originator-attribute"/>
+  </define>
+  <!-- DEFINITION LIST: TERM ATTRIBUTES -->
+  <!--
+    Attributes for the <term> element.
+    In this Tag Set, used as part of
+    <term-display> as well as ordinary
+    definition lists.                
+    NISO STS: Adds @term-status, @term-type,
+    and copies the NISO JATS 1.1d1 vocab 
+    attributes.
+  -->
+  <define name="term-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="term-status">
+        <choice>
+          <ref name="term-status-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="term-type">
+        <choice>
+          <ref name="term-type-values"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="vocab"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term"/>
+    </optional>
+    <optional>
+      <attribute name="vocab-term-identifier"/>
+    </optional>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- TABLES AND INDEX REASSIGNS TO REMOVE 'X' -->
+  <!-- ============================================================= -->
+  <!-- INDEX MODEL -->
+  <!--
+    Content model for the Structural Index
+    <index> element.
+    NISO STS removed the <x> element.
+  -->
+  <define name="index-model">
+    <optional>
+      <ref name="index-title-group"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="index-entry.class"/>
+        <ref name="index-div.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- INDEX DIVISION MODEL -->
+  <!--
+    Content model for the Structural Index
+    <index-entry> element. 
+    NISO STS removed the <x> element.
+  -->
+  <define name="index-div-model">
+    <optional>
+      <ref name="index-title-group"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="index-entry.class"/>
+        <ref name="index-div.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- INDEX DIVISION MODEL -->
+  <!--
+    Content model for the Structural Index
+    <index-entry> element. 
+    NISO STS removed the <x> element.
+  -->
+  <!-- INDEX ENTRY MODEL -->
+  <!--
+    Content model for the Structural Index
+    <index-entry> element.  
+    NISO STS removed the <x> element.
+  -->
+  <define name="index-entry-model">
+    <ref name="term"/>
+    <zeroOrMore>
+      <choice>
+        <ref name="index-entry.class"/>
+        <ref name="struct-link.class"/>
+        <ref name="see-also-see-entry.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVERRIDES FOR BITS TOC MODELS -->
+  <!-- SIMPLIFY! -->
+  <!-- ============================================================= -->
+  <!-- TABLE OF CONTENTS Model -->
+  <!-- Content model for the <toc-group> element -->
+  <define name="toc-group-model">
+    <optional>
+      <ref name="toc-title-group"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="nothing-but-para.class"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="toc.class"/>
+    </oneOrMore>
+  </define>
+  <!-- TABLE OF CONTENTS Model -->
+  <!--
+    Content model for the <toc> element     
+    NISO STS removed the <x> element.
+  -->
+  <define name="toc-model">
+    <optional>
+      <ref name="toc-title-group"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="nothing-but-para.class"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="toc-entry.class"/>
+        <ref name="toc-div.class"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="fn-group.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- TABLE OF CONTENTS DIVISION MODEL -->
+  <!-- Content model for the <toc-div> element. -->
+  <define name="toc-div-model">
+    <optional>
+      <ref name="toc-title-group"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="nothing-but-para.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="struct-link.class"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="toc-entry.class"/>
+        <ref name="toc-div.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- TABLE OF CONTENTS ENTRY MODEL -->
+  <!-- Content model for the <toc-entry> element. -->
+  <define name="toc-entry-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="title"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="struct-link.class"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="toc-entry.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- TOC TITLE GROUP MODEL -->
+  <!-- Content model for <toc-title-group>. -->
+  <define name="toc-title-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="subtitle"/>
+    </zeroOrMore>
+  </define>
+</grammar>
+<!-- ================== End NISO STS Content/Attr Overrides ====== -->
