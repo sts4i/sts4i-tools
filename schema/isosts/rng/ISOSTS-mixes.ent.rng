@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    ISOSTS DTD Customize Mixes Module -->
+<!-- VERSION:   ISOSTS 1.1 -->
+<!-- DATE:      July 2013 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//ISO//DTD ISOSTS DTD Customize Mixes v1.1 20130701//EN"
+       Delivered as file "ISOSTS-mixes.ent"
+       Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-mixes.ent
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISOSTS DTD Suite -->
+<!---->
+<!-- PURPOSE:    Declares over-ride values for the default element -->
+<!-- mixes in the Suite. These over-rides are specific -->
+<!-- to the ISOSTS DTD. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called before the -->
+<!-- default mixes modules (%default-mixes;) -->
+<!---->
+<!-- CONTAINS:   1) PEs that define the element mixes to be -->
+<!-- over-ridden -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- International Organization for Standardization -->
+<!-- (ISO), Geneva. -->
+<!---->
+<!-- © 2011, 2012 ISO, All rights reserved -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2011 -->
+<!---->
+<!-- CREATED BY: B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!-- C. M. Sperberg-McQueen (Mulberry Technologies, -->
+<!-- Inc.) -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 1.1                            (HA) v1.1 (2013-07-01)
+  
+   6. Update version number and public identifiers to 1.1
+  
+       =============================================================
+       Version 1.0                           (MSM) v1.0 (2012-04-23)
+  
+    5. Updated version number for issue of version 1.0.
+  
+       =============================================================
+       Version 0.7                       (MSM/BTU) v0.7 (2012-02-07)
+  
+    4. Add std-ref.class inside emphasized-text.
+  
+    3. Add only-para.class and figure.class inside-cell.
+  
+       =============================================================
+       Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+  
+    2. Add non-normative.class to inside-cell.
+  
+       =============================================================
+       Version 0.5                       (MSM/BTU) v0.5 (2011-10-14)
+  
+    1. Created this module as part of ISOSTS version 0.5.
+-->
+<!-- ============================================================= -->
+<!-- OVERRIDE EMPHASIZED-TEXT MIX -->
+<!-- ============================================================= -->
+<!-- EMPHASIS MIX ELEMENTS -->
+<!--
+  Elements that may be used inside most of the
+  emphasis class elements
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="emphasized-text">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="citation.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="std-ref.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVERRIDE INSIDE-CELL -->
+  <!-- ============================================================= -->
+  <!-- INSIDE TABLE CELL ELEMENTS -->
+  <!--
+    Mixed with #PCDATA inside a table cell, such
+    as a <td> or <th> element in the XHTML table
+    model, the <entry> element in the OASIS CALS
+    table model, etc.  This PE will be used as the
+    value of %Flow.mix;, %paracon;, etc.
+    ### Usage Alert ###
+    Design Note: Inside cell is an exception, an
+    inline mix that does not start with an OR
+    bar. This is because it is used within the
+    PE %Flow.mix;, which is an inline mix
+    defined in the course of the XHTML Table DTD,
+    a DTD not under control of this DTD Suite.
+  -->
+  <define name="inside-cell">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="appearance.class"/>
+      <ref name="article-link.class"/>
+      <ref name="block-math.class"/>
+      <ref name="break.class"/>
+      <ref name="citation.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="figures.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="non-normative.class"/>
+      <ref name="only-para.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-display.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVERRIDE INSIDE-TABLE-WRAP -->
+  <!-- ============================================================= -->
+  <!-- INSIDE TABLE WRAPPER ELEMENTS -->
+  <!--
+    Usually a Table Wrapper contains a table,
+    properly tagged with rows and columns, but
+    sometimes, a structure that is labeled as
+    a "table" is actually a list, or two
+    paragraphs.  This Parameter Entity names
+    all the alternatives to table that may
+    occur inside a table wrapper.
+  -->
+  <define name="inside-table-wrap">
+    <choice>
+      <ref name="intable-para.class"/>
+      <ref name="list.class"/>
+      <ref name="simple-intable-display.class"/>
+      <ref name="non-normative.class"/>
+      <ref name="table.class"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVERRIDE PARAGRAPH-LEVEL ELEMENT MIX -->
+  <!-- ============================================================= -->
+  <!-- PARAGRAPH-LEVEL ELEMENTS -->
+  <!--
+    Elements that may be used at the same
+    structural level as a paragraph, for
+    example inside a Section
+    Note: There a major overlap between this
+    parameter entity and that for the elements
+    that are at the same level as a paragraph.
+    Inline elements appear only inside a
+    paragraph, but block elements such as quotes
+    and lists may appear either within a
+    paragraph or at the same level as a
+    paragraph. This serves a requirement in a
+    repository DTD, since some incoming material
+    will have restricted such elements to only
+    inside a paragraph,  some incoming material
+    will have restricted them to only outside a
+    paragraph and some may allow them in both
+    places. Thus the DTD must allow for them to
+    be in either or both.                      
+    
+    Change to use %only-para.class instead
+    of %just-para.class, to avoid determinism
+    error (some members of %just-para.class 
+    are also members of %block-display.class
+    and would otherwise cause trouble.
+  -->
+  <define name="para-level">
+    <choice>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="only-para.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="related-article.class"/>
+      <ref name="rest-of-para.class"/>
+    </choice>
+  </define>
+  <!-- PARAGRAPH ELEMENTS -->
+  <!--
+    Originally defined in JATS-commoon0.ent
+    but extended to also allow the "break" element
+    in the content model. The use of "break" should 
+    be discouraged and only used in exceptional cases 
+    such as marking up legacy documents or very specific
+    layouts.
+  -->
+  <define name="p-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="citation.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="funding.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="rest-of-para.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="break.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+</grammar>
+<!-- ================== End ISOSTS DTD Mixes Customization ======= -->

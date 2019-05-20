@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Paragraph-Like Elements -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Paragraph-Like Elements v0.4 20110131//EN"
+       Delivered as file "JATS-para0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Names structural elements that will appear in -->
+<!-- the same places as a paragraph -->
+<!---->
+<!-- CONTAINS:   1) Paragraph <p> and its PEs -->
+<!-- 2) The rest of the para-level elements, each with -->
+<!-- its Parameter Entities and subordinate -->
+<!-- elements -->
+<!-- - disp-quote -->
+<!-- - speech -->
+<!-- - statement -->
+<!-- - verse-group -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    4. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    3. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to the following elements:
+        - speaker through speaker-atts (both)
+        - statement through statement-atts (@xml:lang only; already
+            @specific-use))
+        - verse-line through verse-line-atts (both)
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- DISPLAY QUOTE ATTRIBUTES -->
+<!--                     Attribute list for the <disp-quote> element -->
+<!-- PARAGRAPH ATTRIBUTES -->
+<!-- Attribute list for the <p> element -->
+<!-- SPEAKER ATTRIBUTES -->
+<!-- Attribute list for the <speaker> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="speaker-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SPEECH ATTRIBUTES -->
+  <!-- Attribute list for the <speech> element -->
+  <!-- STATEMENT ATTRIBUTES -->
+  <!-- Attribute list for the <statement> element -->
+  <!-- VERSE GROUP ATTRIBUTES -->
+  <!-- Attribute list for the <verse-group> element -->
+  <!-- VERSE LINE ATTRIBUTES -->
+  <!--                     Attribute list for the <verse-line> element -->
+  <define name="verse-line-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PARAGRAPH-LEVEL ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- PARAGRAPH -->
+  <!--
+    The basic block-unit of textual information
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=p
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=p
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=p
+  -->
+  <define name="p">
+    <element name="p">
+      <ref name="p-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="p-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="p-attlist" combine="interleave">
+    <ref name="p-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- THE REST OF THE PARAGRAPH ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- QUOTE, DISPLAYED MODEL -->
+  <!--                     Content model for the Display Quote element -->
+  <define name="disp-quote-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- QUOTE, DISPLAYED -->
+  <!--
+    Extract or extended quoted passage from
+    another work, usually made typographically
+    distinct from the surrounding text.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=disp-quote
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=disp-quote
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=disp-quote
+  -->
+  <define name="disp-quote">
+    <element name="disp-quote">
+      <ref name="disp-quote-attlist"/>
+      <ref name="disp-quote-model"/>
+    </element>
+  </define>
+  <define name="disp-quote-attlist" combine="interleave">
+    <ref name="disp-quote-atts"/>
+  </define>
+  <!-- SPEECH MODEL -->
+  <!-- Content model for the <speech> element -->
+  <define name="speech-model">
+    <ref name="speaker"/>
+    <oneOrMore>
+      <ref name="just-para.class"/>
+    </oneOrMore>
+  </define>
+  <!-- SPEECH -->
+  <!--
+    One exchange in a real or imaginary
+    conversation between two or more entities,
+    for example, between a an interviewer and the
+    person being interviewed, between a nurse or
+    doctor and a patient, between a person and a
+    computer, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=speech
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=speech
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=speech
+  -->
+  <define name="speech">
+    <element name="speech">
+      <ref name="speech-attlist"/>
+      <ref name="speech-model"/>
+    </element>
+  </define>
+  <define name="speech-attlist" combine="interleave">
+    <ref name="speech-atts"/>
+  </define>
+  <!-- SPEAKER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a speaker.
+  -->
+  <define name="speaker-elements">
+    <choice>
+      <ref name="person-name.class"/>
+      <ref name="simple-link.class"/>
+    </choice>
+  </define>
+  <!-- SPEAKER -->
+  <!--
+    One who utters a speech as part of a
+    speech, for example the computer "HAL" in
+    the exchange 'Hal: "Hi Dave"'.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=speaker
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=speaker
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=speaker
+  -->
+  <define name="speaker">
+    <element name="speaker">
+      <ref name="speaker-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="speaker-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="speaker-attlist" combine="interleave">
+    <ref name="speaker-atts"/>
+  </define>
+  <!-- STATEMENT, FORMAL MODEL -->
+  <!-- Content model for the <statement> element -->
+  <define name="statement-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="just-para.class"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- STATEMENT, FORMAL -->
+  <!--
+    A Theorem, Lemma, Proof, Postulate,
+    Hypothesis, Proposition, Corollary, or
+    other formal statement, identified as such
+    with a label, usually made typographically
+    distinct from the surrounding text
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=statement
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=statement
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=statement
+  -->
+  <define name="statement">
+    <element name="statement">
+      <ref name="statement-attlist"/>
+      <ref name="statement-model"/>
+    </element>
+  </define>
+  <define name="statement-attlist" combine="interleave">
+    <ref name="statement-atts"/>
+  </define>
+  <!-- VERSE GROUP MODEL -->
+  <!--                     Content model for the <verse-group> element -->
+  <define name="verse-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <optional>
+      <ref name="subtitle"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="verse-line"/>
+        <ref name="verse-group"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- VERSE FORM FOR POETRY -->
+  <!--
+    A song, poem, or verse.
+    Implementer's Note: No attempt has been made
+    to retain the look or visual form of the
+    original.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=verse-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=verse-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=verse-group
+  -->
+  <define name="verse-group">
+    <element name="verse-group">
+      <ref name="verse-group-attlist"/>
+      <ref name="verse-group-model"/>
+    </element>
+  </define>
+  <define name="verse-group-attlist" combine="interleave">
+    <ref name="verse-group-atts"/>
+  </define>
+  <!-- VERSE-LINE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <verse-line>
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-text; is an inline
+    mix, the OR bar is already there.
+  -->
+  <define name="verse-line-elements">
+    <ref name="simple-text"/>
+  </define>
+  <!-- LINE OF A VERSE -->
+  <!--
+    One line of a poem or verse
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=verse-line
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=verse-line
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=verse-line
+  -->
+  <define name="verse-line">
+    <element name="verse-line">
+      <ref name="verse-line-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="verse-line-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="verse-line-attlist" combine="interleave">
+    <ref name="verse-line-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Paragraph Class Module =============== -->

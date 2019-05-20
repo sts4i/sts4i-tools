@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Formatting Element Classes -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Formatting Element Classes v0.4 20110131//EN"
+   Delivered as file "JATS-format0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!---->
+<!-- PURPOSE:    Elements concerned with rendition of output, for -->
+<!-- example printing on a page or display on a screen -->
+<!---->
+<!-- CONTAINS:   1) Default definitions of format classes -->
+<!-- 2) Appearance class elements -->
+<!-- 3) Break class elements -->
+<!-- 4) Typographic emphasis elements -->
+<!-- 5) Advanced overline and underline elements -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- important contributions. -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    5. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0, but the
+       following change could break some customizations.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    4. @SPECIAL-USE - Added the attribute @special-use to the
+       all 14 formatting (emphasis) elements. This includes all the
+       ones listed in 3. below as well as:
+         - sub             sub-atts  overline-atts
+         - sup             sup-atts
+         - overline-start  overline-start-atts
+         - overline-end    overline-start-atts
+         - underline       underline-atts
+         - underline-start underline-start-atts
+         - underline-end   underline-end-atts
+  
+    3. PES FOR ATTLISTS - Added parameter entity redefinitions for the
+       attribute lists of the following elements: (no attributes or
+       values were changed)
+         - bold            bold-atts       NEW PE
+         - italic          italic-atts     NEW PE
+         - monospace       monospace-atts  NEW PE
+         - roman           roman-atts      NEW PE
+         - sans-serif      sans-serif-atts NEW PE
+         - sc              sc-atts         NEW PE
+         - strike          strike-atts     NEW PE
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- BOLD ATTRIBUTES -->
+<!-- Attributes for the <bold> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="bold-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ITALIC ATTRIBUTES -->
+  <!-- Attributes for the <italic> element -->
+  <define name="italic-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- MONOSPACE ATTRIBUTES -->
+  <!-- Attributes for the <bold> element -->
+  <define name="monospace-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- OVERLINE START ATTRIBUTES -->
+  <!-- Attributes for the <overline> element -->
+  <define name="overline-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- OVERLINE START ATTRIBUTES -->
+  <!--                     Attributes for the <overline-start> element -->
+  <define name="overline-start-atts">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- OVERLINE END ATTRIBUTES -->
+  <!-- Attributes for the <overline-end> element -->
+  <define name="overline-end-atts">
+    <attribute name="rid">
+      <data type="IDREF"/>
+    </attribute>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ROMAN ATTRIBUTES -->
+  <!-- Attributes for the <roman> element -->
+  <define name="roman-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- SANS SERIF ATTRIBUTES -->
+  <!-- Attributes for the <sans-serif> element -->
+  <define name="sans-serif-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- SMALL CAPS ATTRIBUTES -->
+  <!-- Attributes for the <sc> element -->
+  <define name="sc-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- STRIKE THROUGH ATTRIBUTES -->
+  <!-- Attributes for the <strike> element -->
+  <define name="strike-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- SUBSCRIPT ATTRIBUTES -->
+  <!-- Attributes for the subscript <sub> element -->
+  <define name="sub-atts">
+    <optional>
+      <attribute name="arrange">
+        <choice>
+          <value>stack</value>
+          <value>stagger</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- SUPERSCRIPT ATTRIBUTES -->
+  <!--
+    Attributes for the superscript <sup>
+    element
+  -->
+  <define name="sup-atts">
+    <optional>
+      <attribute name="arrange">
+        <choice>
+          <value>stack</value>
+          <value>stagger</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- UNDERLINE ATTRIBUTES -->
+  <!-- Attributes for the <underline> element -->
+  <define name="underline-atts">
+    <optional>
+      <attribute name="underline-style"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- UNDERLINE START ATTRIBUTES -->
+  <!--
+    Attributes for the <underline-start>
+    element
+  -->
+  <define name="underline-start-atts">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- UNDERLINE END ATTRIBUTES -->
+  <!-- Attributes for the <underline-end> element -->
+  <define name="underline-end-atts">
+    <attribute name="rid">
+      <data type="IDREF"/>
+    </attribute>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- APPEARANCE CLASS ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- HORIZONTAL RULE -->
+  <!--
+    Defined to allow the user to specify an
+    explicit (non machine-generated) rule.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=hr
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=hr
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=hr
+  -->
+  <define name="hr">
+    <element name="hr">
+      <ref name="hr-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="hr-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BREAK CLASS ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- LINE BREAK -->
+  <!--
+    Defined to allow the user to specify an
+    explicit (non machine-generated) linebreak.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=break
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=break
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=break
+  -->
+  <define name="break">
+    <element name="break">
+      <ref name="break-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="break-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- EMPHASIS/RENDITION CLASS ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- BOLD -->
+  <!--
+    Used to mark text that should appear in bold
+    face type for print or display
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=bold
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=bold
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=bold
+  -->
+  <define name="bold">
+    <element name="bold">
+      <ref name="bold-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="bold-attlist" combine="interleave">
+    <ref name="bold-atts"/>
+  </define>
+  <!-- ITALIC -->
+  <!--
+    Used to mark text that should appear in
+    italic type on output.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=italic
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=italic
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=italic
+  -->
+  <define name="italic">
+    <element name="italic">
+      <ref name="italic-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="italic-attlist" combine="interleave">
+    <ref name="italic-atts"/>
+  </define>
+  <!-- MONOSPACE TEXT (TYPEWRITER TEXT) -->
+  <!--
+    Used to mark text that should appear in
+    a non-proportional font, such as courier
+    for display or print.  This is common for
+    computer code examples, man-machine
+    dialogues, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=monospace
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=monospace
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=monospace
+  -->
+  <define name="monospace">
+    <element name="monospace">
+      <ref name="monospace-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="monospace-attlist" combine="interleave">
+    <ref name="monospace-atts"/>
+  </define>
+  <!-- ROMAN -->
+  <!--
+    Used to mark text that should remain in
+    roman script no matter what style the
+    surrounding text takes on.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=roman
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=roman
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=roman
+  -->
+  <define name="roman">
+    <element name="roman">
+      <ref name="roman-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="roman-attlist" combine="interleave">
+    <ref name="roman-atts"/>
+  </define>
+  <!-- SANS SERIF -->
+  <!--
+    Used to mark text that should appear in a
+    special sans-serif font, typically used in
+    math or chemistry
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=sans-serif
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=sans-serif
+  -->
+  <define name="sans-serif">
+    <element name="sans-serif">
+      <ref name="sans-serif-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sans-serif-attlist" combine="interleave">
+    <ref name="sans-serif-atts"/>
+  </define>
+  <!-- SMALL CAPS -->
+  <!--
+    Used to mark text that should appear in a
+    font which creates smaller capital letters
+    on output.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=sc
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=sc
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=sc
+  -->
+  <define name="sc">
+    <element name="sc">
+      <ref name="sc-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sc-attlist" combine="interleave">
+    <ref name="sc-atts"/>
+  </define>
+  <!-- OVERLINE -->
+  <!--
+    Used to mark text that should appear with a
+    horizontal line above each character in
+    display or print. There is no PE for
+    override because this was added to handle
+    a specific publisher tag set and should not
+    grow beyond what they need.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=overline
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=overline
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=overline
+  -->
+  <define name="overline">
+    <element name="overline">
+      <ref name="overline-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="overline-attlist" combine="interleave">
+    <ref name="overline-atts"/>
+  </define>
+  <!-- STRIKE THROUGH -->
+  <!--
+    Used to mark text that should appear with
+    a line through it so as to appear "struck out"
+    on display or print
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=strike
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=strike
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=strike
+  -->
+  <define name="strike">
+    <element name="strike">
+      <ref name="strike-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="strike-attlist" combine="interleave">
+    <ref name="strike-atts"/>
+  </define>
+  <!-- SUBSCRIPT -->
+  <!--
+    A number or expression that is set lower
+    than the baseline and slightly smaller,
+    to act as an inferior or subscript
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=sub
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=sub
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=sub
+  -->
+  <define name="sub">
+    <element name="sub">
+      <ref name="sub-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sub-attlist" combine="interleave">
+    <ref name="sub-atts"/>
+  </define>
+  <!-- SUPERSCRIPT -->
+  <!--
+    A number or expression that is set higher
+    than the baseline and slightly smaller,
+    to act as a superior or superscript
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=sup
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=sup
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=sup
+  -->
+  <define name="sup">
+    <element name="sup">
+      <ref name="sup-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sup-attlist" combine="interleave">
+    <ref name="sup-atts"/>
+  </define>
+  <!-- UNDERLINE -->
+  <!--
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=underline
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=underline
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=underline
+  -->
+  <define name="underline">
+    <element name="underline">
+      <ref name="underline-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphasized-text"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="underline-attlist" combine="interleave">
+    <ref name="underline-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!--
+    ADVANCED UNDERLINE AND OVERLINE ELEMENTS
+    (From the Elsevier DTD, used mostly within
+    mathematics, when ordinary MathML underline
+    and overline functions are inadequate. The
+    elements act as milestone tags marking the
+    start and end of over or underlining that
+    may extend across element boundaries.)
+  -->
+  <!-- ============================================================= -->
+  <!-- OVERLINE START -->
+  <!--
+    The start of a milestone-created overline, the
+    end of ornament will be marked by an
+    Overline End element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=overline-start
+  -->
+  <define name="overline-start">
+    <element name="overline-start">
+      <ref name="overline-start-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="overline-start-attlist" combine="interleave">
+    <ref name="overline-start-atts"/>
+  </define>
+  <!-- OVERLINE END -->
+  <!--
+    The end of a milestone-created overline, the
+    start of ornament will be marked by an
+    Overline Start element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=overline-end
+  -->
+  <define name="overline-end">
+    <element name="overline-end">
+      <ref name="overline-end-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="overline-end-attlist" combine="interleave">
+    <ref name="overline-end-atts"/>
+  </define>
+  <!-- UNDERLINE START -->
+  <!--
+    The start of a milestone-created underline,
+    the end of ornament will be marked by an
+    Underline End element
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=underline-start
+  -->
+  <define name="underline-start">
+    <element name="underline-start">
+      <ref name="underline-start-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="underline-start-attlist" combine="interleave">
+    <ref name="underline-start-atts"/>
+  </define>
+  <!-- UNDERLINE END -->
+  <!--
+    The end of a milestone-created underline, the
+    start of ornament will be marked by an
+    Underline Start element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=underline-end
+  -->
+  <define name="underline-end">
+    <element name="underline-end">
+      <ref name="underline-end-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="underline-end-attlist" combine="interleave">
+    <ref name="underline-end-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Format Class Module =================== -->

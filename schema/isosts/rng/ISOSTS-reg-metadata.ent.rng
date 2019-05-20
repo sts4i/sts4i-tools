@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    ISOSTS Regional Body Metadata Module -->
+<!-- VERSION:   ISOSTS 1.1 -->
+<!-- DATE:      April 2013 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//ISO//DTD ISOSTS Metadata for Regional Bodies v1.1 20130701//EN"
+       Delivered as file "ISOSTS-reg-metadata.ent"
+       Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-reg-metadata.ent
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal -->
+<!-- Publishing DTD of the Journal Archiving and -->
+<!-- Interchange DTD Suite (JATS) -->
+<!---->
+<!-- PURPOSE:    This module defines elements for SDO-specific -->
+<!-- metadata, for SDOs which are classified as -->
+<!-- regional. -->
+<!-- In the current version of this DTD, the content -->
+<!-- of reg-meta is based on the iso-meta model -->
+<!-- extended the CEN requirement for a -->
+<!-- release-version-id. -->
+<!---->
+<!-- CONTAINS:   1) Definition of reg-meta -->
+<!-- 2) Definitions of parameter entities to allow -->
+<!-- easy modification and customization of -->
+<!-- content models and attribute lists. -->
+<!---->
+<!-- TAG SET SPONSOR -->
+<!-- International Organization for Standardization -->
+<!-- (ISO) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- ISO and similar bodies -->
+<!---->
+<!-- © ISO, All rights reserved -->
+<!---->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- April 2013 -->
+<!---->
+<!-- CREATED BY: H. Apel (ISO) -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 1.1                           (HA) v1.1 (2013-07-01)
+  
+   1.  First version based on cen-meta model
+-->
+<!-- ============================================================= -->
+<!-- REG METADATA ELEMENT -->
+<!-- ============================================================= -->
+<!-- REG METADATA CONTENT MODEL -->
+<!--
+  The reg-meta content model is (by design)
+  very similar to that of iso-meta.
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="reg-meta-model">
+    <oneOrMore>
+      <ref name="title-wrap"/>
+    </oneOrMore>
+    <ref name="doc-ident"/>
+    <ref name="std-ident"/>
+    <oneOrMore>
+      <ref name="content-language"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="std-ref"/>
+    </oneOrMore>
+    <ref name="doc-ref"/>
+    <optional>
+      <ref name="pub-date"/>
+    </optional>
+    <ref name="release-date"/>
+    <zeroOrMore>
+      <ref name="meta-date"/>
+    </zeroOrMore>
+    <ref name="wi-number"/>
+    <ref name="comm-ref"/>
+    <oneOrMore>
+      <ref name="secretariat"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="ics"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="page-count"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-xref"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="release-version-id"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="permissions"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="custom-meta-group"/>
+    </zeroOrMore>
+  </define>
+  <!-- REG METADATA ATTRIBUTES -->
+  <define name="reg-meta-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <attribute name="originator"/>
+  </define>
+  <!-- REG METADATA -->
+  <define name="reg-meta">
+    <element name="reg-meta">
+      <ref name="reg-meta-attlist"/>
+      <ref name="reg-meta-model"/>
+    </element>
+  </define>
+  <define name="reg-meta-attlist" combine="interleave">
+    <ref name="reg-meta-atts"/>
+  </define>
+  <!-- WORK-ITEM NUMBER CONTENT MODEL -->
+  <!--
+    The wi-number element holds the work-item
+    number for this document.
+  -->
+  <define name="wi-number-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- WORK-ITEM NUMBER ATTRIBUTES -->
+  <define name="wi-number-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- WORK-ITEM NUMBER -->
+  <define name="wi-number">
+    <element name="wi-number">
+      <ref name="wi-number-attlist"/>
+      <ref name="wi-number-model"/>
+    </element>
+  </define>
+  <define name="wi-number-attlist" combine="interleave">
+    <ref name="wi-number-atts"/>
+  </define>
+  <!-- RELEASE-VERSION ID CONTENT MODEL -->
+  <!-- The release version id holds ... -->
+  <define name="release-version-id-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- RELEASE-VERSION ID ATTRIBUTES -->
+  <define name="release-version-id-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- RELEASE VERSION ID -->
+  <define name="release-version-id">
+    <element name="release-version-id">
+      <ref name="release-version-id-attlist"/>
+      <ref name="release-version-id-model"/>
+    </element>
+  </define>
+  <define name="release-version-id-attlist" combine="interleave">
+    <ref name="release-version-id-atts"/>
+  </define>
+</grammar>
+<!-- ELEM  title-wrap    Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  doc-ident     Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  std-ident     Defined in %ISOSTS-iso-meta.ent;" -->
+<!--
+  ELEM  content-language
+  Defined in %ISOSTS-iso-meta.ent;"
+-->
+<!-- ELEM  std-ref       Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  doc-ref       Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  pub-date      Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  release-date  Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  meta-date     Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  comm-ref      Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  secretariat   Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  ics           Defined in %ISOSTS-iso-meta.ent;" -->
+<!-- ELEM  std-xref      Defined in %ISOSTS-iso-meta.ent;" -->
+<!--
+  ELEM  permissions,custom-meta-group
+  Defined in %common0.ent;"
+-->
+<!-- ================== End ISOSTS REG Metadata Module =========== -->

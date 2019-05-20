@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    ISOSTS TBX Terminology Module -->
+<!-- VERSION:   ISOSTS 1.1 -->
+<!-- DATE:      July 2013 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//ISO//DTD ISOSTS TBX Terminology Module v1.1 20130701//EN"
+       Delivered as file "ISOSTS-tbx-namespace.ent"
+       Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-tbx-namespace.ent
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal -->
+<!-- Publishing DTD of the Journal Archiving and -->
+<!-- Interchange DTD Suite (JATS) -->
+<!---->
+<!-- PURPOSE:    This module defines a namespace-qualified, -->
+<!-- TBX (TermBase eXchange) compatible vocabulary -->
+<!-- derived from ISO 30042. -->
+<!---->
+<!-- CONTAINS:   1) Parameter entities for the TBX namespace -->
+<!-- prefix -->
+<!-- 2) Parameter entities for element names -->
+<!-- 3) Standard content models and content-model -->
+<!-- fragments -->
+<!-- 4) Standard attribute sets -->
+<!-- 5) Elements used for text markup -->
+<!-- 6) Elements needed for terminological entries -->
+<!-- (in alphabetical order) -->
+<!---->
+<!-- TAG SET SPONSOR -->
+<!-- International Organization for Standardization -->
+<!-- (ISO) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- ISO and similar bodies -->
+<!---->
+<!-- © 2011, 2012 ISO, All rights reserved -->
+<!---->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- July 2011 -->
+<!---->
+<!-- CREATED BY: C. M. Sperberg-McQueen -->
+<!-- B. Tommie Usdin -->
+<!-- (Mulberry Technologies, Inc.) -->
+<!-- Kara Warburton -->
+<!-- (The Language Automation Company) -->
+<!-- Nathan E. Rasmussen -->
+<!-- (LTAC Global) -->
+<!-- Holger Apel (ISO) -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 1.1                            (HA) v1.1 (2013-07-01)
+  
+   8.  Update version number and public identifiers to 1.1
+   7.  Allow elements from address-link.class and 
+       inline-display-noalt.class to be used by highlight-elements
+  
+       =============================================================
+       Version 1.0                           (MSM) v1.0 (2012-04-23)
+  
+    6. Updated version number for issue of version 1.0.
+  
+  
+       =============================================================
+       Version 0.6                             (HA) v0.6 (2012-02-12)
+  
+    5. add attribute xtarget to tbx:source
+  
+       =============================================================
+       Version 0.5                             (HA) v0.5 (2011-11-22)
+  
+    4. allow a number of ISOSTS markup within highlight-elements
+  
+       =============================================================
+       Version 0.4a                         (MSM) v0.4a (2011-11-01)
+  
+    3. Changed TBX namespace from "urn:iso:std:iso:30042:ed-1:v1:en"
+       to "urn:iso:std:iso:30042:ed-1" (following Holger Apel's note 
+       of 20 Oct 2011).
+  
+       =============================================================
+       Version 0.4                        (KW/NER) v0.2 (2011-11-22)
+  
+    2. Namespace qualification adopted from previous version.  Other
+       modifications from ISO 30042 Annex A as follows:
+  
+       a) Elements enclosing termEntry have been omitted as superfluous.
+  
+       b) Content definitions for termEntry and its children have
+          been subsetted, omitting structures and data categories
+          not necessary in this application.
+  
+       c) A particular set of data categories has been imposed. 
+  
+       d) Meta data elements such as descrip have been replaced by
+          elements that represent a single data category. Where the
+          value of the data category must be drawn from a picklist, 
+          it has been moved from element content to an attribute. 
+          These changes allow a DTD to validate data category usage.
+  
+       e) The partOfSpeech element has been made mandatory in every
+          tig (Term Information Group). Most other term-level data
+          categories have been constrained to occur once at most. 
+          As a side effect, they now must occur in a fixed order.
+  
+       f) A script attribute has been added to most elements. An 
+          xtarget (external target) attribute has been added to
+          entailedTerm and replaces the target attribute on external
+          references. The type attribute has been made mandatory on
+          external references, correcting an oversight in ISO 30042. 
+  
+       i) The markup-encapsulating elements have been removed as 
+          superfluous. Elements that previously had access to them
+          through the noteText content model have been downgraded
+          to basicText.
+  
+       g) MathML and JATS formatting elements have been added to 
+          the basicText content model, supplying lists, tables, and 
+          inline formatting, and superseding TBX-based highlighting 
+          elements other than entailedTerm.
+  
+       h) A new content model, simpleText, provides this formatting
+          but not entailedTerm. It has been applied to all fields
+          that contain plain terms, upgrading some from PCDATA and
+          downgrading others from basicText.
+  
+       =============================================================
+       Version 0.3                       (MSM/BTU) v0.1 (2011-05-12)
+  
+    1. First version of this namespace-qualified TBX.  The material
+       here is based on ISO 30042 Annex A, but has been modified
+       in the following ways:
+  
+       a) The definitions of the parameter entities TBX.prefix, 
+          TBX.xmlns, and TBX.xmlns.attrib have been added.
+  
+       b) Parameter entities have been defined for the names of
+          all elements in the TBX vocabulary.
+  
+       c) All references to elements in the TBX vocabulary have
+          been changed to use these parameter entities.
+  
+       d) The declarations have been reformatted for legibility.
+  
+       e) Annex A of ISO 30042 says of its content "When reformatted
+          as a separate file, it should be named TBXcoreStructV02.dtd
+          (TBX Core DTD Version 02)."  This DTD module is NOT called
+          TBXcoreStructV02.dtd, because it is NOT textually
+          identical with the content of ISO 30042 Annex A.
+  
+-->
+<!--
+  The following material was derived from Annex A of ISO 30042,
+  with the changes listed above in the change log.
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR THE -->
+<!-- TBX NAMESPACE PREFIX -->
+<!-- ============================================================= -->
+<!-- MAKE PREFIX EQUAL "tbx" -->
+<!-- SET UP NAMESPACE FOR TBX -->
+<!--
+  ISO 30042 defines the TBX vocabulary, but
+  does not specify a namespace name for 
+  the vocabulary.  We use the ISO URN for 
+  ISO 30042 itself as the namespace name.
+-->
+<!-- DEFINE TBX namespace declaration -->
+<!-- ============================================================= -->
+<!-- TBX ELEMENT NAMES -->
+<!-- (in alphabetical order) -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SOME USEFUL ENTITIES THAT ARE REFERENCED BELOW: -->
+<!-- STANDARD CONTENT MODELS AND CONTENT-MODEL FRAGMENTS -->
+<!-- NOTE: %simple-link.class; cannot be used since it contains -->
+<!-- already tbx:entailedTerm -->
+<!-- ============================================================= -->
+<grammar xmlns:tbx="urn:iso:std:iso:30042:ed-1" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="highlight-elements">
+    <choice>
+      <ref name="block-math.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="simple-math.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+      <ref name="list.class"/>
+      <ref name="fn"/>
+      <ref name="target"/>
+      <ref name="xref"/>
+      <ref name="citation.class"/>
+      <ref name="break.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="block-display.class"/>
+      <ref name="address-link.class"/>
+      <ref name="inline-display-noalt.class"/>
+    </choice>
+  </define>
+  <define name="basicText-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="highlight-elements"/>
+        <ref name="tbx.entailedTerm"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="simpleText-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="highlight-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ENTITIES THAT DEFINE COMMON SETS OF ATTRIBUTES -->
+  <!-- ============================================================= -->
+  <define name="impIDLangScrpt-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <define name="tbx-xref-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <attribute name="xtarget"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ELEMENTS USED FOR TEXT MARKUP: HIGHLIGHT-BASED ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ENTAILED TERM -->
+  <define name="tbx.entailedTerm">
+    <element name="tbx:entailedTerm">
+      <ref name="tbx.entailedTerm-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.entailedTerm-attlist" combine="interleave">
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="xtarget"/>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ELEMENTS NEEDED FOR TERMINOLOGICAL ENTRIES -->
+  <!-- (in alphabetical order) -->
+  <!-- ============================================================= -->
+  <!-- CROSS REFERENCE -->
+  <define name="tbx.crossReference">
+    <element name="tbx:crossReference">
+      <ref name="tbx.crossReference-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.crossReference-attlist" combine="interleave">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- DEFINITION -->
+  <define name="tbx.definition">
+    <element name="tbx:definition">
+      <ref name="tbx.definition-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.definition-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXAMPLE -->
+  <define name="tbx.example">
+    <element name="tbx:example">
+      <ref name="tbx.example-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.example-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXTERNAL CROSS REFERENCE -->
+  <define name="tbx.externalCrossReference">
+    <element name="tbx:externalCrossReference">
+      <ref name="tbx.externalCrossReference-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.externalCrossReference-attlist" combine="interleave">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <attribute name="xtarget"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- GEOGRAPHICAL USAGE -->
+  <define name="tbx.geographicalUsage">
+    <element name="tbx:geographicalUsage">
+      <ref name="tbx.geographicalUsage-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.geographicalUsage-attlist" combine="interleave">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- GRAMMATICAL GENDER -->
+  <define name="tbx.grammaticalGender">
+    <element name="tbx:grammaticalGender">
+      <ref name="tbx.grammaticalGender-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.grammaticalGender-attlist" combine="interleave">
+    <attribute name="value">
+      <choice>
+        <value>masculine</value>
+        <value>feminine</value>
+        <value>neuter</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- GRAMMATICAL NUMBER -->
+  <define name="tbx.grammaticalNumber">
+    <element name="tbx:grammaticalNumber">
+      <ref name="tbx.grammaticalNumber-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.grammaticalNumber-attlist" combine="interleave">
+    <attribute name="value">
+      <choice>
+        <value>singular</value>
+        <value>plural</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- LANGUAGE SET -->
+  <define name="tbx.langSet">
+    <element name="tbx:langSet">
+      <ref name="tbx.langSet-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="tbx.crossReference"/>
+          <ref name="tbx.definition"/>
+          <ref name="tbx.example"/>
+          <ref name="tbx.externalCrossReference"/>
+          <ref name="tbx.note"/>
+          <ref name="tbx.see"/>
+          <ref name="tbx.source"/>
+          <ref name="tbx.subjectField"/>
+          <ref name="tbx.xGraphic"/>
+          <ref name="tbx.xMathML"/>
+          <ref name="tbx.xSource"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="tbx.tig"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tbx.langSet-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <attribute name="xml:lang"/>
+  </define>
+  <!-- NORMATIVE AUTHORIZATION -->
+  <define name="tbx.normativeAuthorization">
+    <element name="tbx:normativeAuthorization">
+      <ref name="tbx.normativeAuthorization-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.normativeAuthorization-attlist" combine="interleave">
+    <attribute name="value">
+      <choice>
+        <value>preferredTerm</value>
+        <value>admittedTerm</value>
+        <value>deprecatedTerm</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- NOTE -->
+  <define name="tbx.note">
+    <element name="tbx:note">
+      <ref name="tbx.note-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.note-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- PART OF SPEECH -->
+  <define name="tbx.partOfSpeech">
+    <element name="tbx:partOfSpeech">
+      <ref name="tbx.partOfSpeech-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.partOfSpeech-attlist" combine="interleave">
+    <attribute name="value">
+      <choice>
+        <value>noun</value>
+        <value>verb</value>
+        <value>adj</value>
+        <value>adv</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- PRONUNCIATION -->
+  <define name="tbx.pronunciation">
+    <element name="tbx:pronunciation">
+      <ref name="tbx.pronunciation-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.pronunciation-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SEE -->
+  <define name="tbx.see">
+    <element name="tbx:see">
+      <ref name="tbx.see-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.see-attlist" combine="interleave">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- SOURCE -->
+  <define name="tbx.source">
+    <element name="tbx:source">
+      <ref name="tbx.source-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.source-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="xtarget"/>
+    </optional>
+  </define>
+  <!-- SUBJECT FIELD -->
+  <define name="tbx.subjectField">
+    <element name="tbx:subjectField">
+      <ref name="tbx.subjectField-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.subjectField-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- TERM -->
+  <define name="tbx.term">
+    <element name="tbx:term">
+      <ref name="tbx.term-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.term-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- TERM ENTRY (CONCEPT ENTRY) -->
+  <define name="tbx.termEntry">
+    <element name="tbx:termEntry">
+      <ref name="tbx.termEntry-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="tbx.externalCrossReference"/>
+          <ref name="tbx.xGraphic"/>
+          <ref name="tbx.xMathML"/>
+          <ref name="tbx.xSource"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="tbx.langSet"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tbx.termEntry-attlist" combine="interleave">
+    <ref name="TBX.xmlns.attrib"/>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TERM TYPE -->
+  <define name="tbx.termType">
+    <element name="tbx:termType">
+      <ref name="tbx.termType-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.termType-attlist" combine="interleave">
+    <attribute name="value">
+      <choice>
+        <value>acronym</value>
+        <value>abbreviation</value>
+        <value>fullForm</value>
+        <value>symbol</value>
+        <value>variant</value>
+        <value>formula</value>
+        <value>equation</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- TIG (TERM INFORMATION GROUP) -->
+  <define name="tbx.tig">
+    <element name="tbx:tig">
+      <ref name="tbx.tig-attlist"/>
+      <ref name="tbx.term"/>
+      <ref name="tbx.partOfSpeech"/>
+      <optional>
+        <ref name="tbx.geographicalUsage"/>
+      </optional>
+      <optional>
+        <ref name="tbx.grammaticalGender"/>
+      </optional>
+      <optional>
+        <ref name="tbx.grammaticalNumber"/>
+      </optional>
+      <optional>
+        <ref name="tbx.normativeAuthorization"/>
+      </optional>
+      <optional>
+        <ref name="tbx.pronunciation"/>
+      </optional>
+      <optional>
+        <ref name="tbx.termType"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="tbx.usageNote"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="tbx.tig-attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- USAGE NOTE -->
+  <define name="tbx.usageNote">
+    <element name="tbx:usageNote">
+      <ref name="tbx.usageNote-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.usageNote-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXTERNAL GRAPHIC -->
+  <define name="tbx.xGraphic">
+    <element name="tbx:xGraphic">
+      <ref name="tbx.xGraphic-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xGraphic-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+  <!-- EXTERNAL MATHML -->
+  <define name="tbx.xMathML">
+    <element name="tbx:xMathML">
+      <ref name="tbx.xMathML-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xMathML-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+  <!-- EXTERNAL SOURCE -->
+  <define name="tbx.xSource">
+    <element name="tbx:xSource">
+      <ref name="tbx.xSource-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xSource-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+</grammar>
+<!-- ================== End ISOSTS TBX Terminology Module ======== -->

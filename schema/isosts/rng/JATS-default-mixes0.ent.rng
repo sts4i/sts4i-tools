@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Default Element Mixes Module -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Default Element Mixes Module v0.4 20110131//EN"
+  Delivered as file "JATS-default-mixes0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Journal Archiving and Interchange DTD of the -->
+<!-- Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Declares default values for all the element mixes -->
+<!-- used in the content models of the DTD Suite -->
+<!---->
+<!-- Mixes are Or-groups of classes, used in many -->
+<!-- different content models. Mixes should not use -->
+<!-- element names directly, only through classes. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called after the -->
+<!-- customize mixes module (if any). -->
+<!---->
+<!-- CONTAINS:   1) PEs that define the element mixes (such as -->
+<!-- phrase-level elements, para-level elements, -->
+<!-- inside-a-table-cell elements) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital Archive of Journal Articles -->
+<!-- National Center for Biotechnology Information -->
+<!-- (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- August 2004 -->
+<!---->
+<!-- CREATED BY: Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    3. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- ELEMENT MIXES FOR USE IN CONTENT MODELS -->
+<!-- (MIXES ARE COMPOSED USING CLASSES) -->
+<!-- ============================================================= -->
+<!-- SECTION-LEVEL ELEMENTS -->
+<!--
+  Elements that may be used at the same
+  structural level as a Section for example
+  inside the Body <body>
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="sec-level">
+    <ref name="sec.class"/>
+  </define>
+  <!-- ============================================================= -->
+  <!--                     BACK MATTER ELEMENT MIXES(%backmatter.ent;) -->
+  <!-- ============================================================= -->
+  <!-- DOCUMENT BACK MATTER ELEMENTS -->
+  <!--
+    Back Matter Elements used by a full document
+    such as a journal article. This is an element
+    grouping rather than a class. These
+    elements may also appear in the content models
+    of structural elements, such as back matter.
+    (Note: Technically this should have used
+    %sec.class;, but %sec-level; was used in an
+    earlier release and backwards compatibility
+    must be maintained.
+  -->
+  <define name="doc-back-matter-mix">
+    <choice>
+      <ref name="back.class"/>
+      <ref name="front-back.class"/>
+      <ref name="sec.class"/>
+    </choice>
+  </define>
+  <!-- SECTION BACK MATTER ELEMENTS -->
+  <!--
+    Back matter elements used inside smaller
+    structures, such as sections and sidebars
+  -->
+  <!-- ============================================================= -->
+  <!-- PARAGRAPH-LEVEL ELEMENT MIXES -->
+  <!-- ============================================================= -->
+  <!-- PARAGRAPH-LEVEL ELEMENTS -->
+  <!--
+    Elements that may be used at the same
+    structural level as a paragraph, for
+    example inside a Section
+    Note: There a major overlap between this
+    parameter entity and that for the elements
+    that are at the same level as a paragraph.
+    Inline elements appear only inside a
+    paragraph, but block elements such as quotes
+    and lists may appear either within a
+    paragraph or at the same level as a
+    paragraph. This serves a requirement in a
+    repository DTD, since some incoming material
+    will have restricted such elements to only
+    inside a paragraph,  some incoming material
+    will have restricted them to only outside a
+    paragraph and some may allow them in both
+    places. Thus the DTD must allow for them to
+    be in either or both.
+  -->
+  <!-- ============================================================= -->
+  <!-- TABLE ELEMENT MIXES -->
+  <!-- ============================================================= -->
+  <!-- INSIDE TABLE CELL ELEMENTS -->
+  <!--
+    Mixed with #PCDATA inside a table cell, such
+    as a <td> or <th> element in the XHTML table
+    model, the <entry> element in the OASIS CALS
+    table model, etc.  This PE will be used as the
+    value of %Flow.mix;, %paracon;, etc.
+    ### Usage Alert ###
+    Design Note: Inside cell is an exception, an
+    inline mix that does not start with an OR
+    bar. This is because is used within the
+    PE -%Flow.mix;, which is an inline mix
+    defined in the course of the XHTML Table DTD,
+    a DTD not under control of this DTD Suite.
+  -->
+  <!-- INSIDE TABLE WRAPPER ELEMENTS -->
+  <!--
+    Usually a Table Wrapper contains a table,
+    properly tagged with rows and columns, but
+    sometimes, a structure that is labeled as
+    a "table" is actually a list, or two
+    paragraphs.  This Parameter Entity names
+    all the alternatives to table that may
+    occur inside a table wrapper.
+  -->
+  <!-- ============================================================= -->
+  <!-- INLINE ELEMENT MIXES -->
+  <!-- ============================================================= -->
+  <!-- EMPHASIS MIX ELEMENTS -->
+  <!--
+    Elements that may be used inside most of the
+    emphasis class elements
+    Design Note: Inline mixes begin with an
+    OR bar
+  -->
+  <!-- JUST RENDITION -->
+  <!--
+    Only the simplest of the typographic
+    emphasis elements, as well as subscript and
+    superscript.  Usually used in a model that
+    allows #PCDATA and this restricted mixture.
+    This mix may be stripped down to only
+    subscript and superscript by some, more
+    restrictive DTDs.
+    MAINTENANCE NOTE: This Parameter Entity
+    and the related PE "rendition-plus" have
+    been put in place to restrict the amount of
+    variability that a person modifying the DTD
+    through PE redefinition can achieve. Some
+    elements have been set #PCDATA plus one PE
+    and some have been set to #PCDATA plus the
+    other in an effort to allow designers to
+    modify entire groups of elements, but not
+    to change similar models individually .
+    Design Note: Inline mixes begin with an
+    OR bar
+  -->
+  <!-- RENDITION MARKUP PLUS -->
+  <!--
+    Only the simplest of the typographic
+    emphasis elements, as well as subscript and
+    superscript.  Usually used in a model that
+    allows #PCDATA and this restricted mixture.
+    This mix may be enhanced slightly in some
+    more permissive DTDs, and should always
+    contain at least typographic emphasis,
+    subscript, and superscript.
+    MAINTENANCE NOTE:: This Parameter Entity
+    and the related PE "just-rendition" have
+    been put in place to restrict the amount of
+    variability that a person modifying the DTD
+    through PE redefinition can achieve. Some
+    elements have been set #PCDATA plus one PE
+    and some have been set to #PCDATA plus the
+    other in an effort to allow designers to
+    modify entire groups of elements, but not
+    to change similar models individually.
+    Design Note: Inline mixes begin with an
+    OR bar
+  -->
+  <define name="rendition-plus">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+      <ref name="phrase-content.class"/>
+    </choice>
+  </define>
+  <!-- SIMPLE PHRASE-LEVEL TEXTUAL ELEMENTS -->
+  <!--
+    Elements that may be used almost anywhere
+    text is used, for example, inside a title.
+    Simple text plus inline display and math
+    elements. In practice, This is the next step
+    up from "simple-text", adding the links.
+    Design Note: Inline mixes begin with an
+    OR bar
+  -->
+  <define name="simple-phrase">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- SIMPLE TEXTUAL CONTENT -->
+  <!--
+    Elements that may be used inside elements
+    that are really expected to be #PCDATA and
+    not to contain any of these things.
+    Note that there is no math and no links.
+    Simpler even than %simple-phrase;
+    Design Note: Inline mixes begin with an
+    OR bar
+  -->
+  <define name="simple-text">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+</grammar>
+<!-- ================== End Archiving DTD Mixes Customization ==== -->

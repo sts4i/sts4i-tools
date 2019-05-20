@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Subject Phrase Class Elements -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Subject Phrase Class Elements v0.4 20110131//EN"
+       Delivered as file "JATS-phrase0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Defines the phrase.class, that is, names the -->
+<!-- inline, subject-specific elements -->
+<!---->
+<!-- If more specific subject words (such as "gene") -->
+<!-- are added to later version of this DTD, they -->
+<!-- should be added to the %phrase.class; entity and -->
+<!-- defined in this module or in %common.ent; -->
+<!---->
+<!-- CONTAINS:   1) Definition of the phrase class -->
+<!-- 2) Subject Emphasis -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+       =============================================================
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    7. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-12-30)
+  
+       Version 3.1 typo fixes before NISO release.
+  
+    6. MILESTONE END ATTRIBUTES - The new parameter entity
+       &milestone-end-atts; now uses &milestone-atts;, as it used to,
+       for compatibility purposes. This had not been done.
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    5. ACCESSIBILITY- Added @alt to
+       - <abbrev> through %abbrev-atts;
+       - <named-content> through %named-content-atts;
+       - <styled-content> through %styled-content-atts:
+  
+    4. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to the following elements:
+        - abbrev through abbrev-atts (both)
+        - milestone-start through milestone-atts (@xml:lang only;
+             @specific-use already)
+        - milestone-end through milestone-end-atts (both)
+        - named-content through named-content-atts (@xml:lang only;
+             @specific-use already)
+        - styled-content through styled-content-atts (@xml:lang only;
+             @specific-use already)
+  
+    3. MILESTONE - The attribute list for <milestone-start> was
+       named milestone-atts not milestone-start-atts. Added the
+       new PE milestone-start-atts, but set it to the value of
+       milestone-atts so as not to break customizations.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- ABBREVIATION ATTRIBUTES -->
+<!-- Attributes for the <abbrev> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="abbrev-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- MILESTONE ATTRIBUTES -->
+  <!--
+    Attributes for the <milestone-start>
+    element
+  -->
+  <define name="milestone-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rid">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="rationale"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- MILESTONE START ATTRIBUTES -->
+  <!--
+    Attributes for the <milestone-start>
+    element
+  -->
+  <define name="milestone-start-atts">
+    <ref name="milestone-atts"/>
+  </define>
+  <!-- MILESTONE END ATTRIBUTES -->
+  <!--
+    Attributes for the <milestone-end>
+    element
+  -->
+  <define name="milestone-end-atts">
+    <ref name="milestone-atts"/>
+  </define>
+  <!-- NAMED CONTENT ATTRIBUTES -->
+  <!-- Attributes for the <named-content> element -->
+  <define name="named-content-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <attribute name="content-type"/>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- STYLED CONTENT ATTRIBUTES -->
+  <!--                     Attributes for the <styled-content> element -->
+  <define name="styled-content-atts">
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="style-type"/>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PHRASE-LEVEL ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ABBREVIATION ELEMENTS -->
+  <!-- Elements for use in the <abbrev> element -->
+  <define name="abbrev-elements">
+    <ref name="def.class"/>
+  </define>
+  <!-- ABBREVIATION OR ACRONYM -->
+  <!--
+    Used to identify an abbreviation or acronym
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=abbrev
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=abbrev
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=abbrev
+  -->
+  <define name="abbrev">
+    <element name="abbrev">
+      <ref name="abbrev-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="abbrev-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="abbrev-attlist" combine="interleave">
+    <ref name="abbrev-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- MILESTONE ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- MILESTONE MODEL -->
+  <!--
+    Model for the both the <milestone-start> and
+    <milestone-end> elements
+  -->
+  <define name="milestone-model">
+    <empty/>
+  </define>
+  <!-- MILESTONE START MODEL -->
+  <!--
+    Model for the both the <milestone-start>
+    element
+  -->
+  <define name="milestone-start-model">
+    <ref name="milestone-model"/>
+  </define>
+  <!-- MILESTONE START -->
+  <!--
+    Used to mark the start of a non-hierarchically
+    nested object, that is, a textual component
+    which cannot be expressed in the normal
+    non-overlapping, OCHO structure of an XML
+    document. When this element is used, it is
+    assumed that the end of the textual
+    component will be marked with a
+    <milestone-end> element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=milestone-start
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=milestone-start
+  -->
+  <define name="milestone-start">
+    <element name="milestone-start">
+      <ref name="milestone-start-attlist"/>
+      <ref name="milestone-start-model"/>
+    </element>
+  </define>
+  <define name="milestone-start-attlist" combine="interleave">
+    <ref name="milestone-start-atts"/>
+  </define>
+  <!-- MILESTONE END MODEL -->
+  <!--
+    Model for the both the <milestone-end>
+    element
+  -->
+  <define name="milestone-end-model">
+    <ref name="milestone-model"/>
+  </define>
+  <!-- MILESTONE END -->
+  <!--
+    Used to mark the end of a non-hierarchically
+    nested object, that is, a textual component
+    which cannot be expressed in the normal
+    non-overlapping, OCHO structure of an XML
+    document. When this element is used, it is
+    assumed that the start of the textual
+    component was marked with a <milestone-start>
+    element.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=milestone-end
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=milestone-end
+  -->
+  <define name="milestone-end">
+    <element name="milestone-end">
+      <ref name="milestone-end-attlist"/>
+      <ref name="milestone-end-model"/>
+    </element>
+  </define>
+  <define name="milestone-end-attlist" combine="interleave">
+    <ref name="milestone-end-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- NAMED CONTENT ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- NAMED CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the <named-content> element
+  -->
+  <define name="named-content-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+      <ref name="rest-of-para.class"/>
+    </choice>
+  </define>
+  <!-- NAMED SPECIAL (SUBJECT) CONTENT -->
+  <!--
+    A semantically distinct word or phrase
+    within the text. Often such phrases are
+    treated differently, for example, given a
+    different typographic style or look, to call
+    attention to the subject matter. For
+    example, the word is a drug name or a
+    gene or the phrase identifies an organism
+    genus/species.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=named-content
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=named-content
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=named-content
+  -->
+  <define name="named-content">
+    <element name="named-content">
+      <ref name="named-content-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="named-content-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="named-content-attlist" combine="interleave">
+    <ref name="named-content-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- STYLED CONTENT ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- STYLED CONTENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the <styled-content> element
+  -->
+  <define name="styled-content-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="article-link.class"/>
+      <ref name="block-display.class"/>
+      <ref name="block-math.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="inline-display-noalt.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+      <ref name="rest-of-para.class"/>
+    </choice>
+  </define>
+  <!-- STYLED SPECIAL (SUBJECT) CONTENT -->
+  <!--
+    A stylistically distinct word or phrase
+    within the text, that cannot be tagged using
+    any of the other mechanisms for such content.
+    In other words: the content cannot be
+    described with bold, italic, monospace or any
+    of the other emphasis class elements and
+    <named-content> is inappropriate because the
+    semantic reason behind the typographic
+    distinction is not clear.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=styled-content
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=styled-content
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=styled-content
+  -->
+  <define name="styled-content">
+    <element name="styled-content">
+      <ref name="styled-content-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="styled-content-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="styled-content-attlist" combine="interleave">
+    <ref name="styled-content-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Phrase Class Module ================== -->

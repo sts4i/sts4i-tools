@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Related Object Element -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Related Object Element v0.4 20110131//EN"
+       Delivered as file "JATS-related-object0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Define the element <related-object>. [This -->
+<!--              module was previously part of the NLM Book Tag Set -->
+<!-- and named bookrelated-object.ent.] -->
+<!---->
+<!-- CONTAINS:   1) The declaration for the element -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- NLM Bookshelf -->
+<!-- National Center for Biotechnology Information -->
+<!-- (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- February 2008 (book modules Oct 2006) -->
+<!---->
+<!-- CREATED BY: Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION\CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    3. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- RELATED OBJECT ATTRIBUTES -->
+<!-- ============================================================= -->
+<!-- RELATED OBJECT ATTRIBUTES -->
+<!-- Attributes for <related-object> -->
+<!-- ============================================================= -->
+<!-- RELATED OBJECT ELEMENT -->
+<!-- ============================================================= -->
+<!-- RELATED OBJECT ELEMENTS -->
+<!-- Elements allowed inside <related-object> -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="related-object-elements">
+    <choice>
+      <ref name="emphasis.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="references.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- RELATED OBJECT INFORMATION -->
+  <!--
+    Wrapper element, used as a container for
+    text links to a related object, possibly
+    accompanied by a very brief description of
+    the object, for example a related book, a
+    related chapter or figure in a book, a
+    related dataset, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=related-object
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=related-object
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=related-object
+  -->
+  <define name="related-object">
+    <element name="related-object">
+      <ref name="related-object-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="related-object-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="related-object-attlist" combine="interleave">
+    <ref name="related-object-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Related Object Element Module ======== -->

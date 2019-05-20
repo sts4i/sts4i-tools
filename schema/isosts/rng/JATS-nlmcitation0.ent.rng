@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NLM Citation -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) NLM Citation v0.4 20110131//EN"
+  Delivered as file "JATS-nlmcitation0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Journal Publishing DTD of the -->
+<!-- Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    This new DTD Suite module adds the model for the -->
+<!-- NLM Structured bibliographic citation. This model -->
+<!-- The model loosely reflects the NLM's style, in -->
+<!-- that it allows the tagging of all "legal" NLM -->
+<!-- citations and enforces the sequence in which -->
+<!-- content must appear if it is present. However, -->
+<!-- this model does not provide guidance on what -->
+<!-- information is required for each type of cited -->
+<!-- content. -->
+<!---->
+<!-- CONTAINS:   1) Content model for <nlm-citation> -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital Archive of Journal Articles -->
+<!-- National Center for Biotechnology Information -->
+<!-- (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- September 2004 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!-- Deborah A. Lapeyre (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- The Journal Publishing DTD is built from the -->
+<!-- Archiving and Interchange DTD Suite. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- publishing-dtd@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+     =============================================================
+     Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+     This Tag Set is in the process of becoming a NISO standard.
+     The version numbers are starting over from 0.4", as a Trial
+     Use Draft, to be made into "Version 1.0" when the Tag Suite 
+     becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+     been changed to NISO "Version 0.4". No model, attribute, or
+     parameter entity changes were made as part of this renaming.
+  
+     Details on NISO Tial Use Draft Version 0.4 are available at
+           http://jats.nlm.nih.gov/JATS-0.4.
+  
+  4. Updated the public identifier to "v0.4 20110131//EN", 
+     modified the formal public identifier to include "JATS (Z39.96)",
+     and the filename as delivered to include "JATS" and the
+     new version number "0".
+  
+     =============================================================
+     Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+     Version 3.1 is fully compatible with Version 3.0, but the
+     following change could break some customizations.
+  
+     Details on version 3.1 are available at
+           http://jats.nlm.nih.gov/3.1.
+  
+  3. NLM CITATION ATTRIBUTES - Removed the dependency whereby
+     the NLM citation used the same attributes as the other types
+     of citation via %citation-atts;. <nlm-citation> now uses
+     only %nlm-citation-atts; No documents need change.
+     - added @xml:lang
+     - added @specific-use
+  
+  2. Updated public identifier to "v3.1 20100830//EN"
+  
+     =============================================================
+     Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+     Version 3.0 is the first non-backward-compatible release.
+     In addition to the usual incremental changes, some
+     elements and attributes have been renamed and/or remodeled
+     to better meet user needs and to increase tag set consistency.
+     All module change histories are available through the Tag Suite
+     web site at http://dtd.nlm.nih.gov.
+  
+     Details on version 3.0 are available at
+           http://jats.nlm.nih.gov/3.0.
+  
+  1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- NEW ELEMENT DECLARATIONS -->
+<!-- Declarations of elements that are new to -->
+<!-- this DTD. -->
+<!-- NOTE: All new structures must be mappable -->
+<!-- to the archiving/interchange DTD and the -->
+<!-- mapping should be described when the new -->
+<!-- element is declared. -->
+<!-- ============================================================= -->
+<!-- NLM CITATION ATTRIBUTES -->
+<!--
+  Attributes for all three types of
+  citations (<mixed-citation>,
+  <element-citation>, and <nlm-citation>).
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="nlm-citation-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="publication-type"/>
+    </optional>
+    <optional>
+      <attribute name="publisher-type"/>
+    </optional>
+    <optional>
+      <attribute name="publication-format"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- NLM CITATION MODEL -->
+  <!--
+    This structured citation model is loosely
+    reflects the NLM's house style, in that
+    it allows the tagging of all "legal" NLM
+    citations and enforces the sequence in which
+    content must appear if it is present.
+    This model assumes that punctuation between
+    the parts of a citation will be generated
+    on display or on export.
+    (Deprecated after Version 3.0)
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=nlm-citation
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=nlm-citation
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=nlm-citation
+  -->
+  <define name="nlm-citation">
+    <element name="nlm-citation">
+      <ref name="nlm-citation-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="person-group"/>
+          <ref name="collab"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="article-title"/>
+          <ref name="trans-title"/>
+        </choice>
+      </zeroOrMore>
+      <optional>
+        <ref name="source"/>
+      </optional>
+      <optional>
+        <ref name="patent"/>
+      </optional>
+      <optional>
+        <ref name="trans-source"/>
+      </optional>
+      <optional>
+        <ref name="year"/>
+      </optional>
+      <choice>
+        <group>
+          <optional>
+            <ref name="month"/>
+          </optional>
+          <optional>
+            <ref name="day"/>
+          </optional>
+          <optional>
+            <ref name="time-stamp"/>
+          </optional>
+        </group>
+        <optional>
+          <ref name="season"/>
+        </optional>
+      </choice>
+      <optional>
+        <ref name="access-date"/>
+      </optional>
+      <optional>
+        <ref name="volume"/>
+      </optional>
+      <optional>
+        <ref name="edition"/>
+      </optional>
+      <optional>
+        <ref name="conf-name"/>
+      </optional>
+      <optional>
+        <ref name="conf-date"/>
+      </optional>
+      <optional>
+        <ref name="conf-loc"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="issue"/>
+          <ref name="supplement"/>
+        </choice>
+      </zeroOrMore>
+      <optional>
+        <ref name="publisher-loc"/>
+      </optional>
+      <optional>
+        <ref name="publisher-name"/>
+      </optional>
+      <zeroOrMore>
+        <optional>
+          <ref name="fpage"/>
+        </optional>
+        <optional>
+          <ref name="lpage"/>
+        </optional>
+      </zeroOrMore>
+      <optional>
+        <ref name="page-count"/>
+      </optional>
+      <optional>
+        <ref name="series"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="comment"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="pub-id"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="annotation"/>
+      </optional>
+    </element>
+  </define>
+  <define name="nlm-citation-attlist" combine="interleave">
+    <ref name="nlm-citation-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NLM Citation Module ================== -->

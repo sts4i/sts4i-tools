@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    ISOSTS ISO Metadata Module -->
+<!-- VERSION:   ISOSTS 1.1 -->
+<!-- DATE:      July 2013 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//ISO//DTD ISOSTS ISO-specific Metadata v1.1 20130701//EN"
+       Delivered as file "ISOSTS-iso-metadata.ent"                   
+       Available at: http://www.iso.org/schema/isosts/v1.1/ISOSTS-iso-metadata.ent
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     ISO customization of NISO Z39.96 Journal -->
+<!-- Publishing DTD of the Journal Archiving and -->
+<!-- Interchange DTD Suite (JATS) -->
+<!---->
+<!-- PURPOSE:    This module defines ISO-specific metadata, -->
+<!-- specifically (1) the iso-meta element and its -->
+<!-- contents, and (2) parameter entities for -->
+<!-- customization of content models and attribute -->
+<!-- lists. -->
+<!---->
+<!-- CONTAINS:   1) Definition of iso-meta -->
+<!-- 2) Definitions of parameter entities to allow -->
+<!-- easy modification and customization of -->
+<!-- content models and attribute lists. -->
+<!---->
+<!-- TAG SET SPONSOR -->
+<!-- International Organization for Standardization -->
+<!-- (ISO) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- ISO and similar bodies -->
+<!---->
+<!-- © 2011, 2012 ISO, All rights reserved -->
+<!---->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- May 2011 -->
+<!---->
+<!-- CREATED BY: C. M. Sperberg-McQueen -->
+<!-- B. Tommie Usdin -->
+<!-- (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 1.1                            (HA) v1.1 (2013-07-01)
+  
+   20. Update version number and public identifiers to 1.1
+  
+       =============================================================
+       Version 1.0                           (MSM) v1.0 (2012-04-23)
+  
+   19. Updated version number for issue of version 1.0.
+  
+       =============================================================
+       Version 0.7                       (MSM/BTU) v0.7 (2012-02-13)
+  
+   18. Made <permissions> optional repeatable in <iso-meta>.
+  
+  
+   17. Update version number.
+  
+       =============================================================
+       Version 0.6                       (MSM/BTU) v0.6 (2011-12-16)
+  
+   16. Make 'page-count' optional.
+  
+   15. Add 'permissions' to iso-meta.
+  
+       =============================================================
+       Version 0.5                       (TRG) v0.5 (2011-10-06)
+  
+   14. Changed @type attribute on <std-ref> (via %std-ref-atts;) 
+       to optional attribute (so no redundant info when <std-ref> 
+       used within <std>). 
+  
+   13. Changed content model (%iso-meta-model;) for <iso-meta> to 
+       make <pub-date> an optional element (draft standards have no 
+       <pub-date>).
+  
+       =============================================================
+       Version 0.5                       (MSM/BTU) v0.5 (2011-09-23)
+  
+   12. Allow std-ref to have child elements; add 'short' to its
+       possible value for its 'type' attribute.
+  
+   11. In doc-ident, make urn optional.
+  
+   10. In iso-meta, drop number-of-tech-pages and replace with 
+       page-count.  Add meta-date and std-xref.
+  
+       =============================================================
+       Version 0.3                       (MSM/BTU) v0.3 (2011-07-11)
+  
+    9. Make part- and supplement-specific information optional.
+       Make ics indexing information optional.
+  
+    8. Restructure standardReference / std-ident somewhat as suggested
+       by Holger Apel, move std-ref, comm-ref, and secretariat out of 
+       it.  Add doc-ref, pub-date, release-date, and release-version
+       elements.  Suppress stage and stageDate. Also rename some 
+       elements:  
+  
+          docLanguage        becomes content-language
+          standardReference  becomes std-ident
+          reference          becomes std-ref
+          committee          becomes comm-ref
+  
+    6. Change naming convention from camel case to 
+       lowercase-plus-hyphen (isProof becomes is-proof, etc.)
+  
+    5. Change name from ISDTS to ISOSTS, update version number
+  
+       =============================================================
+       Version 0.2                       (MSM/BTU) v0.2 (2011-05-22)
+  
+    4. Factor out the metadata elements into modules, for
+       design consistency with JATS.
+  
+    3. Suppress the XX-elements parameter entities for elements
+       whose descriptions make clear that they should never 
+       have child elements (project ID, stage code, etc.)
+  
+    2. Reformat to follow house style.
+  
+       =============================================================
+       Version 0.1                       (MSM/BTU) v0.1 (2011-05-12)
+  
+    1. First rough draft, based on JATS 0.4.
+-->
+<!-- ============================================================= -->
+<!-- ISO METADATA ELEMENT -->
+<!-- ============================================================= -->
+<!-- ISO METADATA CONTENT MODEL -->
+<!--
+  The <iso-meta> element contains one or
+  more titles (typically en and fr), a
+  document-identity section, the standard
+  identity section, standard reference forms
+  for the standard and for this particular
+  document, publication date, administrative
+  information (e.g.  committee and
+  secretariat information), ICS
+  classifications, an is-proof flag, and
+  optionally more custom metadata.
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="iso-meta-model">
+    <oneOrMore>
+      <ref name="title-wrap"/>
+    </oneOrMore>
+    <ref name="doc-ident"/>
+    <ref name="std-ident"/>
+    <oneOrMore>
+      <ref name="content-language"/>
+    </oneOrMore>
+    <oneOrMore>
+      <ref name="std-ref"/>
+    </oneOrMore>
+    <ref name="doc-ref"/>
+    <optional>
+      <ref name="pub-date"/>
+    </optional>
+    <ref name="release-date"/>
+    <zeroOrMore>
+      <ref name="meta-date"/>
+    </zeroOrMore>
+    <ref name="comm-ref"/>
+    <oneOrMore>
+      <ref name="secretariat"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="ics"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="page-count"/>
+    </optional>
+    <optional>
+      <ref name="is-proof"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-xref"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="permissions"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="custom-meta-group"/>
+    </zeroOrMore>
+  </define>
+  <!-- ISO METADATA ATTRIBUTES -->
+  <define name="iso-meta-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ISO METADATA -->
+  <!-- <iso-meta> contains ISO-specific metadata -->
+  <!-- for this standard. -->
+  <define name="iso-meta">
+    <element name="iso-meta">
+      <ref name="iso-meta-attlist"/>
+      <ref name="iso-meta-model"/>
+    </element>
+  </define>
+  <define name="iso-meta-attlist" combine="interleave">
+    <ref name="iso-meta-atts"/>
+  </define>
+  <!-- TITLE WRAPPER MODEL -->
+  <define name="title-wrap-model">
+    <optional>
+      <ref name="intro"/>
+    </optional>
+    <ref name="main"/>
+    <optional>
+      <ref name="compl"/>
+    </optional>
+    <ref name="full"/>
+  </define>
+  <!-- TITLE WRAPPER ATTRIBUTES -->
+  <define name="title-wrap-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TITLE WRAPPER -->
+  <!--
+    <title-wrap> contains the title of the 
+    document, both in parts and in full.
+  -->
+  <define name="title-wrap">
+    <element name="title-wrap">
+      <ref name="title-wrap-attlist"/>
+      <ref name="title-wrap-model"/>
+    </element>
+  </define>
+  <define name="title-wrap-attlist" combine="interleave">
+    <ref name="title-wrap-atts"/>
+  </define>
+  <!-- TITLE-PART ELEMENTS -->
+  <!--
+    The %title-part-elements; parameter entity 
+    lists the elements legal in any part of 
+    a title.
+  -->
+  <define name="title-part-elements">
+    <choice>
+      <ref name="simple-phrase"/>
+      <ref name="break.class"/>
+      <ref name="citation.class"/>
+    </choice>
+  </define>
+  <!-- INTRODUCTORY TITLE PART MODEL -->
+  <define name="intro-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- INTRODUCTORY TITLE PART -->
+  <!--
+    <intro> is the optional first part of a
+    title, indicating the broad context of the 
+    standard.
+  -->
+  <define name="intro">
+    <element name="intro">
+      <ref name="intro-attlist"/>
+      <ref name="intro-model"/>
+    </element>
+  </define>
+  <define name="intro-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- MAIN TITLE PART MODEL -->
+  <define name="main-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- MAIN TITLE PART -->
+  <!--
+    <main> is the required main part of the 
+    standard's title.
+  -->
+  <define name="main">
+    <element name="main">
+      <ref name="main-attlist"/>
+      <ref name="main-model"/>
+    </element>
+  </define>
+  <define name="main-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- COMPLEMENTARY TITLE PART MODEL -->
+  <define name="compl-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- COMPLEMENTARY TITLE PART -->
+  <!--
+    <compl> is the optional final part of a 
+    standard's title.  For parts of a 
+    multi-part standard, <compl> is the title 
+    of the part (without the label 'Part n')
+  -->
+  <define name="compl">
+    <element name="compl">
+      <ref name="compl-attlist"/>
+      <ref name="compl-model"/>
+    </element>
+  </define>
+  <define name="compl-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- FULL TITLE MODEL -->
+  <define name="full-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="title-part-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- FULL TITLE -->
+  <!--
+    <full> contains the full title of the 
+    standard.  Normally, its value should be 
+    the values of intro, main, and compl, in 
+    order, separated by a space, an em-dash, 
+    and a space; in that case, this element 
+    is redundant; it is provided anyway, in 
+    case of special cases.
+  -->
+  <define name="full">
+    <element name="full">
+      <ref name="full-attlist"/>
+      <ref name="full-model"/>
+    </element>
+  </define>
+  <define name="full-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- DOCUMENT IDENTIFICATION SECTION MODEL -->
+  <define name="doc-ident-model">
+    <ref name="sdo"/>
+    <ref name="proj-id"/>
+    <ref name="language"/>
+    <ref name="release-version"/>
+    <optional>
+      <ref name="urn"/>
+    </optional>
+  </define>
+  <!-- DOCUMENT IDENTIFICATION SECTION -->
+  <!--
+    <doc-ident> contains information which 
+    uniquely identifies this document for ISO 
+    purposes.
+    The sub-elements are closely related to
+    the fields of ISO URNs as documented in 
+    RFC 5141 (from which some of the text 
+    describing them is borrowed).
+  -->
+  <define name="doc-ident">
+    <element name="doc-ident">
+      <ref name="doc-ident-attlist"/>
+      <ref name="doc-ident-model"/>
+    </element>
+  </define>
+  <define name="doc-ident-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SDO MODEL -->
+  <define name="sdo-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- STANDARDS DEVELOPMENT ORGANIZATION -->
+  <!--
+    <sdo> identifies the standards-development 
+    organization from which this standard 
+    emanates.  Expected values are:
+      iso (International Organization for 
+          Standardization)
+      iec (International Electro-Technical
+          Commission)
+      iso-iec (ISO/IEC joint work)
+      iso-cie (ISO/CIE joint work)
+      iso-astm (ISO/ASTM joint work)
+      iso-ieee (ISO/IEEE joint work)
+  -->
+  <define name="sdo">
+    <element name="sdo">
+      <ref name="sdo-attlist"/>
+      <ref name="sdo-model"/>
+    </element>
+  </define>
+  <define name="sdo-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- PROJECT IDENTIFIER MODEL -->
+  <!--
+    <proj-id> gives the ISO project number for
+    this document.  It is required, but it is
+    not expected that authors will always 
+    provide it, so software consuming document
+    using this vocabulary should be prepared for
+    the empty string as a value.
+  -->
+  <define name="proj-id-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- PROJECT IDENTIFIER -->
+  <!--
+    <proj-id> gives the project identifier
+    for the (ISO) project within which this 
+    document was developed.
+  -->
+  <define name="proj-id">
+    <element name="proj-id">
+      <ref name="proj-id-attlist"/>
+      <ref name="proj-id-model"/>
+    </element>
+  </define>
+  <define name="proj-id-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- LANGUAGE MODEL -->
+  <define name="language-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- LANGUAGE -->
+  <!--
+    <language> gives the official language(s)
+    used in this document.  Legal values for
+    monolingual documents are currently: en,
+    fr, ru, es, ar
+    
+    For bilingual documents, use 'en,fr', 
+    'en,ru', 'fr,ru'
+    
+    For trilingual documents, use 'en,fr,ru'.
+    
+    Only one <language> element will appear in 
+    any document. Cf. content-language, below.
+  -->
+  <define name="language">
+    <element name="language">
+      <ref name="language-attlist"/>
+      <ref name="language-model"/>
+    </element>
+  </define>
+  <define name="language-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- RELEASE-VERSION MODEL -->
+  <define name="release-version-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- RELEASE-VERSION -->
+  <!--
+    <release-version> identifies the version 
+    of the document represented by the current
+    XML document, in terms of the standard
+    maturity stages.
+    
+    Expected values are:
+    
+    CD committee draft
+    DIS draft International Standard
+    FDIS final draft International Standard
+    IS International Standard
+    
+  -->
+  <define name="release-version">
+    <element name="release-version">
+      <ref name="release-version-attlist"/>
+      <ref name="release-version-model"/>
+    </element>
+  </define>
+  <define name="release-version-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- UNIFORM RESOURCE NAME MODEL -->
+  <define name="urn-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- UNIFORM RESOURCE NAME -->
+  <!--
+    <urn> gives a Uniform Resource Name (URN) 
+    for this document, as specified by RFC 
+    5141.
+  -->
+  <define name="urn">
+    <element name="urn">
+      <ref name="urn-attlist"/>
+      <ref name="urn-model"/>
+    </element>
+  </define>
+  <define name="urn-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- CONTENT LANGUAGE MODEL -->
+  <define name="content-language-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- CONTENT LANGUAGE -->
+  <!--
+    <content-language> identifies the official 
+    language(s) used in this document.
+    
+    There is one occurrence of the
+    <content-language> element for each
+    language.  (So for monolingual documents,
+    <content-language> and <language> will
+    have the same value, while for bilingual
+    or trilingual documents, the single
+    <language> element will have a value
+    containing commas, while there will be two
+    or three <content-language> elements.
+  -->
+  <define name="content-language">
+    <element name="content-language">
+      <ref name="content-language-attlist"/>
+      <ref name="content-language-model"/>
+    </element>
+  </define>
+  <define name="content-language-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- STANDARD IDENTIFICATION MODEL -->
+  <define name="std-ident-model">
+    <ref name="originator"/>
+    <ref name="doc-type"/>
+    <ref name="doc-number"/>
+    <optional>
+      <ref name="part-number"/>
+    </optional>
+    <ref name="edition"/>
+    <ref name="version"/>
+    <optional>
+      <ref name="suppl-type"/>
+    </optional>
+    <optional>
+      <ref name="suppl-number"/>
+    </optional>
+    <optional>
+      <ref name="suppl-version"/>
+    </optional>
+  </define>
+  <!-- STD-IDENT (STANDARD IDENTIFICATION BLOCK) -->
+  <!--
+    The <std-ident> element gives the basic
+    information from which the standard
+    reference to this document is constructed:
+    full standard reference for the document;
+    the child elements identify the various
+    pieces of the reference and may give other
+    information. The full form of the
+    reference is given by the std-ref and
+    doc-ref elements, which are siblings (not
+    children) of std-ident.
+    
+    When things are simple, the reference
+    could be constructed by putting the pieces
+    together in the prescribed way, but it's
+    sometimes simpler to do it by hand than to
+    try to make the software understand all
+    the rules.
+  -->
+  <define name="std-ident">
+    <element name="std-ident">
+      <ref name="std-ident-attlist"/>
+      <ref name="std-ident-model"/>
+    </element>
+  </define>
+  <define name="std-ident-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ICS MODEL -->
+  <define name="ics-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- ICS -->
+  <!--
+    <ics> identifies the subject matter of the
+    standard using codes from the 
+    International Classification for
+    Standards.  When there is more than one
+    ICS code, it appears more than once.
+  -->
+  <define name="ics">
+    <element name="ics">
+      <ref name="ics-attlist"/>
+      <ref name="ics-model"/>
+    </element>
+  </define>
+  <define name="ics-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- IS-PROOF MODEL -->
+  <define name="is-proof-model">
+    <empty/>
+  </define>
+  <!-- IS-PROOF -->
+  <!--
+    The <is-proof> element is always empty. If 
+    it appears, it signals that the draft 
+    document is being processed as proof.  No 
+    ballot is required and so a special 
+    coverpage must be produced.
+  -->
+  <define name="is-proof">
+    <element name="is-proof">
+      <ref name="is-proof-attlist"/>
+      <ref name="is-proof-model"/>
+    </element>
+  </define>
+  <define name="is-proof-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- ORIGINATOR MODEL -->
+  <define name="originator-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- ORIGINATOR -->
+  <!--
+    The <originator> element indicates the
+    standards development organization from
+    which the document emanates.  E.g. iso, 
+    iec, iso-iec, iso-cie, iso-astm, iso-ieee
+  -->
+  <define name="originator">
+    <element name="originator">
+      <ref name="originator-attlist"/>
+      <ref name="originator-model"/>
+    </element>
+  </define>
+  <define name="originator-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- DOCUMENT TYPE MODEL -->
+  <define name="doc-type-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- DOCUMENT TYPE -->
+  <!--
+    The <doc-type> element indicates what kind 
+    of document this document is.
+    
+    Current values are:
+      guide 
+      is (international standard)
+      isp (international standardized profile)
+      iwa (international workshop agreement)
+      pas (publicly available specification)
+      r (recommendation [obsolete]) 
+      tr (technical report)  
+      ts (technical specification)  
+      tta (technology trends assessment)
+    
+    The following value is for a class of
+    documents no longer being produced, so it
+    will not normally appear (but is listed 
+    here for completeness and in case this tag
+    set is ever used for older documents):
+      data
+  -->
+  <define name="doc-type">
+    <element name="doc-type">
+      <ref name="doc-type-attlist"/>
+      <ref name="doc-type-model"/>
+    </element>
+  </define>
+  <define name="doc-type-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- DOCUMENT NUMBER MODEL -->
+  <define name="doc-number-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- DOCUMENT NUMBER -->
+  <!--
+    <doc-number> gives the document-number part 
+    of the document's reference.  Its value is 
+    a sequence of digits.
+  -->
+  <define name="doc-number">
+    <element name="doc-number">
+      <ref name="doc-number-attlist"/>
+      <ref name="doc-number-model"/>
+    </element>
+  </define>
+  <define name="doc-number-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- DOCUMENT PART NUMBER MODEL -->
+  <define name="part-number-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- DOCUMENT PART NUMBER -->
+  <!--
+    <part-number> gives the part number of the 
+    document, for individual parts of
+    multipart documents.  Its value is one or 
+    more alphanumeric characters or hyphens.
+    
+    In a document reference, the part number
+    is normally preceded by a hyphen (as in 
+    "ISO 8859-1", part 1 of ISO 8859).  But no
+    leading hyphen is needed here, and none
+    should be used.
+  -->
+  <define name="part-number">
+    <element name="part-number">
+      <ref name="part-number-attlist"/>
+      <ref name="part-number-model"/>
+    </element>
+  </define>
+  <define name="part-number-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- EDITION -->
+  <!--
+    <edition> indicates which edition of the 
+    standard is represented (or constituted)
+    by the current document.  Its value is a
+    sequence of decimal digits.
+    
+    The <edition> element may also occur in
+    the main body of the document (in 
+    bibliographic citations) and is defined in 
+    the appropriate module (references).
+  -->
+  <!-- ELEM   edition      Defined in %references.ent;" -->
+  <!-- VERSION MODEL -->
+  <define name="version-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- VERSION -->
+  <!--
+    <version> gives the version number for 
+    this document.
+    
+    The value is expected to be a simple 
+    version number (1, 2, ...).
+    
+    RFC 5141 describes a more complicated form
+    of version number, consisting of a
+    concatenation of a base version number (as
+    in the simple case) and a series of
+    strings indicating supplements included,
+    e.g. 1-amd1.v1-cor3 for version 1 as
+    amended by version 1 of Amendment 1 and
+    the latest version 1 of Technical
+    Corrigendum 3.  But it is not expected
+    that this more complicated form will ever
+    be needed or encountered in documents
+    encoded using this vocabulary.
+  -->
+  <define name="version">
+    <element name="version">
+      <ref name="version-attlist"/>
+      <ref name="version-model"/>
+    </element>
+  </define>
+  <define name="version-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SUPPLEMENT TYPE MODEL -->
+  <define name="suppl-type-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- SUPPLEMENT TYPE -->
+  <!--
+    <suppl-type> identifies what kind of
+    alteration or addition is represented by
+    this document.  Applicable to in  
+    supplements only; in other documents, it 
+    should be empty.
+    
+    Values currently used:
+      amd (Amendment)
+      cor (Technical Corrigendum) 
+      add (Addendum).
+    
+    Some published addenda are still valid,
+    but they are no longer being published so
+    'add' will probably never be encountered.
+  -->
+  <define name="suppl-type">
+    <element name="suppl-type">
+      <ref name="suppl-type-attlist"/>
+      <ref name="suppl-type-model"/>
+    </element>
+  </define>
+  <define name="suppl-type-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SUPPLEMENT NUMBER MODEL -->
+  <define name="suppl-number-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- SUPPLEMENT NUMBER -->
+  <!--
+    <suppl-number> gives the number of the 
+    supplement.  Its value is a sequence of 
+    decimal digits.  For non-supplements, it 
+    should be present (it's required by the 
+    DTD) and empty.  If the element is empty 
+    for a document which IS a supplement, the
+    value defaults to 1.
+  -->
+  <define name="suppl-number">
+    <element name="suppl-number">
+      <ref name="suppl-number-attlist"/>
+      <ref name="suppl-number-model"/>
+    </element>
+  </define>
+  <define name="suppl-number-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SUPPLEMENT VERSION MODEL -->
+  <define name="suppl-version-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- SUPPLEMENT VERSION -->
+  <!--
+    <suppl-version> gives the version number of 
+    the supplement.  Its value, when present, 
+    is a sequence of decimal digits.  For  
+    non-supplements it should be empty.  For a  
+    supplement, the default value is 1.
+  -->
+  <define name="suppl-version">
+    <element name="suppl-version">
+      <ref name="suppl-version-attlist"/>
+      <ref name="suppl-version-model"/>
+    </element>
+  </define>
+  <define name="suppl-version-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- std-ref MODEL -->
+  <define name="std-ref-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="std-ref-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- STANDARD-REFERENCE ATTRIBUTES -->
+  <define name="std-ref-atts">
+    <optional>
+      <attribute name="type">
+        <choice>
+          <value>dated</value>
+          <value>undated</value>
+          <value>short</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STD-REF -->
+  <!--
+    <std-ref> gives the full reference of the
+    document. Normally this is redundant and 
+    could be constructed from other  
+    information present.  But it's convenient 
+    to have it all together.
+    
+    There are two forms of reference:  dated
+    and undated; they are distinguished using 
+    the 'type' attribute.
+  -->
+  <define name="std-ref">
+    <element name="std-ref">
+      <ref name="std-ref-attlist"/>
+      <ref name="std-ref-model"/>
+    </element>
+  </define>
+  <define name="std-ref-attlist" combine="interleave">
+    <ref name="std-ref-atts"/>
+  </define>
+  <!-- DOC-REF MODEL -->
+  <define name="doc-ref-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- DOC-REF -->
+  <!--
+    <doc-ref> gives the full reference form of 
+    this particular document, as one form of
+    the standard.
+  -->
+  <define name="doc-ref">
+    <element name="doc-ref">
+      <ref name="doc-ref-attlist"/>
+      <ref name="doc-ref-model"/>
+    </element>
+  </define>
+  <define name="doc-ref-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- PUB DATE MODEL -->
+  <!-- PUB DATE -->
+  <!--
+    <pub-date> gives the date this standard was
+    published (for published standards, this
+    means the date the project reached stage
+    60.60 and the IS was first published.  For
+    the first publication, this will be the
+    same as release-date; for later
+    publications (corrections, new editions,
+    versions in other languages), the pub-date
+    will be earlier than the release-date (and
+    will be the same across all versions of a
+    given standard).
+  -->
+  <!-- ELEM   pub-date     Defined in %articlemeta.ent; -->
+  <!-- RELEASE DATE MODEL -->
+  <define name="release-date-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- RELEASE DATE -->
+  <!--
+    <release-date> gives the date this
+    particular document was published.  For
+    the first publication of an IS, this will
+    be the same as pub-date, but for later
+    editions, versions in other official
+    languages, etc., the pub-date remains the
+    same but the release-date is the date of
+    the corrected / translated version.
+  -->
+  <define name="release-date">
+    <element name="release-date">
+      <ref name="release-date-attlist"/>
+      <ref name="release-date-model"/>
+    </element>
+  </define>
+  <define name="release-date-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- OTHER METADATA DATE MODEL -->
+  <define name="meta-date-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- OTHER METADATA DATE ATTRIBUTES -->
+  <define name="meta-date-atts">
+    <attribute name="type"/>
+  </define>
+  <!-- OTHER METADATA DATE -->
+  <!--
+    <meta-date> gives the date of some event
+    relevant for this document was published; 
+    the kind of event is given by the 'type'
+    attribute.  The values of 'type' are
+    not formally constrained; possible values 
+    might include 'ratification', 'withdrawal',
+    etc.  Publication and release dates should
+    be tagged as pub-date and release-date,
+    not meta-date.
+  -->
+  <define name="meta-date">
+    <element name="meta-date">
+      <ref name="meta-date-attlist"/>
+      <ref name="meta-date-model"/>
+    </element>
+  </define>
+  <define name="meta-date-attlist" combine="interleave">
+    <ref name="meta-date-atts"/>
+  </define>
+  <!-- COMM-REF MODEL -->
+  <define name="comm-ref-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- COMM-REF -->
+  <!--
+    <comm-ref> identifies the ISO group 
+    responsible for the document.  E.g. ISO/TC   
+    27/SC 4.
+  -->
+  <define name="comm-ref">
+    <element name="comm-ref">
+      <ref name="comm-ref-attlist"/>
+      <ref name="comm-ref-model"/>
+    </element>
+  </define>
+  <define name="comm-ref-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- SECRETARIAT MODEL -->
+  <define name="secretariat-model">
+    <zeroOrMore>
+      <text/>
+    </zeroOrMore>
+  </define>
+  <!-- SECRETARIAT -->
+  <!--
+    <secretariat> identifies the organization 
+    which serves as secretariat for the ISO 
+    group responsible for the document.        
+    Sometimes repeats.
+  -->
+  <define name="secretariat">
+    <element name="secretariat">
+      <ref name="secretariat-attlist"/>
+      <ref name="secretariat-model"/>
+    </element>
+  </define>
+  <define name="secretariat-attlist" combine="interleave">
+    <empty/>
+  </define>
+  <!-- STD-XREF -->
+  <!--
+    <std-xref> identifies links to other 
+    standards.
+  -->
+  <define name="std-xref-model">
+    <optional>
+      <ref name="std-ident"/>
+    </optional>
+    <ref name="std-ref"/>
+    <optional>
+      <ref name="release-date"/>
+    </optional>
+  </define>
+  <!-- STD-XREF ATTRIBUTES -->
+  <!--
+    type       what is the relation between the two
+    standards?  Sample values:  "amends",
+    "revises"
+  -->
+  <define name="std-xref-atts">
+    <optional>
+      <attribute name="type"/>
+    </optional>
+  </define>
+  <define name="std-xref">
+    <element name="std-xref">
+      <ref name="std-xref-attlist"/>
+      <ref name="std-xref-model"/>
+    </element>
+  </define>
+  <define name="std-xref-attlist" combine="interleave">
+    <ref name="std-xref-atts"/>
+  </define>
+</grammar>
+<!--
+  ELEM  permissions,custom-meta-group
+  Defined in %common0.ent;"
+-->
+<!-- ================== End ISOSTS ISO Metadata Module =========== -->

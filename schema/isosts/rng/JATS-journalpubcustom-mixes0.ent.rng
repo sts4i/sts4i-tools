@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Journal Publishing DTD Customize Mixes Module -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Mixes Module v0.4 20110131//EN"
+  Delivered as file "JATS-journalpubcustom-mixes0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Journal Publishing DTD of the -->
+<!-- Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Declares over-ride values for the default element -->
+<!-- mixes in the Suite. These over-rides are specific -->
+<!-- to the Journal Publishing DTD. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called before the -->
+<!-- default mixes modules (%default-mixes;) -->
+<!---->
+<!-- CONTAINS:   1) PEs that define the element mixes to be -->
+<!-- over-ridden -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital Archive of Journal Articles -->
+<!-- National Center for Biotechnology Information -->
+<!-- (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- September 2004 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    3. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- INLINE MIXES FOR USE IN CONTENT MODELS -->
+<!-- (MIXES ARE COMPOSED USING CLASSES) -->
+<!-- ============================================================= -->
+<!-- EMPHASIS MIX ELEMENTS -->
+<!--
+  Elements that may be used inside most of the
+  emphasis class elements
+-->
+<!-- JUST RENDITION -->
+<!--
+  Only the simplest of the typographic
+  emphasis elements, as well as subscript and
+  superscript.  Usually used in a model that
+  allows #PCDATA and this restricted mixture.
+  This mix may be stripped down to only
+  subscript and superscript by some, more
+  restrictive DTDs.
+  MAINTENANCE NOTE: This Parameter Entity
+  and the related PE "rendition-plus" have
+  been put in place to restrict the amount of
+  variability that a person modifying the DTD
+  through PE redefinition can achieve. Some
+  elements have been set #PCDATA plus one PE
+  and some have been set to #PCDATA plus the
+  other in an effort to allow designers to
+  modify entire groups of elements, but not
+  to change similar models individually .
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="just-rendition">
+    <notAllowed/>
+  </define>
+  <!-- SECTION BACK MATTER ELEMENTS -->
+  <!--
+    Back matter elements used inside smaller
+    structures, such as sections and sidebars
+  -->
+  <define name="sec-back-matter-mix">
+    <ref name="sec-back.class"/>
+  </define>
+</grammar>
+<!-- ================== End Publishing DTD Mixes Customization === -->

@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Bibliographic Reference (Citation) Class Elements -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Bibliographic Reference (Citation) Class Elements v0.4 20110131//EN"
+  Delivered as file "JATS-references0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Defines the bibliographic reference elements -->
+<!---->
+<!---->
+<!-- CONTAINS:   1) Default definition of the references class -->
+<!-- 2) Parameter Entities for attribute lists -->
+<!-- 3) Models for the bibliographic reference -->
+<!-- class elements in alphabetical order -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    5. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    4. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to the following elements:
+        - access-date through access-date-atts (only @specific-use)
+        - annotation through annotation-atts (both)
+        - chapter-title through chapter-title-atts (both) NEW PE
+        - comment through comment-atts (both)
+        - date-in-citation through date-in-citation-atts (both)
+        - edition through edition-atts (both)
+        - gov through gov-atts (both)
+        - note through note-atts (both)
+        - part-title through part-title-atts (both) NEW PE
+        - patent through patent-atts (both)
+        - person-group through person-group-atts (both)
+        - pub-id through pub-id-atts (@specific-use only)
+        - ref through ref-atts (both)
+        - ref-list through ref-list-atts (@specific-use only)
+        - series through series-atts (both)
+        - source through source-atts (@specific-use only;
+            @xml:lang already)
+        - std through std-atts (both)
+        - time-stamp through time-stamp-atts (@specific-use only)
+        - trans-source through trans-source-atts (@specific-use only;
+            @xml:lang already)
+  
+    4. PERSON GROUP - Changed the model of <person-group> to mixed
+       content. This entailed: creating new PE %person-group-elements;
+       that contained the elements to be used and Changing PE
+       %person-group-model to (#PCDATA %person-group-elements;)*.
+       The PE person-group-model has been retained in this module for
+       compatibility, but has been set to the mixed model using
+       person-group-elements.
+  
+    3. ANNOTATION - Changed to content model to use the parameter
+       entity %annotation-model; Content model unchanged.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR #PCDATA MODELS -->
+<!-- ============================================================= -->
+<!-- SOURCE ELEMENTS -->
+<!--
+  The elements that can be included along with
+  data characters inside the content model of
+  a <source>.
+-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="source-elements">
+    <choice>
+      <ref name="address-link.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+  <!-- ============================================================= -->
+  <!-- ACCESS DATE ATTRIBUTES -->
+  <!-- Attributes for the <access-date> element -->
+  <define name="access-date-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- ANNOTATION ATTRIBUTES -->
+  <!-- Attributes for the <annotation> element -->
+  <define name="annotation-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CHAPTER TITLE ATTRIBUTES -->
+  <!-- Attributes for the <chapter-title> element -->
+  <define name="chapter-title-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- COMMENT ATTRIBUTES -->
+  <!-- Attributes for the <comment> element -->
+  <define name="comment-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- DATE IN CITATION ATTRIBUTES -->
+  <!--
+    Attributes for the <date-in-citation>
+    element
+  -->
+  <define name="date-in-citation-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- EDITION ATTRIBUTES -->
+  <!-- Attributes for the <edition> element -->
+  <define name="edition-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- GOVERNMENT ATTRIBUTES -->
+  <!-- Attributes for the <gov> element -->
+  <define name="gov-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- NOTE ATTRIBUTES -->
+  <!-- Attributes for the <note> element -->
+  <define name="note-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- PART TITLE ATTRIBUTES -->
+  <!-- Attributes for the <part-title> element -->
+  <define name="part-title-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- PATENT ATTRIBUTES -->
+  <!-- Attributes for the <patent> element -->
+  <define name="patent-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="country"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- PERSON GROUP ATTRIBUTES -->
+  <!-- Attributes for the <person-group> element -->
+  <!-- PUBLICATION IDENTIFIER ATTRIBUTES -->
+  <!-- Attributes for the <pub-id> element -->
+  <define name="pub-id-atts">
+    <optional>
+      <attribute name="pub-id-type">
+        <choice>
+          <ref name="pub-id-types"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- REFERENCE ATTRIBUTES -->
+  <!-- Attributes for the <ref> element -->
+  <define name="ref-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- REFERENCE LIST ATTRIBUTES -->
+  <!-- Attributes for the <ref-list> element -->
+  <!-- SERIES ATTRIBUTES -->
+  <!-- Attributes for the <series> element -->
+  <define name="series-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- SOURCE ATTRIBUTES -->
+  <!--
+    Attributes for the <source> and
+    <trans-source> elements
+  -->
+  <define name="source-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- STANDARDS ATTRIBUTES -->
+  <!-- Attributes for the <std> element -->
+  <!-- TIME STAMP ATTRIBUTES -->
+  <!-- Attributes for the <time-stamp> element -->
+  <define name="time-stamp-atts">
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+  </define>
+  <!-- TRANSLATED SOURCE ATTRIBUTES -->
+  <!-- Attributes for the <trans-source> element -->
+  <define name="trans-source-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BIBLIOGRAPHIC REFERENCE LIST ELEMENTS -->
+  <!-- ============================================================= -->
+  <!--
+    ELEM   article-title
+    Defined in %common.ent;
+  -->
+  <!-- ELEM   collab       Defined in %common.ent; -->
+  <!-- ELEM   conf-date    Defined in %common.ent; -->
+  <!-- ELEM   conf-loc     Defined in %common.ent; -->
+  <!-- ELEM   conf-name    Defined in %common.ent; -->
+  <!-- ELEM   day          Defined in %common.ent; -->
+  <!-- ELEM   elocation-id Defined in %common.ent; -->
+  <!-- ELEM   email        Defined in %common.ent; -->
+  <!-- ELEM   fpage        Defined in %common.ent; -->
+  <!-- ELEM   issn         Defined in %common.ent; -->
+  <!-- ELEM   issue        Defined in %common.ent; -->
+  <!-- ELEM   lpage        Defined in %common.ent; -->
+  <!-- ELEM   month        Defined in %common.ent; -->
+  <!--
+    ELEM   publisher-loc
+    Defined in %common.ent;
+  -->
+  <!--
+    ELEM   publisher-name
+    Defined in %common.ent;
+  -->
+  <!-- ELEM   season       Defined in %common.ent; -->
+  <!-- ELEM   title        Defined in %common.ent; -->
+  <!-- ELEM   trans-title  Defined in %common.ent; -->
+  <!-- ELEM   volume       Defined in %common.ent; -->
+  <!-- ELEM   year         Defined in %common.ent; -->
+  <!-- REFERENCE LIST MODEL -->
+  <!-- Content model for the <ref-list> element -->
+  <define name="ref-list-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="ref"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="ref-list.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- REFERENCE LIST (BIBLIOGRAPHIC REFERENCE LIST) -->
+  <!--
+    List of references (citations) for the
+    article.  Often called "References",
+    "Bibliography", or "Additional Reading". No
+    distinction is made between lists of cited
+    references and lists of suggested references.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=ref-list
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=ref-list
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=ref-list
+  -->
+  <define name="ref-list">
+    <element name="ref-list">
+      <ref name="ref-list-attlist"/>
+      <ref name="ref-list-model"/>
+    </element>
+  </define>
+  <define name="ref-list-attlist" combine="interleave">
+    <ref name="ref-list-atts"/>
+  </define>
+  <!-- REFERENCE ITEM MODEL -->
+  <!-- Content model for the <ref> element -->
+  <!-- REFERENCE ITEM -->
+  <!--
+    One item in a bibliographic list, typically
+    a citation describing a referenced work, but
+    some journals may place notes in this list as
+    well as citations.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=ref
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=ref
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=ref
+  -->
+  <define name="ref">
+    <element name="ref">
+      <ref name="ref-attlist"/>
+      <ref name="ref-model"/>
+    </element>
+  </define>
+  <define name="ref-attlist" combine="interleave">
+    <ref name="ref-atts"/>
+  </define>
+  <!--
+    ELEM   element-citation
+    Defined in %common.ent;
+  -->
+  <!--
+    ELEM   mixed-citation
+    Defined in %common.ent;
+  -->
+  <!-- NOTE IN A REFERENCE LIST MODEL -->
+  <!--
+    Content model for a note in a reference
+    list element
+  -->
+  <define name="note-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="just-para.class"/>
+        <ref name="product.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- NOTE IN A REFERENCE LIST -->
+  <!--
+    Used to tag non-citation material that
+    sometimes within a reference list, for
+    example, used to tag end note material when
+    such a note is placed within a reference
+    list.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=note
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=note
+  -->
+  <define name="note">
+    <element name="note">
+      <ref name="note-attlist"/>
+      <ref name="note-model"/>
+    </element>
+  </define>
+  <define name="note-attlist" combine="interleave">
+    <ref name="note-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BIBLIOGRAPHIC REFERENCE CLASS -->
+  <!-- ============================================================= -->
+  <!-- ACCESS DATE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the Access Date <access-date> element
+  -->
+  <define name="access-date-elements">
+    <notAllowed/>
+  </define>
+  <!-- ACCESS DATE FOR CITED WORK -->
+  <!--
+    The date on which the work which is cited
+    was examined. Some online resources are
+    changing so quickly that a citation to the
+    resource is not complete without the date
+    on which the cited resource was examined,
+    since a day before or a day later the
+    relevant material might be different.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=access-date
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=access-date
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=access-date
+  -->
+  <define name="access-date">
+    <element name="access-date">
+      <ref name="access-date-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="access-date-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="access-date-attlist" combine="interleave">
+    <ref name="access-date-atts"/>
+  </define>
+  <!-- DATE ELEMENTS MODEL -->
+  <!--
+    The content model for the <annotation>
+    element
+  -->
+  <define name="annotation-model">
+    <oneOrMore>
+      <ref name="just-para.class"/>
+    </oneOrMore>
+  </define>
+  <!-- ANNOTATION IN A CITATION -->
+  <!--
+    Most citations just provide the bibliographic
+    information for a cited reference but a few
+    describe or comment upon the nature or
+    quality of the reference or summarize its
+    findings.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=annotation
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=annotation
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=annotation
+  -->
+  <define name="annotation">
+    <element name="annotation">
+      <ref name="annotation-attlist"/>
+      <ref name="annotation-model"/>
+    </element>
+  </define>
+  <define name="annotation-attlist" combine="interleave">
+    <ref name="annotation-atts"/>
+  </define>
+  <!-- CHAPTER TITLE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the <chapter-title> element
+  -->
+  <define name="chapter-title-elements">
+    <ref name="source-elements"/>
+  </define>
+  <!-- CHAPTER TITLE IN A CITATION -->
+  <!--
+    Within a citation (such as a <mixed-citation>
+    or an <element-citation>), the title of a
+    cited book is tagged as <source> and the
+    title of a chapter within that book is tagged
+    as <chapter-title>.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=chapter-title
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=chapter-title
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=chapter-title
+  -->
+  <define name="chapter-title">
+    <element name="chapter-title">
+      <ref name="chapter-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="chapter-title-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="chapter-title-attlist" combine="interleave">
+    <ref name="chapter-title-atts"/>
+  </define>
+  <!-- COMMENT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the Comment in a Citation <comment> element.
+    Design Note: All inline mixes begin with an
+    OR bar, but since %simple-phrase; is an
+    inline mix, the OR bar is already there.
+  -->
+  <define name="comment-elements">
+    <ref name="simple-phrase"/>
+  </define>
+  <!-- COMMENT IN A CITATION -->
+  <!--
+    Used to mark unstructured text within an
+    otherwise element structured reference.
+    In an unstructured reference, this text would
+    merely be data characters.
+    Typical comments could include:
+      <comment>[Abstract]</comment>
+      <comment> translated from Russian</comment>
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=comment
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=comment
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=comment
+  -->
+  <define name="comment">
+    <element name="comment">
+      <ref name="comment-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="comment-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="comment-attlist" combine="interleave">
+    <ref name="comment-atts"/>
+  </define>
+  <!-- DATE IN CITATION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the Date Inside Citation <date-in-citation>
+    element
+  -->
+  <define name="date-in-citation-elements">
+    <ref name="date-parts.class"/>
+  </define>
+  <!-- DATE INSIDE CITATION -->
+  <!--
+    A container element for any date that may be
+    referenced in a citation, other than the
+    publication date of the cited work.
+    The "content-type" attribute should be used
+    to identify the purpose/type of date. For
+    example, if the element contains the date
+    on which the article contributor examined the
+    cited work, the attribute might be
+    "access-date".
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=date-in-citation
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=date-in-citation
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=date-in-citation
+  -->
+  <define name="date-in-citation">
+    <element name="date-in-citation">
+      <ref name="date-in-citation-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="date-in-citation-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="date-in-citation-attlist" combine="interleave">
+    <ref name="date-in-citation-atts"/>
+  </define>
+  <!-- EDITION ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <edition>
+    Design Note: -%just-rendition; begins with
+    an OR bar, so this inline mix begins with
+    an OR bar.
+  -->
+  <!-- EDITION, CITED -->
+  <!--
+    The edition number of a cited publication
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=edition
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=edition
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=edition
+  -->
+  <define name="edition">
+    <element name="edition">
+      <ref name="edition-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="edition-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="edition-attlist" combine="interleave">
+    <ref name="edition-atts"/>
+  </define>
+  <!-- GOVERNMENT REPORT ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <gov>
+    Design Note: -%rendition-plus; begins with
+    an OR bar, so this inline mix begins with
+    an OR bar.
+  -->
+  <define name="gov-elements">
+    <ref name="rendition-plus"/>
+  </define>
+  <!-- GOVERNMENT REPORT, CITED -->
+  <!--
+    The identification information (typically the
+    title and/or an identification number) for
+    a cited governmental report or other
+    government publication
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=gov
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=gov
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=gov
+  -->
+  <define name="gov">
+    <element name="gov">
+      <ref name="gov-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="gov-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="gov-attlist" combine="interleave">
+    <ref name="gov-atts"/>
+  </define>
+  <!-- PART TITLE ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    the <part-title> element
+  -->
+  <define name="part-title-elements">
+    <ref name="source-elements"/>
+  </define>
+  <!-- PART TITLE IN A CITATION -->
+  <!--
+    Within a citation (such as a
+    <mixed-citation> or an <element-citation>),
+    when books are divided into Parts (which
+    may then contain smaller units such as
+    chapters), this element can be used to
+    record the title of the cited Part.
+    The book is tagged as <source>.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=part-title
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=part-title
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=part-title
+  -->
+  <define name="part-title">
+    <element name="part-title">
+      <ref name="part-title-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="part-title-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="part-title-attlist" combine="interleave">
+    <ref name="part-title-atts"/>
+  </define>
+  <!-- PATENT NUMBER ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <patent>
+    Design Note: -%just-rendition; begins with
+    an OR bar, so this inline mix begins with
+    an OR bar.
+  -->
+  <!-- PATENT NUMBER, CITED -->
+  <!--
+    The identification information (typically the
+    patent number or number and name) for a
+    cited patent
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=patent
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=patent
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=patent
+  -->
+  <define name="patent">
+    <element name="patent">
+      <ref name="patent-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="patent-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="patent-attlist" combine="interleave">
+    <ref name="patent-atts"/>
+  </define>
+  <!-- PERSON GROUP ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <person-group>
+  -->
+  <!-- PERSON GROUP MODEL -->
+  <!-- Content model for the Person Group element -->
+  <define name="person-group-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="person-group-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- PERSON GROUP FOR A CITED PUBLICATION -->
+  <!--
+    Wrapper element for one or more authors,
+    editors, translators, etc. named in a cited
+    reference.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=person-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=person-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=person-group
+  -->
+  <define name="person-group">
+    <element name="person-group">
+      <ref name="person-group-attlist"/>
+      <ref name="person-group-model"/>
+    </element>
+  </define>
+  <define name="person-group-attlist" combine="interleave">
+    <ref name="person-group-atts"/>
+  </define>
+  <!-- PUBLICATION IDENTIFIER FOR A CITED PUBLICATION -->
+  <!--
+    The identifier of a publication such as a
+    related journal article that is listed
+    within a citation (such as a <mixed-citation>
+    or an <element-citation>) inside the
+    bibliographic reference list <ref-list> of
+    an article.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=pub-id
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=pub-id
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=pub-id
+  -->
+  <define name="pub-id">
+    <element name="pub-id">
+      <ref name="pub-id-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="pub-id-attlist" combine="interleave">
+    <ref name="pub-id-atts"/>
+  </define>
+  <!-- SERIES ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <series>
+    Design Note: -%rendition-plus; begins with
+    an OR bar, so this inline mix begins with
+    an OR bar.
+  -->
+  <define name="series-elements">
+    <ref name="rendition-plus"/>
+  </define>
+  <!-- SERIES -->
+  <!--
+    Container element for any series information
+    used in a citation (such as a <mixed-citation>
+    or an <element-citation>). For example,
+    within a citation to a non-journal item that
+    spans multiple volumes, this element could
+    contain the unique title of the entire series:
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=series
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=series
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=series
+  -->
+  <define name="series">
+    <element name="series">
+      <ref name="series-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="series-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="series-attlist" combine="interleave">
+    <ref name="series-atts"/>
+  </define>
+  <!-- STANDARD ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    <std>
+    Design Note: -%rendition-plus; begins with
+    an OR bar, so this inline mix begins with
+    an OR bar.
+  -->
+  <!-- STANDARD, CITED -->
+  <!--
+    The identification information (typically the
+    standard number, organization, and name) for
+    a cited standard, where "standard" is defined
+    as a document produced by a recognized
+    standards body such ISO, IEEE, OASIS, ANSI,
+    etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=std
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=std
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=std
+  -->
+  <define name="std">
+    <element name="std">
+      <ref name="std-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="std-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="std-attlist" combine="interleave">
+    <ref name="std-atts"/>
+  </define>
+  <!-- SOURCE -->
+  <!--
+    Within a citation, this is the title of a
+    journal, book, conference proceedings, etc.
+    that is the source of the cited material.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=source
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=source
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=source
+  -->
+  <define name="source">
+    <element name="source">
+      <ref name="source-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="source-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="source-attlist" combine="interleave">
+    <ref name="source-atts"/>
+  </define>
+  <!-- TIME STAMP ELEMENTS -->
+  <!--
+    The elements that can be included along with
+    data characters inside the content model of
+    a <time-stamp>.
+  -->
+  <define name="time-stamp-elements">
+    <notAllowed/>
+  </define>
+  <!-- TIME STAMP FOR CITED WORK -->
+  <!--
+    Used to record any time stamp that was
+    found on the cited resource when it was
+    examined, for resources such as databases
+    that may use a time signature to identify
+    different versions.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=time-stamp
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=time-stamp
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=time-stamp
+  -->
+  <define name="time-stamp">
+    <element name="time-stamp">
+      <ref name="time-stamp-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="time-stamp-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="time-stamp-attlist" combine="interleave">
+    <ref name="time-stamp-atts"/>
+  </define>
+  <!-- TRANSLATED SOURCE -->
+  <!--
+    Within a citation, this is the title of a
+    journal, book, conference proceedings, etc.
+    that is the source of the cited material,
+    but with the source name given in a different
+    language from the source as given in the
+    <source> element. For example, if an article
+    is originally in French, the <source> name
+    would be the French name and the
+    <trans-source> might be in English.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=trans-source
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=trans-source
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=trans-source
+  -->
+  <define name="trans-source">
+    <element name="trans-source">
+      <ref name="trans-source-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="source-elements"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="trans-source-attlist" combine="interleave">
+    <ref name="trans-source-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Bibliographic Class Module =========== -->

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Back Matter Elements -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Back Matter Elements v0.4 20110131//EN"
+       Delivered as file "JATS-backmatter0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Names elements that are not part of the main -->
+<!-- textual flow of a work, but are considered to be -->
+<!-- ancillary material. -->
+<!---->
+<!-- CONTAINS:   1) Parameter Entities for attribute lists -->
+<!-- 2) List of the back matter elements in -->
+<!-- alphabetical order -->
+<!-- - Acknowledgments <ack> (defined in -->
+<!-- %common.ent;) -->
+<!-- - Appendix Matter <app-group> -->
+<!-- - Footnote Group <fn-group> -->
+<!-- - Glossary <glossary> -->
+<!-- - Biography <bio> (defined in %common.ent;) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    4. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    3. @XML:LANG - Added @xml:lang to the following elements:
+        - app through app-atts
+        - app-group through app-group-atts
+        - fn-group through fn-group-atts
+        - glossary through glossary-atts
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- BACKMATTER ELEMENTS -->
+<!-- ============================================================= -->
+<!-- ELEM   bio          Defined in %common.ent; -->
+<!-- ELEM   ref-list     Defined in %references.ent; -->
+<!-- ELEM   sec          Defined in %section.ent; -->
+<!-- ELEM   ack          Defined in %common.ent; -->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- APPENDIX ATTRIBUTES -->
+<!-- Attributes for the Appendix <app> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="app-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- APPENDIX GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the Appendix Group <app-group>
+    element
+  -->
+  <define name="app-group-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- FOOTNOTE GROUP ATTRIBUTES -->
+  <!--
+    Attributes for the Footnote Group <fn-group>
+    element
+  -->
+  <!-- GLOSSARY ATTRIBUTES -->
+  <!--
+    Attributes for the Glossary <glossary>
+    element
+  -->
+  <!-- ============================================================= -->
+  <!-- APPENDIX ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- APPENDIX GROUP MODEL -->
+  <!-- Content model for the <app-group> element -->
+  <define name="app-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="app.class"/>
+        <ref name="ref-list.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- APPENDIX GROUP -->
+  <!--
+    A container element to hold one or more
+    Appendices.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=app-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=app-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=app-group
+  -->
+  <define name="app-group">
+    <element name="app-group">
+      <ref name="app-group-attlist"/>
+      <ref name="app-group-model"/>
+    </element>
+  </define>
+  <define name="app-group-attlist" combine="interleave">
+    <ref name="app-group-atts"/>
+  </define>
+  <!-- APPENDIX MODEL -->
+  <!-- Content model for the <app> element. -->
+  <!-- APPENDIX -->
+  <!--
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=app
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=app
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=app
+  -->
+  <define name="app">
+    <element name="app">
+      <ref name="app-attlist"/>
+      <ref name="app-model"/>
+    </element>
+  </define>
+  <define name="app-attlist" combine="interleave">
+    <ref name="app-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FOOTNOTE GROUPING ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- FOOTNOTE GROUP MODEL -->
+  <!-- Content model for the <fn-group> element -->
+  <define name="fn-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <ref name="fn-link.class"/>
+    </oneOrMore>
+  </define>
+  <!-- FOOTNOTE GROUP -->
+  <!--
+    Footnotes in a journal article may be
+    scattered throughout the text, at the places
+    they occur, or collected in groups at the
+    end of structural units.  This element is a
+    wrapper tag for such groups of footnotes.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=fn-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=fn-group
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=fn-group
+  -->
+  <define name="fn-group">
+    <element name="fn-group">
+      <ref name="fn-group-attlist"/>
+      <ref name="fn-group-model"/>
+    </element>
+  </define>
+  <define name="fn-group-attlist" combine="interleave">
+    <ref name="fn-group-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- GLOSSARY -->
+  <!-- ============================================================= -->
+  <!-- GLOSSARY MODEL -->
+  <!-- Content model for the <glossary> element -->
+  <define name="glossary-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="para-level"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="glossary"/>
+    </zeroOrMore>
+  </define>
+  <!-- GLOSSARY ELEMENTS -->
+  <!--
+    Glossary or list of definitions.  Typically
+    the content will be one or more <def-list>s.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=glossary
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=glossary
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=glossary
+  -->
+  <define name="glossary">
+    <element name="glossary">
+      <ref name="glossary-attlist"/>
+      <ref name="glossary-model"/>
+    </element>
+  </define>
+  <define name="glossary-attlist" combine="interleave">
+    <ref name="glossary-atts"/>
+  </define>
+</grammar>
+<!-- ================== End Back Matter Module =================== -->

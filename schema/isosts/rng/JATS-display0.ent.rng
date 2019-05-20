@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Display Class Elements -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Archiving and Interchange DTD Suite Display Class Elements v0.4 20110131//EN"
+       Delivered as file "JATS-display0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    Describes display-related elements such as -->
+<!-- Figures, Graphics, Math, Chemical Structures, -->
+<!-- Graphics, etc. -->
+<!---->
+<!-- CONTAINS:   1) Parameter Entities for attribute lists -->
+<!-- 2) Parameter Entities for content models -->
+<!-- 3) The display class elements (alpha order) -->
+<!-- a) Array -->
+<!-- b) Boxed text -->
+<!-- c) Caption -->
+<!-- d) Chemical Structure(s) -->
+<!-- e) Figure(s) -->
+<!-- f) Graphic -->
+<!-- g) Inline Graphic -->
+<!-- h) Media -->
+<!-- i) Pre-formatted text -->
+<!-- j) Supplementary Information -->
+<!-- k) Table Group -->
+<!-- l) Table Wrapper -->
+<!-- m) Table (invoked module) -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital archives and publishers who wish to -->
+<!-- create a custom XML DTD for original markup of -->
+<!-- journal literature, books, and related material, -->
+<!-- or for archiving and transferring such material -->
+<!-- between archives. -->
+<!---->
+<!-- This DTD is in the public domain. An organization -->
+<!-- that wishes to create its own DTD from the suite -->
+<!-- may do so without permission from NLM. -->
+<!---->
+<!-- The suite has been set up to be extended using a -->
+<!-- new DTD file and a new DTD-specific customization -->
+<!-- module to redefine the many Parameter Entities. -->
+<!-- Do not modify the suite directly or redistribute -->
+<!-- modified versions of the suite. -->
+<!---->
+<!-- In the interest of maintaining consistency and -->
+<!-- clarity for potential users, NLM requests: -->
+<!---->
+<!-- 1. If you create a DTD from the Archiving and -->
+<!-- Interchange DTD Suite and intend to stay -->
+<!-- compatible with the suite, then please include -->
+<!-- the following statement as a comment in all of -->
+<!-- your DTD modules: -->
+<!-- "Created from, and fully compatible with, -->
+<!-- the NISO Z39.96 Journal Article Tag Suite -->
+<!-- (JATS)." -->
+<!---->
+<!-- 2. If you alter one or more modules of the suite, -->
+<!-- then please rename your version and all its -->
+<!-- modules to avoid any confusion with the -->
+<!-- original suite. Also, please include the -->
+<!-- following statement as a comment in all your -->
+<!-- DTD modules: -->
+<!-- "Based in part on, but not fully compatible -->
+<!-- with, the NISO Z39.96 Journal Article Tag -->
+<!-- Suite." -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- December 2002 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- Bruce Rosenblum (Inera Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- NLM thanks the Harvard University Libraries, both -->
+<!-- for proposing that a draft archiving NLM DTD for -->
+<!-- life sciences journals be extended to accommodate -->
+<!-- journals in all disciplines and for sponsoring -->
+<!-- Bruce Rosenblum's collaboration with other DTD -->
+<!-- authors in completing NLM Version 1.0. The -->
+<!-- Andrew W. Mellon Foundation provided support for -->
+<!-- these important contributions. -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- the DTD suite should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    7. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0, but the
+       following change could break some customizations.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    6. INLINE GRAPHIC - Uses new class %small-access.class; (no
+       model change)
+  
+    5. POSITION ATTRIBUTE - Added the value "background"
+  
+    4. @SPECIFIC-USE and @XML:LANG - Added the @specific-use and
+       @xml:lang to %display-atts;. If these attribute were
+       already part of the list, deleted them. These attributes were
+       added to:
+        - array       (already there)
+        - boxed-text  (already there)
+        - caption     (already there)
+        - chem-struct (added @xml:lang, @specific-use already)
+        - chem-struct-wrap (added @xml:lang, @specific-use already)
+        - fig (already there)
+        - fig-group (added @xml:lang, @specific-use already there)
+        - graphic (added @xml:lang, @specific-use already there)
+        - inline-graphic (both)
+        - media (added @xml:lang, @specific -use already there)
+        - preformat (already there)
+        - supplementary-material (already there)
+        - table-wrap (already there)
+        - table-wrap-group (added @xml:lang, @specific -use
+            already there)
+  
+    3. GRAPHIC MODEL - Removed the dependency which had both
+       <graphic> and <media> modeled with the same parameter
+       entity %graphic-model;. Created new PE for %media-model;
+       but set it (as the default) to %graphic-model; so that no
+       customization would break. NEW PE
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- ATTRIBUTES FOR MULTIPLE ELEMENTS -->
+<!-- ============================================================= -->
+<!-- DISPLAY ATTRIBUTES -->
+<!--
+  Attributes used for several of the block
+  display elements
+-->
+<!-- ============================================================= -->
+<!-- SPECIFIC ATTRIBUTE LISTS -->
+<!-- ============================================================= -->
+<!-- ARRAY ATTRIBUTES -->
+<!-- Attributes for the <array> element -->
+<!-- BOXED TEXT ATTRIBUTES -->
+<!-- Attributes for the <boxed-text> element -->
+<!-- CAPTION ATTRIBUTES -->
+<!-- Attributes for the <caption> element -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="caption-atts">
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- CHEMICAL STRUCTURE ATTRIBUTES -->
+  <!--
+    Attributes for <chem-struct>, a wrapper
+    around one (typically inline) chemical
+    structure, or one of several structures in
+    a <chem-struct-wrap>
+  -->
+  <define name="chem-struct-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="content-type"/>
+    </optional>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="might-link-atts"/>
+  </define>
+  <!-- CHEMICAL STRUCTURE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes for the <chem-struct-wrap>
+    element, the outer wrapper around one or more
+    block-level chemical structures
+  -->
+  <!-- FIGURE ATTRIBUTES -->
+  <!-- Attributes for Figures <fig> -->
+  <define name="fig-atts">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <ref name="display-atts"/>
+    <optional>
+      <attribute name="fig-type"/>
+    </optional>
+  </define>
+  <!-- FIGURE GROUP ATTRIBUTES -->
+  <!-- Attributes for Figure Groups <fig-group> -->
+  <!-- GRAPHIC ATTRIBUTES -->
+  <!-- Attributes for the <graphic> element -->
+  <!-- INLINE GRAPHIC ATTRIBUTES -->
+  <!--                     Attributes for the <inline-graphic> element -->
+  <!-- MEDIA ATTRIBUTES -->
+  <!-- Attributes for the <media> element -->
+  <!-- PREFORMATTED TEXT ATTRIBUTES -->
+  <!-- Attributes for the <preformat> element -->
+  <!-- SUPPLEMENTARY INFORMATION ATTRIBUTES -->
+  <!--
+    Attributes for Supplementary Material
+    <supplementary-material>
+  -->
+  <!-- ============================================================= -->
+  <!-- TABLE ATTRIBUTES -->
+  <!-- ============================================================= -->
+  <!-- TABLE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes to be added to the regular NLM
+    table attributes, for example, when the
+    Elsevier or OASIS Exchange table models are
+    used.
+  -->
+  <!-- TABLE GROUP ATTRIBUTES -->
+  <!--
+    Attributes for groups of <table-wrap>
+    elements <table-wrap-group>
+  -->
+  <!-- TABLE WRAPPER ATTRIBUTES -->
+  <!--
+    Attributes for the <table-wrap> element,
+    the container for <table>s
+  -->
+  <!-- ============================================================= -->
+  <!-- PARAMETER ENTITIES FOR CONTENT MODELS -->
+  <!-- ============================================================= -->
+  <!-- FIGURE-LIKE CONTENT MODEL -->
+  <!--
+    Content model for the Figure element and any
+    similarly structured elements
+  -->
+  <!-- ============================================================= -->
+  <!-- ARRAY ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ARRAY CONTENT MODEL -->
+  <!-- Content model for the <array> element -->
+  <!-- ARRAY (SIMPLE TABULAR ARRAY) -->
+  <!--
+    Used to define in-text table-like (columnar)
+    material.  Uses the XHTML table body element
+    or a graphic to express the rows and columns.
+    These have neither labels nor captions,
+    arrays with labels and captions are table
+    wrappers.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=array
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=array
+  -->
+  <define name="array">
+    <element name="array">
+      <ref name="array-attlist"/>
+      <ref name="array-model"/>
+    </element>
+  </define>
+  <define name="array-attlist" combine="interleave">
+    <ref name="array-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- BOXED TEXT ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- BOXED TEXT MODEL -->
+  <!--
+    Complete content model for the boxed text
+    element <boxed-text>
+  -->
+  <!-- BOXED TEXT -->
+  <!--
+    Textual material that is outside the flow
+    of the narrative text, for example, a
+    sidebar, marginalia, text insert, caution or
+    note box, etc.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=boxed-text
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=boxed-text
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=boxed-text
+  -->
+  <define name="boxed-text">
+    <element name="boxed-text">
+      <ref name="boxed-text-attlist"/>
+      <ref name="boxed-text-model"/>
+    </element>
+  </define>
+  <define name="boxed-text-attlist" combine="interleave">
+    <ref name="boxed-text-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- CHEMICAL STRUCTURE ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- CHEMICAL STRUCTURE WRAPPER MODEL -->
+  <!--
+    Content model for the Chemical Structure
+    Wrapper <chem-struct-wrap> element
+  -->
+  <define name="chem-struct-wrap-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="inside-chem-struct-wrap.class"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="display-back-matter.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- CHEMICAL STRUCTURE WRAPPER -->
+  <!--
+    A chemical expression, reaction, equation,
+    etc. that is set apart within the text.
+    These may be numbered.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=chem-struct-wrap
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=chem-struct-wrap
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=chem-struct-wrap
+  -->
+  <define name="chem-struct-wrap">
+    <element name="chem-struct-wrap">
+      <ref name="chem-struct-wrap-attlist"/>
+      <ref name="chem-struct-wrap-model"/>
+    </element>
+  </define>
+  <define name="chem-struct-wrap-attlist" combine="interleave">
+    <ref name="chem-struct-wrap-atts"/>
+  </define>
+  <!-- CHEMICAL STRUCTURE ELEMENTS -->
+  <!--
+    Those elements that may mix with the data
+    characters inside a Chemical Structure
+    <chem-struct>
+  -->
+  <define name="chem-struct-elements">
+    <choice>
+      <ref name="access.class"/>
+      <ref name="address-link.class"/>
+      <ref name="break.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="label.class"/>
+      <ref name="list.class"/>
+      <ref name="math.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="simple-display.class"/>
+      <ref name="simple-link.class"/>
+      <ref name="subsup.class"/>
+    </choice>
+  </define>
+  <!-- CHEMICAL STRUCTURE MODEL -->
+  <!--
+    A chemical expression, reaction, equation,
+    etc. that is set apart within the text
+  -->
+  <define name="chem-struct-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="chem-struct-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- CHEMICAL STRUCTURE (DISPLAY) -->
+  <!--
+    A chemical expression, reaction, equation,
+    etc. that is set apart within the text.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=chem-struct
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=chem-struct
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=chem-struct
+  -->
+  <define name="chem-struct">
+    <element name="chem-struct">
+      <ref name="chem-struct-attlist"/>
+      <ref name="chem-struct-model"/>
+    </element>
+  </define>
+  <define name="chem-struct-attlist" combine="interleave">
+    <ref name="chem-struct-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- FIGURE ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- FIGURE GROUP MODEL -->
+  <!-- Content model for a Figure Group element -->
+  <!-- FIGURE GROUP -->
+  <!--
+    Used for a group of figures that must be
+    displayed together
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=fig-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=fig-group
+  -->
+  <define name="fig-group">
+    <element name="fig-group">
+      <ref name="fig-group-attlist"/>
+      <ref name="fig-group-model"/>
+    </element>
+  </define>
+  <define name="fig-group-attlist" combine="interleave">
+    <ref name="fig-group-atts"/>
+  </define>
+  <!-- FIGURE -->
+  <!--
+    A block of graphic or textual material that
+    is identified as a "Figure", usually with
+    a caption and a label such as "Figure" or
+    "Figure 3.".The content of a Figure need not
+    be graphical in nature,.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=fig
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=fig
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=fig
+  -->
+  <define name="fig">
+    <element name="fig">
+      <ref name="fig-attlist"/>
+      <ref name="fig-model"/>
+    </element>
+  </define>
+  <define name="fig-attlist" combine="interleave">
+    <ref name="fig-atts"/>
+  </define>
+  <!-- CAPTION BODY PARTS -->
+  <!--
+    Elements that may be included in the body of
+    the <caption> element
+  -->
+  <define name="caption-body-parts">
+    <zeroOrMore>
+      <ref name="just-para.class"/>
+    </zeroOrMore>
+  </define>
+  <!-- CAPTION MODEL -->
+  <!-- Content model for the <caption> element -->
+  <define name="caption-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <ref name="caption-body-parts"/>
+  </define>
+  <!-- CAPTION OF A FIGURE, TABLE, ETC. -->
+  <!--
+    Wrapper element for the textual description
+    associated with a figure, table, etc. In
+    some source document captions, the first
+    sentence is set off from the rest as a title.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=caption
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=caption
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=caption
+  -->
+  <define name="caption">
+    <element name="caption">
+      <ref name="caption-attlist"/>
+      <ref name="caption-model"/>
+    </element>
+  </define>
+  <define name="caption-attlist" combine="interleave">
+    <ref name="caption-atts"/>
+  </define>
+  <!-- ELEM  title        Defined in %common.ent; -->
+  <!-- ELEM  p            Defined in %common.ent; -->
+  <!-- ============================================================= -->
+  <!-- THE GRAPHIC AND MEDIA OBJECT ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- GRAPHIC MODEL -->
+  <!-- Content model for the <graphic> element -->
+  <define name="graphic-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+        <ref name="id.class"/>
+        <ref name="label.class"/>
+        <ref name="caption.class"/>
+        <ref name="display-back-matter.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- GRAPHIC -->
+  <!--
+    An external file that holds a picture,
+    illustration, etc., usually as some form of
+    binary object. The "content" of the <graphic>
+    element is not the object, but merely
+    information about the object. The "href"
+    attribute points to the file containing
+    the object.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=graphic
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=graphic
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=graphic
+  -->
+  <define name="graphic">
+    <element name="graphic">
+      <ref name="graphic-attlist"/>
+      <ref name="graphic-model"/>
+    </element>
+  </define>
+  <define name="graphic-attlist" combine="interleave">
+    <ref name="graphic-atts"/>
+  </define>
+  <!-- MEDIA MODEL -->
+  <!-- Content model for the <media> element -->
+  <define name="media-model">
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+        <ref name="id.class"/>
+        <ref name="label.class"/>
+        <ref name="caption.class"/>
+        <ref name="display-back-matter.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- MEDIA OBJECT -->
+  <!--
+    An external file that holds a media object,
+    such as an animation or a movie. The
+    "content" of the <media> element is not the
+    object, but merely information about the
+    object. The "href" attribute points to the
+    file containing the object.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=media
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=media
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=media
+  -->
+  <define name="media">
+    <element name="media">
+      <ref name="media-attlist"/>
+      <ref name="media-model"/>
+    </element>
+  </define>
+  <define name="media-attlist" combine="interleave">
+    <ref name="media-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- INLINE GRAPHIC -->
+  <!-- ============================================================= -->
+  <!-- INLINE GRAPHIC MODEL -->
+  <!--
+    Content model for the <inline-graphic>
+    element
+  -->
+  <define name="inline-graphic-model">
+    <optional>
+      <ref name="small-access.class"/>
+    </optional>
+  </define>
+  <!-- INLINE GRAPHIC -->
+  <!--
+    A small graphic such as an icon or a small
+    picture symbol that is displayed or set
+    in the same line as the text.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=inline-graphic
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=inline-graphic
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=inline-graphic
+  -->
+  <define name="inline-graphic">
+    <element name="inline-graphic">
+      <ref name="inline-graphic-attlist"/>
+      <ref name="inline-graphic-model"/>
+    </element>
+  </define>
+  <define name="inline-graphic-attlist" combine="interleave">
+    <ref name="inline-graphic-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- PRESERVE THE WHITESPACE TEXT -->
+  <!-- ============================================================= -->
+  <!-- PREFORMATTED TEXT ELEMENTS -->
+  <!--
+    Elements that may be used, along with data
+    characters, inside the content model for the
+    <preformat> element
+  -->
+  <!-- PREFORMAT MODEL -->
+  <!-- Content model for the <preformat> element -->
+  <define name="preformat-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="preformat-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- PREFORMATTED TEXT -->
+  <!--
+    Used for preformatted text such as
+    computer code in which whitespace, such as
+    tabs, line feeds, and spaces, should be
+    preserved.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=preformat
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=preformat
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=preformat
+  -->
+  <define name="preformat">
+    <element name="preformat">
+      <ref name="preformat-attlist"/>
+      <ref name="preformat-model"/>
+    </element>
+  </define>
+  <define name="preformat-attlist" combine="interleave">
+    <ref name="preformat-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- SUPPLEMENTARY MATERIAL -->
+  <!-- ============================================================= -->
+  <!-- SUPPLEMENTARY MATERIAL MODEL -->
+  <!--
+    Content model for the
+    <supplementary-material> element
+  -->
+  <define name="supplementary-material-model">
+    <ref name="fig-model"/>
+  </define>
+  <!-- SUPPLEMENTARY MATERIAL -->
+  <!--
+    Additional data files that contain
+    information directly supportive of the item,
+    for example, an audio clip, movie, database,
+    spreadsheet, applet, or other external file.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=supplementary-material
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=supplementary-material
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=supplementary-material
+  -->
+  <define name="supplementary-material">
+    <element name="supplementary-material">
+      <ref name="supplementary-material-attlist"/>
+      <ref name="supplementary-material-model"/>
+    </element>
+  </define>
+  <define name="supplementary-material-attlist" combine="interleave">
+    <ref name="supplementary-material-atts"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- TABLE ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- TABLE WRAPPER GROUP MODEL -->
+  <!--
+    Content model for the <table-wrap-group>
+    element
+  -->
+  <define name="table-wrap-group-model">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="just-table.class"/>
+    </oneOrMore>
+  </define>
+  <!-- TABLE WRAPPER GROUP -->
+  <!--
+    Used as a wrapper tag to contain a group of
+    tables that must be displayed together
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=table-wrap-group
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=table-wrap-group
+  -->
+  <define name="table-wrap-group">
+    <element name="table-wrap-group">
+      <ref name="table-wrap-group-attlist"/>
+      <ref name="table-wrap-group-model"/>
+    </element>
+  </define>
+  <define name="table-wrap-group-attlist" combine="interleave">
+    <ref name="table-wrap-group-atts"/>
+  </define>
+  <!-- TABLE WRAPPER CONTENT MODEL -->
+  <!--
+    Content model for the container element that
+    surrounds the standard table models for row
+    and columns.
+  -->
+  <define name="table-wrap-model">
+    <zeroOrMore>
+      <ref name="id.class"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="caption.class"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="access.class"/>
+        <ref name="address-link.class"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="inside-table-wrap"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="table-foot.class"/>
+        <ref name="display-back-matter.class"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- TABLE WRAPPER -->
+  <!--
+    Used to hold a complete table, that is, not
+    only the rows and columns that make up a
+    table, but also the table captions, list
+    of table footnotes, alternative descriptions
+    for accessibility, etc.  Within the Table
+    Wrapper element, the row and column tags that
+    describe the table cells are defined by one
+    of the popular "standard" table models, for
+    example the XHTML table model, OASIS Exchange
+    (CALS) table model, of the Elsevier Science
+    Full Length Article table body <tblbody>
+    model, et al.)
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=table-wrap
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=table-wrap
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=table-wrap
+  -->
+  <define name="table-wrap">
+    <element name="table-wrap">
+      <ref name="table-wrap-attlist"/>
+      <ref name="table-wrap-model"/>
+    </element>
+  </define>
+  <define name="table-wrap-attlist" combine="interleave">
+    <ref name="table-wrap-atts"/>
+  </define>
+  <!-- TABLE WRAP FOOTER MODEL -->
+  <!--
+    Content model for the <table-wrap-foot>
+    element
+  -->
+  <define name="table-wrap-foot-model">
+    <optional>
+      <ref name="title"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="just-para.class"/>
+        <ref name="fn-group.class"/>
+        <ref name="fn-link.class"/>
+        <ref name="display-back-matter.class"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <!-- TABLE WRAP FOOTER -->
+  <!--
+    Wrapper element to hold a group of footnotes
+    or other notes or general paragraphs at the
+    end of a table.  Not the same as the
+    Table Foot <tfoot>, which contains rows
+    and columns like the rest of the table.
+    Details at:
+    http://jats.nlm.nih.gov/archiving/tag-library/0.4/index.html?elem=table-wrap-foot
+    http://jats.nlm.nih.gov/publishing/tag-library/0.4/index.html?elem=table-wrap-foot
+    http://jats.nlm.nih.gov/articleauthoring/tag-library/0.4/index.html?elem=table-wrap-foot
+  -->
+  <define name="table-wrap-foot">
+    <element name="table-wrap-foot">
+      <ref name="table-wrap-foot-attlist"/>
+      <ref name="table-wrap-foot-model"/>
+    </element>
+  </define>
+  <define name="table-wrap-foot-attlist" combine="interleave">
+    <empty/>
+  </define>
+</grammar>
+<!-- ================== End Display Class Module ================= -->

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    Journal Publishing DTD Customize Classes Module -->
+<!-- VERSION:   NISO 0.4 -->
+<!-- DATE:      January 2011 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD Customize Classes Module v0.4 20110131//EN"
+  Delivered as file "JATS-journalpubcustom-classes0.ent"
+-->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SYSTEM:     Journal Publishing DTD of the -->
+<!-- Archiving and Interchange DTD Suite -->
+<!---->
+<!-- PURPOSE:    To declare the Parameter Entities (PEs) used to -->
+<!-- over-ride the named element classes for the -->
+<!-- journal Publishing DTD, which was developed from -->
+<!-- the Archiving and Interchange DTD Suite. -->
+<!---->
+<!-- This DTD (in contrast to the Journal Archiving -->
+<!-- and Interchange DTD) is a more prescriptive -->
+<!-- DTD than is the Archiving DTD. There are fewer -->
+<!-- choices in the models within this DTD, and some -->
+<!-- XML structures that were provided simply to -->
+<!-- facilitate conversion of existing materials from -->
+<!--              other DTDs into this format have not been included -->
+<!-- in this version of the DTD. -->
+<!---->
+<!--              Similarly, this is also a tighter DTD. Some of the -->
+<!-- attributes that have type CDATA values in the -->
+<!-- Archiving DTD, and can thus accept any value, -->
+<!-- have been given explicit value lists in this DTD. -->
+<!---->
+<!-- Note: Since PEs must be declared before they -->
+<!-- are used, this module must be called before the -->
+<!-- content modules that declare elements, and before -->
+<!-- the default classes module. -->
+<!---->
+<!-- CONTAINS:   1) PEs for changing the contents of the default -->
+<!-- element classes -->
+<!---->
+<!-- CREATED FOR: -->
+<!-- Digital Archive of Journal Articles -->
+<!-- National Center for Biotechnology Information -->
+<!-- (NCBI) -->
+<!-- National Library of Medicine (NLM) -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- September 2004 -->
+<!---->
+<!-- CREATED BY: Jeff Beck       (NCBI) -->
+<!-- Deborah Lapeyre (Mulberry Technologies, Inc.) -->
+<!-- B. Tommie Usdin (Mulberry Technologies, Inc.) -->
+<!---->
+<!-- Suggestions for refinements and enhancements to -->
+<!-- this DTD should be sent in email to: -->
+<!-- jats@ncbi.nlm.nih.gov -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+  
+       =============================================================
+       Version 0.4                       (DAL/BTU) v0.4 (2011-01-31)
+  
+       This Tag Set is in the process of becoming a NISO standard.
+       The version numbers are starting over from 0.4", as a Trial
+       Use Draft, to be made into "Version 1.0" when the Tag Suite 
+       becomes a NISO standard. Thus, NLM "Version 3.1 Draft" has 
+       been changed to NISO "Version 0.4". No model, attribute, or
+       parameter entity changes were made as part of this renaming.
+  
+       Details on NISO Tial Use Draft Version 0.4 are available at
+             http://jats.nlm.nih.gov/JATS-0.4.
+  
+    5. Updated the public identifier to "v0.4 20110131//EN", 
+       modified the formal public identifier to include "JATS (Z39.96)",
+       and the filename as delivered to include "JATS" and the
+       new version number "0".
+  
+       =============================================================
+       Version 3.1                       (DAL/BTU) v3.1 (2010-04-30)
+  
+       Version 3.1 is fully compatible with Version 3.0.
+  
+       Details on version 3.1 are available at
+             http://jats.nlm.nih.gov/3.1.
+  
+    4. AFFILIATION ALTERNATIVES - Added the element <aff-alternatives>
+       to contrib-info.class to hold multiple <aff>s that are
+       representations of a single affiliation, for example, the name
+       of an institution in two languages or two scripts.
+  
+    3. NAME ALTERNATIVES - Added <name-alternatives> to
+       %name.class;, to therefore be used wherever name is allowed.
+  
+    2. Updated public identifier to "v3.1 20100830//EN"
+  
+       =============================================================
+       Version 3.0                       (DAL/BTU) v3.0 (2007-10-31)
+  
+       Version 3.0 is the first non-backward-compatible release.
+       In addition to the usual incremental changes, some
+       elements and attributes have been renamed and/or remodeled
+       to better meet user needs and to increase tag set consistency.
+       All module change histories are available through the Tag Suite
+       web site at http://dtd.nlm.nih.gov.
+  
+       Details on version 3.0 are available at
+             http://jats.nlm.nih.gov/3.0.
+  
+    1. Updated public identifier to "v3.0 20080202//EN"
+-->
+<!-- ============================================================= -->
+<!-- PARAMETER ENTITIES FOR CLASS OVER-RIDES -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- OVER-RIDE FORMATTING CLASS (format.ent) -->
+<!-- ============================================================= -->
+<!-- EMPHASIS RENDITION ELEMENTS -->
+<!-- ============================================================= -->
+<!-- OVER-RIDE INLINE CLASSES -->
+<!-- ============================================================= -->
+<!-- CITATION CLASS ELEMENTS -->
+<!--
+  Reference to an external document, as used
+  within, for example, the text of a
+  paragraph
+-->
+<!-- CONTRIBUTOR INFORMATION -->
+<!-- Metadata about a contributor -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="contrib-info.class">
+    <choice>
+      <ref name="address"/>
+      <ref name="aff"/>
+      <ref name="aff-alternatives"/>
+      <ref name="author-comment"/>
+      <ref name="bio"/>
+      <ref name="email"/>
+      <ref name="ext-link"/>
+      <ref name="on-behalf-of"/>
+      <ref name="role"/>
+      <ref name="uri"/>
+      <ref name="xref"/>
+    </choice>
+  </define>
+  <!-- DATE CLASS ELEMENTS -->
+  <!-- Dates and other matters of history -->
+  <define name="date.class">
+    <ref name="date"/>
+  </define>
+  <!-- NAMES CLASS -->
+  <!--
+    The elements used to name the personal names
+    for individuals and the collaboration names
+    for groups
+    Removed <string-name>
+  -->
+  <define name="name.class">
+    <choice>
+      <ref name="anonymous"/>
+      <ref name="collab"/>
+      <ref name="name"/>
+      <ref name="name-alternatives"/>
+    </choice>
+  </define>
+  <!-- ============================================================= -->
+  <!-- OVER-RIDE PARAGRAPH-LIKE ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- REST OF PARAGRAPH CLASS (MINUS PARAGRAPH) -->
+  <!--
+    Information for the reader that is at the
+    same structural level as a Paragraph.
+    Contains all paragraph-level objects that are
+    not also used inside tables and excepting
+    also the paragraph element itself.
+  -->
+  <define name="rest-of-para.class">
+    <choice>
+      <ref name="disp-quote"/>
+      <ref name="speech"/>
+      <ref name="statement"/>
+      <ref name="verse-group"/>
+    </choice>
+  </define>
+</grammar>
+<!-- ================== End Publishing Classes Customization ===== -->
