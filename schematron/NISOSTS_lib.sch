@@ -2,7 +2,8 @@
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2" xml:lang="en"
   xmlns:isosts="http://www.iso.org/ns/isosts" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:sc="http://transpect.io/schematron-config"
-  xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
+  xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
+  xmlns:tr= "http://transpect.io">
   
   <!-- Copyright 2017–2019 ISO and contributors
 
@@ -21,7 +22,10 @@
   <!-- Set the allow-foreign parameter to 'true' when invoking the default ISO Schematron
     implementation -->
   
+  <xsl:import href="http://transpect.io/xslt-util/num/xsl/num.xsl"/>
+  
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
+  <ns prefix="tr" uri="http://transpect.io"/>
   
   <let name="inline-element-names" value="('bold', 'italic', 'named-content', 'styled-content')"/>
   
@@ -142,12 +146,46 @@
     </rule>
   </pattern>
 
+  <pattern id="NISOSTS_bold-in-titles">
+    <rule id="NISOSTS_bold-tags-in-title" context="title">
+      <report test="bold[normalize-space()]" role="warning" diagnostics="NISOSTS_bold-tags-in-title_de"
+        >Titles usually are rendered in bold. Additional bold tags may lead to extra bold fonts.</report>
+    </rule>
+  </pattern>
+  
+  <pattern id="NISOSTS_listitem-labels">
+    <rule id="NISOSTS_listitems-labels_mixed" context="list[list-item[label[normalize-space()]]]">
+      <report test="list-item[not(label)]" role="warning" diagnostics="NISOSTS_listitems-labels_mixed_de"
+        >Not all list-items contain label elements. Maybe paragraphs should be moved to the preceding list-item.</report>
+    </rule>
+  </pattern>
+  
+  <pattern id="NISOSTS_listtype">
+    <rule id="NISOSTS_plausible-listtype_roman" context="list[@list-type = ('roman-lower', 'roman-upper', 'lower-roman', 'upper-roman')]">
+      <report test="list-item/label[not(tr:roman-to-int(replace(., '[().]', '')))]" 
+        role="error" diagnostics="NISOSTS_plausible-listtype_de"
+        >list-type must match label values. Found list-type="<xsl:value-of select="@list-type"/>" with label(s) 
+        "<xsl:value-of select="string-join(list-item/label[not(tr:roman-to-int(replace(., '[().]', '')))], ' ')"/>".</report>
+    </rule>
+    <rule id="NISOSTS_plausible-listtype_alpha" context="list[@list-type = ('alpha-lower', 'alpha-upper', 'lower-alpha', 'upper-alpha')]">
+      <report test="list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))]" 
+        role="error" diagnostics="NISOSTS_plausible-listtype_de"
+        >list-type must match label values. Found list-type="<xsl:value-of select="@list-type"/>" with label(s) 
+        "<xsl:value-of select="string-join(list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))], ' ')"/>".</report>
+    </rule>
+  </pattern>
+
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
     <diagnostic id="NISOSTS_iso-like-ids_1_1_de" xml:lang="de">Eine sec- oder app-ID muss wie folgt gebildet werden:
     'sec_' + der Inhalt von label (ohne Text wie z.B. 'Anhang ').</diagnostic>
     <diagnostic id="NISOSTS_table-cell-paras_mixed-p_de" xml:lang="de">Tabellenzellen dürfen nicht sowohl Absätze als 
       auch Inline-Elemente oder Text enthalten.</diagnostic>
+    <diagnostic id="NISOSTS_bold-tags-in-title_de" xml:lang="de">Titel werden in der Regel fett dargestellt. 
+      Zusätzliche bold-Elemente können zu einer extrafetten Darstellung führen.</diagnostic>
+    <diagnostic id="NISOSTS_listitems-labels_mixed_de" xml:lang="de">Nicht alle Listenelemente verfügen über ein label-Element. 
+      Möglicherweise handelt es sich dabei um Folgeabsätze des vorhergehenden Listenelementes.</diagnostic>
+    <diagnostic id="NISOSTS_plausible-listtype_de" xml:lang="de">Listentyp und Inhalte der label-Elemente müssen zusammenpassen.</diagnostic>
   </diagnostics>
   
 </schema>
