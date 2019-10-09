@@ -174,6 +174,15 @@
         "<xsl:value-of select="string-join(list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))], ' ')"/>".</report>
     </rule>
   </pattern>
+  
+  <pattern id="NISOSTS_xrefs">
+    <rule id="NISOSTS_xref_rendering-infos" context="xref">
+      <report test="  preceding-sibling::node()[1]/self::sup[matches(., '^\s?\[$')] 
+                    | following-sibling::node()[1]/self::sup[matches(., '^(\]|\))\s?$')]" 
+              role="warning" diagnostics="NISOSTS_xref_rendering-infos_de"
+        >Improper tagging of rendering information for element 'xref'.</report>
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
@@ -185,7 +194,10 @@
       Zusätzliche bold-Elemente können zu einer extrafetten Darstellung führen.</diagnostic>
     <diagnostic id="NISOSTS_listitems-labels_mixed_de" xml:lang="de">Nicht alle Listenelemente verfügen über ein label-Element. 
       Möglicherweise handelt es sich dabei um Folgeabsätze des vorhergehenden Listenelementes.</diagnostic>
-    <diagnostic id="NISOSTS_plausible-listtype_de" xml:lang="de">Listentyp und Inhalte der label-Elemente müssen zusammenpassen.</diagnostic>
+    <diagnostic id="NISOSTS_plausible-listtype_de" xml:lang="de">Listentyp und Inhalte der label-Elemente müssen 
+      zusammenpassen.</diagnostic>
+    <diagnostic id="NISOSTS_xref_rendering-infos_de" xml:lang="de">Darstellungsrelevantes Tagging sollte innerhalb des 
+      xref-Elementes stehen.</diagnostic>
   </diagnostics>
   
 </schema>
