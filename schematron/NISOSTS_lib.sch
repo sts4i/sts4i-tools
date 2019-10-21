@@ -121,13 +121,16 @@
   <pattern id="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
-        fn-groups. </assert>
+        fn-groups.
+      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"/>
+      </assert>
     </rule>
   </pattern>
 
   <pattern  id="NISOSTS_fn-not-in-fn-group" sc:alternative-for="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-not-in-fn-group_1" context="fn">
-      <report test="exists(ancestor::fn-group)" id="NISOSTS_fn-not-in-fn-group_2" role="warning">Fn in fn-group found. Fn must not be grouped in fn-groups. </report>
+      <report test="exists(ancestor::fn-group)" id="NISOSTS_fn-not-in-fn-group_2" role="warning">Fn in fn-group found. 
+        Fn must not be grouped in fn-groups. </report>
     </rule>
   </pattern>
   

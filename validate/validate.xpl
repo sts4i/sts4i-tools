@@ -3,7 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:ttt="http://transpect.io/tokenized-to-tree" xmlns:c="http://www.w3.org/ns/xproc-step"
   version="1.0" xmlns:cx="http://xmlcalabash.com/ns/extensions" xmlns:tr="http://transpect.io"
-  name="batch-val">
+  name="batch-val" type="tr:batch-val-sts">
 
   <p:input port="iso-rng">
     <p:document href="http://niso-sts.org/sts4i-tools/schema/isosts/rng/ISOSTS.rng"/>
@@ -17,8 +17,8 @@
 
   <p:output port="htmlreport" primary="true"/>
   <p:serialization port="htmlreport" omit-xml-declaration="false" method="xhtml"/>
-  <p:output port="errors">
-    <p:pipe port="result" step="wrap-errors"/>
+  <p:output port="errors" sequence="true">
+    <p:pipe port="result" step="insert-post-fix-svrl"/>
   </p:output>
   <p:serialization port="errors" omit-xml-declaration="false"/>
   
@@ -33,6 +33,7 @@
   <p:import href="http://transpect.io/xproc-util/file-uri/xpl/file-uri.xpl"/>
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/calabash-extensions/rng-extension/xpl/validate-with-rng-declaration.xpl"/>
+  <p:import href="apply-xsl-fixes.xpl"/>
 
   <tr:find-files name="find-files">
     <p:with-option name="input-dir" select="$input-dir"/>
@@ -42,12 +43,13 @@
     <p:with-option name="uninteresting-dir-regex" select="''"/>
   </tr:find-files>
   
-<!--  <p:delete match="c:file[c:errors]"/>-->
-
   <p:for-each name="file-iteration">
     <p:iteration-source select="//c:file[exists(standard | adoption)]"/>
     <p:output port="errors" sequence="true" primary="true">
       <p:pipe port="errors" step="val"/>
+    </p:output>
+    <p:output port="docs">
+      <p:pipe port="result" step="val"/>
     </p:output>
     <p:variable name="input-file-uri" select="resolve-uri(/*/@name, base-uri(/*))"/>
     <p:variable name="output-file-uri" select="concat($input-file-uri, '.val')"/>
@@ -64,6 +66,9 @@
         <p:output port="errors" primary="true" sequence="true">
           <p:pipe port="result" step="add-uri-to-error"/>
           <p:pipe port="result" step="add-uri-to-svrl"/>
+        </p:output>
+        <p:output port="result">
+          <p:pipe port="result" step="add-base-uri"/>
         </p:output>
 
         <p:choose name="load-schema">
@@ -88,10 +93,25 @@
           </p:otherwise>
         </p:choose>
         <p:sink name="sink1"/>
-        <tr:validate-with-rng name="rng">
+        <p:xslt name="add-base-uri" template-name="main">
           <p:input port="source">
             <p:pipe port="matched" step="actual-standard-doc"/>
           </p:input>
+          <p:input port="parameters"><p:empty/></p:input>
+          <p:input port="stylesheet">
+            <p:inline>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+                <xsl:template name="main">
+                  <xsl:sequence select="/"/>
+                </xsl:template>
+              </xsl:stylesheet>
+            </p:inline>
+          </p:input>
+          <p:with-option name="output-base-uri" select="resolve-uri(/*/@name, base-uri(/*))">
+            <p:pipe port="current" step="file-iteration"/>
+          </p:with-option>
+        </p:xslt>
+        <tr:validate-with-rng name="rng">
           <p:input port="schema">
             <p:pipe port="result" step="load-schema"/>
           </p:input>
@@ -108,38 +128,6 @@
         <p:add-attribute name="add-uri-to-error" match="/*" attribute-name="xml:base">
           <p:with-option name="attribute-value" select="$output-file-uri"/>
         </p:add-attribute>
-        <!--<p:try name="rng">
-          <p:group>
-            <p:output port="errors" primary="true"/>
-            <p:validate-with-relax-ng assert-valid="true">
-              <p:input port="source">
-                <p:pipe port="matched" step="actual-standard-doc"/>
-              </p:input>
-              <p:input port="schema">
-                <p:pipe port="result" step="load-schema"/>
-              </p:input>
-            </p:validate-with-relax-ng>
-            <p:sink/>
-            <p:identity>
-              <p:input port="source">
-                <p:inline>
-                  <c:ok/>
-                </p:inline>
-              </p:input>
-            </p:identity>
-          </p:group>
-          <p:catch name="catch">
-            <p:output port="errors" primary="true">
-              <p:pipe port="result" step="add-uri-to-error"/>
-            </p:output>
-            <p:add-attribute name="add-uri-to-error" match="/*" attribute-name="xml:base">
-              <p:input port="source">
-                <p:pipe port="error" step="catch"/>
-              </p:input>
-              <p:with-option name="attribute-value" select="$output-file-uri"/>
-            </p:add-attribute>
-          </p:catch>
-        </p:try>-->
 
         <p:validate-with-schematron name="single-sch" assert-valid="false">
           <p:with-param name="allow-foreign" select="'true'"/>
@@ -163,7 +151,10 @@
         <p:documentation>No standard document could be loaded, but there should be a c:errors document reporting about
           it.</p:documentation>
         <p:output port="errors" sequence="true" primary="true"/>
-        <p:identity>
+        <p:output port="result">
+          <p:pipe port="result" step="id"/>
+        </p:output>
+        <p:identity name="id">
           <p:input port="source">
             <p:pipe port="not-matched" step="actual-standard-doc"/>
           </p:input>
@@ -177,6 +168,58 @@
       <p:pipe port="errors" step="file-iteration"/>
     </p:input>
   </p:wrap-sequence>
+  
+  <tr:apply-xsl-fixes name="apply-fixes">
+    <p:input port="schematron">
+      <p:pipe port="schematron" step="batch-val"/>
+    </p:input>
+    <p:input port="source">
+      <p:pipe port="docs" step="file-iteration"/>
+    </p:input>
+  </tr:apply-xsl-fixes>
+  
+  <p:for-each name="post-fix-schematron">
+    <p:output port="report" primary="true"/>
+    <p:variable name="unparsed" select="substring(unparsed-text(replace(base-uri(), '\.fixed\.xml$', '.xml')), 1, 500)"/>
+    <p:variable name="doctype-public" 
+      select="replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')"/>
+    <p:variable name="doctype-system" 
+      select="replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')"/>
+    <cx:message>
+      <p:with-option name="message" select="'UUUUUUUUU ', $doctype-public, ' :: ', $doctype-system"/>
+    </cx:message>
+    <p:validate-with-schematron name="single-sch2" assert-valid="false">
+      <p:with-param name="allow-foreign" select="'true'"/>
+      <p:input port="schema">
+        <p:pipe port="schematron" step="batch-val"/>
+      </p:input>
+    </p:validate-with-schematron>
+    <p:store omit-xml-declaration="false">
+      <p:with-option name="href" select="base-uri()"/>
+      <p:with-option name="doctype-public" select="$doctype-public"/>
+      <p:with-option name="doctype-system" select="$doctype-system"/>
+    </p:store>
+<!--    <p:sink name="sink4"/>-->
+    <p:add-attribute name="add-uri-to-post-fix-svrl" match="/*" attribute-name="xml:base">
+      <p:input port="source">
+        <p:pipe port="report" step="single-sch2"/>
+      </p:input>
+      <p:with-option name="attribute-value" select="concat(base-uri(/*), '.val')">
+        <p:pipe port="current" step="post-fix-schematron"/>
+      </p:with-option>
+    </p:add-attribute>
+  </p:for-each>
+  
+  <p:sink name="sink5"/>
+  
+  <p:insert name="insert-post-fix-svrl" position="last-child">
+    <p:input port="source">
+      <p:pipe port="result" step="wrap-errors"/>
+    </p:input>
+    <p:input port="insertion">
+      <p:pipe port="report" step="post-fix-schematron"/>
+    </p:input>
+  </p:insert>
 
   <p:xslt name="svrl2html">
     <p:with-param name="common-path" select="/*/@xml:base">
@@ -184,9 +227,6 @@
     </p:with-param>
     <p:input port="parameters">
       <p:empty/>
-    </p:input>
-    <p:input port="source">
-      <p:pipe port="errors" step="file-iteration"/>
     </p:input>
     <p:input port="stylesheet">
       <p:document href="svrl2html.xsl"/>

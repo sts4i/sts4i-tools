@@ -14,23 +14,36 @@
 
   <xsl:param name="common-path" as="xs:string"/>
 
-  <xsl:template match="/" mode="#default">
+  <xsl:key name="by-id" match="*[@id]" use="@id"/>
 
+  <xsl:template match="/" mode="#default">
     <xsl:variable name="content" as="element(html:tr)*">
+      <xsl:variable name="individual-reports" as="document-node(element(*))*">
+        <xsl:for-each select="/reports/*">
+          <xsl:document>
+            <xsl:copy-of select="."/>
+          </xsl:document>
+        </xsl:for-each>
+      </xsl:variable>
+      <xsl:variable name="original-reports" as="document-node(element(*))*" 
+        select="$individual-reports[not(ends-with(base-uri(/*), 'fixed.xml.val'))]"/>
+      <xsl:variable name="post-fix-reports" as="document-node(element(*))*" 
+        select="$individual-reports[ends-with(base-uri(/*), 'fixed.xml.val')]"/>
       <xsl:variable name="msgs" as="element(*)*" 
-        select="collection()//svrl:failed-assert | collection()//svrl:successful-report | collection()//c:error"/>
-      <xsl:if test="$msgs">
+        select="$original-reports//svrl:failed-assert | $original-reports//svrl:successful-report 
+                | $original-reports//c:error"/>
+      <xsl:if test="exists($msgs)">
         <xsl:for-each-group select="$msgs" 
-          group-by="(.//svrl:text/sch:span[@class='srcfile'], replace(base-uri(), '\.val$', ''))[1]">
+          group-by="(.//svrl:text/sch:span[@class='srcfile'], replace(base-uri(/*), '\.val$', ''))[1]">
           <xsl:sort select="current-grouping-key()"/>
           <tr id="file{format-number(position(), '0000')}" class="sep">
-            <th colspan="4">
+            <th colspan="5">
               <xsl:value-of select="substring-after(current-grouping-key(), $common-path)"/>
             </th>
           </tr>
           <xsl:for-each-group select="current-group()" 
             group-by="(preceding-sibling::svrl:active-pattern[1]/@id, 'Schema'[current()/self::c:error])[1]">
-            <xsl:variable name="active-pattern" select="//svrl:active-pattern[@id = current-grouping-key()]" 
+            <xsl:variable name="active-pattern" select="key('by-id', current-grouping-key())/self::svrl:active-pattern" 
               as="node()?"/>
             <xsl:for-each select="current-group()">
               <tr id="{generate-id()}">
@@ -54,6 +67,16 @@
                     </td>
                     <td class="pattern-id">
                       <xsl:value-of select="$active-pattern/@id"/>
+                    </td>
+                    <xsl:variable name="corresponding-post-fix-report" as="document-node(element(*))?"
+                      select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
+                    <xsl:message select="'CCCCCCCCCCCCCCCC ',exists($corresponding-post-fix-report), base-uri(), ' :: ', $post-fix-reports/*/base-uri()"></xsl:message>
+                    <xsl:variable name="fixed" as="xs:boolean"
+                      select="if (exists($corresponding-post-fix-report))
+                              then empty(key('by-id', @id, $corresponding-post-fix-report))
+                              else false()"/>
+                    <td class="fixed {$fixed}">
+                      <xsl:value-of select="$fixed"/>
                     </td>
                   </xsl:when>
                   <xsl:otherwise>
@@ -81,7 +104,7 @@
 
     <xsl:variable name="ok" as="element(html:tr)+">
       <tr xmlns="http://www.w3.org/1999/xhtml">
-        <td class="Status" colspan="4"><p class="ok">Ok</p></td>
+        <td class="Status" colspan="5"><p class="ok">Ok</p></td>
       </tr>
     </xsl:variable>
 
@@ -159,11 +182,12 @@
             th {background-color: #eee;}
             td, th { vertical-align: top; padding: 0.5em; text-align:left }
             td.path p { margin-top: 0; margin-bottom: 0.5em; }
-            .ok { color: #6d6; font-weight: bold; }
+            .ok, .fixed.true { color: #6d6; font-weight: bold; }
             .info { color: #ddd; font-weight: bold; }
             .warning { color: #FFB935; font-weight: bold; }
-            .error { color: #ff1400; font-weight: bold; }
+            .error, .fixed.false  { color: #ff1400; font-weight: bold; }
             .fatal { color: #f39; font-weight: bold; }
+            
           </style>          
         </head>
         <body xmlns="http://www.w3.org/1999/xhtml">
@@ -197,9 +221,10 @@
             <table border="1" valign="top">
               <tr class="head">
                 <th style="width:10%">Severity</th>
-                <th style="width:40%">XPath</th>
-                <th style="width:40%">Message</th>
+                <th style="width:35%">XPath</th>
+                <th style="width:35%">Message</th>
                 <th style="width:10%">Pattern ID or Schema name</th>
+                <th style="width:10%">fixed</th>
               </tr>
               <xsl:sequence select="$content"/>
             </table>

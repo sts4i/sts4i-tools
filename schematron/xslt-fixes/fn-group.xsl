@@ -113,7 +113,7 @@
       </fn-group>
     </xsl:copy>
   </xsl:template>
-
+  
   <xsl:template match="fn[not(ancestor::*/name() = $footnote-roots)]" mode="group-fn">
     <!-- For fns in, for ex., std-meta. This shouldn’t happen, but we need to make sure that we don’t
       discard them since they don’t have a $footnote-root ancestor. -->

@@ -3,14 +3,18 @@
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   xmlns:sc="http://transpect.io/schematron-config"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
+  xmlns:tr="http://transpect.io"
+  exclude-result-prefixes="tr"
   version="2.0">
 
-  <!-- Invocation: saxon -s:importing_front-end_schema.sch -s:xsl:this.xsl
+  <!-- Invocation: saxon -s:importing_front-end_schema.sch -xsl:this.xsl
     The front end Schematron schema may contain sc:alternative-for attributes that point
     to IDs of patterns. In addition, you may specifiy elements
   <sc:pattern sc:selected-alternative="[some-pattern-id]"/>
   within sch:externds in order to select an alternative pattern (by its id attribute) so 
   that patterns with @sc:alternative-for that refer to this ID will be suppressed. -->
+
+  <xsl:import href="http://transpect.io/xslt-util/xslt-based-catalog-resolver/xsl/resolve-uri-by-catalog.xsl"/>
 
   <xsl:template match="node() | @*" mode="resolve-extends filter">
     <xsl:copy>
@@ -58,6 +62,15 @@
     <xsl:if test="$selected-alternatives = @id">
       <xsl:next-match/>
     </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="sch:pattern/@id" mode="resolve-extends">
+    <xsl:next-match/>
+    <xsl:attribute name="xml:base" 
+      select="tr:reverse-resolve-uri-by-catalog(
+                base-uri(), 
+                doc('http://this.transpect.io/xmlcatalog/catalog.xml')
+              )"/>
   </xsl:template>
   
 </xsl:stylesheet>

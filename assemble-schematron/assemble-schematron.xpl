@@ -7,5 +7,8 @@
     <p:input port="stylesheet">
       <p:document href="assemble-schematron.xsl"/>
     </p:input>
+    <p:input port="parameters">
+      <p:empty/>
+    </p:input>
   </p:xslt>
 </p:declare-step>
