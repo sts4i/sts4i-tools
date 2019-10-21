@@ -135,11 +135,17 @@
   </pattern>
   
   
-  <pattern id="fn-in-metadata">
-    <rule  id="fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta]">
+  <pattern id="NISOSTS_fn-in-metadata">
+    <rule  id="NISOSTS_fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta]">
       <report test="true()">Fn are not allowed in metadata elements.</report>
     </rule>
   </pattern>
+  
+  <pattern id="NISOSTS_fn-without-xref">
+    <rule id="NISOSTS_fn-without-xref_1" context="fn[ancestor::*[self::table-wrap or self::table]][not(@id = ancestor::*[self::table-wrap or self::table]//descendant::xref/@rid)]">
+      <report test="true()" role="error" diagnostics="NISOSTS_fn-without-xref_1_de">Table-fn without referencing xref found. All table-fn must be referenced.</report>    </rule>
+  </pattern>
+  
   
   <pattern id="NISOSTS_table-cell-paras">
     <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
@@ -201,6 +207,7 @@
       zusammenpassen.</diagnostic>
     <diagnostic id="NISOSTS_xref_rendering-infos_de" xml:lang="de">Darstellungsrelevantes Tagging sollte innerhalb des 
       xref-Elementes stehen.</diagnostic>
+    <diagnostic id="NISOSTS_fn-without-xref_1_de" xml:lang="de">Tabellenfußnote ohne entsprechende Referenz gefunden. Tabellenfußnoten müssen immer referenziert werden.</diagnostic>
   </diagnostics>
   
 </schema>
