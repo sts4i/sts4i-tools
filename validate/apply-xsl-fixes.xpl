@@ -54,8 +54,8 @@
   <p:for-each name="source-iteration">
     <p:variable name="base-uri" select="base-uri(/*)"/>
     <p:variable name="this-documents-error-ids-with-fixes" cx:type="xs:string*" 
-      select="/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]
-                        /(svrl:failed-assert | svrl:successful-report)/@id[. = $error-ids-with-fixes]">
+      select="distinct-values(/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]
+                        /(svrl:failed-assert | svrl:successful-report)/@id[. = $error-ids-with-fixes])">
       <p:pipe port="reports" step="apply-fixes"/>
     </p:variable>
     <cx:message>

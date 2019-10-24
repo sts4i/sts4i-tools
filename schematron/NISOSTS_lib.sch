@@ -192,6 +192,15 @@
         >Improper tagging of rendering information for element 'xref'.</report>
     </rule>
   </pattern>
+  
+  <pattern id="n12_table-cell_colors">
+    <rule id="NISOSTS_table-cell_colors_1" context="*[self::td or self::th][matches(@style,'background-color')]">
+      <report id="NISOSTS_table-cell_colors_2" test="not(matches(tokenize(tokenize(@style,'\s*;\s*')[matches(.,'background-color')],'\s*:\s*')[2],'^#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]\s*$','i'))"
+        role="warning" diagnostics="NISOSTS_table-cell_colors_2_de">Background-color must be represented by an hex-code
+        <sc:xsl-fix href="xslt-fixes/table-cell_colors.xsl" mode="table-cell_colors"/>
+      </report>
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
@@ -208,6 +217,7 @@
     <diagnostic id="NISOSTS_xref_rendering-infos_de" xml:lang="de">Darstellungsrelevantes Tagging sollte innerhalb des 
       xref-Elementes stehen.</diagnostic>
     <diagnostic id="NISOSTS_fn-without-xref_1_de" xml:lang="de">Tabellenfußnote ohne entsprechende Referenz gefunden. Tabellenfußnoten müssen immer referenziert werden.</diagnostic>
+    <diagnostic id="NISOSTS_table-cell_colors_2_de">Background-color muss als Hex-code ausgezeichnet sein.</diagnostic>
   </diagnostics>
   
 </schema>
