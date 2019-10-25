@@ -35,13 +35,18 @@
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/xproc-util/load/xpl/load-sources.xpl"/>
 
-  <p:variable name="error-ids-with-fixes" select="//(sch:assert | sch:report)[sc:xsl-fix]/@id" cx:type="xs:string*">
+  <p:variable name="error-ids-with-fixes" select="string-join(//(sch:assert | sch:report)[sc:xsl-fix]/@id, ' ')">
     <p:pipe port="schematron" step="apply-fixes"/>
   </p:variable>
-  <p:variable name="report-uris-with-fixes" cx:type="xs:string*"
-     select="distinct-values(//(svrl:failed-assert | svrl:successful-report)[@id = $error-ids-with-fixes]/base-uri())"/>
-  <p:variable name="source-uris-with-fixes" cx:type="xs:string*"
-     select="for $ru in $report-uris-with-fixes return replace($ru, '\.val$', '')"/>
+  <p:variable name="report-uris-with-fixes"
+     select="string-join(
+               distinct-values(//(svrl:failed-assert | svrl:successful-report)
+                                   [@id = tokenize($error-ids-with-fixes, '\s+')]/base-uri()),
+               ' ')"/>
+  <p:variable name="source-uris-with-fixes"
+     select="string-join(
+               for $ru in tokenize($report-uris-with-fixes, '\s+') return replace($ru, '\.val$', ''),
+               ' ')"/>
   <cx:message>
     <p:with-option name="message" select="'1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
   </cx:message>
@@ -49,13 +54,15 @@
     <p:input port="source">
       <p:pipe port="source" step="apply-fixes"/>
     </p:input>
-    <p:with-option name="uris" select="string-join($source-uris-with-fixes, ' ')"/>
+    <p:with-option name="uris" select="$source-uris-with-fixes"/>
   </tr:load-sources>
   <p:for-each name="source-iteration">
     <p:variable name="base-uri" select="base-uri(/*)"/>
-    <p:variable name="this-documents-error-ids-with-fixes" cx:type="xs:string*" 
-      select="distinct-values(/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]
-                        /(svrl:failed-assert | svrl:successful-report)/@id[. = $error-ids-with-fixes])">
+    <p:variable name="this-documents-error-ids-with-fixes" 
+      select="string-join(
+                distinct-values(/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]
+                        /(svrl:failed-assert | svrl:successful-report)/@id[. = $error-ids-with-fixes]),
+                ' ')">
       <p:pipe port="reports" step="apply-fixes"/>
     </p:variable>
     <cx:message>
@@ -70,12 +77,12 @@
       <p:input port="stylesheet">
         <p:inline>
           <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-            <xsl:param name="ids" as="xs:string+"/>
+            <xsl:param name="ids" as="xs:string"/>
             <xsl:key name="by-id" match="*[@id]" use="@id"/>
             <xsl:template match="/*">
               <xsl:copy>
                 <xsl:attribute name="xml:base" select="base-uri()"/>
-                <xsl:apply-templates select="key('by-id', $ids)/sc:xsl-fix"/>
+                <xsl:apply-templates select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix"/>
               </xsl:copy>
             </xsl:template>
             <xsl:template match="sc:xsl-fix">
