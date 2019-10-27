@@ -180,11 +180,15 @@
   
   <p:for-each name="post-fix-schematron">
     <p:output port="report" primary="true"/>
-    <p:variable name="unparsed" select="substring(unparsed-text(replace(base-uri(), '\.fixed\.xml$', '.xml')), 1, 500)"/>
+    <p:variable name="unparsed" select="substring(unparsed-text(replace(base-uri(), '(\.fixed)+\.xml$', '.xml')), 1, 500)"/>
     <p:variable name="doctype-public" 
-      select="replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')"/>
+      select="if (contains($unparsed, '!DOCTYPE')) 
+              then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')
+              else ''"/>
     <p:variable name="doctype-system" 
-      select="replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')"/>
+      select="if (contains($unparsed, '!DOCTYPE'))
+              then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
+              else ''"/>
     <cx:message>
       <p:with-option name="message" select="'UUUUUUUUU ', $doctype-public, ' :: ', $doctype-system"/>
     </cx:message>
@@ -194,12 +198,21 @@
         <p:pipe port="schematron" step="batch-val"/>
       </p:input>
     </p:validate-with-schematron>
-    <p:store omit-xml-declaration="false">
-      <p:with-option name="href" select="base-uri()"/>
-      <p:with-option name="doctype-public" select="$doctype-public"/>
-      <p:with-option name="doctype-system" select="$doctype-system"/>
-    </p:store>
-<!--    <p:sink name="sink4"/>-->
+    <p:choose>
+      <p:when test="ends-with(base-uri(), '.xpl')">
+        <cx:message>
+          <p:with-option name="message" select="'WARNING: Won’t store because base URI ends with .xpl: ', base-uri()"/>
+        </cx:message>
+        <p:sink name="sink4"/>
+      </p:when>
+      <p:otherwise>
+        <p:store omit-xml-declaration="false">
+          <p:with-option name="href" select="base-uri()"/>
+          <p:with-option name="doctype-public" select="$doctype-public"/>
+          <p:with-option name="doctype-system" select="$doctype-system"/>
+        </p:store>    
+      </p:otherwise>
+    </p:choose>
     <p:add-attribute name="add-uri-to-post-fix-svrl" match="/*" attribute-name="xml:base">
       <p:input port="source">
         <p:pipe port="report" step="single-sch2"/>

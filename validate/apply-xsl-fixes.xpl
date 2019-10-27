@@ -35,6 +35,79 @@
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/xproc-util/load/xpl/load-sources.xpl"/>
 
+  <p:declare-step type="tr:apply-fixes-recursion" name="apply-fixes-recursion-decl">
+    <p:input port="fixes" primary="true">
+      <p:documentation>An sch:schema document with sc:xsl-fix children. The first sc:xsl-fix will be applied,
+      then this sc:xsl-fix element will be removed and the step will be invoked with the remaining sch:schema
+      document, until all sc:xsl-fixes have been removed from the document.
+      The purpose of this recursion is that each subsequent fix be applied to the output of the preceding fix.
+      This is not possible with a plain p:for-each iteration over all sc:xsl-fixes.</p:documentation>
+    </p:input>
+    <p:input port="source">
+      <p:documentation>The document to be fixed</p:documentation>
+    </p:input>
+    <p:output port="result" primary="true"/>
+    
+    <p:for-each name="fix-source">
+      <p:iteration-source select="/sch:schema/sc:xsl-fix[1]"/>
+      <p:output port="result" primary="true"/>
+      <cx:message name="b">
+        <p:with-option name="message" select="'bbbbbbbbbbb ', string-join(for $a in /*/@* return concat(name($a), '=', $a), ' ')"></p:with-option>
+      </cx:message>
+      <p:load name="load-xsl">
+        <p:with-option name="href" select="/sc:xsl-fix/@href"/>
+      </p:load>
+      <p:sink name="sink4"/>
+      <p:xslt name="fix-current-source-doc">
+        <p:with-option name="output-base-uri" select="replace(base-uri(), '\.xml$', '.fixed.xml')">
+          <p:pipe port="source" step="apply-fixes-recursion-decl"/>
+        </p:with-option>
+        <p:with-option name="initial-mode" select="xs:QName(/sc:xsl-fix/@mode)">
+          <p:pipe port="current" step="fix-source"/>
+        </p:with-option>
+        <p:input port="source">
+          <p:pipe port="source" step="apply-fixes-recursion-decl"/>
+        </p:input>
+        <p:input port="parameters" select="/sc:xsl-fix/c:param-set">
+          <p:pipe port="current" step="fix-source"/>
+        </p:input>
+        <p:input port="stylesheet">
+          <p:pipe port="result" step="load-xsl"/>
+        </p:input>
+      </p:xslt>
+    </p:for-each>
+<!--    <p:count name="count-fixed-doc"/>-->
+    <p:count name="x">
+      <p:input port="source">
+        <p:pipe port="result" step="fix-source"/>
+      </p:input>
+    </p:count>
+    <!--<p:choose name="conditionally-recurse">
+      <p:when test=". = 0">
+        <p:output port="result" primary="true"/>
+        <p:documentation>no more fixes, return souce</p:documentation>
+        <p:identity>
+          <p:input port="source">
+            <p:pipe port="source" step="apply-fixes-recursion-decl"/>
+          </p:input>
+        </p:identity>
+      </p:when>
+      <p:otherwise>
+        <p:output port="result" primary="true"/>
+        <p:delete match="/sch:schema/sc:xsl-fix[1]">
+          <p:input port="source">
+            <p:pipe port="fixes" step="apply-fixes-recursion-decl"/>
+          </p:input>
+        </p:delete>
+        <tr:apply-fixes-recursion name="encore">
+          <p:input port="source">
+            <p:pipe port="result" step="fix-source"/>
+          </p:input>
+        </tr:apply-fixes-recursion>
+      </p:otherwise>
+    </p:choose>-->
+  </p:declare-step>
+
   <p:variable name="error-ids-with-fixes" select="string-join(//(sch:assert | sch:report)[sc:xsl-fix]/@id, ' ')">
     <p:pipe port="schematron" step="apply-fixes"/>
   </p:variable>
@@ -61,7 +134,7 @@
     <p:variable name="this-documents-error-ids-with-fixes" 
       select="string-join(
                 distinct-values(/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]
-                        /(svrl:failed-assert | svrl:successful-report)/@id[. = $error-ids-with-fixes]),
+                        /(svrl:failed-assert | svrl:successful-report)/@id[. = tokenize($error-ids-with-fixes, '\s+')]),
                 ' ')">
       <p:pipe port="reports" step="apply-fixes"/>
     </p:variable>
@@ -80,6 +153,7 @@
             <xsl:param name="ids" as="xs:string"/>
             <xsl:key name="by-id" match="*[@id]" use="@id"/>
             <xsl:template match="/*">
+              <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
               <xsl:copy>
                 <xsl:attribute name="xml:base" select="base-uri()"/>
                 <xsl:apply-templates select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix"/>
@@ -101,30 +175,13 @@
         </p:inline>
       </p:input>
     </p:xslt>
-    <p:for-each name="fix-source">
-      <p:iteration-source select="/sch:schema/sc:xsl-fix"/>
-      <p:load name="load-xsl">
-        <p:with-option name="href" select="/sc:xsl-fix/@href"/>
-      </p:load>
-      <p:sink name="sink3"/>
-      <p:xslt name="fix-current-source-doc">
-        <p:with-option name="output-base-uri" select="replace(base-uri(), '\.xml$', '.fixed.xml')">
-          <p:pipe port="current" step="source-iteration"/>
-        </p:with-option>
-        <p:with-option name="initial-mode" select="xs:QName(/sc:xsl-fix/@mode)">
-          <p:pipe port="current" step="fix-source"/>
-        </p:with-option>
-        <p:input port="source">
-          <p:pipe port="current" step="source-iteration"/>
-        </p:input>
-        <p:input port="parameters" select="/sc:xsl-fix/c:param-set">
-          <p:pipe port="result" step="select-fixes-for-current-doc"/>
-        </p:input>
-        <p:input port="stylesheet">
-          <p:pipe port="result" step="load-xsl"/>
-        </p:input>
-      </p:xslt>
-    </p:for-each>
+    <cx:message>
+      <p:with-option name="message" select="'444444444 ', count(/*/*), name(/*/*)"></p:with-option>
+    </cx:message>
+    <tr:apply-fixes-recursion name="apply-fixes-recursion">
+      <p:input port="source">
+        <p:pipe port="current" step="source-iteration"/>
+      </p:input>
+    </tr:apply-fixes-recursion>
   </p:for-each>
-
 </p:declare-step>
