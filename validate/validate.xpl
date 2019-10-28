@@ -28,6 +28,8 @@
   <p:option name="input-dir"/>
   <p:option name="depth" select="'-1'"/>
   <p:option name="uninteresting-dir-regex" select="''"/>
+  <p:option name="debug-dir-uri" select="''"/>
+  <p:option name="debug" select="'no'"/>
   
   <p:import href="../find-files/find-files.xpl"/>
   <p:import href="http://transpect.io/xproc-util/file-uri/xpl/file-uri.xpl"/>
@@ -176,6 +178,8 @@
     <p:input port="source">
       <p:pipe port="docs" step="file-iteration"/>
     </p:input>
+    <p:with-option name="debug" select="$debug"/>
+    <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
   </tr:apply-xsl-fixes>
   
   <p:for-each name="post-fix-schematron">
@@ -189,9 +193,6 @@
       select="if (contains($unparsed, '!DOCTYPE'))
               then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
               else ''"/>
-    <cx:message>
-      <p:with-option name="message" select="'UUUUUUUUU ', $doctype-public, ' :: ', $doctype-system"/>
-    </cx:message>
     <p:validate-with-schematron name="single-sch2" assert-valid="false">
       <p:with-param name="allow-foreign" select="'true'"/>
       <p:input port="schema">

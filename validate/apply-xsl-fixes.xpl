@@ -31,6 +31,9 @@
     an '.xml' suffix by '.fixed.xml'.</p:documentation>
   </p:output>
 
+  <p:option name="debug-dir-uri" select="''"/>
+  <p:option name="debug" select="'no'"/>
+
   <p:import href="http://transpect.io/xproc-util/file-uri/xpl/file-uri.xpl"/>
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/xproc-util/load/xpl/load-sources.xpl"/>
@@ -48,23 +51,28 @@
     </p:input>
     <p:output port="result" primary="true"/>
     
+    <p:option name="debug-dir-uri" select="''"/>
+    <p:option name="debug" select="'no'"/>
+    
+    <p:import href="http://transpect.io/xproc-util/store-debug/xpl/store-debug.xpl"/>
+    
     <p:for-each name="fix-source">
       <p:iteration-source select="/sch:schema/sc:xsl-fix[1]"/>
       <p:output port="result" primary="true"/>
-      <cx:message name="b">
+      <p:variable name="fix-xsl-href" select="/sc:xsl-fix/@href"/>
+      <p:variable name="fix-xsl-mode" select="xs:QName(/sc:xsl-fix/@mode)" cx:type="xs:QName"/>
+      <!--<cx:message name="b">
         <p:with-option name="message" select="'bbbbbbbbbbb ', string-join(for $a in /*/@* return concat(name($a), '=', $a), ' ')"></p:with-option>
-      </cx:message>
+      </cx:message>-->
       <p:load name="load-xsl">
-        <p:with-option name="href" select="/sc:xsl-fix/@href"/>
+        <p:with-option name="href" select="$fix-xsl-href"/>
       </p:load>
       <p:sink name="sink4"/>
       <p:xslt name="fix-current-source-doc">
-        <p:with-option name="output-base-uri" select="replace(base-uri(), '\.xml$', '.fixed.xml')">
+        <p:with-option name="output-base-uri" select="replace(base-uri(), '(\.fixed)?\.xml$', '.fixed.xml')">
           <p:pipe port="source" step="apply-fixes-recursion-decl"/>
         </p:with-option>
-        <p:with-option name="initial-mode" select="xs:QName(/sc:xsl-fix/@mode)">
-          <p:pipe port="current" step="fix-source"/>
-        </p:with-option>
+        <p:with-option name="initial-mode" select="$fix-xsl-mode"/>
         <p:input port="source">
           <p:pipe port="source" step="apply-fixes-recursion-decl"/>
         </p:input>
@@ -75,14 +83,19 @@
           <p:pipe port="result" step="load-xsl"/>
         </p:input>
       </p:xslt>
+      <tr:store-debug name="store-patched">
+        <p:with-option name="active" select="$debug"/>
+        <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        <p:with-option name="pipeline-step" 
+          select="string-join(('apply-fix',
+                               replace(base-uri(), '^.+/(.+?)\.xml$', '$1'), 
+                               replace($fix-xsl-href, '^.+/(.+?)\.xsl$', '$1'),
+                               replace($fix-xsl-mode, ':', '_')),
+                              '__')"/>
+      </tr:store-debug>
     </p:for-each>
-<!--    <p:count name="count-fixed-doc"/>-->
-    <p:count name="x">
-      <p:input port="source">
-        <p:pipe port="result" step="fix-source"/>
-      </p:input>
-    </p:count>
-    <!--<p:choose name="conditionally-recurse">
+    <p:count name="count-fixed-doc"/>
+    <p:choose name="conditionally-recurse">
       <p:when test=". = 0">
         <p:output port="result" primary="true"/>
         <p:documentation>no more fixes, return souce</p:documentation>
@@ -103,9 +116,11 @@
           <p:input port="source">
             <p:pipe port="result" step="fix-source"/>
           </p:input>
+          <p:with-option name="debug" select="$debug"/>
+          <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
         </tr:apply-fixes-recursion>
       </p:otherwise>
-    </p:choose>-->
+    </p:choose>
   </p:declare-step>
 
   <p:variable name="error-ids-with-fixes" select="string-join(//(sch:assert | sch:report)[sc:xsl-fix]/@id, ' ')">
@@ -120,9 +135,9 @@
      select="string-join(
                for $ru in tokenize($report-uris-with-fixes, '\s+') return replace($ru, '\.val$', ''),
                ' ')"/>
-  <cx:message>
+  <!--<cx:message>
     <p:with-option name="message" select="'1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
-  </cx:message>
+  </cx:message>-->
   <tr:load-sources name="load-sources">
     <p:input port="source">
       <p:pipe port="source" step="apply-fixes"/>
@@ -138,9 +153,9 @@
                 ' ')">
       <p:pipe port="reports" step="apply-fixes"/>
     </p:variable>
-    <cx:message>
+    <!--<cx:message>
       <p:with-option name="message" select="'3333333 ', $this-documents-error-ids-with-fixes"/> 
-    </cx:message>
+    </cx:message>-->
     <p:xslt name="select-fixes-for-current-doc">
       <p:with-param name="ids" select="$this-documents-error-ids-with-fixes"/>
       <p:input port="parameters"><p:empty/></p:input>
@@ -176,12 +191,14 @@
       </p:input>
     </p:xslt>
     <cx:message>
-      <p:with-option name="message" select="'444444444 ', count(/*/*), name(/*/*)"></p:with-option>
+      <p:with-option name="message" select="'444444444 ', count(/*/*), /*/*/name()"></p:with-option>
     </cx:message>
     <tr:apply-fixes-recursion name="apply-fixes-recursion">
       <p:input port="source">
         <p:pipe port="current" step="source-iteration"/>
       </p:input>
+      <p:with-option name="debug" select="$debug"/>
+      <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
     </tr:apply-fixes-recursion>
   </p:for-each>
 </p:declare-step>

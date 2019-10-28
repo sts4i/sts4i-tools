@@ -70,7 +70,7 @@
                     </td>
                     <xsl:variable name="corresponding-post-fix-report" as="document-node(element(*))?"
                       select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
-                    <xsl:message select="'CCCCCCCCCCCCCCCC ',exists($corresponding-post-fix-report), base-uri(), ' :: ', $post-fix-reports/*/base-uri()"></xsl:message>
+<!--                    <xsl:message select="'CCCCCCCCCCCCCCCC ',exists($corresponding-post-fix-report), base-uri(), ' :: ', $post-fix-reports/*/base-uri()"></xsl:message>-->
                     <xsl:variable name="fixed" as="xs:boolean"
                       select="if (exists($corresponding-post-fix-report))
                               then empty(key('by-id', @id, $corresponding-post-fix-report))
@@ -224,10 +224,13 @@
                 <th style="width:35%">XPath</th>
                 <th style="width:35%">Message</th>
                 <th style="width:10%">Pattern ID or Schema name</th>
-                <th style="width:10%">fixed</th>
+                <th style="width:10%">fixed<sup>1)</sup></th>
               </tr>
               <xsl:sequence select="$content"/>
             </table>
+            <p><sup>1)</sup> Please note that this information might not be 100% accurate: If the fixed XML document
+            still contains a single error of the given Schematron pattern ID, all occurrences of this pattern ID will be 
+            displayed as “fixed: false”. We will eventually improve this reporting.</p>
           </div>
         </body> 
         <script src="http://this.transpect.io/a9s/common/template/js/jquery-2.1.4.min.js"></script>
