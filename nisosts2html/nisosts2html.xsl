@@ -505,7 +505,7 @@
   
   <xsl:template match="/standard" mode="#default">
     <xsl:param name="doc-lang" as="xs:string" tunnel="yes"/>
-    <xsl:variable name="meta-elements" as="element(*)+" select="(front/iso-meta, front/reg-meta, front/nat-meta)"/>
+    <xsl:variable name="meta-elements" as="element(*)+" select="(front/iso-meta, front/reg-meta, front/nat-meta, front/std-meta)"/>
     <html>
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -1162,7 +1162,7 @@
   
   <!-- REFS -->
   
-    <xsl:template name="ref">
+  <xsl:template name="ref">
     <xsl:param name="std" as="element(std)+"/>
     <xsl:param name="doc-lang" as="xs:string" tunnel="yes"/>
     <xsl:variable name="filtered" as="element(std)+">
@@ -1235,7 +1235,6 @@
       <xsl:apply-templates mode="#current"/>  
     </li>
   </xsl:template>
-
 
   <xsl:template match="xref[@ref-type = 'bibr']
                            [key('element-by-id', @rid)/parent::ref-list[@content-type = 'invisible-citation-list']]"

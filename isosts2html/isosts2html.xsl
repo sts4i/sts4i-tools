@@ -1270,7 +1270,7 @@
   
   
   <xsl:template name="footnotes">
-    <xsl:variable name="fn-groups" select="//fn-group[parent::sec or parent::back or parent::term-sec]"/>
+    <xsl:variable name="fn-groups" select="//fn-group[parent::sec or parent::back or parent::term-sec or parent::app]"/>
     <xsl:variable name="fns" select="//fn[not(parent::fn-group or parent::table-wrap-foot or parent::td or parent::th or parent::fig)]"/>
     <xsl:if test="$fn-groups or $fns">
       <div class="sts-footnotes">
