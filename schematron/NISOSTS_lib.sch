@@ -29,6 +29,8 @@
   
   <let name="inline-element-names" value="('bold', 'italic', 'named-content', 'styled-content')"/>
   
+  <let name="legend-content-type" value="'fig-index'"/>
+  
   <xsl:variable name="i18n-strings" as="document-node(element(isosts:i18n))">
     <xsl:document>
       <isosts:i18n xml:id="i18n">
@@ -75,7 +77,9 @@
         Shouldn’t this p be a title (of a key)?
       </report>
       <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning">
-        Put the figure key (a.k.a. legend) in the caption, either as a table-wrap[@content-type='key'] or as a def-list[@list-type='key']. 
+        Put the figure key (a.k.a. legend) in the caption, either as a 
+        table-wrap[@content-type='<value-of select="$legend-content-type"/>'] or as a 
+        def-list[@list-type='<value-of select="$legend-content-type"/>']. 
         For validity reasons, it must be wrapped in a paragraph.
       </report>
     </rule>
@@ -196,7 +200,7 @@
   <pattern id="n12_table-cell_colors">
     <rule id="NISOSTS_table-cell_colors_1" context="*[self::td or self::th][matches(@style,'background-color')]">
       <report id="NISOSTS_table-cell_colors_2" test="not(matches(tokenize(tokenize(@style,'\s*;\s*')[matches(.,'background-color')],'\s*:\s*')[2],'^#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]\s*$','i'))"
-        role="warning" diagnostics="NISOSTS_table-cell_colors_2_de">Background-color must be represented by an hex-code
+        role="warning" diagnostics="NISOSTS_table-cell_colors_2_de">Background-color must be represented by a hex code
         <sc:xsl-fix href="xslt-fixes/table-cell_colors.xsl" mode="table-cell_colors"/>
       </report>
     </rule>

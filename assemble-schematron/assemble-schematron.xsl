@@ -32,9 +32,11 @@
   </xsl:template>
   
   <xsl:template match="sch:extends" mode="resolve-extends">
+    <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" select="()" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
+      <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sc:alternative-for)"/>
       <xsl:with-param name="selected-alternatives" as="attribute(sc:selected-alternative)*" tunnel="yes"
         select="($selected-alternatives, sc:pattern/@sc:selected-alternative)"/>
@@ -48,6 +50,13 @@
       <xsl:next-match/>
     </xsl:if>
   </xsl:template>
+  
+  <xsl:template match="sch:let[empty(ancestor::sch:schema/sch:extends)]" mode="resolve-extends">
+    <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
+    <xsl:sequence select="($lets, .)[1]"/>
+  </xsl:template>
+
+  <xsl:template match="sch:let[exists(ancestor::sch:schema/sch:extends)]" mode="resolve-extends"/>
 
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends">
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" tunnel="yes"/>
