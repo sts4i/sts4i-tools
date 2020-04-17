@@ -60,7 +60,7 @@
   </xsl:template>
   
   
-  <xsl:template match="sch:let" mode="resolve-extends"/>
+  <xsl:template match="sch:let[empty(ancestor::sch:pattern)]" mode="resolve-extends"/>
 
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends">
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" tunnel="yes"/>
