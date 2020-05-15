@@ -136,7 +136,7 @@
                for $ru in tokenize($report-uris-with-fixes, '\s+') return replace($ru, '\.val$', ''),
                ' ')"/>
   <!--<cx:message>
-    <p:with-option name="message" select="'1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
+    <p:with-option name="message" select="'§§§§§§§§§§§§§§§§§§§§ 1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
   </cx:message>-->
   <tr:load-sources name="load-sources">
     <p:input port="source">

@@ -168,6 +168,9 @@
             </p:group>
             <p:catch name="catch22">
               <p:output port="result" primary="true"/>
+              <cx:message>
+                <p:with-option name="message" select="'find-files.xpl: Could not parse ', $input-file-uri"/>
+              </cx:message>
               <p:identity>
                 <p:input port="source">
                   <p:pipe port="error" step="catch22"/>
@@ -176,7 +179,7 @@
             </p:catch>
           </p:try>
           <cx:message>
-            <p:with-option name="message" select="'Could not parse ', $input-file-uri"/>
+            <p:with-option name="message" select="'find-files.xpl: Could not DTD-validate ', $input-file-uri"/>
           </cx:message>
         </p:catch>
       </p:try>

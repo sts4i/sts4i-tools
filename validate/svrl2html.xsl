@@ -38,7 +38,8 @@
           <xsl:sort select="current-grouping-key()"/>
           <tr id="file{format-number(position(), '0000')}" class="sep">
             <th colspan="5">
-              <xsl:value-of select="substring-after(current-grouping-key(), $common-path)"/>
+              <xsl:value-of select="substring-after(replace(current-grouping-key(), '//+', '/'), 
+                                                    replace($common-path, '//+', '/'))"/>
             </th>
           </tr>
           <xsl:for-each-group select="current-group()" 

@@ -22,6 +22,10 @@
     </xsl:copy>
   </xsl:template>
   
+  <xsl:template match=" sch:report[not(@id)] | sch:assert[not(@id)]" mode="resolve-extends filter">
+    <xsl:message terminate="yes">This element needs an ID: <xsl:copy-of select="."/></xsl:message>
+  </xsl:template>
+  
   <xsl:template match="/" mode="#default">
     <xsl:variable name="resolve-extends" as="document-node(element(sch:schema))">
       <xsl:document>
@@ -35,7 +39,6 @@
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" select="()" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
-    <xsl:message select="'LLLLLLLLL ', @href, $lets, ..//sch:let[not(ancestor::sch:pattern)]"></xsl:message>
     <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sc:alternative-for)"/>

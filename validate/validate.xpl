@@ -34,6 +34,7 @@
   <p:import href="../find-files/find-files.xpl"/>
   <p:import href="http://transpect.io/xproc-util/file-uri/xpl/file-uri.xpl"/>
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
+  <p:import href="http://transpect.io/xproc-util/store-debug/xpl/store-debug.xpl"/>
   <p:import href="http://transpect.io/calabash-extensions/rng-extension/xpl/validate-with-rng-declaration.xpl"/>
   <p:import href="apply-xsl-fixes.xpl"/>
 
@@ -43,6 +44,8 @@
     <p:with-option name="depth" select="$depth"/>
     <p:with-option name="input-filename-regex" select="$input-filename-regex"/>
     <p:with-option name="uninteresting-dir-regex" select="''"/>
+    <p:with-option name="debug" select="$debug"/>
+    <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
   </tr:find-files>
   
   <p:for-each name="file-iteration">
@@ -170,6 +173,12 @@
       <p:pipe port="errors" step="file-iteration"/>
     </p:input>
   </p:wrap-sequence>
+  
+  <tr:store-debug>
+    <p:with-option name="pipeline-step" select="'reports'"/>
+    <p:with-option name="active" select="$debug"/>
+    <p:with-option name="base-uri" select="$debug-dir-uri"/>
+  </tr:store-debug>
   
   <tr:apply-xsl-fixes name="apply-fixes">
     <p:input port="schematron">

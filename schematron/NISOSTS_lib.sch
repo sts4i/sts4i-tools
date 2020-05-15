@@ -76,7 +76,7 @@
         diagnostics="NISOSTS_lib_figure_keys_r1_de">
         Shouldn’t this p be a title (of a key)?
       </report>
-      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning">
+      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning" id="NISOSTS_lib_figure_keys_r2">
         Put the figure key (a.k.a. legend) in the caption, either as a 
         table-wrap[@content-type='<value-of select="$legend-content-type"/>'] or as a 
         def-list[@list-type='<value-of select="$legend-content-type"/>']. 
@@ -88,7 +88,7 @@
   <pattern id="NISOSTS_lib_subfigs_in_array">
     <title></title>
     <rule id="NISOSTS_lib_rule01" context="fig[array|table-wrap]">
-      <report test="exists((array|table-wrap)//tr//graphic)" role="warning">
+      <report test="exists((array|table-wrap)//tr//graphic)" role="warning" id="NISOSTS_lib_rule01_r1">
         For subfigure arrangements use an outside tabular construction with the subfigures in the cells.
       </report>
     </rule>
@@ -97,10 +97,11 @@
   
   <pattern id="NISOSTS_lib_ref-list_title_pattern">
     <rule id="ref-list_title" context="ref-list[parent::app|parent::sec]">
-      <report role="warning" test="title">ref-list with title found. Please move title to the surrounding sec or app.</report>
+      <report role="warning" test="title" id="ref-list_title_r1"
+        >ref-list with title found. Please move title to the surrounding sec or app.</report>
     </rule>
     <rule id="NISOSTS_lib_ref-list_title_back" context="ref-list[parent::back]">
-      <report role="warning" test="title">ref-list with title found. 
+      <report role="warning" test="title" id="NISOSTS_lib_ref-list_title_back_r1">ref-list with title found. 
         Please move the ref-list to an app and attach the title to the app.</report>
     </rule>
   </pattern>
@@ -108,7 +109,7 @@
 
   <pattern id="NISOSTS_lib_std-meta_pattern">
     <rule id="std-meta" context="standard/front/iso-meta | standard/front/reg-meta | standard/front/nat-meta">
-      <report role="warning" test="true()"><name/> is deprecated in NISO STS. Please replace it with std-meta.</report>
+      <report role="warning" test="true()" id="std-meta_r1"><name/> is deprecated in NISO STS. Please replace it with std-meta.</report>
     </rule>
   </pattern>
   
@@ -141,34 +142,38 @@
   
   <pattern id="NISOSTS_fn-in-metadata">
     <rule  id="NISOSTS_fn-in-metadata_1" context="fn[ancestor::std-meta|ancestor::std-doc-meta|ancestor::iso-meta|ancestor::reg-meta|ancestor::nat-meta]">
-      <report test="true()">Fn are not allowed in metadata elements.</report>
+      <report test="true()" id="NISOSTS_fn-in-metadata_1_r1">Fn are not allowed in metadata elements.</report>
     </rule>
   </pattern>
   
   <pattern id="NISOSTS_fn-without-xref">
     <rule id="NISOSTS_fn-without-xref_1" context="fn[ancestor::*[self::table-wrap or self::table]][not(@id = ancestor::*[self::table-wrap or self::table]//descendant::xref/@rid)]">
-      <report test="true()" role="error" diagnostics="NISOSTS_fn-without-xref_1_de">Table-fn without referencing xref found. All table-fn must be referenced.</report>    </rule>
+      <report test="true()" role="error" id="NISOSTS_fn-without-xref_1_r1" 
+        diagnostics="NISOSTS_fn-without-xref_1_de">Table-fn without referencing xref found. All table-fn must be referenced.</report>    </rule>
   </pattern>
   
   
   <pattern id="NISOSTS_table-cell-paras">
     <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
-      <report test="text()[normalize-space()] | *[name() = $inline-element-names]" 
+      <report test="text()[normalize-space()] | *[name() = $inline-element-names]" id="NISOSTS_table-cell-paras_mixed-p_r1"
         role="error" diagnostics="NISOSTS_table-cell-paras_mixed-p_de">Table cells must
-      not contain both paragraphs and inline elements or text.</report>
+      not contain both paragraphs and inline elements or text.
+      <sc:xsl-fix href="xslt-fixes/table-paras.xsl" mode="fix-table-paras"/>
+      </report>
     </rule>
   </pattern>
 
   <pattern id="NISOSTS_bold-in-titles">
     <rule id="NISOSTS_bold-tags-in-title" context="title">
       <report test="bold[normalize-space()]" role="warning" diagnostics="NISOSTS_bold-tags-in-title_de"
-        >Titles usually are rendered in bold. Additional bold tags may lead to extra bold fonts.</report>
+        id="NISOSTS_bold-tags-in-title_r1">Titles usually are rendered in bold. Additional bold tags may lead to extra bold fonts.</report>
     </rule>
   </pattern>
   
   <pattern id="NISOSTS_listitem-labels">
     <rule id="NISOSTS_listitems-labels_mixed" context="list[list-item[label[normalize-space()]]]">
-      <report test="list-item[not(label)]" role="warning" diagnostics="NISOSTS_listitems-labels_mixed_de"
+      <report test="list-item[not(label)]" id="NISOSTS_listitems-labels_mixed" role="warning" 
+        diagnostics="NISOSTS_listitems-labels_mixed_de"
         >Not all list-items contain label elements. Maybe paragraphs should be moved to the preceding list-item.</report>
     </rule>
   </pattern>
@@ -176,13 +181,13 @@
   <pattern id="NISOSTS_listtype">
     <rule id="NISOSTS_plausible-listtype_roman" context="list[@list-type = ('roman-lower', 'roman-upper', 'lower-roman', 'upper-roman')]">
       <report test="list-item/label[not(tr:roman-to-int(replace(., '[().]', '')))]" 
-        role="error" diagnostics="NISOSTS_plausible-listtype_de"
+        role="error" diagnostics="NISOSTS_plausible-listtype_de" id="NISOSTS_plausible-listtype_roman_r1"
         >list-type must match label values. Found list-type="<xsl:value-of select="@list-type"/>" with label(s) 
         "<xsl:value-of select="string-join(list-item/label[not(tr:roman-to-int(replace(., '[().]', '')))], ' ')"/>".</report>
     </rule>
     <rule id="NISOSTS_plausible-listtype_alpha" context="list[@list-type = ('alpha-lower', 'alpha-upper', 'lower-alpha', 'upper-alpha')]">
       <report test="list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))]" 
-        role="error" diagnostics="NISOSTS_plausible-listtype_de"
+        role="error" diagnostics="NISOSTS_plausible-listtype_de" id="NISOSTS_plausible-listtype_alpha_r1"
         >list-type must match label values. Found list-type="<xsl:value-of select="@list-type"/>" with label(s) 
         "<xsl:value-of select="string-join(list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))], ' ')"/>".</report>
     </rule>
@@ -192,7 +197,7 @@
     <rule id="NISOSTS_xref_rendering-infos" context="xref">
       <report test="  preceding-sibling::node()[1]/self::sup[matches(., '^\s?\[$')] 
                     | following-sibling::node()[1]/self::sup[matches(., '^(\]|\))\s?$')]" 
-              role="warning" diagnostics="NISOSTS_xref_rendering-infos_de"
+              role="warning" diagnostics="NISOSTS_xref_rendering-infos_de" id="NISOSTS_xref_rendering-infos_r1"
         >Improper tagging of rendering information for element 'xref'.</report>
     </rule>
   </pattern>
