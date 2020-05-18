@@ -41,10 +41,19 @@
           <isosts:translation xml:lang="fr">Légende</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-name">
-          <isosts:documentation>The heading of figure keys</isosts:documentation>
           <isosts:translation xml:lang="en">Annex</isosts:translation>
           <isosts:translation xml:lang="de">Anhang</isosts:translation>
           <isosts:translation xml:lang="fr">Annexe</isosts:translation>
+        </isosts:string>
+        <isosts:string name="annex-type-informative">
+          <isosts:translation xml:lang="en">informative</isosts:translation>
+          <isosts:translation xml:lang="de">informativ</isosts:translation>
+          <isosts:translation xml:lang="fr">informative</isosts:translation>
+        </isosts:string>
+        <isosts:string name="annex-type-normative">
+          <isosts:translation xml:lang="en">normative</isosts:translation>
+          <isosts:translation xml:lang="de">normativ</isosts:translation>
+          <isosts:translation xml:lang="fr">normative</isosts:translation>
         </isosts:string>
       </isosts:i18n>    
     </xsl:document>
@@ -171,7 +180,7 @@
   </pattern>
   
   <pattern id="NISOSTS_listitem-labels">
-    <rule id="NISOSTS_listitems-labels_mixed" context="list[list-item[label[normalize-space()]]]">
+    <rule id="NISOSTS_listitems-labels_mixed_rule" context="list[list-item[label[normalize-space()]]]">
       <report test="list-item[not(label)]" id="NISOSTS_listitems-labels_mixed" role="warning" 
         diagnostics="NISOSTS_listitems-labels_mixed_de"
         >Not all list-items contain label elements. Maybe paragraphs should be moved to the preceding list-item.</report>
