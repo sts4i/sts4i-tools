@@ -67,7 +67,7 @@
                         <xsl:apply-templates select="svrl:text/node()" mode="#current"/>
                     </td>
                     <td class="pattern-id">
-                      <xsl:value-of select="$active-pattern/@id"/>
+                      <xsl:value-of select="$active-pattern/@id, @id" separator=" + "/>
                     </td>
                     <xsl:variable name="corresponding-post-fix-report" as="document-node(element(*))?"
                       select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
@@ -224,7 +224,7 @@
                 <th style="width:10%">Severity</th>
                 <th style="width:35%">XPath</th>
                 <th style="width:35%">Message</th>
-                <th style="width:10%">Pattern ID or Schema name</th>
+                <th style="width:10%">Pattern ID + Report/Assert ID or Schema name</th>
                 <th style="width:10%">fixed<sup>1)</sup></th>
               </tr>
               <xsl:sequence select="$content"/>

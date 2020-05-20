@@ -27,55 +27,8 @@
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
   <ns prefix="tr" uri="http://transpect.io"/>
   
-  <let name="inline-element-names" value="('bold', 'italic', 'named-content', 'styled-content')"/>
-  
   <let name="legend-content-type" value="'fig-index'"/>
-  
-  <xsl:variable name="i18n-strings" as="document-node(element(isosts:i18n))">
-    <xsl:document>
-      <isosts:i18n xml:id="i18n">
-        <isosts:string name="key-heading">
-          <isosts:documentation>The heading of figure keys</isosts:documentation>
-          <isosts:translation xml:lang="en">Key</isosts:translation>
-          <isosts:translation xml:lang="de">Legende</isosts:translation>
-          <isosts:translation xml:lang="fr">Légende</isosts:translation>
-        </isosts:string>
-        <isosts:string name="annex-name">
-          <isosts:translation xml:lang="en">Annex</isosts:translation>
-          <isosts:translation xml:lang="de">Anhang</isosts:translation>
-          <isosts:translation xml:lang="fr">Annexe</isosts:translation>
-        </isosts:string>
-        <isosts:string name="annex-type-informative">
-          <isosts:translation xml:lang="en">informative</isosts:translation>
-          <isosts:translation xml:lang="de">informativ</isosts:translation>
-          <isosts:translation xml:lang="fr">informative</isosts:translation>
-        </isosts:string>
-        <isosts:string name="annex-type-normative">
-          <isosts:translation xml:lang="en">normative</isosts:translation>
-          <isosts:translation xml:lang="de">normativ</isosts:translation>
-          <isosts:translation xml:lang="fr">normative</isosts:translation>
-        </isosts:string>
-      </isosts:i18n>    
-    </xsl:document>
-  </xsl:variable>
-  
-  <xsl:key name="i18n" match="isosts:string/isosts:translation" use="string-join((../@name, @xml:lang), '__')"/>
-  
-  <xsl:function name="isosts:lang" as="xs:string?">
-    <xsl:param name="context" as="element(*)"/>
-    <xsl:variable name="content-language" as="element(content-language)?" 
-      select="$context/ancestor-or-self::*[name() = ('standard', 'adoption')]
-                                          [(front | adoption-front)/*[ends-with(name(), '-meta')]/content-language][1]
-                                           /(front | adoption-front)/*[ends-with(name(), '-meta')]/content-language"/>
-    <xsl:variable name="xml-lang" select="$context/ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
-    <xsl:sequence select="(string($xml-lang)[normalize-space()], string($content-language)[normalize-space()])[1]"/>
-  </xsl:function>
-  
-  <xsl:function name="isosts:i18n-strings" as="xs:string*">
-    <xsl:param name="i18n-string-name" as="xs:string"/>
-    <xsl:param name="context" as="element(*)"/>
-    <xsl:sequence select="key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)"/>
-  </xsl:function>
+  <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
 
   <pattern id="NISOSTS_lib_figure_keys">
     <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
@@ -219,6 +172,30 @@
       </report>
     </rule>
   </pattern>
+  
+  <pattern id="app-norm-inform">
+    <!-- https://gitlab.com/DIN-XML/STS/-/issues/28 -->
+    <rule id="app_has_correct_values" context="app">
+      <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type.</report>
+      <report role="error" id="app_wrong_content-type" test="@content-type/not(.='norm-annex' or .='inform-annex')">The 
+        content-type of an app has to be either "norm-annex" or "inform-annex".</report>
+      <report role="warning" id="app_no_annex-type" test="not(annex-type)"><name/> has no annex-type.</report>
+    </rule>
+    <rule id="annex-type-normative-text" context="annex-type[parent::app/@content-type = 'norm-annex']">
+      <let name="expected" value="concat('(', isosts:i18n-strings('annex-type-normative', .), ')')"/>
+      <assert role="warning" id="annex-type-text-a1" 
+        test=". = $expected"><name/> should be '<value-of select="$expected"/>'.
+        <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+      </assert>
+    </rule>
+    <rule id="annex-type-inform-text" context="annex-type[parent::app/@content-type = 'inform-annex']">
+      <let name="expected" value="concat('(', isosts:i18n-strings('annex-type-informative', .), ')')"/>
+      <assert role="warning" id="annex-type-text-a2" 
+        test=". = $expected"><name/> should be '<value-of select="$expected"/>'.
+        <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+      </assert>
+    </rule>
+ </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>

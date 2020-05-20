@@ -171,7 +171,10 @@
               <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
               <xsl:copy>
                 <xsl:attribute name="xml:base" select="base-uri()"/>
-                <xsl:apply-templates select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix"/>
+                <xsl:for-each-group select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix" 
+                  group-by="string-join((@href, @mode, sc:param/@*), '__')">
+                  <xsl:apply-templates select="."/>
+                </xsl:for-each-group>
               </xsl:copy>
             </xsl:template>
             <xsl:template match="sc:xsl-fix">
