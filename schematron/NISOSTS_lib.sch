@@ -178,7 +178,9 @@
     <rule id="app_has_correct_values" context="app">
       <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type.</report>
       <report role="error" id="app_wrong_content-type" test="@content-type/not(.='norm-annex' or .='inform-annex')">The 
-        content-type of an app has to be either "norm-annex" or "inform-annex".</report>
+        content-type of an app has to be either "norm-annex" or "inform-annex".
+        <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="content-type"/>
+      </report>
       <report role="warning" id="app_no_annex-type" test="not(annex-type)"><name/> has no annex-type.</report>
     </rule>
     <rule id="annex-type-normative-text" context="annex-type[parent::app/@content-type = 'norm-annex']">
