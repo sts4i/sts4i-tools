@@ -19,7 +19,7 @@
     <xsl:variable name="expected" select="concat('(', isosts:i18n-strings('annex-type-normative', .), ')')"/>
     <xsl:copy>
       <xsl:value-of select="$expected"/>
-    </xsl:copy>
+    </xsl:copy> 
   </xsl:template>
   
   <xsl:template match="app[not(@content-type = ('inform-annex', 'norm-annex'))]
@@ -28,6 +28,11 @@
     <xsl:attribute name="{name()}" select="'inform-annex'"/>
   </xsl:template>
   
+    <xsl:template match="app[not(@content-type = ('inform-annex', 'norm-annex'))]
+                          [contains(@content-type, 'norm')]/@content-type" 
+                mode="content-type">
+    <xsl:attribute name="{name()}" select="'norm-annex'"/>
+  </xsl:template>
   
 
 </xsl:stylesheet>
