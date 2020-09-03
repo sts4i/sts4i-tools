@@ -23,15 +23,11 @@
    See the License for the specific language governing permissions and
    limitations under the License. -->
 
-  <!-- Doctype set to actual version of NISO STS Interchange Tag Set with MathML 2.0 -->
   <xsl:output
     method="xml"
     version="1.0"
     encoding="UTF-8"
-    indent="yes"
-    standalone="no"
-    doctype-public="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 2.0 v1.0//EN"
-    doctype-system="NISO-STS-extended-1-mathml2.dtd"/>
+    standalone="omit"/>
 
   <!-- The purpose of this transformation is to convert ISOSTS documents to NISO STS documents. -->
   <!-- Copy everything from the original document -->
@@ -43,69 +39,158 @@
 
   <!-- Update iso-meta to std-meta -->
   <xsl:template match="iso-meta">
-    <std-meta><xsl:apply-templates select="@*|node()" /></std-meta>
+    <std-meta>
+      <xsl:call-template name="title-wrap"/>
+      <xsl:call-template name="proj-id"/>
+      <xsl:call-template name="release-version"/>
+      <xsl:call-template name="std-ident"/>
+      <xsl:call-template name="std-org"/>
+      <xsl:call-template name="content-language"/>
+      <xsl:call-template name="std-ref"/>
+      <xsl:call-template name="doc-ref"/>
+      <xsl:call-template name="pub-date"/>
+      <xsl:call-template name="release-date"/>
+      <xsl:call-template name="meta-date"/>
+      <xsl:call-template name="comm-ref"/>
+      <xsl:call-template name="secretariat"/>
+      <xsl:call-template name="ics"/>
+      <xsl:call-template name="page-count"/>
+      <xsl:call-template name="is-proof"/>
+      <xsl:call-template name="std-xref"/>
+      <xsl:call-template name="permissions"/>
+      <xsl:call-template name="self-uri"/>
+      <xsl:call-template name="custom-meta-group"/>
+    </std-meta>
   </xsl:template>
 
-  <!-- Replace ISOSTS @dtd-version attribute to reflect NISOSTS dtd-version -->
-  <xsl:template match="@dtd-version">
-    <xsl:attribute name="{name()}">
-      <xsl:text>1.0</xsl:text>
-    </xsl:attribute>
+  <xsl:template name="title-wrap">
+    <xsl:copy-of select="title-wrap"/>
   </xsl:template>
 
-  <!-- Copy doc-ident proj-id + release-version + urn to std-ident -->
-  <xsl:template match="std-ident">
-    <xsl:copy>
-      <xsl:apply-templates select="@* | node()" />
-      <xsl:apply-templates select="//doc-ident/sdo" />
-      <xsl:apply-templates select="//doc-ident/proj-id" />
-    </xsl:copy>
+  <xsl:template name="proj-id">
+    <xsl:copy-of select="doc-ident/proj-id"/>
   </xsl:template>
 
-  <!-- Convert <sdo> to <std-org> and moved to <std-ident> -->
-  <xsl:template match="//doc-ident/sdo">
-    <std-org><xsl:apply-templates select="@*|node()" /></std-org>
+  <xsl:template name="release-version">
+    <xsl:copy-of select="doc-ident/release-version"/>
   </xsl:template>
 
-  <!-- Element <proj-id> is kept but moved to <std-ident> -->
-  <xsl:template match="//doc-ident/proj-id">
-    <proj-id><xsl:apply-templates select="@*|node()" /></proj-id>
+  <xsl:template name="std-ident">
+    <xsl:copy-of select="std-ident"/>
   </xsl:template>
-
-  <!-- Element <release-version> is kept but moved to <std-meta> -->
-  <xsl:template match="release-version">
-    <release-version><xsl:apply-templates select="@*|node()" /></release-version>
-  </xsl:template>
-
-  <!-- Element <urn> is kept but moved to <self-uri> -->
-  <xsl:template match="urn">
-    <self-uri><xsl:apply-templates select="@*|node()" /></self-uri>
-  </xsl:template>
-
-  <!-- Remove <doc-ident> from <std-meta> -->
-  <xsl:template match="doc-ident">
-    <xsl:apply-templates select="release-version"/>
-    <xsl:apply-templates select="urn"/>
-  </xsl:template>
-
-  <!-- For NISO STS Tag Set, the publishing date should be recorded using the <release-date> element -->
-  <xsl:template match="pub-date">
-    <release-date date-type="published" std-type="new-standard" iso-8601-date="{.}"><xsl:value-of select="."/></release-date>
-
-    <!-- Corrected version -->
-    <!-- No room in ISOSTS to fit it properly, this is solved in NISO STS -->
-    <xsl:if test="//iso-meta/std-ident/version[text()='2']">
-      <release-date date-type="editorial-change" std-type="IS" iso-8601-date="{//release-date}"><xsl:value-of select="//release-date"/></release-date>
+  
+  <xsl:template name="std-org">
+    <xsl:if test="doc-ident/sdo">
+      <std-org>
+        <std-org-abbrev><xsl:value-of select="doc-ident/sdo"/></std-org-abbrev>
+      </std-org>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="release-date">
-    <release-date date-type="published" std-type="IS" iso-8601-date="{.}"><xsl:value-of select="."/></release-date>
+  <xsl:template name="content-language">
+    <xsl:copy-of select="content-language"/>
   </xsl:template>
 
-  <!-- Systematic review date -->
-  <xsl:template match="meta-date[@type='systematic-review']">
-    <release-date date-type="reaffirmed" std-type="IS" iso-8601-date="{.}"><xsl:value-of select="."/></release-date>
+  <xsl:template name="std-ref">
+    <xsl:copy-of select="std-ref"/>
   </xsl:template>
+
+  <xsl:template name="doc-ref">
+    <xsl:copy-of select="doc-ref"/>
+  </xsl:template>
+
+  <xsl:template name="pub-date">
+    <xsl:if test="pub-date">
+      <xsl:variable name="stdType">
+        <xsl:choose>
+          <xsl:when test="lower-case(std-ident/suppl-type) = 'amd'">
+            <xsl:text>amendment</xsl:text>
+          </xsl:when>
+          <xsl:when test="lower-case(std-ident/suppl-type) = 'cor'">
+            <xsl:text>corrigenda</xsl:text>
+          </xsl:when>
+          <!-- pass legacy types as is -->
+          <xsl:when test="std-ident/suppl-type/text()">
+            <xsl:value-of select="std-ident/suppl-type"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>standard</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <!-- the edition date might not be correct for amd/cor since in ISOSTS the pub-date corresponds to publishing of the amd/cor and
+           not to the publishing of the main document -->
+      <release-date date-type="published" std-type="edition" iso-8601-date="{pub-date}"><xsl:value-of select="pub-date"/></release-date>
+      <release-date date-type="published" std-type="{$stdType}" iso-8601-date="{pub-date}"><xsl:value-of select="pub-date"/></release-date>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="release-date">
+    <xsl:if test="release-date">
+      <!-- Check if this release was for a corrected version -->
+      <xsl:choose>
+        <!-- correction for a main document -->
+        <xsl:when test="not(std-ident/suppl-type/text()) and std-ident/version[text() !='1']">
+          <release-date date-type="released" std-type="correction" iso-8601-date="{release-date}"><xsl:value-of select="release-date"/></release-date>
+        </xsl:when>
+        <!-- correction for a supplement -->
+        <xsl:when test="std-ident/suppl-type/text() and std-ident/suppl-version[text() !='1']">
+          <release-date date-type="released" std-type="correction" iso-8601-date="{release-date}"><xsl:value-of select="release-date"/></release-date>
+        </xsl:when>
+      </xsl:choose>
+      <!-- for drafts we don't have an edition date but a release-date of type standard-draft -->
+      <xsl:if test="doc-ident/release-version != 'IS'">
+        <release-date date-type="released" std-type="standard-draft" iso-8601-date="{release-date}"><xsl:value-of select="release-date"/></release-date>
+      </xsl:if>
+    </xsl:if>
+    <xsl:for-each select="meta-date[@type='systematic-review']">
+      <release-date date-type="reaffirmed" std-type="standard" iso-8601-date="{.}"><xsl:value-of select="."/></release-date>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="meta-date">
+    <xsl:copy-of select="meta-date[@type!='systematic-review']"/>
+  </xsl:template>
+
+  <xsl:template name="comm-ref">
+    <xsl:copy-of select="comm-ref"/>
+  </xsl:template>
+
+  <xsl:template name="secretariat">
+    <xsl:copy-of select="secretariat"/>
+  </xsl:template>
+
+  <xsl:template name="ics">
+    <xsl:copy-of select="ics"/>
+  </xsl:template>
+
+  <xsl:template name="page-count">
+    <xsl:copy-of select="page-count"/>
+  </xsl:template>
+
+  <xsl:template name="is-proof">
+    <xsl:copy-of select="is-proof"/>
+  </xsl:template>
+
+  <xsl:template name="std-xref">
+    <xsl:copy-of select="std-xref"/>
+  </xsl:template>
+
+  <xsl:template name="permissions">
+    <xsl:copy-of select="permissions"/>
+  </xsl:template>
+
+  <xsl:template name="self-uri">
+    <xsl:if test="doc-ident/urn">
+      <self-uri><xsl:value-of select="doc-ident/urn"/></self-uri>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="custom-meta-group">
+    <xsl:copy-of select="custom-meta-group"/>
+  </xsl:template>
+
+  <!-- suppress dtd-version to make make the XML compatible with future dtd-versions -->
+  <xsl:template match="@dtd-version"/>
 
 </xsl:stylesheet>

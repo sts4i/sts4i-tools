@@ -1,11 +1,12 @@
 #ISOSTS to NISO-STS Converter
-#v1.0 updated by SJ - 05-01-2018
 
-Converter to map ISOSTS to NISO-STS XML.
+The XSLT transforms a valid ISOSTS to NISO-STS XML.
 
-v1.0: This converter covers ISO metadata conversion
-- adding a NISO STS doctype
-- iso-meta to std-meta
-- doc-ident not needed anymore, contained elements moved to corresponding parent  
-- handling of various release dates
+The script 
+* converts the `iso-meta` to a `std-meta` section 
+* does an identity transform for other metadata sections and the content structure.
 
+This implies that using the converter with documents containing `nat-meta` or `reg-meta` elements 
+will result in invalid NISO-STS documents. 
+
+The resulting XML targets validity with [NISO-STS version 1.0](https://www.niso-sts.org/standard-html/v1-0/index.html) but does not generate a reference to a specific DTD or XSD.
