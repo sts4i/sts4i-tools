@@ -5,7 +5,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:tbx="urn:iso:std:iso:30042:ed-1"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:csl="http://www.w3.org/1999/XSL/Transform"
   exclude-result-prefixes="xs xlink mml tbx xhtml"
   version="2.0">
 
@@ -78,7 +78,7 @@
   <xsl:template name="std-ident">
     <xsl:copy-of select="std-ident"/>
   </xsl:template>
-  
+
   <xsl:template name="std-org">
     <xsl:if test="doc-ident/sdo">
       <std-org>
@@ -118,9 +118,27 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      <!-- the edition date might not be correct for amd/cor since in ISOSTS the pub-date corresponds to publishing of the amd/cor and
-           not to the publishing of the main document -->
-      <release-date date-type="published" std-type="edition" iso-8601-date="{pub-date}"><xsl:value-of select="pub-date"/></release-date>
+      <!-- For the edition date of amd/cor we can only generate an approximation (year-01-01) using the standard reference
+           because in ISOSTS the pub-date corresponds to the publishing of the amd/cor and not to the main document -->
+      <xsl:variable name="edition-date-from-stdref">
+        <!-- extract year of publication of main document from std-ref -->
+        <xsl:analyze-string regex=".*:(\d{{4}})/(amd|cor).*" flags="i" select="/standard/front/iso-meta/std-ref[@type='dated']">
+            <xsl:matching-substring>
+              <xsl:value-of select="concat(regex-group(1), '-01-01')"/>
+            </xsl:matching-substring>
+          </xsl:analyze-string>
+      </xsl:variable>
+      <xsl:variable name="edition-date">
+        <xsl:choose>
+          <xsl:when test="$edition-date-from-stdref != ''">
+            <xsl:value-of select="$edition-date-from-stdref"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="pub-date"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <release-date date-type="published" std-type="edition" iso-8601-date="{$edition-date}"><xsl:value-of select="$edition-date"/></release-date>
       <release-date date-type="published" std-type="{$stdType}" iso-8601-date="{pub-date}"><xsl:value-of select="pub-date"/></release-date>
     </xsl:if>
   </xsl:template>
