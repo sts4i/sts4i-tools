@@ -7,7 +7,7 @@
   name="find-files" type="tr:find-files">
   
   <p:output port="result" primary="true">
-    <p:documentation>A recursive directory listing (c:directory[@name][@cml:base]) with matching files 
+    <p:documentation>A recursive directory listing (c:directory[@name][@xml:base]) with matching files 
       as c:file[@name] elements.
       If $read-files = 'true', the file (if it is well-formed) will be embedded below its c:file element.
       Please note that this pipeline needs a frontend project with transpect libraries (Calabash, xproc-util, 
