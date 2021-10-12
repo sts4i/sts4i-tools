@@ -197,7 +197,13 @@
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
       </assert>
     </rule>
- </pattern>
+  </pattern>
+  
+  <pattern id="index-navpointer">
+    <rule id="index-navpointer-1" context="index-entry">
+      <assert role="warning" test="exists(.//nav-pointer)" id="index-navpointer-2">index-entry should contain an element nav-pointer</assert>      
+    </rule>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
