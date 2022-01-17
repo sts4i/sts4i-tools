@@ -89,4 +89,15 @@
               )"/>
   </xsl:template>
   
+  <xsl:template match="*[local-name() = ('import', 'include')]
+                        [namespace-uri() = 'http://www.w3.org/1999/XSL/Transform']
+                        [empty(@use-when)]" mode="resolve-extends">
+    <xsl:comment select="string-join((name(), @href, '&#xa;'), ' ')"/>
+    <xsl:apply-templates select="doc(@href)/*/node()" mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="*[local-name() = ('import', 'include')]
+                        [namespace-uri() = 'http://www.w3.org/1999/XSL/Transform']
+                        [@use-when]" mode="resolve-extends"/>
+  
 </xsl:stylesheet>
