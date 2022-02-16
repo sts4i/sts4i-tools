@@ -173,6 +173,16 @@
     </rule>
   </pattern>
   
+  <pattern id="lang">
+    <rule id="content-language" context="content-language">
+      <assert test="matches(., '^\p{Ll}{2}$')" role="warning" id="content-language-iso639-1">content-language 
+        must contain a 2-letter lower-case ISO 639-1 language code. Current value: '<value-of select="."/>'</assert>
+    </rule>
+    <rule id="language-available" context="front | adoption-front | body | back">
+      <assert test="isosts:lang(.)" role="warning" id="body-language-available">The content language cannot be determined.</assert>
+    </rule>
+  </pattern>
+  
   <pattern id="app-norm-inform">
     <!-- https://gitlab.com/DIN-XML/STS/-/issues/28 -->
     <rule id="app_has_correct_values" context="app">
@@ -183,11 +193,23 @@
       </report>
       <report role="warning" id="app_no_annex-type" test="not(annex-type)"><name/> has no annex-type.</report>
     </rule>
+    <rule id="annex-type-normative-text-available" context="annex-type[parent::app/@content-type = 'norm-annex']">
+      <assert role="warning" id="annex-type-text-available1" 
+        test="exists(isosts:i18n-strings('annex-type-normative', .))">No normative annex type available for 
+        language '<value-of select="isosts:lang(.)"/>'.
+      </assert>
+    </rule>
     <rule id="annex-type-normative-text" context="annex-type[parent::app/@content-type = 'norm-annex']">
       <let name="expected" value="concat('(', isosts:i18n-strings('annex-type-normative', .), ')')"/>
       <assert role="warning" id="annex-type-text-a1" 
         test=". = $expected"><name/> should be '<value-of select="$expected"/>'.
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+      </assert>
+    </rule>
+    <rule id="annex-type-inform-text-available" context="annex-type[parent::app/@content-type = 'inform-annex']">
+      <assert role="warning" id="annex-type-text-available2" 
+        test="exists(isosts:i18n-strings('annex-type-informative', .))">No informative annex type available for 
+        language '<value-of select="isosts:lang(.)"/>'.
       </assert>
     </rule>
     <rule id="annex-type-inform-text" context="annex-type[parent::app/@content-type = 'inform-annex']">
@@ -202,6 +224,14 @@
   <pattern id="index-navpointer">
     <rule id="index-navpointer-1" context="index-entry">
       <assert role="warning" test="exists(.//nav-pointer)" id="index-navpointer-2">index-entry should contain an element nav-pointer</assert>      
+    </rule>
+  </pattern>
+  
+  <pattern id="math-without-mml">
+    <rule id="math-without-mml-1" context="*[namespace-uri() = 'http://www.w3.org/1998/Math/MathML']">
+      <assert test="starts-with(name(), 'mml:')" id="math-without-mml-2">MathML elements must have an 'mml' namespace prefix
+      <sc:xsl-fix href="xslt-fixes/mml.xsl" mode="prefix"/>
+      </assert>
     </rule>
   </pattern>
 
