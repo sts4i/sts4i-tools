@@ -67,6 +67,11 @@
       <p:load name="load-xsl">
         <p:with-option name="href" select="$fix-xsl-href"/>
       </p:load>
+      <cx:message>
+        <p:with-option name="message" select="'UUUUUUUUUUU ', base-uri()">
+          <p:pipe port="source" step="apply-fixes-recursion-decl"/>
+        </p:with-option>
+      </cx:message>
       <p:sink name="sink4"/>
       <p:xslt name="fix-current-source-doc">
         <p:with-option name="output-base-uri" select="replace(base-uri(), '(\.fixed)?\.xml$', '.fixed.xml')">
