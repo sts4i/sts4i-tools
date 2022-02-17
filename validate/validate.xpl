@@ -28,6 +28,9 @@
   <p:option name="input-dir"/>
   <p:option name="depth" select="'-1'"/>
   <p:option name="uninteresting-dir-regex" select="''"/>
+  <p:option name="default-niso-doctype-system" select="'NISO-STS-interchange-1-mathml3.dtd'"/>
+  <p:option name="default-niso-doctype-public" 
+    select="'-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.0 20171031//EN'"/>
   <p:option name="debug-dir-uri" select="''"/>
   <p:option name="debug" select="'no'"/>
   
@@ -80,7 +83,9 @@
           <p:xpath-context>
             <p:pipe port="matched" step="actual-standard-doc"/>
           </p:xpath-context>
-          <p:when test="/*/@dtd-version = '1.0' or empty(//nat-meta | //reg-meta | //iso-meta)">
+          <p:when test="/*/@dtd-version = '1.0' 
+                        or empty(//nat-meta | //reg-meta | //iso-meta)
+                        or exists(/adoption)">
             <p:output port="result" primary="true"/>
             <p:identity>
               <p:input port="source">
@@ -197,11 +202,11 @@
     <p:variable name="doctype-public" 
       select="if (contains($unparsed, '!DOCTYPE')) 
               then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')
-              else ''"/>
+              else $default-niso-doctype-public"/>
     <p:variable name="doctype-system" 
       select="if (contains($unparsed, '!DOCTYPE'))
               then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
-              else ''"/>
+              else $default-niso-doctype-system"/>
     <p:validate-with-schematron name="single-sch2" assert-valid="false">
       <p:with-param name="allow-foreign" select="'true'"/>
       <p:input port="schema">
@@ -216,6 +221,10 @@
         <p:sink name="sink4"/>
       </p:when>
       <p:otherwise>
+        <cx:namespace-delete prefixes="c"/>
+        <cx:message>
+          <p:with-option name="message" select="'PPPPPPPPPPP ', base-uri()"/>
+        </cx:message>
         <p:store omit-xml-declaration="false">
           <p:with-option name="href" select="base-uri()"/>
           <p:with-option name="doctype-public" select="$doctype-public"/>

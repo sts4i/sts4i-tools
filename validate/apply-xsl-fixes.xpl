@@ -196,6 +196,12 @@
     <cx:message>
       <p:with-option name="message" select="'444444444 ', count(/*/*), /*/*/name()"></p:with-option>
     </cx:message>
+    <tr:store-debug name="store-fix-list">
+        <p:with-option name="active" select="$debug"/>
+        <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        <p:with-option name="pipeline-step" 
+          select="'fixes-list'"/>
+      </tr:store-debug>
     <tr:apply-fixes-recursion name="apply-fixes-recursion">
       <p:input port="source">
         <p:pipe port="current" step="source-iteration"/>
