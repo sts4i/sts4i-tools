@@ -88,6 +88,9 @@
           <p:pipe port="result" step="load-xsl"/>
         </p:input>
       </p:xslt>
+      <cx:message>
+        <p:with-option name="message" select="'VVVVVVVVVVV ', base-uri()"/>
+      </cx:message>
       <tr:store-debug name="store-patched">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
