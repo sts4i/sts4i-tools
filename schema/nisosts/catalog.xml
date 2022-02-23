@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
 
   <public publicId="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.0 20161031//EN" 
     uri="NISO-STS-interchange-1-MathML3-DTD/NISO-STS-interchange-1-mathml3.dtd"/>
@@ -7,5 +7,7 @@
     uri="NISO-STS-interchange-1-MathML3-DTD/NISO-STS-interchange-1-mathml3.dtd"/>
   <public publicId="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v0.1 20161031//EN" 
     uri="NISO-STS-interchange-1-MathML3-DTD/NISO-STS-interchange-1-mathml3.dtd"/>
+  <public publicId="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 2.0 v1.0 20171031//EN"
+    uri="NISO-STS-interchange-1-MathML2-DTD/NISO-STS-interchange-1-mathml2.dtd"/>
 
 </catalog>

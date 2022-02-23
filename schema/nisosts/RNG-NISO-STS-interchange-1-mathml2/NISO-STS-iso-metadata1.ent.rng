@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS ISO Metadata Module -->
+<!-- VERSION:   ANSI/NISO Z39.102-2017, STS: -->
+<!-- Standards Tag Suite (Version 1.0) -->
+<!-- DATE:      October 2017 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS ISO-specific Metadata v1.0 20171031//EN"
+       Delivered as file "NISO-STS-iso-metadata.ent"
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- PURPOSE:    This module defines ISO-specific metadata, -->
+<!-- specifically (1) the iso-meta element and its -->
+<!-- contents, and (2) parameter entities for -->
+<!-- customization of content models and attribute -->
+<!-- lists. -->
+<!---->
+<!-- CONTAINS:   1) Definition of iso-meta -->
+<!-- 2) Definitions of parameter entities to allow -->
+<!-- easy modification and customization of -->
+<!-- content models and attribute lists. -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by the -->
+<!-- American Society of Mechanical Engineers (ASME) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- COPYRIGHT AND LICENSE: -->
+<!-- Copyright © 2017 by ISO, the American Society of -->
+<!-- Mechanical Engineers (ASME), ASTM International, -->
+<!-- Mulberry Technologies, Inc., and the National -->
+<!-- Information Standards Organization. This work is -->
+<!-- made available under a Creative Commons -->
+<!--              Attribution-ShareAlike 4.0 International License: -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!---->
+<!-- This work is licensed under a Creative Commons -->
+<!-- Attribution-ShareAlike 4.0 International License. -->
+<!-- To view a copy of this license, visit -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--              or send a letter to Creative Commons, PO Box 1866, -->
+<!-- Mountain View, CA 94042, USA -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)
+       =============================================================
+  
+-->
+<!-- ============================================================= -->
+<!-- ISO METADATA ELEMENT -->
+<!-- ============================================================= -->
+<!-- ISO METADATA CONTENT MODEL -->
+<!-- Content model for the element <iso-meta> -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="iso-meta-model">
+    <zeroOrMore>
+      <ref name="title-wrap"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="doc-ident"/>
+    </optional>
+    <optional>
+      <ref name="std-ident"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="std-org"/>
+        <ref name="std-org-group"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="content-language"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="std-ref"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="doc-ref"/>
+    </optional>
+    <optional>
+      <ref name="pub-date"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="release-date"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="meta-date"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="comm-ref"/>
+        <ref name="comm-ref-group"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="secretariat"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="ics"/>
+        <ref name="ics-wrap"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="subj-group"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="page-count"/>
+    </optional>
+    <optional>
+      <ref name="counts"/>
+    </optional>
+    <optional>
+      <ref name="is-proof"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="std-xref"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="permissions"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="self-uri"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="abstract.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="kwd-group.class"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="meta-note"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="custom-meta-group"/>
+    </zeroOrMore>
+  </define>
+  <!-- ISO METADATA ATTRIBUTES -->
+  <define name="iso-meta-atts">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- ISO METADATA -->
+  <!--
+    The <iso-meta> is a container element for
+    ISO-specific metadata for this standard.
+       REMARKS: This element contains any
+    ISO-specific overrides to the metadata 
+    described for the whole standards 
+    document (<std-doc-meta>) as well as any
+    additional ISO-specific metadata. The element 
+    <iso-meta> is the 4th of the organizational 
+    metadata elements with <std-meta>, 
+    <nat-meta>, and <reg-meta>.
+  -->
+  <define name="iso-meta">
+    <element name="iso-meta">
+      <ref name="iso-meta-attlist"/>
+      <ref name="iso-meta-model"/>
+    </element>
+  </define>
+  <define name="iso-meta-attlist" combine="interleave">
+    <ref name="iso-meta-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NISO STS ISO Metadata Module ========= -->
