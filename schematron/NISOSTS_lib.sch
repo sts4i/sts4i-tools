@@ -234,6 +234,41 @@
       </assert>
     </rule>
   </pattern>
+  
+  <pattern id="exclusions" abstract="true">
+    <rule context="$context">
+      <let name="tokenized" value="tokenize('$exclude', '\s+', 's')[normalize-space()]"/>
+      <report test="exists(descendant::*[if ($tokenized = '*') then true() 
+                                         else 
+                                         name() = $tokenized])">In context <value-of select="'$context'"/>,
+      the following elements are prohibited: <value-of select="string-join($tokenized, ', ')"/>.</report>
+    </rule>
+  </pattern>
+  
+  <pattern id="exclusion-non-norm" is-a="exclusions">
+    <param name="context" value="non-normative-note | non-normative-example"/>
+    <param name="exclude" value="non-normative-note non-normative-example"/>
+  </pattern>
+  
+  <pattern id="exclusion-ref" is-a="exclusions">
+    <param name="context" value="xref | ext-link | std"/>
+    <param name="exclude" value="bold italic underlined ext-link std fn def-item xref roman sans-serif monospace"/>
+  </pattern>
+  
+  <pattern id="exclusion-block" is-a="exclusions">
+    <param name="context" value="boxed-text | fig | supplementary-material[graphic] | table-wrap"/>
+    <param name="exclude" value="boxed-text fig-group fig supplementary-material table-wrap preformat"/>
+  </pattern>
+  
+  <pattern id="exclusion-fig-group" is-a="exclusions">
+    <param name="context" value="fig-group"/>
+    <param name="exclude" value="boxed-text fig-group supplementary-material table-wrap preformat"/>
+  </pattern>
+  
+  <pattern id="exclusion-preformat" is-a="exclusions">
+    <param name="context" value="preformat"/>
+    <param name="exclude" value=" * "/>
+  </pattern>
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
