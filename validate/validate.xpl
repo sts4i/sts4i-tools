@@ -39,6 +39,7 @@
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/xproc-util/store-debug/xpl/store-debug.xpl"/>
   <p:import href="http://transpect.io/calabash-extensions/rng-extension/xpl/validate-with-rng-declaration.xpl"/>
+  <p:import href="http://transpect.io/schematron/xpl/oxy-schematron.xpl"/>
   <p:import href="apply-xsl-fixes.xpl"/>
 
   <tr:find-files name="find-files">
@@ -139,7 +140,7 @@
           <p:with-option name="attribute-value" select="$output-file-uri"/>
         </p:add-attribute>
 
-        <p:validate-with-schematron name="single-sch" assert-valid="false">
+        <tr:oxy-validate-with-schematron name="single-sch" assert-valid="false">
           <p:with-param name="allow-foreign" select="'true'"/>
           <p:input port="source">
             <p:pipe port="matched" step="actual-standard-doc"/>
@@ -147,7 +148,7 @@
           <p:input port="schema">
             <p:pipe port="schematron" step="batch-val"/>
           </p:input>
-        </p:validate-with-schematron>
+        </tr:oxy-validate-with-schematron>
         <p:sink/>
         <p:add-attribute name="add-uri-to-svrl" match="/*" attribute-name="xml:base">
           <p:input port="source">
@@ -207,12 +208,12 @@
       select="if (contains($unparsed, '!DOCTYPE'))
               then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
               else $default-niso-doctype-system"/>
-    <p:validate-with-schematron name="single-sch2" assert-valid="false">
+    <tr:oxy-validate-with-schematron name="single-sch2" assert-valid="false">
       <p:with-param name="allow-foreign" select="'true'"/>
       <p:input port="schema">
         <p:pipe port="schematron" step="batch-val"/>
       </p:input>
-    </p:validate-with-schematron>
+    </tr:oxy-validate-with-schematron>
     <p:choose>
       <p:when test="ends-with(base-uri(), '.xpl')">
         <cx:message>
