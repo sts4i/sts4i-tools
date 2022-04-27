@@ -240,7 +240,8 @@
       <let name="tokenized" value="tokenize('$exclude', '\s+', 's')[normalize-space()]"/>
       <report test="exists(descendant::*[if ($tokenized = '*') then true() 
                                          else 
-                                         name() = $tokenized])">In context <value-of select="'$context'"/>,
+                                         name() = $tokenized])"
+              id="report-illegal-nesting">In context <value-of select="'$context'"/>,
       the following elements are prohibited: <value-of select="string-join($tokenized, ', ')"/>.</report>
     </rule>
   </pattern>
