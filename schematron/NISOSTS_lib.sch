@@ -26,6 +26,7 @@
   
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
   <ns prefix="tr" uri="http://transpect.io"/>
+  <ns prefix="tbx" uri="urn:iso:std:iso:30042:ed-1"/>
   
   <let name="legend-content-type" value="'fig-index'"/>
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
@@ -248,7 +249,12 @@
   
   <pattern id="exclusion-non-norm" is-a="exclusions">
     <param name="context" value="non-normative-note | non-normative-example"/>
-    <param name="exclude" value="non-normative-note non-normative-example"/>
+    <param name="exclude" value="non-normative-note non-normative-example note"/>
+  </pattern>
+  
+  <pattern id="exclusion-note" is-a="exclusions">
+    <param name="context" value="note"/>
+    <param name="exclude" value="non-normative-note non-normative-example note"/>
   </pattern>
   
   <pattern id="exclusion-ref" is-a="exclusions">
@@ -270,7 +276,54 @@
     <param name="context" value="preformat"/>
     <param name="exclude" value=" * "/>
   </pattern>
-
+  
+  <pattern id="exclusion-code" is-a="exclusions">
+    <param name="context" value="code"/>
+    <param name="exclude" value=" * "/>
+  </pattern>
+  
+  <pattern id="exclusion-fn" is-a="exclusions">
+    <param name="context" value="fn"/>
+    <param name="exclude" value="fn"/>
+  </pattern>
+  
+  <pattern id="exclusion-disp-formula" is-a="exclusions">
+    <param name="context" value="disp-formula"/>
+    <param name="exclude" value="disp-formula"/>
+  </pattern>
+  
+  <pattern id="exclusion-graphic" is-a="exclusions">
+    <param name="context" value="graphic"/>
+    <param name="exclude" value="graphic"/>
+  </pattern>
+  
+  <pattern id="exclusion-disp-quot" is-a="exclusions">
+    <param name="context" value="disp-quot"/>
+    <param name="exclude" value="disp-quot"/>
+  </pattern>
+  
+  <pattern id="exclusion-array" is-a="exclusions">
+    <param name="context" value="array"/>
+    <param name="exclude" value="array"/>
+  </pattern>
+  
+  <pattern id="exclusion-ref-list" is-a="exclusions">
+    <param name="context" value="ref-list"/>
+    <param name="exclude" value="ref-list"/>
+  </pattern>
+  
+  <pattern id="exclusion-def-item" is-a="exclusions">
+    <param name="context" value="def-item"/>
+    <param name="exclude" value="def-item"/>
+  </pattern>
+      
+  <pattern id="exclusion-term-entry" is-a="exclusions">
+    <param name="context" value="tbx:termEntry"/>
+    <param name="exclude" value="tbx:termEntry"/>
+  </pattern> 
+  
+  
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
     <diagnostic id="NISOSTS_iso-like-ids_1_1_de" xml:lang="de">Eine sec- oder app-ID muss wie folgt gebildet werden:
