@@ -214,20 +214,24 @@
         <p:pipe port="schematron" step="batch-val"/>
       </p:input>
     </tr:oxy-validate-with-schematron>
+
     <p:choose>
-      <p:when test="ends-with(base-uri(), '.xpl')">
+      <p:when test="ends-with(base-uri(/*), '.xpl')">
         <cx:message>
           <p:with-option name="message" select="'WARNING: Won’t store because base URI ends with .xpl: ', base-uri()"/>
         </cx:message>
         <p:sink name="sink4"/>
       </p:when>
       <p:otherwise>
-        <cx:namespace-delete prefixes="c"/>
+        <cx:namespace-delete prefixes="c" name="namespace-delete"/>
         <cx:message>
-          <p:with-option name="message" select="'PPPPPPPPPPP ', base-uri()"/>
+          <p:with-option name="message" select="'PPPPPPPPPPP ', base-uri(/*)"/>
         </cx:message>
+        <p:delete match="/*/@xml:base" name="delete-xml-base-attr"/>
         <p:store omit-xml-declaration="false">
-          <p:with-option name="href" select="base-uri()"/>
+          <p:with-option name="href" select="base-uri(/*)">
+            <p:pipe port="result" step="namespace-delete"/>
+          </p:with-option>
           <p:with-option name="doctype-public" select="$doctype-public"/>
           <p:with-option name="doctype-system" select="$doctype-system"/>
         </p:store>    

@@ -37,6 +37,7 @@
   <p:import href="http://transpect.io/xproc-util/file-uri/xpl/file-uri.xpl"/>
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:import href="http://transpect.io/xproc-util/load/xpl/load-sources.xpl"/>
+  <p:import href="http://transpect.io/xproc-util/store-debug/xpl/store-debug.xpl"/>
 
   <p:declare-step type="tr:apply-fixes-recursion" name="apply-fixes-recursion-decl">
     <p:input port="fixes" primary="true">
@@ -67,14 +68,14 @@
       <p:load name="load-xsl">
         <p:with-option name="href" select="$fix-xsl-href"/>
       </p:load>
-      <cx:message>
-        <p:with-option name="message" select="'UUUUUUUUUUU ', base-uri()">
+      <!--<cx:message>
+        <p:with-option name="message" select="'UUUUUUUUUUU ', base-uri(), ' ', base-uri(/*)">
           <p:pipe port="source" step="apply-fixes-recursion-decl"/>
         </p:with-option>
-      </cx:message>
+      </cx:message>-->
       <p:sink name="sink4"/>
       <p:xslt name="fix-current-source-doc">
-        <p:with-option name="output-base-uri" select="replace(base-uri(), '(\.fixed)?\.xml$', '.fixed.xml')">
+        <p:with-option name="output-base-uri" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')">
           <p:pipe port="source" step="apply-fixes-recursion-decl"/>
         </p:with-option>
         <p:with-option name="initial-mode" select="$fix-xsl-mode"/>
@@ -88,15 +89,19 @@
           <p:pipe port="result" step="load-xsl"/>
         </p:input>
       </p:xslt>
-      <cx:message>
-        <p:with-option name="message" select="'VVVVVVVVVVV ', base-uri()"/>
-      </cx:message>
+      <p:add-attribute name="make-fixed-xml-base-explicit" attribute-name="xml:base" match="/*">
+        <p:documentation>output-base-uri apparently doesn't change as requested</p:documentation>
+        <p:with-option name="attribute-value" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
+      </p:add-attribute>
+      <!--<cx:message>
+        <p:with-option name="message" select="'VVVVVVVVVVV ', base-uri(/*), replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
+      </cx:message>-->
       <tr:store-debug name="store-patched">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
         <p:with-option name="pipeline-step" 
           select="string-join(('apply-fix',
-                               replace(base-uri(), '^.+/(.+?)\.xml$', '$1'), 
+                               replace(base-uri(/*), '^.+/(.+?)\.xml$', '$1'), 
                                replace($fix-xsl-href, '^.+/(.+?)\.xsl$', '$1'),
                                replace($fix-xsl-mode, ':', '_')),
                               '__')"/>
@@ -137,7 +142,7 @@
   <p:variable name="report-uris-with-fixes"
      select="string-join(
                distinct-values(//(svrl:failed-assert | svrl:successful-report)
-                                   [@id = tokenize($error-ids-with-fixes, '\s+')]/base-uri()),
+                                   [@id = tokenize($error-ids-with-fixes, '\s+')]/ancestor::*[@xml:base][1]/@xml:base),
                ' ')"/>
   <p:variable name="source-uris-with-fixes"
      select="string-join(
@@ -146,12 +151,18 @@
   <!--<cx:message>
     <p:with-option name="message" select="'§§§§§§§§§§§§§§§§§§§§ 1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
   </cx:message>-->
-  <tr:load-sources name="load-sources">
+  <tr:load-sources name="load-sources" add-xml-base="true">
     <p:input port="source">
       <p:pipe port="source" step="apply-fixes"/>
     </p:input>
     <p:with-option name="uris" select="$source-uris-with-fixes"/>
   </tr:load-sources>
+  <tr:store-debug name="store-loaded-sources">
+        <p:with-option name="active" select="$debug"/>
+        <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        <p:with-option name="pipeline-step" 
+          select="'load-sources'"/>
+      </tr:store-debug>
   <p:for-each name="source-iteration">
     <p:variable name="base-uri" select="base-uri(/*)"/>
     <p:variable name="this-documents-error-ids-with-fixes" 
@@ -161,9 +172,18 @@
                 ' ')">
       <p:pipe port="reports" step="apply-fixes"/>
     </p:variable>
-    <!--<cx:message>
-      <p:with-option name="message" select="'3333333 ', $this-documents-error-ids-with-fixes"/> 
-    </cx:message>-->
+    <p:add-attribute match="/*" attribute-name="xml:base">
+      <p:with-option name="attribute-value" select="$base-uri"/>
+    </p:add-attribute>
+    <tr:store-debug name="store-fix-source">
+        <p:with-option name="active" select="$debug"/>
+        <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        <p:with-option name="pipeline-step" 
+          select="'fixes-source'"/>
+      </tr:store-debug>
+    <cx:message>
+      <p:with-option name="message" select="'3333333 ', $base-uri, ' :: ', $this-documents-error-ids-with-fixes"/> 
+    </cx:message>
     <p:xslt name="select-fixes-for-current-doc">
       <p:with-param name="ids" select="$this-documents-error-ids-with-fixes"/>
       <p:input port="parameters"><p:empty/></p:input>
@@ -178,7 +198,7 @@
             <xsl:template match="/*">
               <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
               <xsl:copy>
-                <xsl:attribute name="xml:base" select="base-uri()"/>
+                <xsl:attribute name="xml:base" select="base-uri(/*)"/>
                 <xsl:for-each-group select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix" 
                   group-by="string-join((@href, @mode, sc:param/@*), '__')">
                   <xsl:apply-templates select="."/>
