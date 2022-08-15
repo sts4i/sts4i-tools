@@ -60,8 +60,7 @@
   
   <pattern id="NISOSTS_lib_ref-list_title_pattern">
     <rule id="ref-list_title" context="ref-list[parent::app|parent::sec]">
-      <report role="warning" test="title" id="ref-list_title_r1"
-        >ref-list with title found. Please move title to the surrounding sec or app.</report>
+      <report role="warning" test="title" id="ref-list_title_r1">ref-list with title found. Please move title to the surrounding sec or app.</report>
     </rule>
     <rule id="NISOSTS_lib_ref-list_title_back" context="ref-list[parent::back]">
       <report role="warning" test="title" id="NISOSTS_lib_ref-list_title_back_r1">ref-list with title found. 
@@ -188,8 +187,8 @@
     <!-- https://gitlab.com/DIN-XML/STS/-/issues/28 -->
     <rule id="app_has_correct_values" context="app">
       <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type.</report>
-      <report role="error" id="app_wrong_content-type" test="@content-type/not(.='norm-annex' or .='inform-annex')">The 
-        content-type of an app has to be either "norm-annex" or "inform-annex".
+      <report role="error" id="app_wrong_content-type" test="not(@content-type = ('norm-annex', 'inform-annex', 'bibl'))">The 
+        content-type of an app has to be either "norm-annex", "inform-annex" or "bibl".
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="content-type"/>
       </report>
       <report role="warning" id="app_no_annex-type" test="not(annex-type)"><name/> has no annex-type.</report>
@@ -219,6 +218,20 @@
         test=". = $expected"><name/> should be '<value-of select="$expected"/>'.
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
       </assert>
+    </rule>
+  </pattern>
+  
+  <pattern id="ref-list2app">
+    <rule context="back">
+    <report id="ref-list-back2app" test="ref-list">The element ref-list must be moved to an app with content-type "bibl".
+      <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>  
+    </report>
+    <report id="ref-list-app-group2app" test="app-group/ref-list">The element ref-list must be moved to an app with content-type "bibl".
+      <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-app"/>
+    </report>        
+    <report id="app-content-type" test="app[not(@content-type = 'bibl')]/ref-list">The app containing the bibliography needs an attribute content-type with the value "bibl".
+      <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="content-type-for-app"/>
+    </report>
     </rule>
   </pattern>
   
