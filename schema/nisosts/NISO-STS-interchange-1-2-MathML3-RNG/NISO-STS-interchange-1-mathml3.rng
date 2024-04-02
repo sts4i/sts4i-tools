@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="JATS-ali-namespace1-3.ent.rng"/>
+  <include href="NISO-STS-tbx-namespace1.ent.rng"/>
+  <include href="BITS-xinclude2.ent.rng"/>
+  <include href="JATS-common-atts1-3.ent.rng"/>
+  <include href="NISO-STS-classes1.ent.rng"/>
+  <include href="JATS-journalpubcustom-classes1-3.ent.rng"/>
+  <include href="JATS-default-classes1-3.ent.rng"/>
+  <include href="NISO-STS-mixes1.ent.rng"/>
+  <include href="JATS-journalpubcustom-mixes1-3.ent.rng"/>
+  <include href="JATS-default-mixes1-3.ent.rng"/>
+  <include href="NISO-STS-models1.ent.rng"/>
+  <include href="JATS-journalpubcustom-models1-3.ent.rng"/>
+  <include href="JATS-common1-3.ent.rng"/>
+  <include href="JATS-articlemeta1-3.ent.rng"/>
+  <include href="JATS-backmatter1-3.ent.rng"/>
+  <include href="JATS-display1-3.ent.rng"/>
+  <include href="JATS-format1-3.ent.rng"/>
+  <include href="JATS-funding1-3.ent.rng"/>
+  <include href="JATS-link1-3.ent.rng"/>
+  <include href="JATS-list1-3.ent.rng"/>
+  <include href="JATS-math1-3.ent.rng"/>
+  <include href="JATS-nlmcitation1-3.ent.rng"/>
+  <include href="JATS-para1-3.ent.rng"/>
+  <include href="JATS-phrase1-3.ent.rng"/>
+  <include href="JATS-references1-3.ent.rng"/>
+  <include href="JATS-related-object1-3.ent.rng"/>
+  <include href="JATS-section1-3.ent.rng"/>
+  <include href="JATS-mathml3-mathmlsetup1-3.ent.rng"/>
+  <include href="JATS-XHTMLtablesetup1-3.ent.rng"/>
+  <include href="JATS-chars1-3.ent.rng"/>
+  <include href="NISO-STS-common-metadata1.ent.rng"/>
+  <include href="NISO-STS-std-metadata1.ent.rng"/>
+  <include href="NISO-STS-iso-metadata1.ent.rng"/>
+  <include href="NISO-STS-reg-metadata1.ent.rng"/>
+  <include href="NISO-STS-nat-metadata1.ent.rng"/>
+  <include href="NISO-STS-terms-n-def1.ent.rng"/>
+  <include href="NISO-STS-notes-exmp1.ent.rng"/>
+  <include href="NISO-STS-tbx-setup1.ent.rng"/>
+  <include href="BITS-index2.ent.rng"/>
+  <include href="BITS-embedded-index2.ent.rng"/>
+  <include href="BITS-toc2.ent.rng"/>
+  <include href="BITS-toc-index-nav2.ent.rng"/>
+  <define name="app-atts-extended">
+    <ref name="MATHML.xmlns.attrib"/>
+    <ref name="xinclude.xmlns.attrib"/>
+    <ref name="TBX.xmlns.attrib"/>
+  </define>
+  <define name="app-group-attlist" combine="interleave">
+    <ref name="app-atts-extended"/>
+  </define>
+  <define name="app-attlist" combine="interleave">
+    <ref name="app-atts-extended"/>
+  </define>
+  <define name="dtd-version">
+    <optional>
+      <attribute name="dtd-version">
+        <choice>
+          <value>iso-0.9</value>
+          <value>iso-1.0</value>
+          <value>iso-1.1</value>
+          <value>1.0</value>
+          <value>1.1d1</value>
+          <value>1.2</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="standard-atts">
+    <ref name="jats-common-atts"/>
+    <ref name="dtd-version"/>
+    <optional>
+      <attribute name="specific-use"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang" a:defaultValue="en">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <ref name="XLINK.xmlns.attrib"/>
+    <ref name="MATHML.xmlns.attrib"/>
+    <ref name="ali.xmlns.attrib"/>
+    <ref name="xinclude.xmlns.attrib"/>
+    <ref name="Schema.xmlns.attrib"/>
+    <ref name="TBX.xmlns.attrib"/>
+  </define>
+  <include href="NISO-STS-adoption1.ent.rng"/>
+  <define name="standard">
+    <element name="standard">
+      <ref name="standard-attlist"/>
+      <optional>
+        <ref name="processing-meta"/>
+      </optional>
+      <ref name="front"/>
+      <ref name="body"/>
+      <zeroOrMore>
+        <ref name="back"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="standard-attlist" combine="interleave">
+    <ref name="standard-atts"/>
+  </define>
+  <include href="NISO-STS-standards-components1.ent.rng"/>
+  <define name="answer" combine="choice">
+    <notAllowed/>
+  </define>
+  <define name="answer-set" combine="choice">
+    <notAllowed/>
+  </define>
+  <define name="explanation" combine="choice">
+    <notAllowed/>
+  </define>
+  <define name="question" combine="choice">
+    <notAllowed/>
+  </define>
+  <define name="question-wrap" combine="choice">
+    <notAllowed/>
+  </define>
+  <define name="question-wrap-group" combine="choice">
+    <notAllowed/>
+  </define>
+  <start>
+    <choice>
+      <ref name="standard"/>
+      <ref name="adoption"/>
+    </choice>
+  </start>
+</grammar>

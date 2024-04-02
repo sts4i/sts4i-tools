@@ -2,10 +2,11 @@
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2" xml:lang="en"
   xmlns:isosts="http://www.iso.org/ns/isosts" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:c="http://www.w3.org/ns/xproc-step"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
   xmlns:tr= "http://transpect.io">
   
-  <!-- Copyright 2017–2019 ISO and contributors
+  <!-- Copyright 2017–2024 ISO and contributors
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,26 +25,39 @@
   
   <xsl:import href="http://transpect.io/xslt-util/num/xsl/num.xsl"/>
   
+  <xsl:param name="target-niso-version"/>
+  
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
   <ns prefix="tr" uri="http://transpect.io"/>
   <ns prefix="tbx" uri="urn:iso:std:iso:30042:ed-1"/>
+  <ns prefix="c" uri="http://www.w3.org/ns/xproc-step"/>
   
   <let name="legend-content-type" value="'fig-index'"/>
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
 
   <pattern id="NISOSTS_lib_figure_keys">
     <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
-    <p>There is no optimal or canonical way to place keys to figures yet.</p>
-    <rule id="key_location" context="fig/*[not(name() = ('label', 'caption'))]">
+    <p>Prior to NISO STS 1.2, there was no optimal or canonical way to place keys to figures yet.</p>
+    <rule id="SN-key_location" context="fig/non-normative-note[@content-type = 'explanatory']">
+      <report test="true()" id="SN-key_location_r1">The legend needs to go into a NISO STS 1.2 legend element.
+      <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="SN-legends"/></report>
+    </rule>
+    <rule id="key_location" context="fig/*[not(name() = ('label', 'caption', 'legend'))]">
       <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning" id="NISOSTS_lib_figure_keys_r1" 
         diagnostics="NISOSTS_lib_figure_keys_r1_de">
         Shouldn’t this p be a title (of a key)?
       </report>
-      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)" role="warning" id="NISOSTS_lib_figure_keys_r2">
+      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)
+                    and (xs:decimal($target-niso-version) lt 1.2)" role="warning" id="NISOSTS_lib_figure_keys_r2">
         Put the figure key (a.k.a. legend) in the caption, either as a 
         table-wrap[@content-type='<value-of select="$legend-content-type"/>'] or as a 
         def-list[@list-type='<value-of select="$legend-content-type"/>']. 
         For validity reasons, it must be wrapped in a paragraph.
+      </report>
+      <report test="(title | caption/title) = isosts:i18n-strings('key-heading', .)
+                    and (xs:decimal($target-niso-version) ge 1.2)" role="warning" id="NISOSTS_lib_figure_keys_r3">
+        Put the figure key in a NISO STS 1.2 legend element.
+      <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="legends"/>
       </report>
     </rule>
   </pattern>
@@ -173,6 +187,24 @@
     </rule>
   </pattern>
   
+  <pattern id="dtd-version">
+    <rule id="NISOSTS_dtd-version_missing_rule" context="/*">
+      <report id="NISOSTS_dtd-version_missing" test="empty(@dtd-version)"
+        role="info">The dtd-version attribute on the top-level element is not specified. It is recommended to be set even when using XSD or RNG validation.
+      <sc:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="dtd-version">
+        <c:param-set>
+          <c:param name="target-niso-version" value="{$target-niso-version}"/>
+        </c:param-set>
+      </sc:xsl-fix>
+      </report>
+    </rule>
+    <rule id="NISOSTS_dtd-version_different_rule" context="/*">
+      <report id="NISOSTS_dtd-version_different" test="not(@dtd-version = $target-niso-version)"
+        role="info">The dtd-version attribute on the top-level element is different from the target version. 
+      It will be autocorrected to <xsl:value-of select="$target-niso-version"/></report>
+    </rule>
+  </pattern>
+  
   <pattern id="lang">
     <rule id="content-language" context="content-language">
       <assert test="matches(., '^\p{Ll}{2}$')" role="warning" id="content-language-iso639-1">content-language 
@@ -222,6 +254,7 @@
   </pattern>
   
   <pattern id="ref-list2app">
+    <!-- Note: Putting bibliographic references into an appendix deviates from the IEC/ISO Coding Guidelines. -->
     <rule context="back">
     <report id="ref-list-back2app" test="ref-list">The element ref-list must be moved to an app with content-type "bibl".
       <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>  
@@ -252,9 +285,14 @@
   <pattern id="exclusions" abstract="true">
     <rule context="$context">
       <let name="tokenized" value="tokenize('$exclude', '\s+', 's')[normalize-space()]"/>
+      <let name="legalizers" value="tokenize('$legalizing-intermediates', '\s+', 's')[normalize-space()]"/>
       <report test="exists(descendant::*[if ($tokenized = '*') then true() 
                                          else 
-                                         name() = $tokenized])"
+                                         name() = $tokenized]
+                                        [if ($legalizers)
+                                         then empty(ancestor::*[name() = $legalizers]
+                                                               [exists(ancestor::* intersect current())])
+                                         else true()])"
               id="report-illegal-nesting">In context <value-of select="'$context'"/>,
       the following elements are prohibited: <value-of select="string-join($tokenized, ', ')"/>.</report>
     </rule>
@@ -277,12 +315,14 @@
   
   <pattern id="exclusion-block" is-a="exclusions">
     <param name="context" value="boxed-text | fig | supplementary-material[graphic] | table-wrap"/>
-    <param name="exclude" value="boxed-text fig-group fig supplementary-material table-wrap preformat"/>
+    <param name="exclude" value="boxed-text fig-group fig supplementary-material table-wrap[empty(parent::legend)] preformat"/>
+    <param name="legalizing-intermediates" value="legend"/>
   </pattern>
   
   <pattern id="exclusion-fig-group" is-a="exclusions">
     <param name="context" value="fig-group"/>
     <param name="exclude" value="boxed-text fig-group supplementary-material table-wrap preformat"/>
+    <param name="legalizing-intermediates" value="legend"/>
   </pattern>
   
   <pattern id="exclusion-preformat" is-a="exclusions">

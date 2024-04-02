@@ -221,11 +221,11 @@
           <div class="content">
             <table border="1" valign="top">
               <tr class="head">
-                <th style="width:10%">Severity</th>
-                <th style="width:35%">XPath</th>
+                <th style="width:8%">Severity</th>
+                <th style="width:30%">XPath</th>
                 <th style="width:35%">Message</th>
-                <th style="width:10%">Pattern ID + Report/Assert ID or Schema name</th>
-                <th style="width:10%">fixed<sup>1)</sup></th>
+                <th style="width:21%">Pattern ID + Report/Assert ID or Schema name</th>
+                <th style="width:6%">fixed<sup>1)</sup></th>
               </tr>
               <xsl:sequence select="$content"/>
             </table>
@@ -234,9 +234,9 @@
             displayed as “fixed: false”. We will eventually improve this reporting.</p>
           </div>
         </body> 
-        <script src="http://this.transpect.io/a9s/common/template/js/jquery-2.1.4.min.js"></script>
+        <!--<script src="http://this.transpect.io/a9s/common/template/js/jquery-2.1.4.min.js"></script>
         <script src="http://this.transpect.io/a9s/common/template/js/jquery.easing.1.3.js"/>
-        <script src="http://this.transpect.io/a9s/common/template/js/scrolling-nav.js"/>
+        <script src="http://this.transpect.io/a9s/common/template/js/scrolling-nav.js"/>-->
       </html>
     </xsl:if>
   </xsl:template>

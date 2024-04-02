@@ -29,7 +29,9 @@
   <xsl:template match="/" mode="#default">
     <xsl:variable name="resolve-extends" as="document-node(element(sch:schema))">
       <xsl:document>
-        <xsl:apply-templates mode="resolve-extends"/>
+        <xsl:apply-templates mode="resolve-extends">
+          <xsl:with-param name="selected-alternatives"></xsl:with-param>
+        </xsl:apply-templates>
       </xsl:document>
     </xsl:variable>
     <xsl:apply-templates select="$resolve-extends" mode="filter"/>
@@ -47,10 +49,40 @@
     </xsl:apply-templates>
   </xsl:template>
   
-  <xsl:template match="sch:pattern[@id][@sc:alternative-for]" mode="resolve-extends" priority="2">
+  <!-- 
+  Do include: if current ID is in tunneled $selected-alternatives
+              or
+              if current ID is in the selected alternatives specified in this customization’s extends
+              or
+              (
+                if current ID is not in tunneled $alternatives-for
+                and 
+                current element has no alternative-for attribute
+              )
+  
+  Do not include: if current ID is in tunneled $alternatives-for 
+  
+  -->
+  
+  
+  <xsl:template match="sch:pattern[@id]" mode="resolve-extends" priority="2">
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
-    <xsl:if test="not($alternatives-for = @id) and $selected-alternatives = @id">
+<xsl:message select="'aaaaaa ', string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>
+    <xsl:if test="(
+                    ($selected-alternatives = @id)
+                    or 
+                    (ancestor::sch:schema//sch:extends/sc:pattern/@sc:selected-alternative = @id)
+                    or 
+                    (
+                      not($alternatives-for = @id)
+                      and
+                      empty(@sc:alternative-for)
+                    )
+                  )
+                  and
+                  not($alternatives-for = @id)">
+<xsl:message select="'AAAAAAAAAAAA ', string(@id), ' :: ',string-join($selected-alternatives, ' ')"></xsl:message>
       <xsl:next-match/>
     </xsl:if>
   </xsl:template>
@@ -65,7 +97,7 @@
   
   <xsl:template match="sch:let[empty(ancestor::sch:pattern)]" mode="resolve-extends"/>
 
-  <xsl:template match="sch:pattern[@id]" mode="resolve-extends">
+  <xsl:template match="sch:pattern[@id]" mode="resolve-extends_">
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:if test="not($alternatives-for = @id)">
@@ -73,7 +105,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="sch:pattern[@sc:alternative-for]" mode="resolve-extends">
+  <xsl:template match="sch:pattern[@sc:alternative-for]" mode="resolve-extends_">
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:if test="$selected-alternatives = @id">
       <xsl:next-match/>

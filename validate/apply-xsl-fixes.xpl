@@ -25,6 +25,7 @@
   <p:input port="schematron">
     <p:documentation>An assembled Schematron document, possibly with sc:fix-xsl attributes.</p:documentation>
   </p:input>
+  <p:input port="params" kind="parameter"/>
 
   <p:output port="result" primary="true" sequence="true">
     <p:documentation>The hopefully fixed documents from the source port. The base URI will be augmented by replacing
@@ -50,12 +51,25 @@
     <p:input port="source">
       <p:documentation>The document to be fixed</p:documentation>
     </p:input>
+    <p:input port="params" kind="parameter"/>
     <p:output port="result" primary="true"/>
     
     <p:option name="debug-dir-uri" select="''"/>
     <p:option name="debug" select="'no'"/>
     
     <p:import href="http://transpect.io/xproc-util/store-debug/xpl/store-debug.xpl"/>
+
+    <p:parameters name="consolidate-params">
+      <p:input port="parameters">
+        <p:pipe port="params" step="apply-fixes-recursion-decl"/>
+      </p:input>
+    </p:parameters> 
+
+    <p:identity name="get-primary-sources-back-on-the-DRP">
+      <p:input port="source">
+        <p:pipe port="fixes" step="apply-fixes-recursion-decl"/>
+      </p:input>
+    </p:identity>
     
     <p:for-each name="fix-source">
       <p:iteration-source select="/sch:schema/sc:xsl-fix[1]"/>
@@ -93,9 +107,9 @@
         <p:documentation>output-base-uri apparently doesn't change as requested</p:documentation>
         <p:with-option name="attribute-value" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
       </p:add-attribute>
-      <!--<cx:message>
+      <cx:message>
         <p:with-option name="message" select="'VVVVVVVVVVV ', base-uri(/*), replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
-      </cx:message>-->
+      </cx:message>
       <tr:store-debug name="store-patched">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
@@ -129,6 +143,9 @@
           <p:input port="source">
             <p:pipe port="result" step="fix-source"/>
           </p:input>
+          <p:input port="params">
+            <p:pipe port="result" step="consolidate-params"/>
+          </p:input>
           <p:with-option name="debug" select="$debug"/>
           <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
         </tr:apply-fixes-recursion>
@@ -150,7 +167,13 @@
                ' ')"/>
   <!--<cx:message>
     <p:with-option name="message" select="'§§§§§§§§§§§§§§§§§§§§ 1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
-  </cx:message>-->
+  </cx:message>
+  <p:sink></p:sink>-->
+  <p:parameters name="consolidate-params">
+    <p:input port="parameters">
+      <p:pipe port="params" step="apply-fixes"/>
+    </p:input>
+  </p:parameters>
   <tr:load-sources name="load-sources" add-xml-base="true">
     <p:input port="source">
       <p:pipe port="source" step="apply-fixes"/>
@@ -158,11 +181,10 @@
     <p:with-option name="uris" select="$source-uris-with-fixes"/>
   </tr:load-sources>
   <tr:store-debug name="store-loaded-sources">
-        <p:with-option name="active" select="$debug"/>
-        <p:with-option name="base-uri" select="$debug-dir-uri"/>
-        <p:with-option name="pipeline-step" 
-          select="'load-sources'"/>
-      </tr:store-debug>
+    <p:with-option name="active" select="$debug"/>
+    <p:with-option name="base-uri" select="$debug-dir-uri"/>
+    <p:with-option name="pipeline-step" select="'load-sources'"/>
+  </tr:store-debug>
   <p:for-each name="source-iteration">
     <p:variable name="base-uri" select="base-uri(/*)"/>
     <p:variable name="this-documents-error-ids-with-fixes" 
@@ -176,11 +198,10 @@
       <p:with-option name="attribute-value" select="$base-uri"/>
     </p:add-attribute>
     <tr:store-debug name="store-fix-source">
-        <p:with-option name="active" select="$debug"/>
-        <p:with-option name="base-uri" select="$debug-dir-uri"/>
-        <p:with-option name="pipeline-step" 
-          select="'fixes-source'"/>
-      </tr:store-debug>
+      <p:with-option name="active" select="$debug"/>
+      <p:with-option name="base-uri" select="$debug-dir-uri"/>
+      <p:with-option name="pipeline-step" select="'fixes-source'"/>
+    </tr:store-debug>
     <cx:message>
       <p:with-option name="message" select="'3333333 ', $base-uri, ' :: ', $this-documents-error-ids-with-fixes"/> 
     </cx:message>
@@ -233,6 +254,9 @@
     <tr:apply-fixes-recursion name="apply-fixes-recursion">
       <p:input port="source">
         <p:pipe port="current" step="source-iteration"/>
+      </p:input>
+      <p:input port="params">
+        <p:pipe port="result" step="consolidate-params"/>
       </p:input>
       <p:with-option name="debug" select="$debug"/>
       <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>

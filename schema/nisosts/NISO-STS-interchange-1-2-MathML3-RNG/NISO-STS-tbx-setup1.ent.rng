@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================= -->
+<!-- MODULE:    NISO STS TBX Terminology Module -->
+<!-- VERSION:   ANSI/NISO Z39.102-2022, STS: -->
+<!-- Standards Standards Tag Suite (Version 1.2) -->
+<!-- DATE:      October 2022 -->
+<!---->
+<!-- ============================================================= -->
+<!-- PUBLIC DOCUMENT TYPE DEFINITION -->
+<!-- TYPICAL INVOCATION -->
+<!--
+  "-//NISO//DTD NISO STS TBX Terminology Module v1.2 20221031//EN"
+       Delivered as file "NISO-STS-tbx-setup1.ent"
+-->
+<!-- ============================================================= -->
+<!-- SYSTEM:     NISO Standards Tag Suite (NISO STS) -->
+<!---->
+<!-- PURPOSE:    This module defines a namespace-qualified, -->
+<!-- TBX (TermBase eXchange) compatible vocabulary -->
+<!-- derived from ISO 30042. -->
+<!---->
+<!-- CONTAINS:   1) Parameter entities for TBX element names -->
+<!-- 2) Standard content models and content-model -->
+<!-- fragments -->
+<!-- 3) Standard attribute sets -->
+<!-- 4) Elements used for text markup -->
+<!-- 5) Elements needed for terminological entries -->
+<!-- (in alphabetical order) -->
+<!---->
+<!-- MODULE NEEDED -->
+<!--              NISO-STS-tbx-namespace1.ent (set up TBX namespace) -->
+<!---->
+<!-- CREATED BY: Mulberry Technologies, Inc. -->
+<!-- Deborah Aleyne Lapeyre and B. Tommie Usdin -->
+<!-- in support of NISO and the NISO STS Committee. -->
+<!-- Mulberry Technologies work was supported by the -->
+<!-- American Society of Mechanical Engineers (ASME) -->
+<!-- and ASTM International. -->
+<!---->
+<!-- COPYRIGHT AND LICENSE: -->
+<!-- Copyright © 2017, 2022 by ISO, the American -->
+<!-- Society of  Mechanical Engineers (ASME), -->
+<!-- ASTM International, Mulberry Technologies, Inc., -->
+<!-- and the National Information Standards -->
+<!-- Organization (NISO). -->
+<!---->
+<!-- This work is licensed under a Creative Commons -->
+<!-- Attribution-ShareAlike 4.0 International License. -->
+<!-- To view a copy of this license, visit -->
+<!-- http://creativecommons.org/licenses/by-sa/4.0/ -->
+<!--              or send a letter to Creative Commons, PO Box 1866, -->
+<!-- Mountain View, CA 94042, USA -->
+<!---->
+<!-- ORIGINAL CREATION DATE: -->
+<!-- October 2016 -->
+<!---->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- DTD VERSION/CHANGE HISTORY -->
+<!-- ============================================================= -->
+<!--
+  Version  Reason/Occasion                   (who) vx.x (yyyy-mm-dd)  
+       =============================================================
+       NISO STS Version 1.2 (ANSI/NISO Z39.102-2022)
+                                        (DAL/BTU) v1.2 (2022-10-31)
+  
+       ANSI NISO STS is a continuing maintenance NISO Standard, 
+       which requires voting by both the NISO and ANSI memberships 
+       to be changed. This version of the NISO STS was approved 
+       by ANSI vote on October 21, 2022, so it supersedes the 
+       2017 version and all committee drafts, becoming 
+       NISO STS v1.2 20221031 (ANSI/NISO Z39.102-2022).
+  
+       The formal public identifiers have been changed in the  
+       modules and the OASIS XML catalogs.
+  
+    6. NISO STS 'v1.1d1 20210831' becomes 'v1.2 20221031'
+       'ANSI/NISO Z39.102-2017' becomes 'ANSI/NISO Z39.102-2022'
+  
+       =============================================================
+       NISO STS Version 1.1d1 (ANSI/NISO Z39.102-202x)
+                                    (DAL/BTU) v1.1d1 (2021-08-31)
+  
+       ANSI NISO STS is a continuing maintenance NISO Standard, 
+       which requires voting by the NISO and ANSI memberships 
+       to be changed. 
+  
+       This ***DRAFT*** DTD represents an interim version of the
+       non-normative STS DTD Suite, as an indication to STS users
+       of the decisions that have been made by the STS Standing
+       Committee. This DRAFT has not yet been given public review 
+       or voting; it is for Standing Committee review and
+       testing. 
+  
+       The formal public identifiers have been changed in the  
+       modules and the OASIS XML catalogs. 
+  
+    5. GRAMMATICAL GENDER VALUE - Added the value 
+       "masculine-feminine" to the @value attribute of
+       <tbx:grammaticalGender>
+  
+    4. GEOGRAPHICAL USAGE - Made <tbx:geographicalUsage>
+       repeatable inside <tbx:tig>.
+  
+    3. TBX TERM NOT AVAILABLE - Added the attribute @absent
+       [absent  (yes | no)] to <tbx:term> to mark cases where
+       the required element <tbx:term> has been left empty 
+       deliberately.                              
+  
+    2. TERM DISPLAY CLASS - Added <term-display-string> to hold
+       displayed text of various sorts inside <term-display>
+       That cannot be tagged using one of the semantic term-display
+       elements.
+       Class is used in side %inside-term-display-mix.
+  
+    1. STS 'v1.0 20171031' becomes 'v1.1d1 20210831' 
+  
+      =============================================================
+      NISO STS Version 1.0              (DAL/BTU) v 1.0  (2017-10-31)
+  
+       NISO STS is an adaptation of ISO STS, which is an adaptation
+       of JATS. This version of NISO STS is just before the first
+       public release and comment period.
+  
+    4. PART OF SPEECH - MADE <tbx:partOfSpeech> optional
+       inside <tbx:tig> (Term Information Group)
+  
+    3. CHANGES TO TERM ENTRY - Added the class
+       niso-sts-termEntry-additions.class to <tbx:termEntry>.
+       At this point, that class contains only <index-term>.
+  
+    2. THE GREAT MODULE NAME SWAP - ISO STS had two TBX modules:
+        - ISOSTS-tbx-setup1.ent (set up the TBX namespace) and
+        - ISOSTS-tbx-namespace1.ent (defined TBX elements, attributes)
+  
+       Both of these modules were copied for NISO STS. But JATS
+       (the other source for NISO STS) also had vocabularies using
+       1 namespace and 1 setup module. In all other cases (OASIS,
+       ALI, etc.) the modules named "namespace" contained the 
+       namespace setup and the module named "setup" contained any 
+       any element, attribute, or parameter entity declarations that
+       were needed before the vocabulary could be run. This made 
+       JATS-derived namespace modules work one way and ISO-derived 
+       namespace modules work in another. Therefore, the contents and
+       processing order of the NISO STS TBX modules were switched
+       to match JATS:
+        - NISO-STS-tbx-namespace1.ent (sets up the TBX namespace) and
+        - NISO-STS-tbx-setup1.ent (defines TBX elements/attributes)
+  
+    1. FPIS - NISO STS is in first Public Comment Phase, released as
+       version "1.0" and "v1.0 20171031"
+  
+       =============================================================
+-->
+<!-- ============================================================= -->
+<!-- DESIGN NOTE -->
+<!-- ============================================================= -->
+<!--
+  The following material was derived from 
+  Annex A of ISO 30042 (TBX), with the 
+  changes listed above in the change log.
+-->
+<!-- ============================================================= -->
+<!-- TBX ELEMENT NAMES -->
+<!-- (in alphabetical order) -->
+<!-- ============================================================= -->
+<!-- ============================================================= -->
+<!-- SOME USEFUL ENTITIES THAT ARE REFERENCED BELOW: -->
+<!-- STANDARD CONTENT MODELS AND CONTENT-MODEL FRAGMENTS -->
+<!-- NOTE: %simple-link.class; cannot be used since it contains -->
+<!-- already tbx:entailedTerm -->
+<!-- ============================================================= -->
+<grammar xmlns:tbx="urn:iso:std:iso:30042:ed-1" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="highlight-elements">
+    <choice>
+      <ref name="block-math.class"/>
+      <ref name="inline-math.class"/>
+      <ref name="simple-math.class"/>
+      <ref name="emphasis.class"/>
+      <ref name="subsup.class"/>
+      <ref name="list.class"/>
+      <ref name="fn"/>
+      <ref name="target"/>
+      <ref name="xref"/>
+      <ref name="citation.class"/>
+      <ref name="break.class"/>
+      <ref name="phrase-content.class"/>
+      <ref name="block-display.class"/>
+      <ref name="address-link.class"/>
+      <ref name="inline-display-noalt.class"/>
+    </choice>
+  </define>
+  <define name="basicText-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="highlight-elements"/>
+        <ref name="tbx.entailedTerm"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="simpleText-model">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="highlight-elements"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ENTITIES THAT DEFINE COMMON SETS OF ATTRIBUTES -->
+  <!-- ============================================================= -->
+  <define name="impIDLangScrpt-atts">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <define name="tbx-xref-atts">
+    <ref name="jats-common-atts"/>
+    <attribute name="xtarget"/>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ELEMENTS USED FOR TEXT MARKUP: HIGHLIGHT-BASED ELEMENTS -->
+  <!-- ============================================================= -->
+  <!-- ENTAILED TERM -->
+  <define name="tbx.entailedTerm">
+    <element name="tbx:entailedTerm">
+      <ref name="tbx.entailedTerm-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.entailedTerm-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="xtarget"/>
+    </optional>
+  </define>
+  <!-- ============================================================= -->
+  <!-- ELEMENTS NEEDED FOR TERMINOLOGICAL ENTRIES -->
+  <!-- (in alphabetical order) -->
+  <!-- ============================================================= -->
+  <!-- CROSS REFERENCE -->
+  <define name="tbx.crossReference">
+    <element name="tbx:crossReference">
+      <ref name="tbx.crossReference-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.crossReference-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- DEFINITION -->
+  <define name="tbx.definition">
+    <element name="tbx:definition">
+      <ref name="tbx.definition-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.definition-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXAMPLE -->
+  <define name="tbx.example">
+    <element name="tbx:example">
+      <ref name="tbx.example-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.example-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXTERNAL CROSS REFERENCE -->
+  <define name="tbx.externalCrossReference">
+    <element name="tbx:externalCrossReference">
+      <ref name="tbx.externalCrossReference-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.externalCrossReference-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <attribute name="xtarget"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- GEOGRAPHICAL USAGE -->
+  <define name="tbx.geographicalUsage">
+    <element name="tbx:geographicalUsage">
+      <ref name="tbx.geographicalUsage-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.geographicalUsage-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- GRAMMATICAL GENDER -->
+  <define name="tbx.grammaticalGender">
+    <element name="tbx:grammaticalGender">
+      <ref name="tbx.grammaticalGender-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.grammaticalGender-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <attribute name="value">
+      <choice>
+        <value>masculine</value>
+        <value>feminine</value>
+        <value>neuter</value>
+        <value>masculine-feminine</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- GRAMMATICAL NUMBER -->
+  <define name="tbx.grammaticalNumber">
+    <element name="tbx:grammaticalNumber">
+      <ref name="tbx.grammaticalNumber-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.grammaticalNumber-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <attribute name="value">
+      <choice>
+        <value>singular</value>
+        <value>plural</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- LANGUAGE SET -->
+  <define name="tbx.langSet">
+    <element name="tbx:langSet">
+      <ref name="tbx.langSet-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="tbx.crossReference"/>
+          <ref name="tbx.definition"/>
+          <ref name="tbx.example"/>
+          <ref name="tbx.externalCrossReference"/>
+          <ref name="tbx.note"/>
+          <ref name="tbx.see"/>
+          <ref name="tbx.source"/>
+          <ref name="tbx.subjectField"/>
+          <ref name="tbx.xGraphic"/>
+          <ref name="tbx.xMathML"/>
+          <ref name="tbx.xSource"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="tbx.tig"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tbx.langSet-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <attribute name="xml:lang"/>
+  </define>
+  <!-- NORMATIVE AUTHORIZATION -->
+  <define name="tbx.normativeAuthorization">
+    <element name="tbx:normativeAuthorization">
+      <ref name="tbx.normativeAuthorization-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.normativeAuthorization-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <attribute name="value">
+      <choice>
+        <value>preferredTerm</value>
+        <value>admittedTerm</value>
+        <value>deprecatedTerm</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- NOTE -->
+  <define name="tbx.note">
+    <element name="tbx:note">
+      <ref name="tbx.note-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.note-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- PART OF SPEECH -->
+  <define name="tbx.partOfSpeech">
+    <element name="tbx:partOfSpeech">
+      <ref name="tbx.partOfSpeech-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.partOfSpeech-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <attribute name="value">
+      <choice>
+        <value>noun</value>
+        <value>verb</value>
+        <value>adj</value>
+        <value>adv</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- PRONUNCIATION -->
+  <define name="tbx.pronunciation">
+    <element name="tbx:pronunciation">
+      <ref name="tbx.pronunciation-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.pronunciation-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- SEE -->
+  <define name="tbx.see">
+    <element name="tbx:see">
+      <ref name="tbx.see-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.see-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- SOURCE -->
+  <define name="tbx.source">
+    <element name="tbx:source">
+      <ref name="tbx.source-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.source-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="xtarget"/>
+    </optional>
+  </define>
+  <!-- SUBJECT FIELD -->
+  <define name="tbx.subjectField">
+    <element name="tbx:subjectField">
+      <ref name="tbx.subjectField-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.subjectField-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+  </define>
+  <!-- TERM -->
+  <define name="tbx.term">
+    <element name="tbx:term">
+      <ref name="tbx.term-attlist"/>
+      <ref name="simpleText-model"/>
+    </element>
+  </define>
+  <define name="tbx.term-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="absent">
+        <choice>
+          <value>yes</value>
+          <value>no</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- TERM ENTRY (CONCEPT ENTRY) -->
+  <define name="tbx.termEntry">
+    <element name="tbx:termEntry">
+      <ref name="tbx.termEntry-attlist"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="tbx.externalCrossReference"/>
+          <ref name="tbx.xGraphic"/>
+          <ref name="tbx.xMathML"/>
+          <ref name="tbx.xSource"/>
+          <ref name="niso-sts-termEntry-additions.class"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="tbx.langSet"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tbx.termEntry-attlist" combine="interleave">
+    <ref name="TBX.xmlns.attrib"/>
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- TERM TYPE -->
+  <define name="tbx.termType">
+    <element name="tbx:termType">
+      <ref name="tbx.termType-attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="tbx.termType-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+    <attribute name="value">
+      <choice>
+        <value>acronym</value>
+        <value>abbreviation</value>
+        <value>fullForm</value>
+        <value>symbol</value>
+        <value>variant</value>
+        <value>formula</value>
+        <value>equation</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- TIG (TERM INFORMATION GROUP) -->
+  <define name="tbx.tig">
+    <element name="tbx:tig">
+      <ref name="tbx.tig-attlist"/>
+      <ref name="tbx.term"/>
+      <optional>
+        <ref name="tbx.partOfSpeech"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="tbx.geographicalUsage"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="tbx.grammaticalGender"/>
+      </optional>
+      <optional>
+        <ref name="tbx.grammaticalNumber"/>
+      </optional>
+      <optional>
+        <ref name="tbx.normativeAuthorization"/>
+      </optional>
+      <optional>
+        <ref name="tbx.pronunciation"/>
+      </optional>
+      <optional>
+        <ref name="tbx.termType"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="tbx.usageNote"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="tbx.tig-attlist" combine="interleave">
+    <ref name="jats-common-atts"/>
+  </define>
+  <!-- USAGE NOTE -->
+  <define name="tbx.usageNote">
+    <element name="tbx:usageNote">
+      <ref name="tbx.usageNote-attlist"/>
+      <ref name="basicText-model"/>
+    </element>
+  </define>
+  <define name="tbx.usageNote-attlist" combine="interleave">
+    <ref name="impIDLangScrpt-atts"/>
+  </define>
+  <!-- EXTERNAL GRAPHIC -->
+  <define name="tbx.xGraphic">
+    <element name="tbx:xGraphic">
+      <ref name="tbx.xGraphic-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xGraphic-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+  <!-- EXTERNAL MATHML -->
+  <define name="tbx.xMathML">
+    <element name="tbx:xMathML">
+      <ref name="tbx.xMathML-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xMathML-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+  <!-- EXTERNAL SOURCE -->
+  <define name="tbx.xSource">
+    <element name="tbx:xSource">
+      <ref name="tbx.xSource-attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="tbx.xSource-attlist" combine="interleave">
+    <ref name="tbx-xref-atts"/>
+  </define>
+</grammar>
+<!-- ================== End NISO STS TBX Setup Module ============ -->

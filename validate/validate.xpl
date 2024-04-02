@@ -8,9 +8,6 @@
   <p:input port="iso-rng">
     <p:document href="http://niso-sts.org/sts4i-tools/schema/isosts/rng/ISOSTS.rng"/>
   </p:input>
-  <p:input port="niso-interchange-mathml3-rng">
-    <p:document href="http://niso-sts.org/sts4i-tools/schema/nisosts/RNG-NISO-STS-interchange-1-mathml3/NISO-STS-interchange-1-mathml3.rng"/>
-  </p:input>
   <p:input port="schematron">
     <p:document href="http://niso-sts.org/sts4i-tools/schematron/empty.sch"/>
   </p:input>
@@ -28,9 +25,13 @@
   <p:option name="input-dir"/>
   <p:option name="depth" select="'-1'"/>
   <p:option name="uninteresting-dir-regex" select="''"/>
+  <p:option name="target-niso-version" select="'1.2'"/>
   <p:option name="default-niso-doctype-system" select="'NISO-STS-interchange-1-mathml3.dtd'"/>
   <p:option name="default-niso-doctype-public" 
-    select="'-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.0 20171031//EN'"/>
+    select="if ($target-niso-version = '1.2')
+            then '-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.2 20221031//EN'
+            else '-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.0 20171031//EN'"/>
+  <p:option name="enforce-default-doctype" select="'true'"/>
   <p:option name="debug-dir-uri" select="''"/>
   <p:option name="debug" select="'no'"/>
   
@@ -41,6 +42,13 @@
   <p:import href="http://transpect.io/calabash-extensions/rng-extension/xpl/validate-with-rng-declaration.xpl"/>
   <p:import href="http://transpect.io/schematron/xpl/oxy-schematron.xpl"/>
   <p:import href="apply-xsl-fixes.xpl"/>
+
+  <p:load name="load-niso-rng">
+    <p:with-option name="href" 
+      select="if ($target-niso-version = '1.2')
+              then 'http://niso-sts.org/sts4i-tools/schema/nisosts/NISO-STS-interchange-1-2-MathML3-RNG/NISO-STS-interchange-1-mathml3.rng'
+              else 'http://niso-sts.org/sts4i-tools/schema/nisosts/RNG-NISO-STS-interchange-1-mathml3/NISO-STS-interchange-1-mathml3.rng'"></p:with-option>
+  </p:load>
 
   <tr:find-files name="find-files">
     <p:with-option name="input-dir" select="$input-dir"/>
@@ -84,13 +92,13 @@
           <p:xpath-context>
             <p:pipe port="matched" step="actual-standard-doc"/>
           </p:xpath-context>
-          <p:when test="/*/@dtd-version = '1.0' 
+          <p:when test="/*/@dtd-version = ('1.0', '1.2') 
                         or empty(//nat-meta | //reg-meta | //iso-meta)
                         or exists(/adoption)">
             <p:output port="result" primary="true"/>
             <p:identity>
               <p:input port="source">
-                <p:pipe port="niso-interchange-mathml3-rng" step="batch-val"/>
+                <p:pipe port="result" step="load-niso-rng"/>
               </p:input>
             </p:identity>
           </p:when>
@@ -142,6 +150,7 @@
 
         <tr:oxy-validate-with-schematron name="single-sch" assert-valid="false">
           <p:with-param name="allow-foreign" select="'true'"/>
+          <p:with-param name="target-niso-version" select="$target-niso-version"/>
           <p:input port="source">
             <p:pipe port="matched" step="actual-standard-doc"/>
           </p:input>
@@ -195,21 +204,27 @@
     </p:input>
     <p:with-option name="debug" select="$debug"/>
     <p:with-option name="debug-dir-uri" select="$debug-dir-uri"/>
+    <p:with-param name="target-niso-version" select="$target-niso-version"/>
   </tr:apply-xsl-fixes>
   
   <p:for-each name="post-fix-schematron">
     <p:output port="report" primary="true"/>
     <p:variable name="unparsed" select="substring(unparsed-text(replace(base-uri(), '(\.fixed)+\.xml$', '.xml')), 1, 500)"/>
     <p:variable name="doctype-public" 
-      select="if (contains($unparsed, '!DOCTYPE')) 
-              then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')
-              else $default-niso-doctype-public"/>
+      select="if ($enforce-default-doctype = 'true')
+              then $default-niso-doctype-public
+              else if (contains($unparsed, '!DOCTYPE')) 
+                   then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$1', 's')
+                   else $default-niso-doctype-public"/>
     <p:variable name="doctype-system" 
-      select="if (contains($unparsed, '!DOCTYPE'))
-              then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
-              else $default-niso-doctype-system"/>
+      select="if ($enforce-default-doctype = 'true')
+              then $default-niso-doctype-system
+              else if (contains($unparsed, '!DOCTYPE'))
+                   then replace($unparsed, '.*?&lt;!DOCTYPE\s+\S+\s+PUBLIC\s+&quot;([^&quot;]+)&quot;\s+&quot;([^&quot;]+)&quot;.+$', '$2', 's')
+                   else $default-niso-doctype-system"/>
     <tr:oxy-validate-with-schematron name="single-sch2" assert-valid="false">
       <p:with-param name="allow-foreign" select="'true'"/>
+      <p:with-param name="target-niso-version" select="$target-niso-version"/>
       <p:input port="schema">
         <p:pipe port="schematron" step="batch-val"/>
       </p:input>
