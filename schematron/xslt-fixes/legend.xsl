@@ -64,7 +64,8 @@
   
   <xsl:template match="fig[graphic]/non-normative-note[@content-type = 'explanatory']" mode="SN-legends"/>
   
-  <xsl:template match="non-normative-note[@content-type = 'explanatory'][empty(title)]/label" mode="SN-legends">
+  <xsl:template match="non-normative-note[@content-type = 'explanatory'][empty(title)]/label
+                       | non-normative-note[@content-type = 'explanatory'][empty(title)][empty(label)][*[2]/self::def-list]/*[1][self::p]" mode="SN-legends">
     <title>
       <xsl:apply-templates mode="#current"/>
     </title>

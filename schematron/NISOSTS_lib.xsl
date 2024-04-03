@@ -6,6 +6,8 @@
   
   <xsl:variable name="inline-element-names" select="('bold', 'italic', 'named-content', 'styled-content')" as="xs:string+"/>
   
+  <xsl:key name="by-id" match="*[@id]" use="@id"/>
+  
   <xsl:variable name="i18n-strings" as="document-node(element(isosts:i18n))">
     <xsl:document>
       <isosts:i18n xml:id="i18n">

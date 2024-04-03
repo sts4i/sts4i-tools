@@ -167,6 +167,15 @@
         >list-type must match label values. Found list-type="<xsl:value-of select="@list-type"/>" with label(s) 
         "<xsl:value-of select="string-join(list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))], ' ')"/>".</report>
     </rule>
+    <rule id="NISOSTS_listtype_dash" 
+      context="list[@list-type = ('dash')]
+                   [xs:decimal($target-niso-version) gt 1.0]">
+      <report test="list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))]" 
+        role="warning" id="NISOSTS_listtype_dash_r1"
+        >The recommended list-type is 'bullet' instead of 'dash'. You can specify the detail in the style-detail attribute.
+        <sc:xsl-fix href="xslt-fixes/list.xsl" mode="bullet"/>
+      </report>
+    </rule>
   </pattern>
   
   <pattern id="NISOSTS_xrefs">
@@ -373,7 +382,36 @@
   <pattern id="exclusion-term-entry" is-a="exclusions">
     <param name="context" value="tbx:termEntry"/>
     <param name="exclude" value="tbx:termEntry"/>
-  </pattern> 
+  </pattern>
+  
+  <pattern id="entailedTerm">
+    <rule id="xref-to-entailedTerm" context="xref[key('by-id', @rid)/self::term-sec]
+                                                 [count(italic) = 1]
+                                                 [normalize-space(italic[1]) = //tbx:term]
+                                                 [count(text()[matches(., '\(\d+\.\d+\)')]) = 1]">
+      <let name="parenthesized-term-sec-number" value="replace(text(), '[\p{Zs}\s]+\((\d+\.\d+)\)', '$1', 's')"/>
+      <report test="$parenthesized-term-sec-number = key('by-id', @rid)/self::term-sec/label
+                    and
+                    normalize-space(italic[1]) = key('by-id', @rid)/self::term-sec//tbx:term" id="xref-to-entailedTerm_r1" role="warning">The italic term should become a tbx:entailedTerm 
+        and only the number in parentheses should link to the term-sec.
+        <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="SN-italic-entailedTerm"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="release-date">
+    <rule id="release-date-empty" context="std-meta[empty(release-date)]
+                                                   [exists(std-ident/year)
+                                                    or
+                                                    contains(std-ref[@type = 'dated'], ':')]" role="warning">
+      <report test="true()" id="release-date-empty-but-fallback-exists">release-date should be given
+        <sc:xsl-fix href="xslt-fixes/release-date.xsl" mode="infer"/>
+      </report>
+    </rule>
+    <rule id="release-date-empty2" context="std-meta[empty(release-date)]" role="warning">
+      <report test="true()" id="release-date-empty-no-fallback-exists">release-date should be given (no fallback available)</report>
+    </rule>
+  </pattern>
   
   
   
