@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   exclude-result-prefixes="xs"
-  version="2.0">
+  version="3.0">
   
   <!-- If you need to use different version of the DTD, you need to create new XSLT variants that import
     the XSLTs in question and replace the xsl:output instruction. In addition, you might need to provide

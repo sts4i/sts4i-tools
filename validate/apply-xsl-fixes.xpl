@@ -220,12 +220,19 @@
               <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
               <xsl:copy>
                 <xsl:attribute name="xml:base" select="base-uri(/*)"/>
-                <xsl:for-each-group select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix" 
+                <xsl:for-each-group select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix ! sc:prepend-prerequisites(.)" 
                   group-by="string-join((@href, @mode, sc:param/@*), '__')">
                   <xsl:apply-templates select="."/>
                 </xsl:for-each-group>
               </xsl:copy>
             </xsl:template>
+            <xsl:function name="sc:prepend-prerequisites" as="element(sc:xsl-fix)+">
+              <xsl:param name="fix" as="element(sc:xsl-fix)"/>
+              <xsl:if test="$fix/@depends-on (: id of an sch:assert or sch:report with an sc:xsl-fix :)">
+                <xsl:sequence select="sc:prepend-prerequisites(key('by-id', tokenize($fix/@depends-on, '\s+'), root($fix))/sc:xsl-fix)"/>
+              </xsl:if>
+              <xsl:sequence select="$fix"/>
+            </xsl:function>
             <xsl:template match="sc:xsl-fix">
               <xsl:copy>
                 <xsl:attribute name="href" select="resolve-uri(@href, base-uri(.))"/>

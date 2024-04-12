@@ -224,6 +224,17 @@
     </rule>
   </pattern>
   
+  <pattern id="adoption-nesting">
+    <rule id="adoption-nesting_rule1" context="standard/front[std-meta]">
+      <let name="int" value="std-meta[isosts:std-meta-type(.) = 'international'][1]"/>
+      <let name="reg" value="std-meta[isosts:std-meta-type(.) = 'regional'][1]"/>
+      <let name="nat" value="std-meta[isosts:std-meta-type(.) = 'national'][1]"/>
+      <report id="adoption-nesting_r1" role="error" test="count($int | $reg | $nat) gt 1">Use adoption nesting for adopted standards.
+      <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="create-adoptions"/>
+      </report>
+    </rule>
+  </pattern>
+  
   <pattern id="app-norm-inform">
     <!-- https://gitlab.com/DIN-XML/STS/-/issues/28 -->
     <rule id="app_has_correct_values" context="app">
@@ -392,7 +403,8 @@
       <let name="parenthesized-term-sec-number" value="replace(text(), '[\p{Zs}\s]+\((\d+\.\d+)\)', '$1', 's')"/>
       <report test="$parenthesized-term-sec-number = key('by-id', @rid)/self::term-sec/label
                     and
-                    normalize-space(italic[1]) = key('by-id', @rid)/self::term-sec//tbx:term" id="xref-to-entailedTerm_r1" role="warning">The italic term should become a tbx:entailedTerm 
+                    normalize-space(italic[1]) = key('by-id', @rid)/self::term-sec//tbx:term" 
+              id="xref-to-entailedTerm_r1" role="warning">The italic term should become a tbx:entailedTerm 
         and only the number in parentheses should link to the term-sec.
         <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="SN-italic-entailedTerm"/>
       </report>

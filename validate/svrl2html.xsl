@@ -13,6 +13,7 @@
   >
 
   <xsl:param name="common-path" as="xs:string"/>
+  <xsl:param name="group-by-error-code" as="xs:boolean" select="true()"/>
 
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
 
@@ -188,8 +189,8 @@
             .warning { color: #FFB935; font-weight: bold; }
             .error, .fixed.false  { color: #ff1400; font-weight: bold; }
             .fatal { color: #f39; font-weight: bold; }
-            
-          </style>          
+            details > details { margin-left: 1.5em; }
+          </style>      
         </head>
         <body xmlns="http://www.w3.org/1999/xhtml">
           <div class="header">
@@ -219,16 +220,48 @@
             </ul>
           </nav>
           <div class="content">
-            <table border="1" valign="top">
-              <tr class="head">
-                <th style="width:8%">Severity</th>
-                <th style="width:30%">XPath</th>
-                <th style="width:35%">Message</th>
-                <th style="width:21%">Pattern ID + Report/Assert ID or Schema name</th>
-                <th style="width:6%">fixed<sup>1)</sup></th>
-              </tr>
-              <xsl:sequence select="$content"/>
-            </table>
+            <xsl:choose>
+              <xsl:when test="$group-by-error-code">
+                <details>
+                  <summary>
+                    <xsl:sequence select="$content[exists(*/@colspan)]/*/node()"/>
+                  </summary>
+                  <xsl:for-each-group select="$content[empty(*/@colspan)]" group-by="html:td[@class = 'pattern-id']">
+                    <details>
+                      <summary>
+                        <xsl:value-of select="current-grouping-key()"/>
+                        <xsl:text> – </xsl:text>
+                        <span>
+                          <xsl:sequence select="html:td[tokenize(@class, '\s+') = 'impact']/(@class, node())"/>
+                        </span>
+                        <xsl:text>: </xsl:text>
+                        <span>
+                          <xsl:sequence select="html:td[tokenize(@class, '\s+') = 'impact']/@class"/>
+                          <xsl:value-of select="count(current-group())"/>
+                        </span>
+                        <span>
+                          <xsl:sequence select="html:td[tokenize(@class, '\s+') = 'fixed']/@class"/>
+                          <xsl:text>, fixed: </xsl:text>
+                          <xsl:value-of select="count(current-group()/html:td[tokenize(@class, '\s+') = 'fixed']
+                                                                             [tokenize(@class, '\s+') = 'true'])"/>
+                        </span>
+                      </summary>
+                      <xsl:call-template name="output-table-now-really">
+                        <xsl:with-param name="content" select="current-group()"/>
+                      </xsl:call-template>
+                    </details>
+                  </xsl:for-each-group>
+                </details>
+                
+                
+                
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="output-table-now-really">
+                    <xsl:with-param name="content" select="$content"/>
+                  </xsl:call-template>
+              </xsl:otherwise>
+            </xsl:choose>
             <p><sup>1)</sup> Please note that this information might not be 100% accurate: If the fixed XML document
             still contains a single error of the given Schematron pattern ID, all occurrences of this pattern ID will be 
             displayed as “fixed: false”. We will eventually improve this reporting.</p>
@@ -239,6 +272,20 @@
         <script src="http://this.transpect.io/a9s/common/template/js/scrolling-nav.js"/>-->
       </html>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="output-table-now-really">
+    <xsl:param name="content" as="element(html:tr)+"/>
+    <table border="1" valign="top">
+      <tr class="head">
+        <th style="width:8%">Severity</th>
+        <th style="width:30%">XPath</th>
+        <th style="width:35%">Message</th>
+        <th style="width:21%">Pattern ID + Report/Assert ID or Schema name</th>
+        <th style="width:6%">fixed<sup>1)</sup></th>
+      </tr>
+      <xsl:sequence select="$content"/>
+    </table>
   </xsl:template>
 
   <xsl:variable name="block-names" as="xs:string+" select="('dl', 'div', 'ol', 'ul', 'c:errors', 'c:error')"/>

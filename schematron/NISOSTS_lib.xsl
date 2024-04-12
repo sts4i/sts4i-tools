@@ -54,5 +54,30 @@
     <xsl:param name="context" as="element(*)"/>
     <xsl:sequence select="key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)"/>
   </xsl:function>
+  
+  <xsl:function name="isosts:std-meta-type" as="xs:string">
+    <xsl:param name="meta-elt" as="element(*)"/>
+    <xsl:variable name="originator" select="$meta-elt/std-ident/originator/normalize-space()" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="$meta-elt/self::nat-meta">
+        <xsl:sequence select="'national'"/>
+      </xsl:when>
+      <xsl:when test="$meta-elt/self::reg-meta">
+        <xsl:sequence select="'regional'"/>
+      </xsl:when>
+      <xsl:when test="$meta-elt/self::iso-meta">
+        <xsl:sequence select="'international'"/>
+      </xsl:when>
+      <xsl:when test="starts-with($originator, 'CEN')">
+        <xsl:sequence select="'regional'"/>
+      </xsl:when>
+      <xsl:when test="matches($originator, '(ISO|IEC)')">
+        <xsl:sequence select="'international'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="'national'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
 </xsl:stylesheet>

@@ -35,6 +35,7 @@
     <xsl:choose>
       <xsl:when test="$do-the-needful">
         <tbx:entailedTerm>
+          <xsl:attribute name="target" select="key('by-id', ../@rid)/self::term-sec/tbx:termEntry[1]/@id"/>
           <xsl:apply-templates mode="#current"/>
         </tbx:entailedTerm>
       </xsl:when>

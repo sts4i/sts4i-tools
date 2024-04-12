@@ -5,7 +5,7 @@
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
   xmlns:tr="http://transpect.io"
   exclude-result-prefixes="tr"
-  version="2.0">
+  version="3.0">
 
   <!-- Invocation: saxon -s:importing_front-end_schema.sch -xsl:this.xsl
     The front end Schematron schema may contain sc:alternative-for attributes that point
@@ -41,12 +41,28 @@
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" select="()" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
+    <xsl:param name="dependencies" as="element(sc:dependency)*" tunnel="yes"/>
     <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sc:alternative-for)"/>
       <xsl:with-param name="selected-alternatives" as="attribute(sc:selected-alternative)*" tunnel="yes"
         select="($selected-alternatives, sc:pattern/@sc:selected-alternative)"/>
+      <xsl:with-param name="dependencies" as="element(sc:dependency)*" tunnel="yes"
+        select="($dependencies, sc:dependency)"/>
     </xsl:apply-templates>
+  </xsl:template>
+  
+  <xsl:template match="sc:xsl-fix" mode="resolve-extends">
+    <xsl:param name="dependencies" as="element(sc:dependency)*" tunnel="yes"/>
+    <xsl:variable name="for-this" as="element(sc:dependency)*" 
+      select="$dependencies[@fix-for = current()/(ancestor::sch:report | ancestor::sch:assert)/@id]"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:if test="exists($for-this)">
+        <xsl:attribute name="depends-on" select="@depends-on, $for-this/@depends-on"/>
+      </xsl:if>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
   </xsl:template>
   
   <!-- 
