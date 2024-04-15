@@ -70,4 +70,13 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="term-sec[not(normalize-space(label))]
+                               [not(normalize-space(tbx:termEntry))]
+                               [empty(@id)]
+                               [term-sec]"
+                mode="unwrap-empty-term-sec">
+    <xsl:message select="'qqqqqqqqqqq'"></xsl:message>
+    <xsl:apply-templates select="term-sec" mode="#current"/>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -4,6 +4,8 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   version="2.0" exclude-result-prefixes="xs isosts">
   
+  <xsl:param name="fail-on-error" select="'yes'"/>
+  
   <xsl:variable name="inline-element-names" select="('bold', 'italic', 'named-content', 'styled-content')" as="xs:string+"/>
   
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
@@ -78,6 +80,12 @@
         <xsl:sequence select="'national'"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="isosts:index-of" as="xs:integer*">
+    <xsl:param name="all" as="node()*"/>
+    <xsl:param name="selected" as="node()*"/>
+    <xsl:sequence select="index-of($all/generate-id(), $selected/generate-id())"/>
   </xsl:function>
 
 </xsl:stylesheet>

@@ -222,7 +222,7 @@
           <div class="content">
             <xsl:choose>
               <xsl:when test="$group-by-error-code">
-                <details>
+                <details open="true">
                   <summary>
                     <xsl:sequence select="$content[exists(*/@colspan)]/*/node()"/>
                   </summary>

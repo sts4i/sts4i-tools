@@ -138,11 +138,40 @@
       </report>
     </rule>
   </pattern>
+  
+  <pattern id="NISOSTS_normalize-space-label">
+    <rule id="NISOSTS_normalize-space-label_rule1" context="label[text()][every $n in node() satisfies ($n/self::text())]" role="warning">
+      <assert test="normalize-space(.) = string(.)" id="NISOSTS_normalize-space-label_a1">The label contains additional whitespace that might impede subsequent ID normalization, etc.
+      <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="normalize-space-label"/>
+      </assert>
+    </rule>
+  </pattern>
+
+  <pattern id="NISOSTS_annex-type-in-bold-title">
+    <rule id="NISOSTS_annex-type-in-bold-title_rule1" context="title[bold[normalize-space()]]">
+      <report test="node()[1]/self::text()[normalize-space()]" role="warning" 
+        id="NISOSTS_annex-type-in-bold-title_r1">There is probably an annex-type identifier string at the beginning of a title that has also bold tags. 
+        This should go into an annex-type element.
+      <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="annex-type"/>
+      </report>
+    </rule>
+  </pattern>
+
+  <pattern id="NISOSTS_numbering-in-bold-title">
+    <rule id="NISOSTS_numbering-in-bold-title_rule1" context="title[bold[normalize-space()]]">
+      <report test="node()[1]/self::text()[normalize-space()]" role="warning" 
+        id="NISOSTS_numbering-in-bold-title_r1">There is probably numbering at the beginning of a title that has also bold tags. Numbering should go into a label.
+      <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="label" depends-on="NISOSTS_annex-type-in-bold-title_r1"/>
+      </report>
+    </rule>
+  </pattern>
 
   <pattern id="NISOSTS_bold-in-titles">
     <rule id="NISOSTS_bold-tags-in-title" context="title">
       <report test="bold[normalize-space()]" role="warning" diagnostics="NISOSTS_bold-tags-in-title_de"
-        id="NISOSTS_bold-tags-in-title_r1">Titles usually are rendered in bold. Additional bold tags may lead to extra bold fonts.</report>
+        id="NISOSTS_bold-tags-in-title_r1">Titles are usually rendered in bold so bold tags are redundant.
+      <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="bold-in-title" depends-on="NISOSTS_numbering-in-bold-title_r1"/>
+      </report>
     </rule>
   </pattern>
   
@@ -200,17 +229,19 @@
     <rule id="NISOSTS_dtd-version_missing_rule" context="/*">
       <report id="NISOSTS_dtd-version_missing" test="empty(@dtd-version)"
         role="info">The dtd-version attribute on the top-level element is not specified. It is recommended to be set even when using XSD or RNG validation.
+        It will be autocorrected to <xsl:value-of select="$target-niso-version"/>.
       <sc:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="dtd-version">
-        <c:param-set>
-          <c:param name="target-niso-version" value="{$target-niso-version}"/>
-        </c:param-set>
+        <sc:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sc:param>
       </sc:xsl-fix>
       </report>
     </rule>
     <rule id="NISOSTS_dtd-version_different_rule" context="/*">
       <report id="NISOSTS_dtd-version_different" test="not(@dtd-version = $target-niso-version)"
         role="info">The dtd-version attribute on the top-level element is different from the target version. 
-      It will be autocorrected to <xsl:value-of select="$target-niso-version"/></report>
+      It will be autocorrected to <xsl:value-of select="$target-niso-version"/>
+      <sc:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="dtd-version">
+        <sc:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sc:param>
+      </sc:xsl-fix></report>
     </rule>
   </pattern>
   
@@ -243,7 +274,7 @@
         content-type of an app has to be either "norm-annex", "inform-annex" or "bibl".
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="content-type"/>
       </report>
-      <report role="warning" id="app_no_annex-type" test="not(annex-type)"><name/> has no annex-type.</report>
+      <report role="warning" id="app_no_annex-type" test="not(@content-type = 'bibl') and not(annex-type)"><name/> has no annex-type.</report>
     </rule>
     <rule id="annex-type-normative-text-available" context="annex-type[parent::app/@content-type = 'norm-annex']">
       <assert role="warning" id="annex-type-text-available1" 
@@ -305,13 +336,17 @@
   <pattern id="exclusions" abstract="true">
     <rule context="$context">
       <let name="tokenized" value="tokenize('$exclude', '\s+', 's')[normalize-space()]"/>
-      <let name="legalizers" value="tokenize('$legalizing-intermediates', '\s+', 's')[normalize-space()]"/>
+      <let name="intermediatelegalizers" value="tokenize('$legalizing-intermediates', '\s+', 's')[normalize-space()]"/>
+      <let name="ancestorlegalizers" value="tokenize('$legalizing-ancestors', '\s+', 's')[normalize-space()]"/>
       <report test="exists(descendant::*[if ($tokenized = '*') then true() 
                                          else 
                                          name() = $tokenized]
-                                        [if ($legalizers)
-                                         then empty(ancestor::*[name() = $legalizers]
+                                        [if ($intermediatelegalizers)
+                                         then empty(ancestor::*[name() = $intermediatelegalizers]
                                                                [exists(ancestor::* intersect current())])
+                                         else true()]
+                                         [if ($ancestorlegalizers)
+                                         then empty(ancestor::*[name() = $ancestorlegalizers])
                                          else true()])"
               id="report-illegal-nesting">In context <value-of select="'$context'"/>,
       the following elements are prohibited: <value-of select="string-join($tokenized, ', ')"/>.</report>
@@ -331,6 +366,7 @@
   <pattern id="exclusion-ref" is-a="exclusions">
     <param name="context" value="xref | ext-link | std"/>
     <param name="exclude" value="bold italic underlined ext-link std fn def-item xref roman sans-serif monospace"/>
+    <param name="legalizing-ancestors" value="ref"/>
   </pattern>
   
   <pattern id="exclusion-block" is-a="exclusions">
@@ -422,6 +458,17 @@
     </rule>
     <rule id="release-date-empty2" context="std-meta[empty(release-date)]" role="warning">
       <report test="true()" id="release-date-empty-no-fallback-exists">release-date should be given (no fallback available)</report>
+    </rule>
+  </pattern>
+  
+  <pattern id="term-sec-wrapper">
+    <rule context="term-sec[not(normalize-space(label))]
+                           [not(normalize-space(tbx:termEntry))]
+                           [empty(@id)]
+                           [term-sec]" id="term-sec-wrapper_rule1">
+      <report test="true()" id="term-sec-wrapper_r1" role="warning">This term-sec is a wrapper around others for no apparent reason.
+      <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="unwrap-empty-term-sec"/>
+      </report>
     </rule>
   </pattern>
   

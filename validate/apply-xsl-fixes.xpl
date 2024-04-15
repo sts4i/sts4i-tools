@@ -42,7 +42,7 @@
 
   <p:declare-step type="tr:apply-fixes-recursion" name="apply-fixes-recursion-decl">
     <p:input port="fixes" primary="true">
-      <p:documentation>An sch:schema document with sc:xsl-fix children. The first sc:xsl-fix will be applied,
+      <p:documentation>A sc:fixes-list document with sc:xsl-fix children. The first sc:xsl-fix will be applied,
       then this sc:xsl-fix element will be removed and the step will be invoked with the remaining sch:schema
       document, until all sc:xsl-fixes have been removed from the document.
       The purpose of this recursion is that each subsequent fix be applied to the output of the preceding fix.
@@ -72,21 +72,14 @@
     </p:identity>
     
     <p:for-each name="fix-source">
-      <p:iteration-source select="/sch:schema/sc:xsl-fix[1]"/>
+      <p:iteration-source select="/sc:fixes-list/sc:xsl-fix[1]"/>
       <p:output port="result" primary="true"/>
+      <p:variable name="iteration-position" select="/*/@pos"/>
       <p:variable name="fix-xsl-href" select="/sc:xsl-fix/@href"/>
       <p:variable name="fix-xsl-mode" select="xs:QName(/sc:xsl-fix/@mode)" cx:type="xs:QName"/>
-      <!--<cx:message name="b">
-        <p:with-option name="message" select="'bbbbbbbbbbb ', string-join(for $a in /*/@* return concat(name($a), '=', $a), ' ')"></p:with-option>
-      </cx:message>-->
       <p:load name="load-xsl">
         <p:with-option name="href" select="$fix-xsl-href"/>
       </p:load>
-      <!--<cx:message>
-        <p:with-option name="message" select="'UUUUUUUUUUU ', base-uri(), ' ', base-uri(/*)">
-          <p:pipe port="source" step="apply-fixes-recursion-decl"/>
-        </p:with-option>
-      </cx:message>-->
       <p:sink name="sink4"/>
       <p:xslt name="fix-current-source-doc">
         <p:with-option name="output-base-uri" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')">
@@ -108,13 +101,13 @@
         <p:with-option name="attribute-value" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
       </p:add-attribute>
       <cx:message>
-        <p:with-option name="message" select="'VVVVVVVVVVV ', base-uri(/*), replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
+        <p:with-option name="message" select="'VVVVVVVVVVV ', ' ;; &#xa;', base-uri(/*), ' :: ', replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
       </cx:message>
       <tr:store-debug name="store-patched">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
         <p:with-option name="pipeline-step" 
-          select="string-join(('apply-fix',
+          select="string-join(('apply-fix', $iteration-position,
                                replace(base-uri(/*), '^.+/(.+?)\.xml$', '$1'), 
                                replace($fix-xsl-href, '^.+/(.+?)\.xsl$', '$1'),
                                replace($fix-xsl-mode, ':', '_')),
@@ -134,7 +127,7 @@
       </p:when>
       <p:otherwise>
         <p:output port="result" primary="true"/>
-        <p:delete match="/sch:schema/sc:xsl-fix[1]">
+        <p:delete match="/sc:fixes-list/sc:xsl-fix[1]">
           <p:input port="source">
             <p:pipe port="fixes" step="apply-fixes-recursion-decl"/>
           </p:input>
@@ -205,50 +198,111 @@
     <cx:message>
       <p:with-option name="message" select="'3333333 ', $base-uri, ' :: ', $this-documents-error-ids-with-fixes"/> 
     </cx:message>
-    <p:xslt name="select-fixes-for-current-doc">
+    <p:xslt name="select-fixes-for-current-doc" template-name="main">
       <p:with-param name="ids" select="$this-documents-error-ids-with-fixes"/>
+      <p:with-param name="base-uri" select="$base-uri"/>
       <p:input port="parameters"><p:empty/></p:input>
       <p:input port="source">
         <p:pipe port="schematron" step="apply-fixes"/>
+        <p:pipe port="reports" step="apply-fixes"/>
       </p:input>
       <p:input port="stylesheet">
         <p:inline>
           <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
             <xsl:param name="ids" as="xs:string"/>
+            <xsl:param name="base-uri" as="xs:string"/>
             <xsl:key name="by-id" match="*[@id]" use="@id"/>
-            <xsl:template match="/*">
+            <xsl:key name="by-test-id" match="*[@test-id]" use="@test-id"/>
+            <xsl:template name="main">
+              <xsl:variable name="svrl-doc" as="document-node(element(svrl:schematron-output))">
+                <xsl:document>
+                  <xsl:sequence select="collection()/reports/svrl:schematron-output[@xml:base = concat($base-uri, '.val')]"/>
+                </xsl:document>
+              </xsl:variable>
+              <xsl:apply-templates select="$svrl-doc/svrl:schematron-output">
+                <xsl:with-param name="schematron" as="document-node(element(sch:schema))" select="collection()[sch:schema]" tunnel="yes"/>
+              </xsl:apply-templates>
+            </xsl:template>
+            <xsl:template match="/svrl:schematron-output">
+              <xsl:param name="schematron" tunnel="yes" as="document-node(element(sch:schema))"/>
+              <xsl:variable name="svrl" as="document-node()" select=".."/>
               <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
-              <xsl:copy>
-                <xsl:attribute name="xml:base" select="base-uri(/*)"/>
-                <xsl:for-each-group select="key('by-id', tokenize($ids, '\s+'))/sc:xsl-fix ! sc:prepend-prerequisites(.)" 
+              <sc:fixes-list>
+                <xsl:attribute name="xml:base" select="$base-uri"/>
+                <xsl:for-each-group select="tokenize($ids, '\s+') ! key('by-test-id', ., $svrl)[1] ! sc:prepend-prerequisites(., $svrl, $schematron)" 
                   group-by="string-join((@href, @mode, sc:param/@*), '__')">
                   <xsl:apply-templates select="."/>
                 </xsl:for-each-group>
-              </xsl:copy>
+              </sc:fixes-list>
             </xsl:template>
             <xsl:function name="sc:prepend-prerequisites" as="element(sc:xsl-fix)+">
-              <xsl:param name="fix" as="element(sc:xsl-fix)"/>
-              <xsl:if test="$fix/@depends-on (: id of an sch:assert or sch:report with an sc:xsl-fix :)">
-                <xsl:sequence select="sc:prepend-prerequisites(key('by-id', tokenize($fix/@depends-on, '\s+'), root($fix))/sc:xsl-fix)"/>
-              </xsl:if>
-              <xsl:sequence select="$fix"/>
+              <xsl:param name="fix" as="element(sc:xsl-fix)+"/>
+              <xsl:param name="svrl" as="document-node(element(svrl:schematron-output))"/>
+              <xsl:param name="schematron" as="document-node(element(sch:schema))"/>
+              <xsl:for-each select="$fix/@depends-on (: id of an sch:assert or sch:report with an sc:xsl-fix :)">
+                <xsl:variable name="dependencies-found-in-svrl" as="element(sc:xsl-fix)*"
+                    select="tokenize(., '\s+') ! key('by-test-id', ., $svrl)[1]"/>
+                <xsl:variable name="fallback-dependencies-found-in-schematron" as="element(sc:xsl-fix)*"
+                    select="tokenize(., '\s+')[not(. = $dependencies-found-in-svrl/@test-id)] ! key('by-test-id', ., $schematron)[1]"/>
+                <xsl:sequence select="sc:prepend-prerequisites(($dependencies-found-in-svrl, $fallback-dependencies-found-in-schematron), $svrl, $schematron)"/>
+              </xsl:for-each>
+              <xsl:apply-templates select="$fix">
+                <xsl:with-param name="schematron" select="$schematron" as="document-node(element(sch:schema))" tunnel="yes"/>
+              </xsl:apply-templates>
             </xsl:function>
             <xsl:template match="sc:xsl-fix">
+              <xsl:param name="schematron" as="document-node(element(sch:schema))" tunnel="yes"/>
+              <xsl:if test="local-name(..) = ('report', 'assert') and empty(../@id)">
+                <xsl:message terminate="yes" select="'This schematron element neeeds an ID: ', .."/>
+              </xsl:if>
+              <xsl:variable name="fix-in-schematron" select="key('by-test-id', @test-id, $schematron)[1]"/>
               <xsl:copy>
-                <xsl:attribute name="href" select="resolve-uri(@href, base-uri(.))"/>
-                <xsl:copy-of select="@* except @href"/>
-                <c:param-set>
-                  <xsl:apply-templates select="sc:param"/>
-                </c:param-set>
+                <xsl:attribute name="href" select="resolve-uri(@href, base-uri($fix-in-schematron))"/>
+                <xsl:copy-of select="@* except @href, node()"/>
+                <!-- apply-templates of sc:param does not work, probably due to a Calabash bug.
+                  This and other strange things only happen when sc:xsl-fix occur both in Schematron and XVRL documents. -->  
               </xsl:copy>
             </xsl:template>
-            <xsl:template match="sc:param">
-              <c:param name="{@name}" value="{@value}"/>
+            <xsl:template match="sc:param"><!-- won’t match, bug -->
             </xsl:template>
           </xsl:stylesheet>
         </p:inline>
       </p:input>
     </p:xslt>
+
+    <p:xslt name="param-sets">
+      <p:input port="parameters"><p:empty/></p:input>
+      <p:input port="stylesheet">
+        <p:inline>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+            <xsl:template match="node() | @*">
+              <xsl:copy>
+                <xsl:apply-templates select="node() | @*"/>
+              </xsl:copy>
+            </xsl:template>
+            <xsl:template match="@test-id">
+              <xsl:next-match/>
+              <xsl:attribute name="pos" select="index-of(../../sc:xsl-fix/generate-id(), ../generate-id())"></xsl:attribute>
+            </xsl:template>
+            <xsl:template match="*:xsl-fix[*:param]">
+              <xsl:copy>
+                <xsl:apply-templates select="@*"/>
+                <c:param-set>
+                  <xsl:apply-templates/>
+                </c:param-set>
+              </xsl:copy>
+            </xsl:template>
+            <xsl:template match="sc:param">
+              <!-- this is the reason why we use the sc:xsl-fix from SVRL rather than from Schematron (that we use as fallback
+                if there is no failed-assert/successful-report for a given dependency in the SVRL) --> 
+              <xsl:message select="'PPPPPPPPPPPPPPAAAAAAAAAAAAAAAAAa ', string(@name), ' :: ', string(.), ' :: ', ."></xsl:message>
+              <c:param name="{@name}" value="{string(.)}"/>
+            </xsl:template>
+          </xsl:stylesheet>
+        </p:inline>
+      </p:input>
+    </p:xslt>
+
     <cx:message>
       <p:with-option name="message" select="'444444444 ', count(/*/*), /*/*/name()"></p:with-option>
     </cx:message>

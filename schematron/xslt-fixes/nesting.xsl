@@ -49,6 +49,9 @@
     <xsl:choose>
       <xsl:when test="following-sibling::metas">
         <adoption>
+          <xsl:if test="empty(preceding-sibling::metas)">
+            <xsl:apply-templates select="$entire-standard/@*" mode="#current"/>
+          </xsl:if>
           <adoption-front>
             <xsl:apply-templates select="*" mode="#current"/>
             <xsl:apply-templates select="$entire-standard/front/*[not(ends-with(name(), '-meta'))]

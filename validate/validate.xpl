@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
+  xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
   xmlns:ttt="http://transpect.io/tokenized-to-tree" xmlns:c="http://www.w3.org/ns/xproc-step"
   version="1.0" xmlns:cx="http://xmlcalabash.com/ns/extensions" xmlns:tr="http://transpect.io"
   name="batch-val" type="tr:batch-val-sts">
@@ -159,10 +162,30 @@
           </p:input>
         </tr:oxy-validate-with-schematron>
         <p:sink/>
-        <p:add-attribute name="add-uri-to-svrl" match="/*" attribute-name="xml:base">
+        <p:xslt name="add-id-to-fix">
+          <p:input port="parameters"><p:empty/></p:input>
           <p:input port="source">
             <p:pipe port="report" step="single-sch"/>
           </p:input>
+          <p:input port="stylesheet">
+            <p:inline>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+                <xsl:template match="node() | @*">
+                  <xsl:copy>
+                    <xsl:apply-templates select="node() | @*"/>
+                  </xsl:copy>
+                </xsl:template>
+                <xsl:template match="sc:xsl-fix">
+                  <xsl:copy>
+                    <xsl:attribute name="test-id" select="parent::svrl:text/../@id"/>
+                    <xsl:copy-of select="@*, node()"/>
+                  </xsl:copy>
+                </xsl:template>
+              </xsl:stylesheet>  
+            </p:inline>
+          </p:input>
+        </p:xslt>
+        <p:add-attribute name="add-uri-to-svrl" match="/*" attribute-name="xml:base">
           <p:with-option name="attribute-value" select="$output-file-uri"/>
         </p:add-attribute>
         <p:sink/>
@@ -195,9 +218,42 @@
     <p:with-option name="base-uri" select="$debug-dir-uri"/>
   </tr:store-debug>
   
-  <tr:apply-xsl-fixes name="apply-fixes">
-    <p:input port="schematron">
+  <p:sink name="sink0"/>
+
+  <p:xslt name="add-id-to-schematron">
+    <p:input port="parameters">
+      <p:empty/>
+    </p:input>
+    <p:input port="source">
       <p:pipe port="schematron" step="batch-val"/>
+    </p:input>
+    <p:input port="stylesheet">
+      <p:inline>
+        <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+          <xsl:template match="node() | @*">
+            <xsl:copy>
+              <xsl:apply-templates select="node() | @*"/>
+            </xsl:copy>
+          </xsl:template>
+          <xsl:template match="sc:xsl-fix">
+            <xsl:copy>
+              <xsl:attribute name="test-id" select="../@id"/>
+              <xsl:copy-of select="@*, node()"/>
+            </xsl:copy>
+          </xsl:template>
+        </xsl:stylesheet>
+      </p:inline>
+    </p:input>
+  </p:xslt>
+
+  <p:sink name="sink3"/>
+  
+  <tr:apply-xsl-fixes name="apply-fixes">
+    <p:input port="reports">
+      <p:pipe port="result" step="wrap-errors"/>
+    </p:input>
+    <p:input port="schematron">
+      <p:pipe port="result" step="add-id-to-schematron"/>
     </p:input>
     <p:input port="source">
       <p:pipe port="docs" step="file-iteration"/>
@@ -272,6 +328,12 @@
       <p:pipe port="report" step="post-fix-schematron"/>
     </p:input>
   </p:insert>
+  
+  <tr:store-debug>
+    <p:with-option name="pipeline-step" select="'reports_post-fix'"/>
+    <p:with-option name="active" select="$debug"/>
+    <p:with-option name="base-uri" select="$debug-dir-uri"/>
+  </tr:store-debug>
 
   <p:xslt name="svrl2html">
     <p:with-param name="common-path" select="/*/@xml:base">
