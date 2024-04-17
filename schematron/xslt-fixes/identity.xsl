@@ -17,7 +17,7 @@
   <xsl:key name="by-rid" match="*[@rid]" use="@rid"/>
 
   <xsl:template match="node()|@*" mode="#all">
-   <xsl:copy>
+   <xsl:copy copy-namespaces="no">
      <xsl:apply-templates select="@*|node()" mode="#current"/>
    </xsl:copy>
   </xsl:template>

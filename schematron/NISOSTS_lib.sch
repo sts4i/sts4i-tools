@@ -35,6 +35,14 @@
   <let name="legend-content-type" value="'fig-index'"/>
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
 
+  <pattern id="legacy-meta">
+    <rule id="legacy-meta_rule1" context="nat-meta | reg-meta | iso-meta">
+      <assert test="name() = 'std-meta'" id="legacy-meta_a1" role="error">Please use std-meta since <name/> will be deprecated in future NISO STS versions.
+      <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="legacy-meta"/>
+      </assert>
+    </rule>
+  </pattern>
+
   <pattern id="NISOSTS_lib_figure_keys">
     <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
     <p>Prior to NISO STS 1.2, there was no optimal or canonical way to place keys to figures yet.</p>
@@ -371,7 +379,7 @@
   
   <pattern id="exclusion-block" is-a="exclusions">
     <param name="context" value="boxed-text | fig | supplementary-material[graphic] | table-wrap"/>
-    <param name="exclude" value="boxed-text fig-group fig supplementary-material table-wrap[empty(parent::legend)] preformat"/>
+    <param name="exclude" value="boxed-text fig-group fig supplementary-material table-wrap preformat"/>
     <param name="legalizing-intermediates" value="legend"/>
   </pattern>
   

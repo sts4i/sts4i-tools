@@ -18,21 +18,25 @@
           <isosts:translation xml:lang="en">Key</isosts:translation>
           <isosts:translation xml:lang="de">Legende</isosts:translation>
           <isosts:translation xml:lang="fr">Légende</isosts:translation>
+          <isosts:translation xml:lang="nl">Legenda</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-name">
           <isosts:translation xml:lang="en">Annex</isosts:translation>
           <isosts:translation xml:lang="de">Anhang</isosts:translation>
           <isosts:translation xml:lang="fr">Annexe</isosts:translation>
+          <isosts:translation xml:lang="nl">Aanhang</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-type-informative">
           <isosts:translation xml:lang="en">informative</isosts:translation>
           <isosts:translation xml:lang="de">informativ</isosts:translation>
           <isosts:translation xml:lang="fr">informative</isosts:translation>
+          <isosts:translation xml:lang="nl">informatief</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-type-normative">
           <isosts:translation xml:lang="en">normative</isosts:translation>
           <isosts:translation xml:lang="de">normativ</isosts:translation>
           <isosts:translation xml:lang="fr">normative</isosts:translation>
+          <isosts:translation xml:lang="nl">normatief</isosts:translation>
         </isosts:string>
       </isosts:i18n>    
     </xsl:document>

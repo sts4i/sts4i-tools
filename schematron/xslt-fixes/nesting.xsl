@@ -50,7 +50,7 @@
       <xsl:when test="following-sibling::metas">
         <adoption>
           <xsl:if test="empty(preceding-sibling::metas)">
-            <xsl:apply-templates select="$entire-standard/@*" mode="#current"/>
+            <xsl:call-template name="top-level-atts-and-ns"/>
           </xsl:if>
           <adoption-front>
             <xsl:apply-templates select="*" mode="#current"/>
@@ -63,6 +63,9 @@
       </xsl:when>
       <xsl:otherwise>
         <standard>
+          <xsl:if test="empty(preceding-sibling::metas)">
+            <xsl:call-template name="top-level-atts-and-ns"/>
+          </xsl:if>
           <front>
             <xsl:apply-templates select="*" mode="#current"/>
           </front>
@@ -72,9 +75,35 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="top-level-atts-and-ns">
+    <xsl:param name="entire-standard" as="element(standard)" tunnel="yes"/>
+    <xsl:apply-templates select="$entire-standard/@*" mode="#current"/>
+    <xsl:namespace name="tbx">urn:iso:std:iso:30042:ed-1</xsl:namespace>
+    <xsl:namespace name="mml">http://www.w3.org/1998/Math/MathML</xsl:namespace>
+    <xsl:namespace name="xlink">http://www.w3.org/1999/xlink</xsl:namespace>
+  </xsl:template>
+  
+  <xsl:template match="namespace::xsi" mode="create-adoptions"/>
+  
+  <xsl:template match="namespace"></xsl:template>
+
   <xsl:function name="isosts:front-matter-origin-type" as="xs:string">
     <xsl:param name="elt" as="element(*)"/>
     <xsl:sequence select="'national'"/>
   </xsl:function>
+  
+  <xsl:template match="nat-meta | reg-mata | int-meta" mode="legacy-meta">
+    <std-meta>
+      <xsl:apply-templates select="@* | node()" mode="#current"/>
+    </std-meta>
+  </xsl:template>
+  
+  <xsl:template match="doc-ident" mode="legacy-meta">
+    <std-ident>
+      <xsl:apply-templates select="@* | node()" mode="#current"/>
+    </std-ident>
+  </xsl:template>
+  
+  <xsl:template match="nat-meta/@originator | reg-mata/@originator" mode="legacy-meta"/>
 
 </xsl:stylesheet>
