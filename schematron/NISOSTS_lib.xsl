@@ -63,7 +63,7 @@
   
   <xsl:function name="isosts:std-meta-type" as="xs:string">
     <xsl:param name="meta-elt" as="element(*)"/>
-    <xsl:variable name="originator" select="$meta-elt/std-ident/originator/normalize-space()" as="xs:string"/>
+    <xsl:variable name="originator" select="$meta-elt/std-ident/originator/normalize-space()" as="xs:string?"/>
     <xsl:choose>
       <xsl:when test="$meta-elt/self::nat-meta">
         <xsl:sequence select="'national'"/>

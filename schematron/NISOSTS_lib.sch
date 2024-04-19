@@ -40,12 +40,26 @@
                                            'http://www.w3.org/1999/xlink', 'http://www.w3.org/XML/1998/namespace',
                                            'http://www.niso.org/schemas/ali/1.0/', 'http://www.w3.org/2001/XInclude',
                                            'http://www.w3.org/2001/XMLSchema-instance', 'http://www.w3.org/ns/xproc-step')"/>
+    
+    <let name="expected-ns-prefixes" value="('ali', 'mml', 
+                                           'xi', 'xsi',
+                                            'tbx',
+                                           'xlink', 'xml')"/>
+    
     <rule context="*[namespace::*]">
       <assert test="every $n in (namespace::* ! string(.)) 
-                    satisfies ($n = $expected-ns-uris)" id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>.
+                    satisfies ($n = $expected-ns-uris or $n = ../namespace::* ! string(.))" id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>.
       Found: <value-of select="string-join(namespace::*[not(string(.) = $expected-ns-uris)] ! string-join((name(.), string(.)), ':'), ', ')"/>
       </assert>
+      
+       <assert test="every $n in (namespace::* ! name(.)) 
+                    satisfies ($n = $expected-ns-prefixes or $n = ../namespace::* ! name(.))" id="unexpected-namespace-prefix">Unexpected prefix in namespace declaration in <name/>.
+      Found: <value-of select="string-join(namespace::*[not(name(.) = $expected-ns-prefixes)] ! string-join((name(.), string(.)), ':'), ', ')"/>
+      </assert>
+      
     </rule>
+    
+    
   </pattern>
 
   <pattern id="legacy-meta">
