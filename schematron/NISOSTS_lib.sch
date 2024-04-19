@@ -35,6 +35,19 @@
   <let name="legend-content-type" value="'fig-index'"/>
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
 
+  <pattern id="unexpected-namespace-uris">
+    <let name="expected-ns-uris" value="('urn:iso:std:iso:30042:ed-1', 'http://www.w3.org/1998/Math/MathML', 
+                                           'http://www.w3.org/1999/xlink', 'http://www.w3.org/XML/1998/namespace',
+                                           'http://www.niso.org/schemas/ali/1.0/', 'http://www.w3.org/2001/XInclude',
+                                           'http://www.w3.org/2001/XMLSchema-instance', 'http://www.w3.org/ns/xproc-step')"/>
+    <rule context="*[namespace::*]">
+      <assert test="every $n in (namespace::* ! string(.)) 
+                    satisfies ($n = $expected-ns-uris)" id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>.
+      Found: <value-of select="string-join(namespace::*[not(string(.) = $expected-ns-uris)] ! string-join((name(.), string(.)), ':'), ', ')"/>
+      </assert>
+    </rule>
+  </pattern>
+
   <pattern id="legacy-meta">
     <rule id="legacy-meta_rule1" context="nat-meta | reg-meta | iso-meta">
       <assert test="name() = 'std-meta'" id="legacy-meta_a1" role="error">Please use std-meta since <name/> will be deprecated in future NISO STS versions.

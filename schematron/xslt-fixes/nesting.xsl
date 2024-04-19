@@ -77,16 +77,10 @@
 
   <xsl:template name="top-level-atts-and-ns">
     <xsl:param name="entire-standard" as="element(standard)" tunnel="yes"/>
+    <xsl:call-template name="top-level-ns-decls"/>
     <xsl:apply-templates select="$entire-standard/@*" mode="#current"/>
-    <xsl:namespace name="tbx">urn:iso:std:iso:30042:ed-1</xsl:namespace>
-    <xsl:namespace name="mml">http://www.w3.org/1998/Math/MathML</xsl:namespace>
-    <xsl:namespace name="xlink">http://www.w3.org/1999/xlink</xsl:namespace>
   </xsl:template>
   
-  <xsl:template match="namespace::xsi" mode="create-adoptions"/>
-  
-  <xsl:template match="namespace"></xsl:template>
-
   <xsl:function name="isosts:front-matter-origin-type" as="xs:string">
     <xsl:param name="elt" as="element(*)"/>
     <xsl:sequence select="'national'"/>
