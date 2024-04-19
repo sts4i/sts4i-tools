@@ -16,7 +16,7 @@
 
   <xsl:key name="by-rid" match="*[@rid]" use="@rid"/>
 
-  <xsl:template match="/*" priority="1">
+  <xsl:template match="/*" priority="1" mode="#all">
     <xsl:copy copy-namespaces="no">
       <xsl:call-template name="top-level-ns-decls"/>
       <xsl:apply-templates select="@* | node()" mode="#current"/>
