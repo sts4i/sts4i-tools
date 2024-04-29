@@ -2,9 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:isosts="http://www.iso.org/ns/isosts" 
   exclude-result-prefixes="sc xs" version="2.0">
 
   <xsl:import href="identity.xsl"/>
+  <xsl:import href="../NISOSTS_lib.xsl"/>
 
   <xsl:template match="fig[caption][table-wrap[@content-type = 'fig-index'][caption/title]]/caption" mode="legends">
     <xsl:next-match/>
@@ -70,5 +72,41 @@
       <xsl:apply-templates mode="#current"/>
     </title>
   </xsl:template>
-
+  
+  <xsl:template mode="table-key" match="table-wrap[table-wrap-foot[fn[1][lower-case(isosts:i18n-strings('key-heading', .))=lower-case(normalize-space(.))]]]/caption">
+    <xsl:next-match/>
+    <legend>
+      <xsl:apply-templates select="../table-wrap-foot/fn[empty(label)][1]" mode="table-key-to-legend"/>
+      <def-list>
+        <xsl:apply-templates select="../table-wrap-foot/fn[empty(label)][position() gt 1]" mode="table-key-to-legend"/>
+      </def-list>
+    </legend>
+  </xsl:template>
+  <xsl:template match="fn[1]" mode="table-key-to-legend">
+    <title>
+      <xsl:value-of select="normalize-space(.)"/>
+    </title>
+  </xsl:template>
+  
+  <xsl:template match="fn/p[1]" mode="table-key-to-legend">
+    <xsl:variable name="first-text-node" select="text()[1]"/>
+    <def-item>
+      <term>
+        <xsl:sequence select="node()[$first-text-node >> .]"/>
+      </term>
+      <def>
+        <p>
+          <xsl:value-of select="replace($first-text-node, '^\s+', '')"/>
+          <xsl:sequence select="node()[. >> $first-text-node]"/>
+        </p>
+        <xsl:apply-templates select="../*[position() gt 1]" mode="#current"/>
+      </def>
+    </def-item>
+  </xsl:template>
+   <xsl:template mode="table-key" match="table-wrap-foot/fn[empty(label)]"/>
+  
+   <xsl:template match="fn" mode="table-key-to-legend">
+     <xsl:apply-templates select="p[1]" mode="#current"/>
+  </xsl:template>
+  
 </xsl:stylesheet>

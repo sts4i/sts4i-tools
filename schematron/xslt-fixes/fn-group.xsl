@@ -106,11 +106,11 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="table-wrap[empty(table-wrap-foot)]
+  <xsl:template match="table-wrap[empty(table-wrap-foot) or (every $e in table-wrap-foot/* satisfies ($e/self::fn))]
                                  [empty(ancestor::table-wrap[label | caption])]" mode="group-fn">
     <xsl:param name="footnotes" as="element(fn)*" tunnel="yes"/>
     <xsl:copy>
-      <xsl:apply-templates select="@* | node() except (attrib | permissions)" mode="#current"/>
+      <xsl:apply-templates select="@* | node() except (attrib | permissions | table-wrap-foot)" mode="#current"/>
       <xsl:if test="exists($footnotes)">
         <table-wrap-foot>
           <fn-group>

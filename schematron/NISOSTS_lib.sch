@@ -77,6 +77,13 @@
       <report test="true()" id="SN-key_location_r1">The legend needs to go into a NISO STS 1.2 legend element.
       <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="SN-legends"/></report>
     </rule>
+    <rule id="NISOSTS_table-key-in-footnotes_rule1" 
+      context="table-wrap-foot[fn[1][lower-case(isosts:i18n-strings('key-heading', .))=lower-case(normalize-space(.))]]">
+      <report test="true()" role="error" id="NISOSTS_table-key-in-footnotes_r1" >
+        Table key seems to be encoded in table-footnotes.
+       <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="table-key"/>
+      </report>    
+    </rule>
     <rule id="key_location" context="fig/*[not(name() = ('label', 'caption', 'legend'))]">
       <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning" id="NISOSTS_lib_figure_keys_r1" 
         diagnostics="NISOSTS_lib_figure_keys_r1_de">
@@ -138,7 +145,7 @@
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups.
-      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"/>
+      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn" depends-on="NISOSTS_table-key-in-footnotes_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -163,6 +170,7 @@
         diagnostics="NISOSTS_fn-without-xref_1_de">Table-fn without referencing xref found. All table-fn must be referenced.</report>    </rule>
   </pattern>
   
+
   
   <pattern id="NISOSTS_table-cell-paras">
     <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
@@ -202,6 +210,14 @@
   </pattern>
 
   <pattern id="NISOSTS_bold-in-titles">
+    <rule id="NISOSTS_bold-tags-in-titles_rule1" context="title">
+      <report test="bold[.='(continued)']" role="warning"
+        id="NISOSTS_bold-tags-in-title_r2">Continuation objects may be problematic for subsequent processing steps. For the time being,
+        we avoid this warning by converting the bold element into a named-content element.
+      <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="continuation" depends-on="NISOSTS_numbering-in-bold-title_r1"/>
+      </report>
+      
+    </rule>
     <rule id="NISOSTS_bold-tags-in-title" context="title">
       <report test="bold[normalize-space()]" role="warning" diagnostics="NISOSTS_bold-tags-in-title_de"
         id="NISOSTS_bold-tags-in-title_r1">Titles are usually rendered in bold so bold tags are redundant.
@@ -304,12 +320,18 @@
   <pattern id="app-norm-inform">
     <!-- https://gitlab.com/DIN-XML/STS/-/issues/28 -->
     <rule id="app_has_correct_values" context="app">
-      <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type.</report>
-      <report role="error" id="app_wrong_content-type" test="not(@content-type = ('norm-annex', 'inform-annex', 'bibl'))">The 
+      <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type.
+      <xsl:if test="empty(annex-type)">
+          If there were an annex-type we could infer the content-type attribute 
+       </xsl:if>
+      </report>
+      <report role="error" id="app_wrong_content-type" test="exists(@content-type) and not(@content-type = ('norm-annex', 'inform-annex', 'bibl'))">The 
         content-type of an app has to be either "norm-annex", "inform-annex" or "bibl".
         <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="content-type"/>
       </report>
-      <report role="warning" id="app_no_annex-type" test="not(@content-type = 'bibl') and not(annex-type)"><name/> has no annex-type.</report>
+      <report role="warning" id="app_no_annex-type" test="not(@content-type = 'bibl') and not(annex-type)"><name/> has no annex-type.
+       CEN/CENELEC Internal Regulations Part 3: &#x201c;The annex heading shall be followed by the indication "(normative)" or "(informative)"&#x2026;&#x201d;
+      </report>
     </rule>
     <rule id="annex-type-normative-text-available" context="annex-type[parent::app/@content-type = 'norm-annex']">
       <assert role="warning" id="annex-type-text-available1" 
@@ -507,6 +529,14 @@
     </rule>
   </pattern>
   
+  
+  <pattern id="change_markup_in_specififc-use">
+    <rule id="change_markup_in_specififc-use_rule1" context="*[@specific-use]">
+      <report id="change_markup_in_specififc-use_r1" role="error" test="@specific-use = ('insert', 'delete')">
+        Attribute specific-use with value <value-of select="@specific-use"/> found in Element <name/>  
+      </report>
+    </rule>
+  </pattern>
   
   
   <diagnostics>

@@ -163,5 +163,11 @@
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template mode="continuation" match="title/bold[.='(continued)']">
+    <named-content content-type="continuation-note">
+      <xsl:apply-templates select="@*|node()" mode="#current"/>
+    </named-content>
+  </xsl:template>
 
 </xsl:stylesheet>
