@@ -538,6 +538,18 @@
     </rule>
   </pattern>
   
+  <pattern id="main_in_title-wrap_empty">
+    <rule id="main_in_title-wrap_empty_rule1" context="title-wrap[empty(main/node())]
+                                 [empty(compl/node())]
+                                 [empty(main-title-wrap | compl-title-wrap | intro | intro-title-wrap)]
+                                 [matches(full, $dash-in-space-regex)]">
+      <report id="main_in_title-wrap_empty_r1" role="error" test="true()">
+       <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/>
+        Element main in title-wrap is empty.
+      </report>
+    </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
