@@ -551,6 +551,16 @@
   </pattern>
   
   
+  <pattern id="sec-type_unintended_value">
+    <rule id="sec-type_unintended_value_rule1" context="sec[@sec-type='titlepage']">
+      <report id="sec-type_unintended_value_r1" role="error" test="true()">
+        '<value-of select="@sec-type"/>' is not an intended value for the attribute 'sec-type'
+      <sc:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note-titlepage"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
     <diagnostic id="NISOSTS_iso-like-ids_1_1_de" xml:lang="de">Eine sec- oder app-ID muss wie folgt gebildet werden:
