@@ -92,4 +92,6 @@
     <xsl:sequence select="index-of($all/generate-id(), $selected/generate-id())"/>
   </xsl:function>
 
+  <xsl:variable name="dash-in-space-regex" as="xs:string" select="'[\p{Zs}\s]+\p{Pd}[\p{Zs}\s]+'"/>
+
 </xsl:stylesheet>

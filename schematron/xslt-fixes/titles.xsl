@@ -170,4 +170,37 @@
     </named-content>
   </xsl:template>
 
+  <xsl:template match="title-wrap[empty(main/node())]
+                                 [empty(compl/node())]
+                                 [empty(main-title-wrap | compl-title-wrap | intro | intro-title-wrap)]
+                                 [matches(full, $dash-in-space-regex)]" mode="title-wrap-only-full">
+    <xsl:variable name="split-full" as="element(full)">
+      <xsl:apply-templates select="full" mode="title-wrap-only-full_sep"/>
+    </xsl:variable>
+    <xsl:copy copy-namespaces="no">
+      <main>
+        <xsl:apply-templates select="main/@*" mode="#current"/>
+        <xsl:sequence select="$split-full/node()[following-sibling::sep]"/>
+      </main>
+      <compl>
+        <xsl:apply-templates select="compl/@*" mode="#current"/>
+        <xsl:sequence select="$split-full/node()[preceding-sibling::sep]"/>
+      </compl>
+      <xsl:apply-templates select="*[empty(self::main | self::compl)]"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="text()[matches(., $dash-in-space-regex)][1]" mode="title-wrap-only-full_sep">
+    <xsl:analyze-string select="." regex="{$dash-in-space-regex}">
+      <xsl:matching-substring>
+        <sep>
+          <xsl:value-of select="."/>
+        </sep>
+      </xsl:matching-substring>
+      <xsl:non-matching-substring>
+        <xsl:value-of select="."/>
+      </xsl:non-matching-substring>
+    </xsl:analyze-string>
+  </xsl:template>
+
 </xsl:stylesheet>
