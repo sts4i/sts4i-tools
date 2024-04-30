@@ -17,6 +17,7 @@
   <xsl:param name="group-by-error-code" as="xs:boolean" select="true()"/>
 
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
+  <xsl:key name="by-location" match="*[@location]" use="@location"/>
 
   <xsl:template match="/" mode="#default">
     <xsl:variable name="content" as="element(html:tr)*">
@@ -69,14 +70,16 @@
                         <xsl:apply-templates select="svrl:text/node()" mode="#current"/>
                     </td>
                     <td class="pattern-id">
-                      <xsl:value-of select="$active-pattern/@id, @id" separator=" + "/>
+                      <xsl:value-of select="tokenize(svrl:text/sch:span[@class = 'rule-base-uri'], '/')[last()], 
+                                            $active-pattern/@id, @id" separator=" + "/>
                     </td>
                     <xsl:variable name="corresponding-post-fix-report" as="document-node(element(*))?"
                       select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
 <!--                    <xsl:message select="'CCCCCCCCCCCCCCCC ',exists($corresponding-post-fix-report), base-uri(), ' :: ', $post-fix-reports/*/base-uri()"></xsl:message>-->
+                    <xsl:variable name="location" as="xs:string?" select="@location"/>
                     <xsl:variable name="fixed" as="xs:boolean"
                       select="if (exists($corresponding-post-fix-report))
-                              then empty(key('by-id', @id, $corresponding-post-fix-report))
+                              then empty(key('by-id', @id, $corresponding-post-fix-report)[svrl:text/sch:span[@class = 'srcpath'] = $location])
                               else false()"/>
                     <td class="fixed {$fixed}">
                       <xsl:value-of select="$fixed"/>
@@ -115,6 +118,8 @@
       <xsl:with-param name="content" select="if ($content) then $content else $ok" />
     </xsl:call-template>
   </xsl:template>
+  
+  <xsl:template match="sch:span[@class = ('srcpath', 'rule-base-uri')]" mode="#default"/>
 
   <xsl:function name="html:impact-sortkey" as="xs:integer">
     <xsl:param name="elt" as="element(*)"/>
@@ -228,6 +233,9 @@
                     <xsl:sequence select="$content[exists(*/@colspan)]/*/node()"/>
                   </summary>
                   <xsl:for-each-group select="$content[empty(*/@colspan)]" group-by="html:td[@class = 'pattern-id']">
+                    <xsl:variable name="fixed-count" as="xs:integer"
+                                  select="count(current-group()/html:td[tokenize(@class, '\s+') = 'fixed']
+                                                                       [tokenize(@class, '\s+') = 'true'])"/>
                     <details>
                       <summary>
                         <xsl:value-of select="current-grouping-key()"/>
@@ -241,7 +249,12 @@
                           <xsl:value-of select="count(current-group())"/>
                         </span>
                         <span>
-                          <xsl:sequence select="html:td[tokenize(@class, '\s+') = 'fixed']/@class"/>
+                          <xsl:attribute name="class" 
+                            select="if ($fixed-count = 0)
+                                    then 'fixed false'
+                                    else if (count(current-group()) - $fixed-count = 0)
+                                         then 'fixed true'
+                                         else 'warning'"/>
                           <xsl:text>, fixed: </xsl:text>
                           <xsl:value-of select="count(current-group()/html:td[tokenize(@class, '\s+') = 'fixed']
                                                                              [tokenize(@class, '\s+') = 'true'])"/>
@@ -253,9 +266,6 @@
                     </details>
                   </xsl:for-each-group>
                 </details>
-                
-                
-                
               </xsl:when>
               <xsl:otherwise>
                 <xsl:call-template name="output-table-now-really">
@@ -263,9 +273,6 @@
                   </xsl:call-template>
               </xsl:otherwise>
             </xsl:choose>
-            <p><sup>1)</sup> Please note that this information might not be 100% accurate: If the fixed XML document
-            still contains a single error of the given Schematron pattern ID, all occurrences of this pattern ID will be 
-            displayed as “fixed: false”. We will eventually improve this reporting.</p>
           </div>
         </body> 
         <!--<script src="http://this.transpect.io/a9s/common/template/js/jquery-2.1.4.min.js"></script>
@@ -282,8 +289,8 @@
         <th style="width:8%">Severity</th>
         <th style="width:30%">XPath</th>
         <th style="width:35%">Message</th>
-        <th style="width:21%">Pattern ID + Report/Assert ID or Schema name</th>
-        <th style="width:6%">fixed<sup>1)</sup></th>
+        <th style="width:21%">Schema name + Pattern ID + Report/Assert ID</th>
+        <th style="width:6%">fixed</th>
       </tr>
       <xsl:sequence select="$content"/>
     </table>

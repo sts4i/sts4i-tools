@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:xslout="bogo"
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
   xmlns:tr="http://transpect.io"
-  exclude-result-prefixes="tr"
+  exclude-result-prefixes="tr xs"
   version="3.0">
 
   <!-- Invocation: saxon -s:importing_front-end_schema.sch -xsl:this.xsl
@@ -19,6 +21,24 @@
   <xsl:template match="node() | @*" mode="resolve-extends filter">
     <xsl:copy>
       <xsl:apply-templates select="@*, node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
+  
+  <xsl:template match=" sch:report | sch:assert" mode="resolve-extends"
+    xmlns="http://purl.oclc.org/dsdl/schematron">
+    <xsl:param name="xsl-fixes-for" as="element(sc:xsl-fix-for)*" tunnel="yes"/>
+    <xsl:variable name="for-this" as="xs:boolean" select="($xsl-fixes-for ! tokenize(@rid)) = @id"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@* | node() except sc:xsl-fix[$for-this]" mode="#current"/>
+      <xsl:if test="$for-this">
+        <sc:xsl-fix>
+          <xsl:copy-of select="$xsl-fixes-for[tokenize(@rid) = current()/@id]/(@* except @rid)"/>
+        </sc:xsl-fix>  
+      </xsl:if>
+      <span class="srcpath"><xslout:value-of select="@srcpath"/></span>
+      <span class="rule-base-uri"><xsl:value-of select="base-uri()"/></span>
     </xsl:copy>
   </xsl:template>
   
@@ -40,11 +60,13 @@
   <xsl:template match="sch:extends" mode="resolve-extends">
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sc:alternative-for)*" select="()" tunnel="yes"/>
+    <xsl:param name="xsl-fixes-for" as="element(sc:xsl-fix-for)*" select="()" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(sc:selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:param name="dependencies" as="element(sc:dependency)*" tunnel="yes"/>
     <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sc:alternative-for)"/>
+      <xsl:with-param name="xsl-fixes-for" tunnel="yes" select="($xsl-fixes-for, sc:xsl-fix-for)"/>
       <xsl:with-param name="selected-alternatives" as="attribute(sc:selected-alternative)*" tunnel="yes"
         select="($selected-alternatives, sc:pattern/@sc:selected-alternative)"/>
       <xsl:with-param name="dependencies" as="element(sc:dependency)*" tunnel="yes"

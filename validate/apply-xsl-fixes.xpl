@@ -159,19 +159,19 @@
                for $ru in tokenize($report-uris-with-fixes, '\s+') return replace($ru, '\.val$', ''),
                ' ')"/>
   <!--<cx:message>
-    <p:with-option name="message" select="'§§§§§§§§§§§§§§§§§§§§ 1111111 ', $error-ids-with-fixes, ' :: ', $report-uris-with-fixes"></p:with-option>
-  </cx:message>
-  <p:sink></p:sink>-->
+    <p:with-option name="message" select="'§§§§§§§§§§§§§§§§§§§§ 1111111 ', string-join($source-uris-with-fixes, '&#xa;')"></p:with-option>
+  </cx:message>-->
+  <p:sink></p:sink>
   <p:parameters name="consolidate-params">
     <p:input port="parameters">
       <p:pipe port="params" step="apply-fixes"/>
     </p:input>
   </p:parameters>
   <tr:load-sources name="load-sources" add-xml-base="true">
+    <p:with-option name="uris" select="$source-uris-with-fixes"/>
     <p:input port="source">
       <p:pipe port="source" step="apply-fixes"/>
     </p:input>
-    <p:with-option name="uris" select="$source-uris-with-fixes"/>
   </tr:load-sources>
   <tr:store-debug name="store-loaded-sources">
     <p:with-option name="active" select="$debug"/>

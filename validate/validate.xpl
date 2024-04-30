@@ -88,7 +88,7 @@
           <p:pipe port="result" step="add-uri-to-svrl"/>
         </p:output>
         <p:output port="result">
-          <p:pipe port="result" step="add-base-uri"/>
+          <p:pipe port="result" step="add-srcpath"/>
         </p:output>
 
         <p:choose name="load-schema">
@@ -115,7 +115,10 @@
           </p:otherwise>
         </p:choose>
         <p:sink name="sink1"/>
-        <p:xslt name="add-base-uri" template-name="main">
+        <p:xslt name="add-base-uri">
+          <p:with-param name="base-uri" select="resolve-uri(/*/@name, base-uri(/*))">
+            <p:pipe port="current" step="file-iteration"/>
+          </p:with-param>
           <p:input port="source">
             <p:pipe port="matched" step="actual-standard-doc"/>
           </p:input>
@@ -123,8 +126,12 @@
           <p:input port="stylesheet">
             <p:inline>
               <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-                <xsl:template name="main">
-                  <xsl:sequence select="/"/>
+                <xsl:param name="base-uri"/>
+                <xsl:template match="/*">
+                  <xsl:copy>
+                    <xsl:attribute name="xml:base" select="$base-uri"/>
+                    <xsl:copy-of select="@*, node()"/>
+                  </xsl:copy>
                 </xsl:template>
               </xsl:stylesheet>
             </p:inline>
@@ -133,6 +140,11 @@
             <p:pipe port="current" step="file-iteration"/>
           </p:with-option>
         </p:xslt>
+        <tr:store-debug>
+          <p:with-option name="pipeline-step" select="'add-base-uri'"/>
+          <p:with-option name="active" select="$debug"/>
+          <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        </tr:store-debug>
         <tr:validate-with-rng name="rng">
           <p:input port="schema">
             <p:pipe port="result" step="load-schema"/>
@@ -155,12 +167,43 @@
           <p:with-param name="allow-foreign" select="'true'"/>
           <p:with-param name="target-niso-version" select="$target-niso-version"/>
           <p:input port="source">
-            <p:pipe port="matched" step="actual-standard-doc"/>
+            <p:pipe port="result" step="add-base-uri"/>
+<!--            <p:pipe port="matched" step="actual-standard-doc"/>-->
           </p:input>
           <p:input port="schema">
             <p:pipe port="schematron" step="batch-val"/>
           </p:input>
         </tr:oxy-validate-with-schematron>
+        <p:xslt name="add-srcpath">
+          <p:input port="parameters"><p:empty/></p:input>
+          <p:input port="stylesheet">
+            <p:inline>
+              <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+                <xsl:template match="node() | @*">
+                  <xsl:copy/>
+                </xsl:template>
+                <!--<xsl:template match="/*" priority="2">
+                  <xsl:copy>
+                    <xsl:attribute name="xml:base" select="base-uri(.)"/>
+                    <xsl:attribute name="srcpath" select="path(.) => replace('/Q\{\}', '/')"/>
+                    <xsl:apply-templates select="@*, node()"/>
+                  </xsl:copy>
+                </xsl:template>-->
+                <xsl:template match="*" priority="1">
+                  <xsl:copy>
+                    <xsl:attribute name="srcpath" select="path(.) => replace('/Q\{\}', '/')"/>
+                    <xsl:apply-templates select="@*, node()"/>
+                  </xsl:copy>
+                </xsl:template>
+              </xsl:stylesheet>  
+            </p:inline>
+          </p:input>
+        </p:xslt>
+        <tr:store-debug>
+          <p:with-option name="pipeline-step" select="'add-srcpath'"/>
+          <p:with-option name="active" select="$debug"/>
+          <p:with-option name="base-uri" select="$debug-dir-uri"/>
+        </tr:store-debug>
         <p:sink/>
         <p:xslt name="add-id-to-fix">
           <p:input port="parameters"><p:empty/></p:input>
@@ -247,7 +290,14 @@
   </p:xslt>
 
   <p:sink name="sink3"/>
-  
+  <tr:store-debug>
+    <p:input port="source">
+      <p:pipe port="docs" step="file-iteration"/>
+    </p:input>
+    <p:with-option name="pipeline-step" select="'file-iteration-docs'"/>
+    <p:with-option name="active" select="$debug"/>
+    <p:with-option name="base-uri" select="$debug-dir-uri"/>
+  </tr:store-debug>
   <tr:apply-xsl-fixes name="apply-fixes">
     <p:input port="reports">
       <p:pipe port="result" step="wrap-errors"/>
@@ -320,7 +370,7 @@
   
   <p:sink name="sink5"/>
   
-  <p:insert name="insert-post-fix-svrl" position="last-child">
+  <p:insert name="insert-post-fix-svrl" position="last-child" match="/*">
     <p:input port="source">
       <p:pipe port="result" step="wrap-errors"/>
     </p:input>

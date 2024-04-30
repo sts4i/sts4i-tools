@@ -532,7 +532,7 @@
   
   <pattern id="change_markup_in_specififc-use">
     <rule id="change_markup_in_specififc-use_rule1" context="*[@specific-use]">
-      <report id="change_markup_in_specififc-use_r1" role="error" test="@specific-use = ('insert', 'delete')">
+      <report id="change_markup_in_specific-use_r1" role="error" test="@specific-use = ('insert', 'delete')">
         Attribute specific-use with value <value-of select="@specific-use"/> found in Element <name/>  
       </report>
     </rule>
