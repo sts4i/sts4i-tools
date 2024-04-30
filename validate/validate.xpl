@@ -345,10 +345,11 @@
       </p:when>
       <p:otherwise>
         <cx:namespace-delete prefixes="c" name="namespace-delete"/>
-        <cx:message>
+        <!--<cx:message>
           <p:with-option name="message" select="'PPPPPPPPPPP ', base-uri(/*)"/>
-        </cx:message>
+        </cx:message>-->
         <p:delete match="/*/@xml:base" name="delete-xml-base-attr"/>
+        <p:delete match="@srcpath" name="delete-srcpath"/>
         <p:store omit-xml-declaration="false">
           <p:with-option name="href" select="base-uri(/*)">
             <p:pipe port="result" step="namespace-delete"/>
