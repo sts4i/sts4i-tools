@@ -93,5 +93,11 @@
   </xsl:function>
 
   <xsl:variable name="dash-in-space-regex" as="xs:string" select="'[\p{Zs}\s]+\p{Pd}[\p{Zs}\s]+'"/>
+  
+  
+  <xsl:function name="isosts:is-legend-table" as="xs:boolean">
+    <xsl:param name="tw" as="element(table-wrap)"/>
+        <xsl:sequence select="exists($tw/caption/title[lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))])"/>
+  </xsl:function>
 
 </xsl:stylesheet>

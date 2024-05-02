@@ -109,4 +109,16 @@
      <xsl:apply-templates select="p[1]" mode="#current"/>
   </xsl:template>
   
+  
+  <xsl:template match="legend[*[1]/self::table-wrap/caption/title]
+    [isosts:is-legend-table(table-wrap[1])]" 
+    mode="table-wrap-title-to-legend">
+    <xsl:copy copy-namespaces="no">
+       <xsl:apply-templates select="@* except @position, table" mode="#current"/>
+      <array>
+        <xsl:apply-templates select="table-wrap[1]/(@* except @position, table)"/>
+      </array>
+    </xsl:copy>
+  </xsl:template>
+  
 </xsl:stylesheet>

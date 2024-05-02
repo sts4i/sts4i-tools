@@ -554,12 +554,21 @@
   <pattern id="sec-type_unintended_value">
     <rule id="sec-type_unintended_value_rule1" context="sec[@sec-type='titlepage']">
       <report id="sec-type_unintended_value_r1" role="error" test="true()">
-        '<value-of select="@sec-type"/>' is not an intended value for the attribute 'sec-type'
+        '<value-of select="@sec-type"/>' is not an intended value for the attribute 'sec-type'.
       <sc:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note-titlepage"/>
       </report>
     </rule>
   </pattern>
   
+  <pattern id="legend_title_in_table-wrap">
+    <rule id="legend_title_in_table-wrap_rule1" context="legend[*[1]/self::table-wrap/caption/title]
+    [isosts:is-legend-table(table-wrap[1])]">
+      <report id="legend_title_in_table-wrap_r1" role="error" test="true()">
+       Found 'legend' where 'title' is in 'table-wrap/caption'. 
+      <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="table-wrap-title-to-legend"/>
+      </report>
+    </rule>
+  </pattern>
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
