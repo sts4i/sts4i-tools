@@ -114,9 +114,9 @@
     [isosts:is-legend-table(table-wrap[1])]" 
     mode="table-wrap-title-to-legend">
     <xsl:copy copy-namespaces="no">
-       <xsl:apply-templates select="@* except @position, table" mode="#current"/>
+       <xsl:apply-templates select="@*" mode="#current"/>
       <array>
-        <xsl:apply-templates select="table-wrap[1]/(@* except @position, table)"/>
+        <xsl:apply-templates select="table-wrap[1]/(@* except @position, table)" mode="#current"/>
       </array>
     </xsl:copy>
   </xsl:template>
