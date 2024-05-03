@@ -3,7 +3,7 @@
   xmlns:isosts="http://www.iso.org/ns/isosts" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
-  exclude-result-prefixes="sc xs isosts" version="2.0">
+  exclude-result-prefixes="sc xs isosts" version="3.0">
 
   <xsl:import href="identity.xsl"/>
   <xsl:import href="../NISOSTS_lib.xsl"/>
@@ -24,28 +24,33 @@
   <xsl:template match="*[name() = ('title', 'th')][bold]" mode="bold-in-title">
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="#current"/>
-      <xsl:for-each-group select="node()" group-adjacent="isosts:title-node-type(., ())[1]">
-        <xsl:choose>
-          <xsl:when test="current-grouping-key() = 'ignorable'"/>
-          <xsl:when test="current-grouping-key() = 'bold'">
-            <xsl:apply-templates select="current-group()" mode="bold-in-title-with-formula"/>
-          </xsl:when>
-          <xsl:when test="current-grouping-key() = 'inline-formula'">
-            <xsl:if test="isosts:title-node-type(., ()) = 'ws'">
-              <xsl:value-of select="replace(., '^(\s+).+', '$1')"/>
-            </xsl:if>
-            <inline-formula>
-              <xsl:apply-templates select="current-group()" mode="bold-in-title-with-formula"/>  
-            </inline-formula>
-          </xsl:when>
-          <xsl:when test="current-grouping-key() = 'ws'">
-            <xsl:apply-templates select="current-group()" mode="bold-in-title"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates select="current-group()" mode="bold-in-title"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each-group>
+      <xsl:try>
+        <xsl:for-each-group select="node()" group-adjacent="isosts:title-node-type(., ())[1]">
+          <xsl:choose>
+            <xsl:when test="current-grouping-key() = 'ignorable'"/>
+            <xsl:when test="current-grouping-key() = 'bold'">
+              <xsl:apply-templates select="current-group()" mode="bold-in-title-with-formula"/>
+            </xsl:when>
+            <xsl:when test="current-grouping-key() = 'inline-formula'">
+              <xsl:if test="isosts:title-node-type(., ()) = 'ws'">
+                <xsl:value-of select="replace(., '^(\s+).+', '$1')"/>
+              </xsl:if>
+              <inline-formula>
+                <xsl:apply-templates select="current-group()" mode="bold-in-title-with-formula"/>  
+              </inline-formula>
+            </xsl:when>
+            <xsl:when test="current-grouping-key() = 'ws'">
+              <xsl:apply-templates select="current-group()" mode="bold-in-title"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="current-group()" mode="bold-in-title"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each-group>  
+        <xsl:catch>
+          <xsl:apply-templates mode="#current"/>
+        </xsl:catch>
+      </xsl:try>
     </xsl:copy>
   </xsl:template>
   
@@ -77,14 +82,17 @@
       <xsl:when test="empty($n)">
         <xsl:sequence select="'ws'"/>
       </xsl:when>
+      <xsl:when test="$n/self::break">
+        <xsl:sequence select="'ws'"/>
+      </xsl:when>
       <xsl:when test="$n[. is ../node()[1]][matches(., '^\s+$', 's')][following-sibling::bold]">
         <xsl:sequence select="'ignorable'"/>
       </xsl:when>
       <xsl:when test="$n[. is ../node()[last()]][matches(., '^\s+$', 's')]">
         <xsl:sequence select="'ignorable'"/>
       </xsl:when>
-      <xsl:when test="$n[matches(., '^\s+$', 's')][preceding-sibling::node()[1]/self::bold]
-                                                  [following-sibling::node()[1]/self::bold]">
+      <xsl:when test="$n[matches(., '^\s+$', 's')][preceding-sibling::node()[not(isosts:title-node-type(., (., $seen)) = ('ignorable', 'ws'))][1]/self::bold]
+                                                  [following-sibling::node()[not(isosts:title-node-type(., (., $seen)) = ('ignorable', 'ws'))][1]/self::bold]">
         <xsl:sequence select="'ws'"/>
       </xsl:when>
       <xsl:when test="$n/self::bold 
