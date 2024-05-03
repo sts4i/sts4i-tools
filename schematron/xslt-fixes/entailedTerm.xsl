@@ -3,6 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:tbx="urn:iso:std:iso:30042:ed-1"
   xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
   exclude-result-prefixes="sc xs" version="2.0">
 
   <xsl:import href="identity.xsl"/>
@@ -78,5 +79,10 @@
     <xsl:message select="'qqqqqqqqqqq'"></xsl:message>
     <xsl:apply-templates select="term-sec" mode="#current"/>
   </xsl:template>
-
+  
+  <xsl:template match="named-content [@content-type = 'term']" mode="named-content_content-type_term_to_entailedTerm">
+      <tbx:entailedTerm target="{replace(@xlink:href, '^#' , '')}">
+        <xsl:apply-templates mode="#current"/>
+        </tbx:entailedTerm>
+  </xsl:template>
 </xsl:stylesheet>

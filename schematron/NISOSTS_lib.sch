@@ -31,6 +31,7 @@
   <ns prefix="tr" uri="http://transpect.io"/>
   <ns prefix="tbx" uri="urn:iso:std:iso:30042:ed-1"/>
   <ns prefix="c" uri="http://www.w3.org/ns/xproc-step"/>
+  <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
   
   <let name="legend-content-type" value="'fig-index'"/>
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>  
@@ -533,7 +534,7 @@
   <pattern id="change_markup_in_specififc-use">
     <rule id="change_markup_in_specififc-use_rule1" context="*[@specific-use]">
       <report id="change_markup_in_specific-use_r1" role="error" test="@specific-use = ('insert', 'delete')">
-        Attribute specific-use with value <value-of select="@specific-use"/> found in Element <name/>  
+        Attribute specific-use with value <value-of select="@specific-use"/> found in Element <name/>
       </report>
     </rule>
   </pattern>
@@ -569,6 +570,33 @@
       </report>
     </rule>
   </pattern>
+  
+  <pattern id="entailedTerm_in_named-content">
+    <rule id="entailedTerm_in_named-content_rule1" context="named-content[@content-type = 'term']">
+      <report id="entailedTerm_in_named-content_r1" test="true()">
+        '<name/>' with '@content-type="term"' found instead of Element 'entailedTerm'
+        <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="named-content_content-type_term_to_entailedTerm"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  
+  <pattern id="NISO_disp-formula_alt-graphic">
+    <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula[mml:math]/graphic">
+      <report role="warning" id="NISO_disp-formula_alt-graphic_r1" test="true()">This is probably an alternative representation. Both should be wrapped in an alternatives element.
+      <sc:xsl-fix href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
+    </report>
+    </rule>    
+  </pattern>
+  
+  <pattern id="NISO_table-wrap_alt-graphic">
+    <rule id="NISO_table-wrap_alt-graphic_rule1" context="table-wrap[table]/graphic">
+      <report role="warning" id="NISO_table-wrap_alt-graphic_r1" test="true()">This is probably an alternative representation. Both should be wrapped in an alternatives element.
+      <sc:xsl-fix href="xslt-fixes/alternatives.xsl" mode="table-alternatives" depends-on="SN-key_location_r1"/>
+    </report>
+    </rule>    
+  </pattern>
+
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>

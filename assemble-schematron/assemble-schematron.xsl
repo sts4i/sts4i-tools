@@ -33,9 +33,13 @@
     <xsl:copy>
       <xsl:apply-templates select="@* | node() except sc:xsl-fix[$for-this]" mode="#current"/>
       <xsl:if test="$for-this">
-        <sc:xsl-fix>
-          <xsl:copy-of select="$xsl-fixes-for[tokenize(@rid) = current()/@id]/(@* except @rid)"/>
-        </sc:xsl-fix>  
+        <xsl:for-each select="$xsl-fixes-for[tokenize(@rid) = current()/@id]">
+          <sc:xsl-fix>
+            <xsl:attribute name="xml:base" select="base-uri(.)"/>
+            <xsl:copy-of select="@* except @rid"/>
+          </sc:xsl-fix>  
+        </xsl:for-each>
+          
       </xsl:if>
       <span class="srcpath"><xslout:value-of select="@srcpath"/></span>
       <span class="rule-base-uri"><xsl:value-of select="base-uri()"/></span>
