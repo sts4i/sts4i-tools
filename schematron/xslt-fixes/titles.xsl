@@ -185,17 +185,23 @@
     <xsl:variable name="split-full" as="element(full)">
       <xsl:apply-templates select="full" mode="title-wrap-only-full_sep"/>
     </xsl:variable>
+    <xsl:variable name="selected-sep" as="element(sep)" 
+      select="($split-full/sep[following-sibling::node()[1]/self::text()[matches(., '^(Part(ie)?|Teil)[\s\p{Zs}]+\d')]], $split-full/sep[1])[1]"/>
     <xsl:copy copy-namespaces="no">
       <main>
         <xsl:apply-templates select="main/@*" mode="#current"/>
-        <xsl:sequence select="$split-full/node()[following-sibling::sep]"/>
+        <xsl:apply-templates select="$split-full/node()[$selected-sep >> .]" mode="#current"/>
       </main>
       <compl>
         <xsl:apply-templates select="compl/@*" mode="#current"/>
-        <xsl:sequence select="$split-full/node()[preceding-sibling::sep]"/>
+        <xsl:apply-templates select="$split-full/node()[. >> $selected-sep]" mode="#current"/>
       </compl>
       <xsl:apply-templates select="*[empty(self::main | self::compl)]"/>
     </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="sep" mode="title-wrap-only-full">
+    <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
   <xsl:template match="text()[matches(., $dash-in-space-regex)][1]" mode="title-wrap-only-full_sep">
