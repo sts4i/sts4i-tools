@@ -171,8 +171,13 @@
         diagnostics="NISOSTS_fn-without-xref_1_de">Table-fn without referencing xref found. All table-fn must be referenced.</report>    </rule>
   </pattern>
   
-
-  
+  <pattern id="NISOSTS_BSI_bookmark_error">
+    <rule id="NISOSTS_BSI_bookmark_error_rule1" context="bold[sup[. = 'Error! Bookmark not defined.']]">
+      <report test="true()" role="error" id="NISOSTS_BSI_bookmark_error_r1">This error message ('<value-of select="string(sup)"/>') 
+        is probably not part of the standard’s content.</report>
+    </rule>
+  </pattern>
+    
   <pattern id="NISOSTS_table-cell-paras">
     <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
       <report test="text()[normalize-space()] | *[name() = $inline-element-names]" id="NISOSTS_table-cell-paras_mixed-p_r1"
@@ -540,11 +545,12 @@
   </pattern>
   
   <pattern id="main_in_title-wrap_empty">
-    <rule id="main_in_title-wrap_empty_rule1" context="title-wrap[empty(main/node())]
-                                 [empty(compl/node())]
-                                 [empty(main-title-wrap | compl-title-wrap | intro | intro-title-wrap)]
-                                 [matches(full, $dash-in-space-regex)]">
-      <report id="main_in_title-wrap_empty_r1" role="error" test="true()">
+    <rule id="main_in_title-wrap_empty_rule1" 
+          context="title-wrap[empty(main/node())]
+                             [empty(compl/node())]
+                             [empty(main-title-wrap | compl-title-wrap | intro | intro-title-wrap)]
+                             [matches(full, $dash-in-space-regex)]">
+      <report id="main_in_title-wrap_empty_r1" role="warning" test="true()">
        <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/>
         Element main in title-wrap is empty.
       </report>
