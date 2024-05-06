@@ -75,7 +75,7 @@
       <xsl:when test="$meta-elt/self::iso-meta">
         <xsl:sequence select="'international'"/>
       </xsl:when>
-      <xsl:when test="starts-with($originator, 'CEN')">
+      <xsl:when test="matches($originator, '^C?EN')">
         <xsl:sequence select="'regional'"/>
       </xsl:when>
       <xsl:when test="matches($originator, '(^ISO|IEC)')">
