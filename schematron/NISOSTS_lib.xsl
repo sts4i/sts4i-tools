@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:isosts="http://www.iso.org/ns/isosts" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tr= "http://transpect.io"
   version="2.0" exclude-result-prefixes="xs isosts">
   
   <xsl:param name="fail-on-error" select="'yes'"/>
@@ -100,5 +101,30 @@
     <xsl:param name="tw" as="element(table-wrap)"/>
         <xsl:sequence select="exists($tw/caption/title[lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))])"/>
   </xsl:function>
-
+  
+  <xsl:function name="isosts:numbering-type" as="xs:string">
+    <xsl:param name="marker" as="xs:string"/>
+        <xsl:choose>
+          <xsl:when test="matches($marker, '^[A-Z]$')">
+            <xsl:sequence select="'upper-alpha'"></xsl:sequence>
+          </xsl:when>
+          <xsl:when test="matches($marker, '^[a-z]$')">
+            <xsl:sequence select="'lower-alpha'"></xsl:sequence>
+          </xsl:when>
+          <!-- <xsl:when test="matches($marker,'')">
+            <xsl:sequence select="'upper-roman'"></xsl:sequence>
+          </xsl:when>
+          <xsl:when test="matches($marker, '')">
+            <xsl:sequence select="'lower-roman'"></xsl:sequence>
+          </xsl:when> -->
+          <xsl:when test="matches($marker, '^\d+$')">
+            <xsl:sequence select="'arabic'"></xsl:sequence>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:sequence select="'lower-alpha'"></xsl:sequence>
+          </xsl:otherwise>
+        </xsl:choose>
+  </xsl:function>
+  
+ 
 </xsl:stylesheet>

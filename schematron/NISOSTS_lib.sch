@@ -146,7 +146,7 @@
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups.
-      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn" depends-on="NISOSTS_table-key-in-footnotes_r1"/>
+      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn" depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -602,7 +602,16 @@
     </report>
     </rule>    
   </pattern>
-
+  
+  <pattern id="continuation_footnotes">
+    <rule id="continuation_footnotes_rule1" context="table-wrap-foot | fn-group">
+      <report test="fn[position() gt 1][empty(label)][preceding-sibling::fn[label]]" id="continuation_footnotes_r1">
+        This footnote has no label. Is it a continuation footnote?
+        
+      </report>
+    </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
