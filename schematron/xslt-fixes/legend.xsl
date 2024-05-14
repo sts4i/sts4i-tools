@@ -3,7 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
   xmlns:isosts="http://www.iso.org/ns/isosts" 
-  exclude-result-prefixes="sc xs" version="2.0">
+  exclude-result-prefixes="sc xs" version="3.0">
 
   <xsl:import href="identity.xsl"/>
   <xsl:import href="../NISOSTS_lib.xsl"/>
@@ -120,5 +120,50 @@
       </array>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="fig[def-list/title = isosts:i18n-strings('key-heading', .) 
+    or def-list/@list-content='figure']" 
+    mode="legends">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@* ,editing-instructions,
+        object-id, label, caption" mode="#current"/>
+    <legend>
+       <xsl:apply-templates select="def-list/title" mode="#current"/>
+      <def-list>
+      <xsl:apply-templates select="def-list/@*, def-list/* except (def-list/title)" mode="#current"/>
+      </def-list>
+    </legend>
+       <xsl:apply-templates select="node() except (editing-instructions,
+        object-id, label, caption, def-list)" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="fig[table-wrap/@content-type='key']
+    [table-wrap[empty(caption/title)]]" 
+    mode="legend_title_in_table">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@* ,editing-instructions,
+        object-id, label, caption" mode="#current"/>
+      <legend>
+        <xsl:variable name="title"
+          select="table-wrap/(table/(thead | tbody)/tr[1])[1][lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"/>
+        <xsl:if test="$title">
+          <title>
+            <xsl:value-of select="$title"/>
+          </title>
+        </xsl:if>
+        <table-wrap>
+          <xsl:apply-templates select="table-wrap/@*, table-wrap/*" mode="#current"/>
+        </table-wrap>
+      </legend>
+       <xsl:apply-templates select="node() except (editing-instructions,
+        object-id, label, caption, table-wrap)" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
+                                            [lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]" 
+    mode="legend_title_in_table"/>
+    
   
 </xsl:stylesheet>

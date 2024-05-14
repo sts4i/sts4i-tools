@@ -190,15 +190,19 @@
     <xsl:copy copy-namespaces="no">
       <main>
         <xsl:apply-templates select="main/@*" mode="#current"/>
-        <xsl:apply-templates select="$split-full/node()[$selected-sep >> .]" mode="#current"/>
+        <xsl:apply-templates select="$split-full/node()[$selected-sep >> .]" mode="strip_ids"/>
       </main>
       <compl>
         <xsl:apply-templates select="compl/@*" mode="#current"/>
-        <xsl:apply-templates select="$split-full/node()[. >> $selected-sep]" mode="#current"/>
+        <xsl:apply-templates select="$split-full/node()[. >> $selected-sep]" mode="strip_ids"/>
       </compl>
       <xsl:apply-templates select="*[empty(self::main | self::compl)]"/>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="@id" mode="strip_ids"/>
+    
+  
   
   <xsl:template match="sep" mode="title-wrap-only-full">
     <xsl:apply-templates mode="#current"/>

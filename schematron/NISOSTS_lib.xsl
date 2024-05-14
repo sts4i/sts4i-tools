@@ -27,12 +27,14 @@
           <isosts:translation xml:lang="de">Anhang</isosts:translation>
           <isosts:translation xml:lang="fr">Annexe</isosts:translation>
           <isosts:translation xml:lang="nl">Aanhang</isosts:translation>
+          <isosts:translation xml:lang="ru">Приложение</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-type-informative">
           <isosts:translation xml:lang="en">informative</isosts:translation>
           <isosts:translation xml:lang="de">informativ</isosts:translation>
           <isosts:translation xml:lang="fr">informative</isosts:translation>
           <isosts:translation xml:lang="nl">informatief</isosts:translation>
+          <isosts:translation xml:lang="ru">справочное</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-type-normative">
           <isosts:translation xml:lang="en">normative</isosts:translation>
@@ -43,6 +45,10 @@
       </isosts:i18n>    
     </xsl:document>
   </xsl:variable>
+  
+  <xsl:variable name="table_label_regEx" select="'^\s*(Table(au)?|Таблица|Tabel(le)?)[\s\p{Zs}]+'"/>
+  
+  <xsl:variable name="figur_label_regEx" select="'^\s*(Figure|Bild|Figuur|Рисунок)[\s\p{Zs}]+'"/>
   
   <xsl:key name="i18n" match="isosts:string/isosts:translation" use="string-join((../@name, @xml:lang), '__')"/>
   
@@ -103,7 +109,7 @@
   </xsl:function>
   
   <xsl:function name="isosts:numbering-type" as="xs:string">
-    <xsl:param name="marker" as="xs:string"/>
+    <xsl:param name="marker" as="xs:string*"/>
         <xsl:choose>
           <xsl:when test="matches($marker, '^[A-Z]$')">
             <xsl:sequence select="'upper-alpha'"></xsl:sequence>

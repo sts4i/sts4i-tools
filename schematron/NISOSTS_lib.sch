@@ -612,6 +612,24 @@
     </rule>
   </pattern>
   
+  <pattern id="legend_is_table">
+    <rule id="legend_is_table_rule1" context="fig/table-wrap [@content-type='key'][empty(caption/title)]
+      [(table/(thead | tbody)/tr[1])[1]/*[1] ! normalize-space(.) ! lower-case(.) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]">
+      <report test="true()" 
+        id="legend_is_table_r1">
+        table-wrap appears to be a legend with a title inside a td
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
+      </report>
+    </rule>
+      <rule id="legend_is_table_rule2" context="fig/table-wrap [@content-type='key'][empty(caption/title)]">
+      <report test="true()" 
+        id="legend_is_table_r2">
+        table-wrap appears to be a legend without a title
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
+      </report>
+      </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>
