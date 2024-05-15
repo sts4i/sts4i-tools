@@ -146,7 +146,7 @@
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups.
-      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn" depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1"/>
+      <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn" depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1 duplicate_fn_marker_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -628,6 +628,16 @@
         <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
       </report>
       </rule>
+  </pattern>
+  
+  <pattern id="disp-formula_in_p_with_table-wrap_legend">
+    <rule id="disp-formula_in_p_with_table-wrap_legend_rule1" context="p[@style-type='indent']
+      [following-sibling::*[1]/self::table-wrap[@content-type='formula-index']]">
+      <report id="disp-formula_in_p_with_table-wrap_legend_r1" test="true()">
+        This seems to be a disp-formula with legend. Please mark it up accordingly.
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_with_legend_from_p"/>
+      </report>
+    </rule>
   </pattern>
   
   

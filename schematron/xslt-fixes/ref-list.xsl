@@ -45,9 +45,9 @@
   </xsl:template>
   
   <xsl:template match="back/ref-list/title" mode="put-into-app"/>
-  <xsl:template match="ref-list/@content-type['bibl']" mode="put-into-app"/>
+<!--  <xsl:template match="ref-list/@content-type['bibl']" mode="put-into-app"/>-->
   <xsl:template match="ref-list/title" mode="rmv-ref-list-title"/>
-  <xsl:template match="ref-list/@content-type['bibl']" mode="rmv-ref-list-title"/>
+<!--  <xsl:template match="ref-list/@content-type['bibl']" mode="rmv-ref-list-title"/>-->
 
 <!-- ref-list als Kind von app in einer app-group, aber @content-type fehlt an app  -->
   
