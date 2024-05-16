@@ -204,7 +204,7 @@
     
   
   
-  <xsl:template match="sep" mode="title-wrap-only-full">
+  <xsl:template match="sep" mode="title-wrap-only-full strip_ids">
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
 

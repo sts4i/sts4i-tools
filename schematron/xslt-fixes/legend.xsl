@@ -3,7 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
   xmlns:isosts="http://www.iso.org/ns/isosts" 
-  exclude-result-prefixes="sc xs" version="3.0">
+  exclude-result-prefixes="sc xs isosts" version="3.0">
 
   <xsl:import href="identity.xsl"/>
   <xsl:import href="../NISOSTS_lib.xsl"/>
@@ -164,6 +164,97 @@
   <xsl:template match="table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
                                             [lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]" 
     mode="legend_title_in_table"/>
-    
+  
+  <xsl:template mode="disp-formula_with_legend_from_p" match="p[@style-type='indent']
+      [following-sibling::*[1]/self::table-wrap[@content-type='formula-index']]">
+      <disp-formula>
+       <xsl:apply-templates mode="#current" select="@* except @style-type, node()"/>
+        <xsl:apply-templates mode="disp-formula_table-wrap_to_legend_from_p" select="following-sibling::*[1]"/>
+      </disp-formula>
+  </xsl:template>
+  
+  <xsl:template mode="disp-formula_with_legend_from_p" match="table-wrap[@content-type='formula-index']
+     [preceding-sibling::*[1]/self::p[@style-type='indent']]"/>
+  
+  <xsl:template mode="disp-formula_table-wrap_to_legend_from_p" match="table-wrap[@content-type='formula-index']
+     [preceding-sibling::*[1]/self::p[@style-type='indent']]
+     [caption/title]">
+    <legend>
+        <xsl:apply-templates mode="#current" select="caption/title"/>
+      <xsl:copy copy-namespaces="no">
+        <xsl:apply-templates mode="#current" select="@*, node() except caption"/>
+      </xsl:copy>
+    </legend>
+  </xsl:template>
+  
+  <xsl:template mode="disp-formula_add_legend_from_array" match="disp-formula
+    [following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]][following-sibling::*[2]/self::array]">
+    <xsl:copy>
+      <xsl:apply-templates mode="#current" select="@*, node()"/>
+      <legend>
+        <title>
+        <xsl:value-of select="following-sibling::*[1]"/>
+        </title>
+        <xsl:apply-templates mode="disp-formula_add_array" select="following-sibling::*[2]"/>
+      </legend>
+      </xsl:copy>
+  </xsl:template>
+  
+  
+  <xsl:template mode="disp-formula_add_legend_from_array" match="array
+    [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]]
+    [preceding-sibling::*[2]/self::disp-formula]"/>
+  
+    <xsl:template mode="disp-formula_add_legend_from_array" match="p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]
+      [following-sibling::*[1]/self::array]
+      [preceding-sibling::*[1]/self::disp-formula]"/>
+      
+ 
+  <xsl:template mode="disp-formula_add_legend_from_table-wrap" match="disp-formula
+     [following-sibling::*[1]/self::table-wrap[@content-type='formula-index']]">
+    <xsl:copy>
+      <xsl:apply-templates mode="#current" select="@*, node()"/>
+      <xsl:apply-templates mode="disp-formula_add_table-wrap_to_legend" select="following-sibling::*[1]"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template mode="disp-formula_add_legend_from_table-wrap" match="table-wrap[@content-type='formula-index']
+     [preceding-sibling::*[1]/self::disp-formula]"/>
+  
+  <xsl:template mode="disp-formula_add_table-wrap_to_legend" match="table-wrap[@content-type='formula-index']
+     [preceding-sibling::*[1]/self::disp-formula]
+     [caption/title]">
+    <legend>
+      <xsl:apply-templates mode="#current" select="caption/title"/>
+      <xsl:copy copy-namespaces="no">
+        <xsl:apply-templates mode="#current" select="@*, node() except caption"/>
+      </xsl:copy>
+    </legend>
+  </xsl:template>
+  
+ <xsl:template mode=" disp-formula_add_legend_from_def-list" match="disp-formula
+    [../self::p/following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]][../self::p/following-sibling::*[2]/self::def-list]">
+    <xsl:copy>
+      <xsl:apply-templates mode="#current" select="@*, node()"/>
+      <legend>
+        <title>
+        <xsl:value-of select="../following-sibling::*[1]"/>
+        </title>
+        <xsl:apply-templates mode="disp-formula_add_def-ist" select="../following-sibling::*[2]"/>
+      </legend>
+      </xsl:copy>
+  </xsl:template>
+  
+  
+  <xsl:template mode=" disp-formula_add_legend_from_def-list" match="def-list
+    [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]][preceding-sibling::*[2]/self::p/disp-formula]"/>
+  
+    <xsl:template mode=" disp-formula_add_legend_from_def-list" match="p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]
+      [following-sibling::*[1]/self::def-list]
+      [preceding-sibling::*[1]/self::p/disp-formula]"/>
+ 
+ 
+ 
+ 
   
 </xsl:stylesheet>

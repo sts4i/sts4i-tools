@@ -640,6 +640,40 @@
     </rule>
   </pattern>
   
+  <pattern id="disp-formula_with_array_legend">
+    <rule id="disp-formula_with_array_legend_rule1" context="array
+    [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]][preceding-sibling::*[2]/self::disp-formula]">
+      <report id="disp-formula_with_array_legend_r1" test="true()">
+        Put this '<name/>' into a 'legend' element inside the preceding 'disp-formula'.
+        The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found in the preceding 'p'.
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_array"/>
+      </report>
+    </rule>
+  </pattern>
+  
+   <pattern id="disp-formula_with_table-wrap_legend">
+    <rule id="disp-formula_with_table-wrap_legend_rule1" context="table-wrap[@content-type='formula-index']
+     [preceding-sibling::*[1]/self::disp-formula]
+     [caption/title]">
+      <report id="disp-formula_with_table-wrap_legend_r1" test="true()">
+        Put this '<name/>' into a 'legend' element inside the preceding 'disp-formula'.
+        The 'title' schould be "<value-of select="caption/title"/>" and is found in 'caption/title'.
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_table-wrap"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="disp-formula_with_def-list_legend">
+    <rule id="disp-formula_with_def-list_legend_rule1" context="def-list
+    [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .) , 'i')]][preceding-sibling::*[2]/self::p/disp-formula]">
+      <report id="disp-formula_with_def-list_legend_r1" test="true()">
+        Put this '<name/>' into a 'legend' element inside the preceding 'disp-formula'.
+        The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found in the preceding 'p'.
+        <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_def-list"/>
+      </report>
+    </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende) sein?</diagnostic>

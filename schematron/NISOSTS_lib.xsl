@@ -42,6 +42,12 @@
           <isosts:translation xml:lang="fr">normative</isosts:translation>
           <isosts:translation xml:lang="nl">normatief</isosts:translation>
         </isosts:string>
+        <isosts:string name="where-heading">
+          <isosts:translation xml:lang="en">where</isosts:translation>
+          <isosts:translation xml:lang="de">Dabei ist</isosts:translation>
+          <isosts:translation xml:lang="fr">où</isosts:translation>
+          <isosts:translation xml:lang="nl">waarin</isosts:translation>
+        </isosts:string>
       </isosts:i18n>    
     </xsl:document>
   </xsl:variable>

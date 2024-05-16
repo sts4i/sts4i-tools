@@ -9,7 +9,7 @@
   the DTDs and appropriate catalog resolution (see xmlcatalog/catalog.xml). -->
   
   <xsl:output
-    doctype-public="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v0.2 20170331//EN"
+    doctype-public="-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.2 20221031//EN"
     doctype-system="NISO-STS-interchange-1-mathml3.dtd"/>
 
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
