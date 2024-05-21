@@ -99,5 +99,8 @@
   </xsl:template>
   
   <xsl:template match="nat-meta/@originator | reg-mata/@originator" mode="legacy-meta"/>
+  
+  <xsl:template match="doc-ident" mode="remove_doc-ident"/>
+
 
 </xsl:stylesheet>
