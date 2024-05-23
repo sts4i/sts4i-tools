@@ -40,68 +40,68 @@
     </define>
     
     <define name="schema">
-    <element name="schema">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <ref name="rich"/>
-      <optional>
-        <attribute name="schemaVersion">
-          <ref name="non-empty-string"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="defaultPhase">
-          <data type="IDREF"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="queryBinding">
-          <ref name="non-empty-string"/>
-        </attribute>
-      </optional>
-      <interleave>
-        <ref name="foreign"/>
-        <zeroOrMore>
-          <ref name="inclusion"/>
-        </zeroOrMore>
+      <element name="schema">
         <optional>
-          <ref name="top-level-extends"/>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
         </optional>
-        <group>
+        <ref name="rich"/>
+        <optional>
+          <attribute name="schemaVersion">
+            <ref name="non-empty-string"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="defaultPhase">
+            <data type="IDREF"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="queryBinding">
+            <ref name="non-empty-string"/>
+          </attribute>
+        </optional>
+        <interleave>
+          <ref name="foreign"/>
+          <zeroOrMore>
+            <ref name="inclusion"/>
+          </zeroOrMore>
           <optional>
-            <ref name="title"/>
+            <ref name="top-level-extends"/>
           </optional>
-          <zeroOrMore>
-            <ref name="ns"/>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="p"/>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="let"/>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="phase"/>
-          </zeroOrMore>
-          <oneOrMore>
-            <ref name="pattern"/>
-          </oneOrMore>
-          <zeroOrMore>
-            <ref name="p"/>
-          </zeroOrMore>
-          <optional>
-            <ref name="diagnostics"/>
-          </optional>
-          <optional>
-            <ref name="properties"/>
-          </optional>
-        </group>
-      </interleave>
-    </element>
-  </define>
+          <group>
+            <optional>
+              <ref name="title"/>
+            </optional>
+            <zeroOrMore>
+              <ref name="ns"/>
+            </zeroOrMore>
+            <zeroOrMore>
+              <ref name="p"/>
+            </zeroOrMore>
+            <zeroOrMore>
+              <ref name="let"/>
+            </zeroOrMore>
+            <zeroOrMore>
+              <ref name="phase"/>
+            </zeroOrMore>
+            <oneOrMore>
+              <ref name="pattern"/>
+            </oneOrMore>
+            <zeroOrMore>
+              <ref name="p"/>
+            </zeroOrMore>
+            <optional>
+              <ref name="diagnostics"/>
+            </optional>
+            <optional>
+              <ref name="properties"/>
+            </optional>
+          </group>
+        </interleave>
+      </element>
+    </define>
   </include>
   
   <define name="assert-report-model" ns="http://purl.oclc.org/dsdl/schematron">
