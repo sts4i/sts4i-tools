@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar 
+    xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <include href="../schematron/schematron.rng">
+    <define name="foreign-element">
+      <element>
+        <anyName>
+          <except>
+            <nsName ns="http://purl.oclc.org/dsdl/schematron"/>
+            <nsName ns="http://transpect.io/schematron-batch-fix"/>
+          </except>
+        </anyName>
+        <zeroOrMore>
+          <choice>
+            <attribute>
+              <anyName/>
+            </attribute>
+            <ref name="foreign-element"/>
+            <ref name="schema"/>
+            <text/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    </include>
+  
+    <define name="xsl-fix">
+        <element name="xsl-fix" ns="http://transpect.io/schematron-batch-fix">
+          <attribute name="href">
+            <ref name="uriValue"/> 
+          </attribute>
+            <attribute name="mode">
+              <data type="NMTOKEN"/> 
+            </attribute>
+            <optional>
+            <attribute name="depends-on">
+              <data type="NMTOKENS"/> 
+            </attribute>  
+            </optional>
+            <zeroOrMore>
+             <element name="param" ns="http://transpect.io/schematron-batch-fix">
+                 <attribute name="name">
+                   <data type="NMTOKEN"/> 
+                 </attribute>
+                 <attribute name="value">
+                     <ref name="non-empty-string"/>
+                 </attribute>
+             </element>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="report" combine="interleave">
+       <zeroOrMore>
+           <ref name="xsl-fix"/>
+       </zeroOrMore>
+    </define>
+    <define name="assert" combine="interleave">
+        <zeroOrMore>
+            <ref name="xsl-fix"/>
+        </zeroOrMore>
+    </define>
+  
+  <define name="sbf_extends">
+    <element name="extends" ns="http://transpect.io/schematron-batch-fix">
+    <attribute name="href">
+      <ref name="uriValue"/> 
+    </attribute>
+      <zeroOrMore>
+      <ref name="sbf_pattern"/>
+      <ref name="xsl-fix-for"/>
+      <ref name="dependency"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sbf_pattern">
+    <element name="pattern" ns="http://transpect.io/schematron-batch-fix">
+      <attribute name="selected-alternative">
+        <data type="IDREF"/>
+      </attribute>
+    </element>
+  </define>
+  <define name="xsl-fix-for">
+    <element name="xsl-fix-for" ns="http://transpect.io/schematron-batch-fix">
+      <attribute name="rid">
+        <data type="IDREF"/>
+      </attribute>
+      <attribute name="href">
+        <ref name="uriValue"/> 
+      </attribute>
+      <attribute name="mode">
+        <data type="NMTOKEN"/> 
+      </attribute>
+    </element>
+  </define>
+  <define name="dependency">
+    <element name="dependency" ns="http://transpect.io/schematron-batch-fix">
+      <attribute name="fix-for">
+        <data type="IDREF"/>
+      </attribute>
+      <attribute name="depends-on">
+        <data type="IDREFS"/>
+      </attribute>  
+    </element>
+  </define>
+  
+</grammar>
