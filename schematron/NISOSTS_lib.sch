@@ -599,8 +599,8 @@
 
   <pattern id="sec-type_unintended_value">
     <rule id="sec-type_unintended_value_rule1" context="sec[@sec-type = 'titlepage']">
-      <report id="sec-type_unintended_value_r1" role="error" test="true()"> '<value-of select="@sec-type"/>' is not an
-        intended value for the attribute 'sec-type'. <sc:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note-titlepage"/>
+      <report id="sec-type_unintended_value_r1" role="warning" test="true()"> '<value-of select="@sec-type"/>' is not an
+        intended value for the attribute 'sec-type'. <sc:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note"/>
       </report>
     </rule>
   </pattern>
@@ -627,7 +627,7 @@
 
 
   <pattern id="NISO_disp-formula_alt-graphic">
-    <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula[mml:math][graphic]">
+    <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula [mml:math][graphic]">
       <report role="warning" id="NISO_disp-formula_alt-graphic_r1" test="true()">This is probably an alternative
         representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
@@ -727,7 +727,7 @@
   </pattern>
 
   <pattern id="deprecated_doc-ident">
-    <rule id="deprecated_doc-ident_rule1" context="doc-ident">
+    <rule id="deprecated_doc-ident_rule1" context="doc-ident[sdo]">
       <report id="deprecated_doc-ident_r1" test="true()"> Please use std-ident since doc-ident will be deprecated in
         future NISO STS versions. <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="remove_doc-ident"/>
       </report>
@@ -759,6 +759,9 @@
       </report>
     </rule>
   </pattern>
+  
+ 
+
 
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)

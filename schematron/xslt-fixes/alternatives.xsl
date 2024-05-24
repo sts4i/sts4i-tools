@@ -11,7 +11,7 @@
   
  
  
-  <xsl:template match="disp-formula[mml:math][graphic] | disp-formula[mml:math][inline-graphic]" mode="formula-alternatives">
+  <xsl:template match="disp-formula[mml:math][graphic | inline-graphic]" mode="formula-alternatives">
      <xsl:copy>
         <xsl:apply-templates select="@* , node() except(mml:math | graphic | inline-graphic)" mode="#current"/>
       <alternatives>

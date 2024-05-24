@@ -11,7 +11,7 @@
   
     <xsl:template match="std-meta[custom-meta-group]
                                [following-sibling::sec[@sec-type='titlepage'][empty(label/node())]]/custom-meta-group"
-                mode="meta-note-titlepage">
+                mode="meta-note">
     <meta-note content-type="standard.text">
       <xsl:apply-templates select="../following-sibling::sec[@sec-type='titlepage']/node()" mode="#current"/>
     </meta-note>
@@ -20,7 +20,7 @@
   
   <xsl:template match="std-meta[not(custom-meta-group)]
                                [following-sibling::sec[@sec-type='titlepage'][empty(label/node())]]"
-                mode="meta-note-titlepage">
+                mode="meta-note">
       <xsl:copy copy-namespaces="no">
           <xsl:apply-templates mode="#current"/>
          <meta-note content-type="standard.text">
@@ -31,10 +31,11 @@
 
   <xsl:template match="sec[@sec-type='titlepage'][empty(label/node())]
                           [preceding-sibling::std-meta]"
-                mode="meta-note-titlepage"/>
+                mode="meta-note"/>
   
   <xsl:template match="sec[@sec-type='titlepage'][empty(label/node())]
                           [preceding-sibling::std-meta]/label"
-                mode="meta-note-titlepage"/>
+                mode="meta-note"/>
+  
 
 </xsl:stylesheet>
