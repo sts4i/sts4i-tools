@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:sbf="http://transpect.io/schematron-batch-fix"
   xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
   xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
   xmlns:ttt="http://transpect.io/tokenized-to-tree" xmlns:c="http://www.w3.org/ns/xproc-step"
@@ -218,7 +218,7 @@
                     <xsl:apply-templates select="node() | @*"/>
                   </xsl:copy>
                 </xsl:template>
-                <xsl:template match="sc:xsl-fix">
+                <xsl:template match="sbf:xsl-fix">
                   <xsl:copy>
                     <xsl:attribute name="test-id" select="parent::svrl:text/../@id"/>
                     <xsl:copy-of select="@*, node()"/>
@@ -278,7 +278,7 @@
               <xsl:apply-templates select="node() | @*"/>
             </xsl:copy>
           </xsl:template>
-          <xsl:template match="sc:xsl-fix">
+          <xsl:template match="sbf:xsl-fix">
             <xsl:copy>
               <xsl:attribute name="test-id" select="../@id"/>
               <xsl:copy-of select="@*, node()"/>

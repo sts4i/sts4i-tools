@@ -2,7 +2,7 @@
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:c="http://www.w3.org/ns/xproc-step"
-  xmlns:sc="http://transpect.io/schematron-config"
+  xmlns:sbf="http://transpect.io/schematron-batch-fix"
   xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:s="http://purl.oclc.org/dsdl/schematron"
@@ -313,7 +313,7 @@
     </xsl:for-each-group>
   </xsl:template>
   
-  <xsl:template match="svrl:schematron-output/sc:xsl-fix" mode="#default"/>
+  <xsl:template match="svrl:schematron-output/sbf:xsl-fix" mode="#default"/>
   
   <xsl:template match="sch:span[@class = 'srcfile']" mode="#default"/>
 
