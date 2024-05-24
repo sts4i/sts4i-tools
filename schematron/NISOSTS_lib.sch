@@ -625,9 +625,8 @@
     </rule>
   </pattern>
 
-
   <pattern id="NISO_disp-formula_alt-graphic">
-    <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula [mml:math][graphic]">
+    <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula[mml:math]/graphic">
       <report role="warning" id="NISO_disp-formula_alt-graphic_r1" test="true()">This is probably an alternative
         representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
@@ -636,7 +635,7 @@
   </pattern>
   
    <pattern id="NISO_disp-formula_alt-inline-graphic">
-    <rule id="NISO_disp-formula_alt-inline-graphic_rule1" context="disp-formula[mml:math][inline-graphic]">
+    <rule id="NISO_disp-formula_alt-inline-graphic_rule1" context="disp-formula[mml:math]/inline-graphic">
       <report role="warning" id="NISO_disp-formula_alt-inline-graphic_r1" test="true()">This is probably an alternative
         representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
@@ -644,7 +643,6 @@
     </rule>
   </pattern>
   
-
   <pattern id="NISO_table-wrap_alt-graphic">
     <rule id="NISO_table-wrap_alt-graphic_rule1" context="table-wrap[table]/graphic">
       <report role="warning" id="NISO_table-wrap_alt-graphic_r1" test="true()">This is probably an alternative

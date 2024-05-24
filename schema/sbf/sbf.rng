@@ -102,6 +102,105 @@
         </interleave>
       </element>
     </define>
+    
+    <define name="pattern">
+    <element name="pattern">
+      <optional>
+        <attribute name="documents">
+          <ref name="pathValue"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:base">
+          <ref name="uriValue"/>
+        </attribute>
+      </optional>
+      <ref name="rich"/>
+      <interleave>
+        <ref name="foreign"/>
+        <zeroOrMore>
+          <ref name="inclusion"/>
+        </zeroOrMore>
+        <choice>
+          <group>
+            <attribute name="abstract">
+              <value>true</value>
+            </attribute>
+            <attribute name="id">
+              <data type="ID"/>
+            </attribute>
+            <optional>
+              <ref name="title"/>
+            </optional>
+            <group>
+              <zeroOrMore>
+                <ref name="p"/>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="let"/>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="rule"/>
+              </zeroOrMore>
+            </group>
+          </group>
+          <group>
+            <optional>
+              <attribute name="abstract">
+                <value>false</value>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="id">
+                <data type="ID"/>
+              </attribute>
+            </optional>
+            <optional>
+              <ref name="title"/>
+            </optional>
+            <group>
+              <zeroOrMore>
+                <ref name="p"/>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="let"/>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="rule"/>
+              </zeroOrMore>
+            </group>
+          </group>
+          <group>
+            <optional>
+              <attribute name="abstract">
+                <value>false</value>
+              </attribute>
+            </optional>
+            <attribute name="is-a">
+              <data type="IDREF"/>
+            </attribute>
+            <optional>
+              <attribute name="id">
+                <data type="ID"/>
+              </attribute>
+            </optional>
+            <optional>
+              <ref name="title"/>
+            </optional>
+            <group>
+              <zeroOrMore>
+                <ref name="p"/>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="param"/>
+              </zeroOrMore>
+            </group>
+          </group>
+        </choice>
+      </interleave>
+    </element>
+  </define>
+    
   </include>
   
   <define name="assert-report-model" ns="http://purl.oclc.org/dsdl/schematron">
@@ -167,24 +266,28 @@
           <attribute name="name">
             <data type="NMTOKEN"/>
           </attribute>
-          <attribute name="value">
-            <ref name="non-empty-string"/>
-          </attribute>
+          <element name="value-of" ns="http://www.w3.org/1999/XSL/Transform">
+            <attribute name="select">
+               <data type="string" datatypeLibrary=""/>
+            </attribute>
+          </element>
         </element>
       </zeroOrMore>
     </element>
   </define>
   
   <define name="top-level-extends">
-    <element name="extends" ns="http://purl.oclc.org/dsdl/schematron">
+    <element name="extends" ns="http://transpect.io/schematron-batch-fix">
       <attribute name="href">
         <ref name="uriValue"/>
       </attribute>
       <zeroOrMore>
+        <choice>
         <ref name="sbf_pattern"/>
         <ref name="xsl-fix-for"/>
         <ref name="dependency"/>
-      </zeroOrMore>
+        </choice>
+      </zeroOrMore> 
     </element>
   </define>
   
@@ -197,14 +300,14 @@
   <define name="sbf_pattern">
     <element name="pattern" ns="http://transpect.io/schematron-batch-fix">
       <attribute name="selected-alternative">
-        <data type="IDREF"/>
+        <data type="NMTOKEN"/>
       </attribute>
     </element>
   </define>
   <define name="xsl-fix-for">
     <element name="xsl-fix-for" ns="http://transpect.io/schematron-batch-fix">
       <attribute name="rid">
-        <data type="IDREF"/>
+        <data type="NMTOKEN"/>
       </attribute>
       <attribute name="href">
         <ref name="uriValue"/> 
@@ -217,10 +320,10 @@
   <define name="dependency">
     <element name="dependency" ns="http://transpect.io/schematron-batch-fix">
       <attribute name="fix-for">
-        <data type="IDREF"/>
+        <data type="NMTOKEN"/>
       </attribute>
       <attribute name="depends-on">
-        <data type="IDREFS"/>
+        <data type="NMTOKENS"/>
       </attribute>  
     </element>
   </define>
