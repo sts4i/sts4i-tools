@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2" xml:lang="en"
   xmlns:isosts="http://www.iso.org/ns/isosts" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:sc="http://transpect.io/schematron-config" xmlns:c="http://www.w3.org/ns/xproc-step"
+  xmlns:sbf="http://transpect.io/schematron-batch-fix" xmlns:c="http://www.w3.org/ns/xproc-step"
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process" xmlns:tr="http://transpect.io">
 
   <!-- Copyright 2017–2024 ISO and contributors
@@ -76,7 +76,7 @@
   <pattern id="legacy-meta">
     <rule id="legacy-meta_rule1" context="nat-meta | reg-meta | iso-meta">
       <assert test="name() = 'std-meta'" id="legacy-meta_a1" role="error">Please use std-meta since <name/> will be
-        deprecated in future NISO STS versions. <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="legacy-meta"
+        deprecated in future NISO STS versions. <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="legacy-meta"
           depends-on="deprecated_doc-ident_r1"/>
       </assert>
     </rule>
@@ -87,12 +87,12 @@
     <p>Prior to NISO STS 1.2, there was no optimal or canonical way to place keys to figures yet.</p>
     <rule id="SN-key_location" context="fig/non-normative-note[@content-type = 'explanatory']">
       <report test="true()" id="SN-key_location_r1">The legend needs to go into a NISO STS 1.2 legend element.
-          <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="SN-legends"/></report>
+          <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="SN-legends"/></report>
     </rule>
     <rule id="NISOSTS_table-key-in-footnotes_rule1"
       context="table-wrap-foot[fn[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))]]">
       <report test="true()" role="error" id="NISOSTS_table-key-in-footnotes_r1"> Table key seems to be encoded in
-        table-footnotes. <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="table-key"/>
+        table-footnotes. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="table-key"/>
       </report>
     </rule>
     <rule id="key_location" context="fig/*[not(name() = ('label', 'caption', 'legend'))]">
@@ -110,7 +110,7 @@
         test="
           (title | caption/title) = isosts:i18n-strings('key-heading', .)
           and (xs:decimal($target-niso-version) ge 1.2)"
-        role="warning" id="NISOSTS_lib_figure_keys_r3"> Put the figure key in a NISO STS 1.2 legend element. <sc:xsl-fix
+        role="warning" id="NISOSTS_lib_figure_keys_r3"> Put the figure key in a NISO STS 1.2 legend element. <sbf:xsl-fix
           href="xslt-fixes/legend.xsl" mode="legends"/>
       </report>
     </rule>
@@ -157,13 +157,13 @@
   <pattern id="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
-        fn-groups. <sc:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"
+        fn-groups. <sbf:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"
           depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1 duplicate_fn_marker_r1"/>
       </assert>
     </rule>
   </pattern>
 
-  <pattern id="NISOSTS_fn-not-in-fn-group" sc:alternative-for="NISOSTS_fn-in-fn-group">
+  <pattern id="NISOSTS_fn-not-in-fn-group" sbf:alternative-for="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-not-in-fn-group_1" context="fn">
       <report test="exists(ancestor::fn-group)" id="NISOSTS_fn-not-in-fn-group_2" role="warning">Fn in fn-group found.
         Fn must not be grouped in fn-groups. </report>
@@ -197,7 +197,7 @@
     <rule id="NISOSTS_table-cell-paras_mixed-p" context="td[p] | th[p]">
       <report test="text()[normalize-space()] | *[name() = $inline-element-names]"
         id="NISOSTS_table-cell-paras_mixed-p_r1" role="error" diagnostics="NISOSTS_table-cell-paras_mixed-p_de">Table
-        cells must not contain both paragraphs and inline elements or text. <sc:xsl-fix
+        cells must not contain both paragraphs and inline elements or text. <sbf:xsl-fix
           href="xslt-fixes/table-paras.xsl" mode="fix-table-paras"/>
       </report>
     </rule>
@@ -209,7 +209,7 @@
         label[text()][every $n in node()
           satisfies ($n/self::text())]" role="warning">
       <assert test="normalize-space(.) = string(.)" id="NISOSTS_normalize-space-label_a1">The label contains additional
-        whitespace that might impede subsequent ID normalization, etc. <sc:xsl-fix href="xslt-fixes/titles.xsl"
+        whitespace that might impede subsequent ID normalization, etc. <sbf:xsl-fix href="xslt-fixes/titles.xsl"
           mode="normalize-space-label"/>
       </assert>
     </rule>
@@ -219,7 +219,7 @@
     <rule id="NISOSTS_annex-type-in-bold-title_rule1" context="title[bold[normalize-space()]]">
       <report test="node()[1]/self::text()[normalize-space()]" role="warning" id="NISOSTS_annex-type-in-bold-title_r1"
         >There is probably an annex-type identifier string at the beginning of a title that has also bold tags. This
-        should go into an annex-type element. <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="annex-type"/>
+        should go into an annex-type element. <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="annex-type"/>
       </report>
     </rule>
   </pattern>
@@ -228,7 +228,7 @@
     <rule id="NISOSTS_numbering-in-bold-title_rule1" context="title[bold[normalize-space()]]">
       <report test="node()[1]/self::text()[normalize-space()]" role="warning" id="NISOSTS_numbering-in-bold-title_r1"
         >There is probably numbering at the beginning of a title that has also bold tags. Numbering should go into a
-        label. <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="label" depends-on="NISOSTS_annex-type-in-bold-title_r1"/>
+        label. <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="label" depends-on="NISOSTS_annex-type-in-bold-title_r1"/>
       </report>
     </rule>
   </pattern>
@@ -237,14 +237,14 @@
     <rule id="NISOSTS_bold-tags-in-titles_rule1" context="title">
       <report test="bold[. = '(continued)']" role="warning" id="NISOSTS_bold-tags-in-title_r2">Continuation objects may
         be problematic for subsequent processing steps. For the time being, we avoid this warning by converting the bold
-        element into a named-content element. <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="continuation"
+        element into a named-content element. <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="continuation"
           depends-on="NISOSTS_numbering-in-bold-title_r1"/>
       </report>
 
     </rule>
     <rule id="NISOSTS_bold-tags-in-title" context="title">
       <report test="bold[normalize-space()]" role="warning" diagnostics="NISOSTS_bold-tags-in-title_de"
-        id="NISOSTS_bold-tags-in-title_r1">Titles are usually rendered in bold so bold tags are redundant. <sc:xsl-fix
+        id="NISOSTS_bold-tags-in-title_r1">Titles are usually rendered in bold so bold tags are redundant. <sbf:xsl-fix
           href="xslt-fixes/titles.xsl" mode="bold-in-title" depends-on="NISOSTS_numbering-in-bold-title_r1"/>
       </report>
     </rule>
@@ -279,7 +279,7 @@
         [xs:decimal($target-niso-version) gt 1.0]">
       <report test="list-item/label[not(tr:letters-to-number(replace(., '[().]', '')))]" role="warning"
         id="NISOSTS_listtype_dash_r1">The recommended list-type is 'bullet' instead of 'dash'. You can specify the
-        detail in the style-detail attribute. <sc:xsl-fix href="xslt-fixes/list.xsl" mode="bullet"/>
+        detail in the style-detail attribute. <sbf:xsl-fix href="xslt-fixes/list.xsl" mode="bullet"/>
       </report>
     </rule>
   </pattern>
@@ -300,7 +300,7 @@
       <report id="NISOSTS_table-cell_colors_2"
         test="not(matches(tokenize(tokenize(@style, '\s*;\s*')[matches(., 'background-color')], '\s*:\s*')[2], '^#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]\s*$', 'i'))"
         role="warning" diagnostics="NISOSTS_table-cell_colors_2_de">Background-color must be represented by a hex code
-          <sc:xsl-fix href="xslt-fixes/table-cell_colors.xsl" mode="table-cell_colors"/>
+          <sbf:xsl-fix href="xslt-fixes/table-cell_colors.xsl" mode="table-cell_colors"/>
       </report>
     </rule>
   </pattern>
@@ -309,19 +309,19 @@
     <rule id="NISOSTS_dtd-version_missing_rule" context="/*">
       <report id="NISOSTS_dtd-version_missing" test="empty(@dtd-version)" role="info">The dtd-version attribute on the
         top-level element is not specified. It is recommended to be set even when using XSD or RNG validation. It will
-        be autocorrected to <xsl:value-of select="$target-niso-version"/>. <sc:xsl-fix href="xslt-fixes/dtd-version.xsl"
+        be autocorrected to <xsl:value-of select="$target-niso-version"/>. <sbf:xsl-fix href="xslt-fixes/dtd-version.xsl"
           mode="dtd-version">
-          <sc:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sc:param>
-        </sc:xsl-fix>
+          <sbf:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sbf:param>
+        </sbf:xsl-fix>
       </report>
     </rule>
     <rule id="NISOSTS_dtd-version_different_rule" context="/*">
       <report id="NISOSTS_dtd-version_different" test="not(@dtd-version = $target-niso-version)" role="info">The
         dtd-version attribute on the top-level element is different from the target version. It will be autocorrected to
           <xsl:value-of select="$target-niso-version"/>
-        <sc:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="dtd-version">
-          <sc:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sc:param>
-        </sc:xsl-fix></report>
+        <sbf:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="dtd-version">
+          <sbf:param name="target-niso-version"><xsl:value-of select="$target-niso-version"/></sbf:param>
+        </sbf:xsl-fix></report>
     </rule>
   </pattern>
 
@@ -342,7 +342,7 @@
       <let name="reg" value="std-meta[isosts:std-meta-type(.) = 'regional'][1]"/>
       <let name="nat" value="std-meta[isosts:std-meta-type(.) = 'national'][1]"/>
       <report id="adoption-nesting_r1" role="error" test="count($int | $reg | $nat) gt 1">Use adoption nesting for
-        adopted standards. <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="create-adoptions"/>
+        adopted standards. <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="create-adoptions"/>
       </report>
     </rule>
   </pattern>
@@ -355,7 +355,7 @@
       </report>
       <report role="error" id="app_wrong_content-type"
         test="exists(@content-type) and not(@content-type = ('norm-annex', 'inform-annex', 'bibl'))">The content-type of
-        an app has to be either "norm-annex", "inform-annex" or "bibl". <sc:xsl-fix href="xslt-fixes/app-type.xsl"
+        an app has to be either "norm-annex", "inform-annex" or "bibl". <sbf:xsl-fix href="xslt-fixes/app-type.xsl"
           mode="content-type"/>
       </report>
       <report role="warning" id="app_no_annex-type" test="not(@content-type = 'bibl') and not(annex-type)"><name/> has
@@ -370,7 +370,7 @@
     <rule id="annex-type-normative-text" context="annex-type[parent::app/@content-type = 'norm-annex']">
       <let name="expected" value="concat('(', isosts:i18n-strings('annex-type-normative', .), ')')"/>
       <assert role="warning" id="annex-type-text-a1" test=". = $expected"><name/> should be '<value-of
-          select="$expected"/>'. <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+          select="$expected"/>'. <sbf:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
       </assert>
     </rule>
     <rule id="annex-type-inform-text-available" context="annex-type[parent::app/@content-type = 'inform-annex']">
@@ -381,7 +381,7 @@
     <rule id="annex-type-inform-text" context="annex-type[parent::app/@content-type = 'inform-annex']">
       <let name="expected" value="concat('(', isosts:i18n-strings('annex-type-informative', .), ')')"/>
       <assert role="warning" id="annex-type-text-a2" test=". = $expected"><name/> should be '<value-of
-          select="$expected"/>'. <sc:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+          select="$expected"/>'. <sbf:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
       </assert>
     </rule>
   </pattern>
@@ -390,13 +390,13 @@
     <!-- Note: Putting bibliographic references into an appendix deviates from the IEC/ISO Coding Guidelines. -->
     <rule context="back">
       <report id="ref-list-back2app" test="ref-list">The element ref-list must be moved to an app with content-type
-        "bibl". <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>
+        "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>
       </report>
       <report id="ref-list-app-group2app" test="app-group/ref-list">The element ref-list must be moved to an app with
-        content-type "bibl". <sc:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-app"/>
+        content-type "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-app"/>
       </report>
       <report id="app-content-type" test="app[not(@content-type = 'bibl')]/ref-list">The app containing the bibliography
-        needs an attribute content-type with the value "bibl". <sc:xsl-fix href="xslt-fixes/ref-list.xsl"
+        needs an attribute content-type with the value "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl"
           mode="content-type-for-app"/>
       </report>
     </rule>
@@ -412,7 +412,7 @@
   <pattern id="math-without-mml">
     <rule id="math-without-mml-1" context="*[namespace-uri() = 'http://www.w3.org/1998/Math/MathML']">
       <assert test="starts-with(name(), 'mml:')" id="math-without-mml-2">MathML elements must have an 'mml' namespace
-        prefix <sc:xsl-fix href="xslt-fixes/mml.xsl" mode="prefix"/>
+        prefix <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="prefix"/>
       </assert>
     </rule>
   </pattern>
@@ -536,7 +536,7 @@
           and
           normalize-space(italic[1]) = key('by-id', @rid)/self::term-sec//tbx:term"
         id="xref-to-entailedTerm_r1" role="warning">The italic term should become a tbx:entailedTerm and only the number
-        in parentheses should link to the term-sec. <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl"
+        in parentheses should link to the term-sec. <sbf:xsl-fix href="xslt-fixes/entailedTerm.xsl"
           mode="SN-italic-entailedTerm"/>
       </report>
     </rule>
@@ -550,7 +550,7 @@
         or
         contains(std-ref[@type = 'dated'], ':')]"
       role="warning">
-      <report test="true()" id="release-date-empty-but-fallback-exists">release-date should be given <sc:xsl-fix
+      <report test="true()" id="release-date-empty-but-fallback-exists">release-date should be given <sbf:xsl-fix
           href="xslt-fixes/release-date.xsl" mode="infer"/>
       </report>
     </rule>
@@ -569,7 +569,7 @@
         [term-sec]"
       id="term-sec-wrapper_rule1">
       <report test="true()" id="term-sec-wrapper_r1" role="warning">This term-sec is a wrapper around others for no
-        apparent reason. <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="unwrap-empty-term-sec"/>
+        apparent reason. <sbf:xsl-fix href="xslt-fixes/entailedTerm.xsl" mode="unwrap-empty-term-sec"/>
       </report>
     </rule>
   </pattern>
@@ -591,7 +591,7 @@
         [empty(main-title-wrap | compl-title-wrap | intro | intro-title-wrap)]
         [matches(full, $dash-in-space-regex)]">
       <report id="main_in_title-wrap_empty_r1" role="warning" test="true()">
-        <sc:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element main in title-wrap is empty.
+        <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element main in title-wrap is empty.
       </report>
     </rule>
   </pattern>
@@ -600,7 +600,7 @@
   <pattern id="sec-type_unintended_value">
     <rule id="sec-type_unintended_value_rule1" context="sec[@sec-type = 'titlepage']">
       <report id="sec-type_unintended_value_r1" role="warning" test="true()"> '<value-of select="@sec-type"/>' is not an
-        intended value for the attribute 'sec-type'. <sc:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note"/>
+        intended value for the attribute 'sec-type'. <sbf:xsl-fix href="xslt-fixes/meta.xsl" mode="meta-note"/>
       </report>
     </rule>
   </pattern>
@@ -611,7 +611,7 @@
         legend[*[1]/self::table-wrap/caption/title]
         [isosts:is-legend-table(table-wrap[1])]">
       <report id="legend_title_in_table-wrap_r1" role="error" test="true()"> Found 'legend' where 'title' is in
-        'table-wrap/caption'. <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="table-wrap-title-to-legend"/>
+        'table-wrap/caption'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="table-wrap-title-to-legend"/>
       </report>
     </rule>
   </pattern>
@@ -619,7 +619,7 @@
   <pattern id="entailedTerm_in_named-content">
     <rule id="entailedTerm_in_named-content_rule1" context="named-content[@content-type = 'term']">
       <report id="entailedTerm_in_named-content_r1" test="true()"> '<name/>' with '@content-type="term"' found instead
-        of Element 'entailedTerm' <sc:xsl-fix href="xslt-fixes/entailedTerm.xsl"
+        of Element 'entailedTerm' <sbf:xsl-fix href="xslt-fixes/entailedTerm.xsl"
           mode="named-content_content-type_term_to_entailedTerm"/>
       </report>
     </rule>
@@ -628,7 +628,7 @@
   <pattern id="NISO_disp-formula_alt-graphic">
     <rule id="NISO_disp-formula_alt-graphic_rule1" context="disp-formula[mml:math]/graphic">
       <report role="warning" id="NISO_disp-formula_alt-graphic_r1" test="true()">This is probably an alternative
-        representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
+        representation. Both should be wrapped in an alternatives element. <sbf:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
       </report>
     </rule>
@@ -637,7 +637,7 @@
    <pattern id="NISO_disp-formula_alt-inline-graphic">
     <rule id="NISO_disp-formula_alt-inline-graphic_rule1" context="disp-formula[mml:math]/inline-graphic">
       <report role="warning" id="NISO_disp-formula_alt-inline-graphic_r1" test="true()">This is probably an alternative
-        representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
+        representation. Both should be wrapped in an alternatives element. <sbf:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="formula-alternatives" depends-on="SN-key_location_r1"/>
       </report>
     </rule>
@@ -646,7 +646,7 @@
   <pattern id="NISO_table-wrap_alt-graphic">
     <rule id="NISO_table-wrap_alt-graphic_rule1" context="table-wrap[table]/graphic">
       <report role="warning" id="NISO_table-wrap_alt-graphic_r1" test="true()">This is probably an alternative
-        representation. Both should be wrapped in an alternatives element. <sc:xsl-fix
+        representation. Both should be wrapped in an alternatives element. <sbf:xsl-fix
           href="xslt-fixes/alternatives.xsl" mode="table-alternatives" depends-on="SN-key_location_r1"/>
       </report>
     </rule>
@@ -665,11 +665,11 @@
         fig/table-wrap[@content-type = 'key'][empty(caption/title)]
         [(table/(thead | tbody)/tr[1])[1]/*[1] ! normalize-space(.) ! lower-case(.) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]">
       <report test="true()" id="legend_is_table_r1"> table-wrap appears to be a legend with a title inside a td
-          <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
+          <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
       </report>
     </rule>
     <rule id="legend_is_table_rule2" context="fig/table-wrap[@content-type = 'key'][empty(caption/title)]">
-      <report test="true()" id="legend_is_table_r2"> table-wrap appears to be a legend without a title <sc:xsl-fix
+      <report test="true()" id="legend_is_table_r2"> table-wrap appears to be a legend without a title <sbf:xsl-fix
           href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
       </report>
     </rule>
@@ -681,7 +681,7 @@
         p[@style-type = 'indent']
         [following-sibling::*[1]/self::table-wrap[@content-type = 'formula-index']]">
       <report id="disp-formula_in_p_with_table-wrap_legend_r1" test="true()"> This seems to be a disp-formula with
-        legend. Please mark it up accordingly. <sc:xsl-fix href="xslt-fixes/legend.xsl"
+        legend. Please mark it up accordingly. <sbf:xsl-fix href="xslt-fixes/legend.xsl"
           mode="disp-formula_with_legend_from_p"/>
       </report>
     </rule>
@@ -694,7 +694,7 @@
         [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .), 'i')]][preceding-sibling::*[2]/self::disp-formula]">
       <report id="disp-formula_with_array_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element inside
         the preceding 'disp-formula'. The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found
-        in the preceding 'p'. <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_array"/>
+        in the preceding 'p'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_array"/>
       </report>
     </rule>
   </pattern>
@@ -707,7 +707,7 @@
         [caption/title]">
       <report id="disp-formula_with_table-wrap_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element
         inside the preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
-        'caption/title'. <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_table-wrap"/>
+        'caption/title'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_table-wrap"/>
       </report>
     </rule>
   </pattern>
@@ -719,7 +719,7 @@
         [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .), 'i')]][preceding-sibling::*[2]/self::p/disp-formula]">
       <report id="disp-formula_with_def-list_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element inside
         the preceding 'disp-formula'. The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found
-        in the preceding 'p'. <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_def-list"/>
+        in the preceding 'p'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_def-list"/>
       </report>
     </rule>
   </pattern>
@@ -727,7 +727,7 @@
   <pattern id="deprecated_doc-ident">
     <rule id="deprecated_doc-ident_rule1" context="doc-ident[sdo]">
       <report id="deprecated_doc-ident_r1" test="true()"> Please use std-ident since doc-ident will be deprecated in
-        future NISO STS versions. <sc:xsl-fix href="xslt-fixes/nesting.xsl" mode="remove_doc-ident"/>
+        future NISO STS versions. <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="remove_doc-ident"/>
       </report>
     </rule>
   </pattern>
@@ -740,7 +740,7 @@
       <report test="true()" id="NEN_disp-formula_legend_1_r1"> Put this '<name/>' into a 'legend' element inside the
         preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
         'caption/title'. 
-      <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend"/>
+      <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend"/>
       </report>
     </rule>
   </pattern>
@@ -753,7 +753,7 @@
       <report test="true()" id="NEN_disp-formula_legend_2_r1"> Put this '<name/>' into a 'legend' element inside the
         preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
         'caption/title'. 
-      <sc:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend_2" depends-on="NEN_disp-formula_legend_1_r1"/>
+      <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend_2" depends-on="NEN_disp-formula_legend_1_r1"/>
       </report>
     </rule>
   </pattern>

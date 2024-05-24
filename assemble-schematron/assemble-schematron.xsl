@@ -61,7 +61,7 @@
     <xsl:apply-templates select="$resolve-extends" mode="filter"/>
   </xsl:template>
   
-  <xsl:template match="sch:extends" mode="resolve-extends">
+  <xsl:template match="sbf:extends" mode="resolve-extends">
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" select="()" tunnel="yes"/>
     <xsl:param name="xsl-fixes-for" as="element(sbf:xsl-fix-for)*" select="()" tunnel="yes"/>
@@ -114,7 +114,7 @@
     <xsl:if test="(
                     ($selected-alternatives = @id)
                     or 
-                    (ancestor::sch:schema//sch:extends/sbf:pattern/@sbf:selected-alternative = @id)
+                    (ancestor::sch:schema//sbf:extends/sbf:pattern/@sbf:selected-alternative = @id)
                     or 
                     (
                       not($alternatives-for = @id)
@@ -129,7 +129,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="sch:schema[empty(sch:extends)]/node()[1]" mode="resolve-extends">
+  <xsl:template match="sch:schema[empty(sbf:extends)]/node()[1]" mode="resolve-extends">
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:for-each-group select="($lets, ..//sch:let[empty(ancestor::sch:pattern)])" group-by="@name">
       <xsl:sequence select="."/>
