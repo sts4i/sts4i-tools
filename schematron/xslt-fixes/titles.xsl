@@ -200,6 +200,23 @@
     </xsl:copy>
   </xsl:template>
   
+  <xsl:template match=" title-wrap[empty(main/node())]
+        [empty(compl/node())]
+        [not(matches(full, $dash-in-space-regex))]
+        [not(main-title-wrap | compl-title-wrap | intro-title-wrap)]" mode="title-wrap-only-full">
+         <xsl:copy copy-namespaces="no">
+           <xsl:apply-templates select="@*, intro" mode="#current"/>
+      <main>
+        <xsl:apply-templates select="main/@*" mode="#current"/>
+        <xsl:apply-templates select="full/node()" mode="#current"/>
+      </main>
+      <compl>
+         <xsl:apply-templates select="main/@*" mode="#current"/>
+      </compl>
+      <xsl:apply-templates select="full" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
   <xsl:template match="@id" mode="strip_ids"/>
     
   

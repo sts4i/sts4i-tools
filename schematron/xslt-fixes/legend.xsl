@@ -354,6 +354,8 @@
         [@content-type = 'formula-index']
         [preceding-sibling::*[1]/self::list/list-item/p/disp-formula]"
     mode="NEN_add_disp-formula_legend_2"/>
+  
+
     
   
 </xsl:stylesheet>

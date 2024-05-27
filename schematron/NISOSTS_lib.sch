@@ -77,7 +77,7 @@
     <rule id="legacy-meta_rule1" context="nat-meta | reg-meta | iso-meta">
       <assert test="name() = 'std-meta'" id="legacy-meta_a1" role="error">Please use std-meta since <name/> will be
         deprecated in future NISO STS versions. <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="legacy-meta"
-          depends-on="deprecated_doc-ident_r1"/>
+          depends-on="deprecated_doc-ident_r1 text_in_nat-meta_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -133,14 +133,6 @@
     <rule id="NISOSTS_lib_ref-list_title_back" context="ref-list[parent::back]">
       <report role="warning" test="title" id="NISOSTS_lib_ref-list_title_back_r1">ref-list with title found. Please move
         the ref-list to an app and attach the title to the app.</report>
-    </rule>
-  </pattern>
-
-
-  <pattern id="NISOSTS_lib_std-meta_pattern">
-    <rule id="std-meta" context="standard/front/iso-meta | standard/front/reg-meta | standard/front/nat-meta">
-      <report role="warning" test="true()" id="std-meta_r1"><name/> is deprecated in NISO STS. Please replace it with
-        std-meta.</report>
     </rule>
   </pattern>
 
@@ -594,6 +586,16 @@
         <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element main in title-wrap is empty.
       </report>
     </rule>
+    <rule id="main_in_title-wrap_empty_rule2"
+      context="
+        title-wrap[empty(main/node())]
+        [empty(compl/node())]
+        [not(main-title-wrap | compl-title-wrap | intro-title-wrap)]
+        [not(matches(full, $dash-in-space-regex))]">
+      <report id="main_in_title-wrap_empty_r2" role="warning" test="true()">
+        <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element 'main' in 'title-wrap' was empty and was filled with the contents of 'full'.
+      </report>
+    </rule>
   </pattern>
 
 
@@ -757,6 +759,17 @@
       </report>
     </rule>
   </pattern>
+  
+<pattern id="text_in_nat-meta">
+  <rule id="text_in_nat-meta_rule1" context="nat-meta">
+    <report test="text()[normalize-space(.)]" id="text_in_nat-meta_r1">
+      Found text: '<value-of select="text()[normalize-space(.)]"/>'. Only elements are allowed in '<name/>'. Text was deleted
+      <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete_text_in_nat-meta"/>
+    </report>
+  </rule>
+</pattern>
+  
+  
   
  
 
