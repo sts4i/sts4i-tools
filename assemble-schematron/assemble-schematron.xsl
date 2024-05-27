@@ -12,7 +12,7 @@
   <!-- Invocation: saxon -s:importing_front-end_schema.sch -xsl:this.xsl
     The front end Schematron schema may contain sbf:alternative-for attributes that point
     to IDs of patterns. In addition, you may specifiy elements
-  <sbf:pattern sbf:selected-alternative="[some-pattern-id]"/>
+  <sbf:pattern selected-alternative="[some-pattern-id]"/>
   within sch:externds in order to select an alternative pattern (by its id attribute) so 
   that patterns with @sbf:alternative-for that refer to this ID will be suppressed. -->
 
@@ -65,14 +65,14 @@
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" select="()" tunnel="yes"/>
     <xsl:param name="xsl-fixes-for" as="element(sbf:xsl-fix-for)*" select="()" tunnel="yes"/>
-    <xsl:param name="selected-alternatives" as="attribute(sbf:selected-alternative)*" select="()" tunnel="yes"/>
+    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:param name="dependencies" as="element(sbf:dependency)*" tunnel="yes"/>
     <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sbf:alternative-for)"/>
       <xsl:with-param name="xsl-fixes-for" tunnel="yes" select="($xsl-fixes-for, sbf:xsl-fix-for)"/>
-      <xsl:with-param name="selected-alternatives" as="attribute(sbf:selected-alternative)*" tunnel="yes"
-        select="($selected-alternatives, sbf:pattern/@sbf:selected-alternative)"/>
+      <xsl:with-param name="selected-alternatives" as="attribute(selected-alternative)*" tunnel="yes"
+        select="($selected-alternatives, sbf:pattern/@selected-alternative)"/>
       <xsl:with-param name="dependencies" as="element(sbf:dependency)*" tunnel="yes"
         select="($dependencies, sbf:dependency)"/>
     </xsl:apply-templates>
@@ -109,12 +109,12 @@
   
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends" priority="2">
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
-    <xsl:param name="selected-alternatives" as="attribute(sbf:selected-alternative)*" select="()" tunnel="yes"/>
+    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
 <xsl:message select="'aaaaaa ', string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>
     <xsl:if test="(
                     ($selected-alternatives = @id)
                     or 
-                    (ancestor::sch:schema//sbf:extends/sbf:pattern/@sbf:selected-alternative = @id)
+                    (ancestor::sch:schema//sbf:extends/sbf:pattern/@selected-alternative = @id)
                     or 
                     (
                       not($alternatives-for = @id)
@@ -141,14 +141,14 @@
 
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends_">
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
-    <xsl:param name="selected-alternatives" as="attribute(sbf:selected-alternative)*" select="()" tunnel="yes"/>
+    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:if test="not($alternatives-for = @id)">
       <xsl:next-match/>
     </xsl:if>
   </xsl:template>
   
   <xsl:template match="sch:pattern[@sbf:alternative-for]" mode="resolve-extends_">
-    <xsl:param name="selected-alternatives" as="attribute(sbf:selected-alternative)*" select="()" tunnel="yes"/>
+    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:if test="$selected-alternatives = @id">
       <xsl:next-match/>
     </xsl:if>
