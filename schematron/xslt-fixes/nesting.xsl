@@ -68,6 +68,9 @@
           </xsl:if>
           <front>
             <xsl:apply-templates select="*" mode="#current"/>
+            <xsl:apply-templates select="$entire-standard/front/*[not(ends-with(name(), '-meta'))]
+                                                                 [isosts:front-matter-origin-type(.) = $std-meta-type]" 
+                                 mode="#current"/>
           </front>
           <xsl:apply-templates select="$entire-standard/(body | back)" mode="#current"/>
         </standard>
@@ -83,7 +86,34 @@
   
   <xsl:function name="isosts:front-matter-origin-type" as="xs:string">
     <xsl:param name="elt" as="element(*)"/>
-    <xsl:sequence select="'national'"/>
+    <xsl:variable name="metas" as="element(*)+" select="$elt/../*[ends-with(name(), '-meta')]"/>
+    <xsl:choose>
+      <xsl:when test="count($metas) = 1">
+        <xsl:sequence select="isosts:std-meta-type($metas)"/>
+      </xsl:when>
+      <xsl:when test="starts-with($elt/p[1] => normalize-space(), 'ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies')">
+        <xsl:sequence select="'international'"/>
+      </xsl:when>
+      <xsl:when test="matches($elt/title, 'europ', 'i')">
+        <xsl:sequence select="'regional'"/>
+      </xsl:when>
+      <xsl:when test="contains($elt, 'CEN')">
+        <xsl:sequence select="'regional'"/>
+      </xsl:when>
+      <xsl:when test="matches($elt/title, '(einleitung|introduction)', 'i')
+                      and
+                      exists($elt/preceding-sibling::*[not(ends-with(name(), '-meta'))])">
+        <xsl:sequence select="isosts:front-matter-origin-type($elt/preceding-sibling::*[1])"/>
+      </xsl:when>
+      <xsl:when test="matches($elt/title, '(endorsement|anerkennung)', 'i')
+                      and
+                      exists($elt/preceding-sibling::*[not(ends-with(name(), '-meta'))])">
+        <xsl:sequence select="isosts:front-matter-origin-type($elt/preceding-sibling::*[1])"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="'national'"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
   
   <xsl:template match="nat-meta | reg-mata | int-meta" mode="legacy-meta">
