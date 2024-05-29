@@ -110,20 +110,28 @@
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends" priority="2">
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
-<xsl:message select="'aaaaaa ', string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>
+    <xsl:if test="@id = ('NISO_disp-formula_alt-graphic', 'disp-formula_alt-graphic')">
+    <xsl:message select="'aaaaaa ', @id = $alternatives-for/../@id, string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>  
+    </xsl:if>
     <xsl:if test="(
                     ($selected-alternatives = @id)
                     or 
-                    (ancestor::sch:schema//sbf:extends/sbf:pattern/@selected-alternative = @id)
-                    or 
+                    (ancestor::sch:schema/sbf:extends/sbf:pattern/@selected-alternative = @id)
+                    or
                     (
-                      not($alternatives-for = @id)
-                      and
-                      empty(@sbf:alternative-for)
+                      not($alternatives-for[. = current()/@id]/../@id = $selected-alternatives)
                     )
                   )
-                  and
-                  not($alternatives-for = @id)">
+                  and (if (@id = $alternatives-for/../@id)
+                       then not(@id = ($selected-alternatives, ancestor::sch:schema/sbf:extends/sbf:pattern/@selected-alternative))
+                       else true()
+                      )
+                  and (if (@sbf:alternative-for)
+                       then @id = ($selected-alternatives, ancestor::sch:schema/sbf:extends/sbf:pattern/@selected-alternative)
+                       else true()
+                      )
+                  (:and
+                  not($alternatives-for = @id):)">
 <xsl:message select="'AAAAAAAAAAAA ', string(@id), ' :: ',string-join($selected-alternatives, ' ')"></xsl:message>
       <xsl:next-match/>
     </xsl:if>
