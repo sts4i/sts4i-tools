@@ -769,6 +769,34 @@
   </rule>
 </pattern>
   
+   <pattern id="completly_emphasized_xref">
+    <let name="emphasis" value="'bold|italic|monospace|underline|sans-serif'" />
+    <rule id="completly_emphasized_xref_rule1" context="xref[count(*) = 1][matches(name(*), $emphasis)]
+      [not(text()[normalize-space(.)])]">
+      <report test="true()" id="completly_emphasized_xref_r1">
+        This <name/> seems to be emphasized. Please put the emphasis before the <name/>.
+        <sbf:xsl-fix href="xslt-fixes/emphasis.xsl" mode="emphasize_xref"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="empty_doc-ref">
+    <rule id="empty_doc-ref_rule1" context="doc-ref[.='']">
+      <report test="true()" id="empty_doc-ref_r1">
+        Found empty <name/>.
+        <sbf:xsl-fix href="xslt-fixes/doc-ref.xsl" mode="fill_doc-ref"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="empty_release-date">
+    <rule id="empty_release-date_rule1" context="release-date[.='']">
+      <report test="true()" id="empty_release-date_r1">
+        Found empty <name/>.
+        <sbf:xsl-fix href="xslt-fixes/doc-ref.xsl" mode="fill_release-date"/>
+      </report>
+    </rule>
+  </pattern>
   
   
  
