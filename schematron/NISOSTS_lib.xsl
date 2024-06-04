@@ -45,7 +45,8 @@
         <isosts:string name="where-heading">
           <isosts:translation xml:lang="en">where</isosts:translation>
           <isosts:translation xml:lang="de">Dabei ist</isosts:translation>
-          <isosts:translation xml:lang="fr">où</isosts:translation>
+          <!--AFNOR Text is english, but value of @xml:lang is "fr"-->
+          <isosts:translation xml:lang="fr">où|where</isosts:translation>
           <isosts:translation xml:lang="nl">waarin</isosts:translation>
         </isosts:string>
       </isosts:i18n>    
@@ -53,6 +54,8 @@
   </xsl:variable>
   
   <xsl:variable name="table_label_regEx" select="'^\s*(Table(au)?|Таблица|Tabel(le)?)[\s\p{Zs}]+'"/>
+  
+  <xsl:variable name="annex_label_regEx" select="'^\s*(Annexe?|Приложение|Aa?nhang)[\s\p{Zs}]+'"/>
   
   <xsl:variable name="figur_label_regEx" select="'^\s*(Figure|Bild|Figuur|Рисунок)[\s\p{Zs}]+'"/>
   
@@ -138,5 +141,16 @@
         </xsl:choose>
   </xsl:function>
   
- 
+  <xsl:function name="isosts:illegal" as="xs:string+">
+     <xsl:param name="context" as="element(*)"/>
+    <xsl:sequence>
+    <xsl:text>Found illegal element:</xsl:text>
+    <xsl:value-of select="name($context)"/>
+    <xsl:text>at:</xsl:text>
+    <xsl:value-of select="path($context)"/>
+      <xsl:text>&#x2002;&#x007c;&#x2002;</xsl:text>
+    </xsl:sequence>
+  </xsl:function>
+  
+  
 </xsl:stylesheet>

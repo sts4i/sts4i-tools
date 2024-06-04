@@ -798,10 +798,68 @@
     </rule>
   </pattern>
   
+  <pattern id="AFNOR_remove_enrichments">
+    <let name="illegal_elements" value="'refNormative|termOcc|termDef|refCitee|exigence|figure|tableau'"/>
+    <let name="elements" value="descendant::*[matches(name(), $illegal_elements)]"/>
+    <rule id="AFNOR_remove_enrichments_rule1" context="/*" >
+      <report test="$elements" id="AFNOR_remove_enrichments_r1" role="warning">
+       <!-- Found at least on illegal element (<value-of select="$illegal_elements"/>)-->
+        <value-of select="$elements ! isosts:illegal(.)"/>
+        <sbf:xsl-fix href="xslt-fixes/enrichments.xsl" mode="remove_enrichments"/>
+      </report>
+    </rule>
+  </pattern>
   
- 
+  
+  <pattern id="AFNOR_array_is_disp-formula_legend">
+    <rule id="AFNOR_array_is_disp-formula_legend_rule1" context="disp-formula[matches(., isosts:i18n-strings('where-heading', .), 'i')]/array[preceding-sibling::text()[1]]">
+      <report test="true()" id="AFNOR_array_is_disp-formula_legend_r1" role="warning">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="AFNOR_disp-formula_legend"/>
+      </report>
+    </rule>
+  </pattern>
+  
+   <pattern id="AFNOR_table-wrap_is_fig_legend">
+    <rule id="AFNOR_table-wrap_is_fig_legend_rule1" context="table-wrap[@content-type ='fig-index']
+      [empty(caption/title)]
+      [(table/(thead | tbody)/tr[1])[1]/* ! normalize-space(.) ! lower-case(.) = isosts:i18n-strings('key-heading', .) ! lower-case(.)] ">
+      <report test="true()" id="AFNOR_table-wrap_is_fig_legend_r1" role="warning">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="AFNOR_table-wrap_fig_legend"/>
+      </report>
+    </rule>
+  </pattern>
+  
 
-
+<pattern id="AFNOR_wrong_punctuation_character">
+    <rule id="AFNOR_wrong_punctuation_character_rule1" context="label[normalize-space()='-']">
+      <report test="true()" id="AFNOR_wrong_punctuation_character_r1" role="warning">
+        This <name/> uses a hyphen:<value-of select="."/> instead of a dash like: &#x2014; 
+        <sbf:xsl-fix href="xslt-fixes/hyphen.xsl" mode="change_hyphen"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="AFNOR_annex_doubled_in_label">
+    <rule id="AFNOR_annex_doubled_in_label_rule1" context="app/label">
+      <report test="matches(., concat($annex_label_regEx,replace($annex_label_regEx, '\^', '')), 'i')" id="AFNOR_annex_doubled_in_label_r1" role="warning">
+        This <name/> seems to use the words for annex: <value-of select="."/>
+         <sbf:xsl-fix href="xslt-fixes/app-type.xsl" mode="label"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="wrong_language">
+    <let name="language" value="//standard/front/std-meta[last()]/content-language"/>
+    <rule id="wrong_language_rule1" context="//standard[front/std-meta[last()]/content-language]//*[@xml:lang]">
+      <report test="not(matches(@xml:lang, $language))" id="wrong_language_r1" role="warning">
+        This <name/> uses <value-of select="@xml:lang"/> as value of '@xml:lang' which differs from the 'content-language': <value-of select="$language"/>
+        Please check if this is correct.
+      </report>
+    </rule>
+  </pattern>
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>

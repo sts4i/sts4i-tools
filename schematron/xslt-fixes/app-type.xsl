@@ -34,5 +34,11 @@
     <xsl:attribute name="{name()}" select="'norm-annex'"/>
   </xsl:template>
   
+   <xsl:template match="app/label" mode="label">
+     <xsl:copy>
+   <xsl:value-of select="replace(., $annex_label_regEx, '')"/>
+       </xsl:copy>
+  </xsl:template>
+  
 
 </xsl:stylesheet>

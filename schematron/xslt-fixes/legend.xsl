@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:sc="http://transpect.io/schematron-config" xmlns:isosts="http://www.iso.org/ns/isosts"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:isosts="http://www.iso.org/ns/isosts" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:sc="http://transpect.io/schematron-config"
   exclude-result-prefixes="sc xs isosts" version="3.0">
 
   <xsl:import href="identity.xsl"/>
@@ -354,8 +356,63 @@
         [@content-type = 'formula-index']
         [preceding-sibling::*[1]/self::list/list-item/p/disp-formula]"
     mode="NEN_add_disp-formula_legend_2"/>
-  
 
-    
+<xsl:template match="disp-formula[matches(., isosts:i18n-strings('where-heading', .), 'i')]/text()[following-sibling::*[1]/self::array]" 
+  mode="AFNOR_disp-formula_legend">
+  <legend>
+    <title>
+      <xsl:value-of select="."/>
+    </title>
+    <xsl:apply-templates select="following-sibling::*[1]" mode="AFNOR_add_array"/>
+  </legend>
+</xsl:template>
+  
+  <xsl:template match="disp-formula[matches(., isosts:i18n-strings('where-heading', .), 'i')]/array[preceding-sibling::text()[1]]" mode="AFNOR_disp-formula_legend"/>
+
+
+<xsl:template mode="AFNOR_table-wrap_fig_legend" match="fig[table-wrap/@content-type ='fig-index']
+      [empty(table-wrap/caption/title)]">
+       <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="
+          @*, editing-instructions,
+          object-id, label, caption"
+        mode="#current"/>
+      <legend>
+        <xsl:variable name="title"
+          select="table-wrap/(table/(thead | tbody)/tr[1])[1][lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"/>
+        <xsl:if test="$title">
+          <title>
+            <xsl:value-of select="$title"/>
+          </title>
+        </xsl:if>
+        <table-wrap>
+          <xsl:apply-templates select="table-wrap/@*, table-wrap/*" mode="#current"/>
+        </table-wrap>
+      </legend>
+      <xsl:apply-templates
+        select="
+          node() except (editing-instructions,
+          object-id, label, caption, table-wrap)"
+        mode="#current"/>
+    </xsl:copy>
+</xsl:template>
+
+
+  <xsl:template
+    match="
+      table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
+      [lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"
+    mode="AFNOR_table-wrap_fig_legend"/>
+  
+  
+  
+   <xsl:template
+    match="
+      table-wrap[@content-type = 'fig-index']/table[1][count(*/tr) = 1]"
+    mode="AFNOR_table-wrap_fig_legend"/>
+  
+ 
+
+
   
 </xsl:stylesheet>

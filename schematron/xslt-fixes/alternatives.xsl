@@ -24,10 +24,11 @@
 
   <xsl:template match="table-wrap[table][graphic]" mode="table-alternatives">
     <xsl:copy>
-        <xsl:apply-templates select="@* , node() except(table | graphic)" mode="#current"/>
+        <xsl:apply-templates select="@* , node() except(table | graphic | table-wrap-foot)" mode="#current"/>
       <alternatives>
           <xsl:apply-templates select="(table | graphic)" mode="#current"/>
       </alternatives>
+      <xsl:apply-templates select="table-wrap-foot" mode="#current"/>
        </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>

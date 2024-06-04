@@ -217,6 +217,7 @@
     </xsl:copy>
   </xsl:template>
   
+  
   <xsl:template match="@id" mode="strip_ids"/>
     
   
@@ -237,5 +238,4 @@
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
-
 </xsl:stylesheet>
