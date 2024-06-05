@@ -132,5 +132,9 @@
   
   <xsl:template match="doc-ident[sdo]" mode="remove_doc-ident"/>
 
-
+  <xsl:template match="table-wrap/descendant::table-wrap" mode="table-wrap_to_array">
+    <array>
+    <xsl:apply-templates select="@*, node()"/>
+    </array>
+  </xsl:template>
 </xsl:stylesheet>

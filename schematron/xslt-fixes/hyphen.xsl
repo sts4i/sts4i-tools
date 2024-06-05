@@ -16,4 +16,7 @@
    </xsl:copy>
   </xsl:template>
  
+  <xsl:template match="title-wrap//*/text()[matches(., '\s-\s')]" mode="change_hyphen">
+     <xsl:value-of select="replace(., '-', '&#x2014;')"/>
+  </xsl:template>
 </xsl:stylesheet>

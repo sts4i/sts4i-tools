@@ -150,7 +150,7 @@
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups. <sbf:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"
-          depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1 duplicate_fn_marker_r1"/>
+          depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1 duplicate_fn_marker_r1 AFNOR_remove_enrichments_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -596,6 +596,15 @@
         <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element 'main' in 'title-wrap' was empty and was filled with the contents of 'full'.
       </report>
     </rule>
+    <rule id="main_in_main-title-wrap_empty_rule1"
+      context="
+        main-title-wrap[main=''][matches(subtitle, $dash-in-space-regex)]
+        ">
+      <report id="main_in_main-title-wrap_empty_r1" role="warning" test="true()">
+        <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="main-title-wrap-only-subtitle"/>
+        Element 'main' in 'main-title-wrap' is empty
+      </report>
+    </rule>
   </pattern>
 
 
@@ -839,6 +848,12 @@
         <sbf:xsl-fix href="xslt-fixes/hyphen.xsl" mode="change_hyphen"/>
       </report>
     </rule>
+  <rule id="AFNOR_wrong_punctuation_character_rule2" context="title-wrap//*">
+      <report test="text()[matches(., '\s-\s')]" id="AFNOR_wrong_punctuation_character_r2" role="warning">
+        This <name/> contains at least one hyphen, that should be a dash
+        <sbf:xsl-fix href="xslt-fixes/hyphen.xsl" mode="change_hyphen"/>
+      </report>
+  </rule>
   </pattern>
   
   <pattern id="AFNOR_annex_doubled_in_label">
@@ -859,6 +874,25 @@
       </report>
     </rule>
   </pattern>
+  
+  <pattern id="AFNOR_duplicate_dash">
+    <rule id="AFNOR_duplicate_dash_rule1" context="title">
+     <report test="*[1]/text()[matches(. ,'^\p{Pd}')]" id="duplicate_dash_r1" role="warning">
+       The 'title' contains a dash at the beginning 
+       <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="remove_dash"/>
+     </report> 
+    </rule>
+  </pattern>
+  
+  <pattern id="table-wrap_in_table-wrap">
+    <rule id="table-wrap_in_table-wrap_rule1" context="table-wrap/descendant::table-wrap">
+     <report test="true()" id="table-wrap_in_table-wrap_r1" role="warning">
+       This <name/> is not allowed here
+       <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="table-wrap_to_array"/>
+     </report> 
+    </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
