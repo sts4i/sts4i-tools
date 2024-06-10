@@ -893,6 +893,16 @@
     </rule>
   </pattern>
   
+  <pattern id="xref_wrong_ref-type">
+    <rule id="xref_wrong_ref-typep_rule1" context="xref
+      [exists(key('by-id', @rid)/self::fn)]">
+     <report test="not(matches(@ref-type, 'table-fn'))" id="xref_wrong_ref-type_r1" role="warning">
+       This <name/> should have @ref-type="table-fn" instead of "<value-of select="@ref-type"/>"
+       <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="change_ref-type"/>
+     </report> 
+    </rule>
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
