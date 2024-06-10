@@ -865,15 +865,15 @@
     </rule>
   </pattern>
   
-  <pattern id="wrong_language">
+  <!--<pattern id="wrong_language">
     <let name="language" value="//standard/front/std-meta[last()]/content-language"/>
     <rule id="wrong_language_rule1" context="//standard[front/std-meta[last()]/content-language]//*[@xml:lang]">
-      <report test="not(matches(@xml:lang, $language))" id="wrong_language_r1" role="warning">
+      <report test="not(matches(@xml:lang, $language))" id="wrong_language_r1" role="info">
         This <name/> uses <value-of select="@xml:lang"/> as value of '@xml:lang' which differs from the 'content-language': <value-of select="$language"/>
         Please check if this is correct.
       </report>
     </rule>
-  </pattern>
+  </pattern>-->
   
   <pattern id="AFNOR_duplicate_dash">
     <rule id="AFNOR_duplicate_dash_rule1" context="title">

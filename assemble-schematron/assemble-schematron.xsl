@@ -26,7 +26,7 @@
   
   <xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
   
-  <xsl:template match=" sch:report | sch:assert" mode="resolve-extends"
+  <xsl:template match="sch:report | sch:assert" mode="resolve-extends"
     xmlns="http://purl.oclc.org/dsdl/schematron">
     <xsl:param name="xsl-fixes-for" as="element(sbf:xsl-fix-for)*" tunnel="yes"/>
     <xsl:variable name="for-this" as="xs:boolean" select="($xsl-fixes-for ! tokenize(@rid)) = @id"/>
@@ -39,9 +39,11 @@
             <xsl:copy-of select="@* except @rid"/>
           </sbf:xsl-fix>  
         </xsl:for-each>
-          
       </xsl:if>
       <span class="srcpath"><xslout:value-of select="@srcpath"/></span>
+<!--      <span class="attributes"><xslout:value-of select="string-join(@* ! string-join((name(.), .), '='), ' ')"/></span>
+      <span class="name"><xslout:value-of select="name()"/></span>
+      <span class="serialize"><xslout:copy-of select="."/></span>-->
       <span class="rule-base-uri"><xsl:value-of select="base-uri()"/></span>
     </xsl:copy>
   </xsl:template>

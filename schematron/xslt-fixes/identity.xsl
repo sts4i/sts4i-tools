@@ -15,6 +15,8 @@
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
 
   <xsl:key name="by-rid" match="*[@rid]" use="@rid"/>
+  
+  <xsl:key name="by-srcpath" match="*[@srcpath]" use="@srcpath"/>
 
   <xsl:template match="/*" priority="1" mode="#all">
     <xsl:copy copy-namespaces="no">

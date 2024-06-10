@@ -8,9 +8,10 @@
   xmlns:s="http://purl.oclc.org/dsdl/schematron"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  xmlns:tr="http://transpect.io"
   xmlns="http://www.w3.org/1999/xhtml"
-  version="2.0"
-  exclude-result-prefixes="svrl s xs html"
+  version="3.0"
+  exclude-result-prefixes="svrl s xs html tr"
   >
 
   <xsl:param name="common-path" as="xs:string"/>
@@ -77,9 +78,20 @@
                       select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
 <!--                    <xsl:message select="'CCCCCCCCCCCCCCCC ',exists($corresponding-post-fix-report), base-uri(), ' :: ', $post-fix-reports/*/base-uri()"></xsl:message>-->
                     <xsl:variable name="location" as="xs:string?" select="@location"/>
+                    <!--<xsl:if test="contains(@location, 'namespace-uri')">
+                      <xsl:message select="'NNNNNNNNNNNNNN srcpath: ', 
+                        key('by-id', @id, $corresponding-post-fix-report)/svrl:text/sch:span[@class = 'srcpath'] ! tr:Q-notation-to-svrl-location(.), '&#xa;Location:', string(@location)"></xsl:message>
+                    </xsl:if>-->
+                    <!--<xsl:if test="@location = '/standard[1]/front[1]/std-meta[1]/title-wrap[1]'">
+                      <xsl:message select="'LLLLLLLLLL id: ', string(@id), ' srcpath: ', 
+                        key('by-id', @id, $corresponding-post-fix-report)/svrl:text/sch:span[@class = 'srcpath'] ! tr:Q-notation-to-svrl-location(.), '&#xa;Location:', string(@location),
+                        ' :: count: ', count(key('by-id', @id, $corresponding-post-fix-report))"></xsl:message>
+                    </xsl:if>-->
                     <xsl:variable name="fixed" as="xs:boolean"
                       select="if (exists($corresponding-post-fix-report))
-                              then empty(key('by-id', @id, $corresponding-post-fix-report)[svrl:text/sch:span[@class = 'srcpath'] = $location])
+                              then empty(key('by-id', @id, $corresponding-post-fix-report)
+                                           [svrl:text/sch:span[@class = 'srcpath'] ! tr:Q-notation-to-svrl-location(.) = $location]
+                                        )
                               else false()"/>
                     <td class="fixed {$fixed}">
                       <xsl:value-of select="$fixed"/>
@@ -119,6 +131,37 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:function name="tr:Q-notation-to-svrl-location" as="xs:string" cache="yes">
+    <xsl:param name="Q-notation" as="xs:string"/>
+    <xsl:variable name="regex" as="xs:string" select="'/Q\{(.+?)\}([^\[]+)'"/>
+    <xsl:variable name="tokens" as="xs:string*">
+      <xsl:analyze-string select="$Q-notation" regex="{$regex}">
+        <xsl:matching-substring>
+          <xsl:sequence select="'/*:' || regex-group(2) || '[namespace-uri()=''' || regex-group(1) || ''']'"/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:sequence select="."/>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </xsl:variable>
+    <xsl:sequence select="string-join($tokens)"/>
+  </xsl:function>
+  
+  <xsl:function name="tr:svrl-location-to-Q-notation" as="xs:string">
+    <xsl:param name="svrl-location" as="xs:string"/>
+    <xsl:variable name="tokens" as="xs:string+">
+      <xsl:analyze-string select="$svrl-location" regex="/\*:(\i\c*)\[namespace-uri()='([^']+)'\]">
+        <xsl:matching-substring>
+          <xsl:sequence select="'/Q{' || regex-group(2) || '}' || regex-group(1)"/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:sequence select="."/>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </xsl:variable>
+    <xsl:sequence select="string-join($tokens)"/>
+  </xsl:function>
+
   <xsl:template match="sch:span[@class = ('srcpath', 'rule-base-uri')]" mode="#default"/>
 
   <xsl:function name="html:impact-sortkey" as="xs:integer">
