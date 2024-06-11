@@ -11,7 +11,8 @@
   
  
  <xsl:template match="xref
-   [exists(key('by-id', @rid)/self::fn)]"
+      [exists(key('by-id', @rid)/self::fn[ancestor::table-wrap-foot])]
+      [not(matches(@ref-type, 'table-fn'))]"
    mode="change_ref-type">
    <xsl:copy>
    <xsl:attribute name="ref-type">

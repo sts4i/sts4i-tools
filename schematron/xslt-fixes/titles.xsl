@@ -258,10 +258,10 @@
       <xsl:apply-templates select="@*, intro" mode="#current"/>
       <main>
         <xsl:apply-templates select="main/@*" mode="#current"/>
-        <xsl:apply-templates select="full/node()" mode="#current"/>
+        <xsl:apply-templates select="full/node()" mode="strip_ids"/>
       </main>
       <compl>
-        <xsl:apply-templates select="main/@*" mode="#current"/>
+        <xsl:apply-templates select="compl/@*" mode="#current"/>
       </compl>
       <xsl:apply-templates select="full" mode="#current"/>
     </xsl:copy>
