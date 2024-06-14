@@ -150,11 +150,11 @@
                 <value>false</value>
               </attribute>
             </optional>
-            <optional>
+            
               <attribute name="id">
                 <data type="ID"/>
               </attribute>
-            </optional>
+            
             <optional>
               <ref name="title"/>
             </optional>
@@ -179,11 +179,11 @@
             <attribute name="is-a">
               <data type="IDREF"/>
             </attribute>
-            <optional>
+            
               <attribute name="id">
                 <data type="ID"/>
               </attribute>
-            </optional>
+            
             <optional>
               <ref name="title"/>
             </optional>
@@ -200,7 +200,70 @@
       </interleave>
     </element>
   </define>
-    
+   
+   <define name="rule">
+    <element name="rule">
+      <optional>
+        <attribute name="flag">
+          <ref name="flagValue"/>
+        </attribute>
+      </optional>
+      <ref name="rich"/>
+      <ref name="linkable"/>
+      <interleave>
+        <ref name="foreign"/>
+        <zeroOrMore>
+          <ref name="inclusion"/>
+        </zeroOrMore>
+        <choice>
+          <group>
+            <attribute name="abstract">
+              <value>true</value>
+            </attribute>
+            <attribute name="id">
+              <data type="ID"/>
+            </attribute>
+            <zeroOrMore>
+              <ref name="let"/>
+            </zeroOrMore>
+            <oneOrMore>
+              <choice>
+                <ref name="assert"/>
+                <ref name="report"/>
+                <ref name="extends"/>
+                <ref name="p"/>
+              </choice>
+            </oneOrMore>
+          </group>
+          <group>
+            <attribute name="context">
+              <ref name="pathValue"/>
+            </attribute>
+              <attribute name="id">
+                <data type="ID"/>
+              </attribute>
+            <optional>
+              <attribute name="abstract">
+                <value>false</value>
+              </attribute>
+            </optional>
+            <zeroOrMore>
+              <ref name="let"/>
+            </zeroOrMore>
+            <oneOrMore>
+              <choice>
+                <ref name="assert"/>
+                <ref name="report"/>
+                <ref name="extends"/>
+                <ref name="p"/>
+              </choice>
+            </oneOrMore>
+          </group>
+        </choice>
+      </interleave>
+    </element>
+  </define>
+   
   </include>
   
   <define name="assert-report-model" ns="http://purl.oclc.org/dsdl/schematron">
@@ -229,11 +292,9 @@
         <ref name="flagValue"/>
       </attribute>
     </optional>
-    <optional>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
-    </optional>
     <optional>
       <attribute name="diagnostics">
         <data type="IDREFS"/>

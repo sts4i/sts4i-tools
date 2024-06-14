@@ -49,7 +49,7 @@
         'tbx',
         'xlink', 'xml')"/>
 
-    <rule context="*[namespace::*]">
+    <rule id="unexpected-namespace-uris_rule1" context="*[namespace::*]">
       <assert
         test="
           every $n in (namespace::* ! string(.))
@@ -381,7 +381,7 @@
 
   <pattern id="ref-list2app">
     <!-- Note: Putting bibliographic references into an appendix deviates from the IEC/ISO Coding Guidelines. -->
-    <rule context="back">
+    <rule id="ref-list2app_rule1" context="back">
       <report id="ref-list-back2app" test="ref-list">The element ref-list must be moved to an app with content-type
         "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>
       </report>
@@ -411,7 +411,7 @@
   </pattern>
 
   <pattern id="exclusions" abstract="true">
-    <rule context="$context">
+    <rule id="exclusions_rule1" context="$context">
       <let name="tokenized" value="tokenize('$exclude', '\s+', 's')[normalize-space()]"/>
       <let name="intermediatelegalizers" value="tokenize('$legalizing-intermediates', '\s+', 's')[normalize-space()]"/>
       <let name="ancestorlegalizers" value="tokenize('$legalizing-ancestors', '\s+', 's')[normalize-space()]"/>
