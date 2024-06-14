@@ -120,7 +120,7 @@
     <title/>
     <rule id="NISOSTS_lib_rule01" context="fig[array | table-wrap]">
       <report test="exists((array | table-wrap)//tr//graphic)" role="warning" id="NISOSTS_lib_rule01_r1"> For subfigure
-        arrangements use an outside tabular construction with the subfigures in the cells. </report>
+        arrangements use 'fig-group' or an outside tabular construction with the subfigures in the cells. </report>
     </rule>
   </pattern>
 
@@ -344,6 +344,7 @@
     <rule id="app_has_correct_values" context="app">
       <report role="warning" id="app_no_content-type" test="not(@content-type)"><name/> has no content-type. <xsl:if
           test="empty(annex-type)"> If there were an annex-type we could infer the content-type attribute </xsl:if>
+        <sbf:xsl-fix href="xslt-fixes/app-type.xsl" mode="content-type"/>
       </report>
       <report role="error" id="app_wrong_content-type"
         test="exists(@content-type) and not(@content-type = ('norm-annex', 'inform-annex', 'bibl'))">The content-type of
@@ -591,7 +592,8 @@
         title-wrap[empty(main/node())]
         [empty(compl/node())]
         [not(main-title-wrap | compl-title-wrap | intro-title-wrap)]
-        [not(matches(full, $dash-in-space-regex))]">
+        [not(matches(full, $dash-in-space-regex))]
+        [not(empty(full/node()))]">
       <report id="main_in_title-wrap_empty_r2" role="warning" test="true()">
         <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="title-wrap-only-full"/> Element 'main' in 'title-wrap' was empty and was filled with the contents of 'full'.
       </report>
@@ -884,21 +886,30 @@
     </rule>
   </pattern>
   
-  <pattern id="table-wrap_in_table-wrap">
-    <rule id="table-wrap_in_table-wrap_rule1" context="table-wrap/descendant::table-wrap">
-     <report test="true()" id="table-wrap_in_table-wrap_r1" role="warning">
-       This <name/> is not allowed here
-       <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="table-wrap_to_array"/>
-     </report> 
-    </rule>
-  </pattern>
-  
   <pattern id="xref_wrong_ref-type">
     <rule id="xref_wrong_ref-typep_rule1" context="xref
       [exists(key('by-id', @rid)/self::fn[ancestor::table-wrap-foot])]">
      <report test="not(matches(@ref-type, 'table-fn'))" id="xref_wrong_ref-type_r1" role="warning">
        This <name/> should have @ref-type="table-fn" instead of "<value-of select="@ref-type"/>"
        <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="change_ref-type"/>
+     </report> 
+    </rule>
+  </pattern>
+  
+  <pattern id="AFNOR_terms">
+    <rule id="AFNOR_wrong_term_sec_rule1" context="sec[@sec-type = 'terms']">
+      <report test="not(term-sec) and
+         descendant::table-wrap [table/tbody/tr ! count(td) = 2]
+          [not(ancestor::table-wrap)]" id="AFNOR_wrong_term_sec_r2" role="warning">
+        term-secs seem to be encoded inside a table-wrap.
+        <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="change_sec"/>
+     </report>
+    </rule>
+    <rule id="AFNOR_non-normative-note_in_table-wrap_rule1" context="table-wrap[count(descendant::col) = 2]
+      [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]">
+     <report test="true()" id="AFNOR_non-normative-note_in_table-wrap_r1" role="warning">
+        non-normative-notes seem to be encoded inside <name/>.
+       <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="table-wrap_to_non-normative-note"/>
      </report> 
     </rule>
   </pattern>

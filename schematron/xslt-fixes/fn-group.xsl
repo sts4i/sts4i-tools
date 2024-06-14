@@ -136,11 +136,13 @@
       <xsl:otherwise>
         <xsl:copy>
           <xsl:apply-templates select="@*, node() except ($footnotes | fn-group)" mode="#current"/>
-          <fn-group>
-            <xsl:apply-templates select="$footnotes" mode="#current">
-              <xsl:with-param name="keep-fn" select="true()" tunnel="yes"/>
+          <xsl:if test="exists($footnotes)">
+            <fn-group>
+              <xsl:apply-templates select="$footnotes" mode="#current">
+                <xsl:with-param name="keep-fn" select="true()" tunnel="yes"/>
             </xsl:apply-templates>
-          </fn-group>
+            </fn-group>
+          </xsl:if>
         </xsl:copy>    
       </xsl:otherwise>
     </xsl:choose>
@@ -186,6 +188,7 @@
       another fix. -->
     <xsl:attribute name="id" select="(@id, concat('fn_', generate-id()))[1]"/>
   </xsl:template>
+  
 
 
   </xsl:stylesheet>

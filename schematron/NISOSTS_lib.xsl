@@ -3,7 +3,7 @@
   xmlns:isosts="http://www.iso.org/ns/isosts" 
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:tr= "http://transpect.io"
-  version="2.0" exclude-result-prefixes="xs isosts">
+  version="3.0" exclude-result-prefixes="xs isosts">
   
   <xsl:param name="fail-on-error" select="'yes'"/>
   
@@ -49,15 +49,24 @@
           <isosts:translation xml:lang="fr">où|where</isosts:translation>
           <isosts:translation xml:lang="nl">waarin</isosts:translation>
         </isosts:string>
+        <isosts:string name="note-label">
+          <isosts:translation xml:lang="en">NOTE</isosts:translation>
+          <isosts:translation xml:lang="de">ANMERKUNG</isosts:translation>
+          <isosts:translation xml:lang="fr">NOTE</isosts:translation>
+          <isosts:translation xml:lang="nl">OPMERKING</isosts:translation>
+          <isosts:translation xml:lang="ru">ПРИМЕЧАНИЕ</isosts:translation>
+        </isosts:string>
       </isosts:i18n>    
     </xsl:document>
   </xsl:variable>
   
-  <xsl:variable name="table_label_regEx" select="'^\s*(Table(au)?|Таблица|Tabel(le)?)[\s\p{Zs}]+'"/>
+  <xsl:variable name="space_regEx" select="'[\s\p{Zs}&#x200B;&#x2060;]+'"/>
   
-  <xsl:variable name="annex_label_regEx" select="'^\s*(Annexe?|Приложение|Aa?nhang)[\s\p{Zs}]+'"/>
+  <xsl:variable name="table_label_regEx" select="concat('^\s*(Table(au)?|Таблица|Tabel(le)?)', $space_regEx)"/>
   
-  <xsl:variable name="figur_label_regEx" select="'^\s*(Figure|Bild|Figuur|Рисунок)[\s\p{Zs}]+'"/>
+  <xsl:variable name="annex_label_regEx" select="concat('^\s*(Annexe?|Приложение|Aa?nhang)', $space_regEx)"/>
+  
+  <xsl:variable name="figur_label_regEx" select="concat('^\s*(Figure|Bild|Figuur|Рисунок)', $space_regEx)"/>
   
   <xsl:key name="i18n" match="isosts:string/isosts:translation" use="string-join((../@name, @xml:lang), '__')"/>
   
@@ -151,6 +160,12 @@
       <xsl:text>&#x2002;&#x007c;&#x2002;</xsl:text>
     </xsl:sequence>
   </xsl:function>
+  
+  <xsl:function name="isosts:label-to-regex">
+     <xsl:param name="context" as="element(label)"/>
+    <xsl:sequence select="$context => replace('[()\[\]{}]', '') => replace('\.', '\\.')"/>
+  </xsl:function>
+ 
   
   
 </xsl:stylesheet>

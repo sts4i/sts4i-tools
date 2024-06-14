@@ -34,6 +34,28 @@
     <xsl:attribute name="{name()}" select="'norm-annex'"/>
   </xsl:template>
   
+  
+  
+  <xsl:template match="app[not(@content-type)]
+                          [matches(annex-type, isosts:i18n-strings('annex-type-normative', .), 'i')]" 
+                mode="content-type">
+    <xsl:copy>
+       <xsl:attribute name="content-type" select="'norm-annex'"/>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
+    </xsl:copy>
+   
+  </xsl:template>
+  
+  <xsl:template match="app[not(@content-type)]
+                          [matches(annex-type, isosts:i18n-strings('annex-type-informative', .), 'i')]" 
+                mode="content-type">
+    <xsl:copy>
+       <xsl:attribute name="content-type" select="'inform-annex'"/>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
    <xsl:template match="app/label" mode="label">
      <xsl:copy>
    <xsl:value-of select="replace(., $annex_label_regEx, '')"/>
