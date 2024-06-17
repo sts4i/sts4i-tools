@@ -23,7 +23,7 @@
           <isosts:translation xml:lang="nl">Legenda</isosts:translation>
         </isosts:string>
         <isosts:string name="annex-name">
-          <isosts:translation xml:lang="en">Annex</isosts:translation>
+          <isosts:translation xml:lang="en">Annex|Appendix</isosts:translation>
           <isosts:translation xml:lang="de">Anhang</isosts:translation>
           <isosts:translation xml:lang="fr">Annexe</isosts:translation>
           <isosts:translation xml:lang="nl">Aanhang</isosts:translation>
@@ -55,6 +55,9 @@
           <isosts:translation xml:lang="fr">NOTE</isosts:translation>
           <isosts:translation xml:lang="nl">OPMERKING</isosts:translation>
           <isosts:translation xml:lang="ru">ПРИМЕЧАНИЕ</isosts:translation>
+        </isosts:string>
+        <isosts:string name="section-name">
+          <isosts:translation xml:lang="en">Section</isosts:translation>
         </isosts:string>
       </isosts:i18n>    
     </xsl:document>

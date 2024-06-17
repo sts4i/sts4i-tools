@@ -353,7 +353,9 @@
       </report>
       <report role="warning" id="app_no_annex-type" test="not(@content-type = 'bibl') and not(annex-type)"><name/> has
         no annex-type. CEN/CENELEC Internal Regulations Part 3: &#x201c;The annex heading shall be followed by the
-        indication "(normative)" or "(informative)"&#x2026;&#x201d; </report>
+        indication "(normative)" or "(informative)"&#x2026;&#x201d; 
+      <sbf:xsl-fix href="xslt-fixes/app-type.xsl" mode="annex-type"/>
+      </report>
     </rule>
     <rule id="annex-type-normative-text-available" context="annex-type[parent::app/@content-type = 'norm-annex']">
       <assert role="warning" id="annex-type-text-available1"
@@ -911,6 +913,18 @@
         non-normative-notes seem to be encoded inside <name/>.
        <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="table-wrap_to_non-normative-note"/>
      </report> 
+    </rule>
+  </pattern>
+  
+  <pattern id="table_border_wrong_value">
+    <rule id="table_border_wrong_value_rule1" context="*[@border]">
+     <assert test="number(@border) = floor(number(@border)) and number(@border) >= 0 " id="table_border_wrong_value_a1" role="warning">
+       The value of @border should be 0 or a positive integer. Found: <value-of select="@border"/>
+     </assert>
+      <report test="matches(@border, 'none', 'i') " id="table_border_wrong_value_r1" role="warning">
+       The value of @border should be 0.
+       <sbf:xsl-fix href="xslt-fixes/border.xsl" mode="change_value"/>
+     </report>
     </rule>
   </pattern>
   

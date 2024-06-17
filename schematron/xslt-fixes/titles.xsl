@@ -190,11 +190,10 @@
     <xsl:next-match/>
   </xsl:template>
 
-  <xsl:template match="caption[not(label)][title/node()[1]/self::text()[matches(., $table_label_regEx)]]" mode="label">
+  <xsl:template match="caption[not(../label)][title/node()[1]/self::text()[matches(., $table_label_regEx)]]" mode="label">
     <label>
       <xsl:value-of select="normalize-space(replace(title/node()[1], $table_label_regEx, '$1'))"/>
     </label>
-    <xsl:next-match/>
   </xsl:template>
 
   <xsl:template

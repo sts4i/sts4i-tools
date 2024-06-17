@@ -29,8 +29,7 @@
    <xsl:copy>
      <xsl:apply-templates select="@*, node()"
      mode="#current"/>
-     <xsl:apply-templates select="descendant::table-wrap[ancestor::sec[@sec-type = 'terms']]
-   [table/tbody/tr ! count(td) = 2]
+     <xsl:apply-templates select="descendant::table-wrap[table/tbody/tr ! count(td) = 2]
    [not(ancestor::table-wrap)]"
      mode="add_term-secs"/>
    </xsl:copy>

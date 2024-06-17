@@ -22,6 +22,30 @@
     </xsl:copy> 
   </xsl:template>
   
+  <xsl:template match="app[not(annex-type)]
+    [@content-type = 'norm-annex']" mode="annex-type">
+    <xsl:variable name="expected" select="concat('(', isosts:i18n-strings('annex-type-normative', .), ')')"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*, editing-instruction, sec-meta, label" mode="#current"/>
+      <annex-type>
+        <xsl:value-of select="$expected"/>
+      </annex-type>
+       <xsl:apply-templates select="node() except (editing-instruction, sec-meta, label)" mode="#current"/>
+    </xsl:copy> 
+  </xsl:template>
+  
+  <xsl:template match="app[not(annex-type)]
+    [@content-type = 'inform-annex']" mode="annex-type">
+    <xsl:variable name="expected" select="concat('(', isosts:i18n-strings('annex-type-informative', .), ')')"/>
+    <xsl:copy>
+       <xsl:apply-templates select="@*, editing-instruction, sec-meta, label" mode="#current"/>
+      <annex-type>
+        <xsl:value-of select="$expected"/>
+      </annex-type>
+       <xsl:apply-templates select="node() except (editing-instruction, sec-meta, label)" mode="#current"/>
+    </xsl:copy> 
+  </xsl:template>
+  
   <xsl:template match="app[not(@content-type = ('inform-annex', 'norm-annex'))]
                           [contains(@content-type, 'inform')]/@content-type" 
                 mode="content-type">
@@ -61,6 +85,7 @@
    <xsl:value-of select="replace(., $annex_label_regEx, '')"/>
        </xsl:copy>
   </xsl:template>
+  
   
 
 </xsl:stylesheet>
