@@ -56,9 +56,6 @@
           <isosts:translation xml:lang="nl">OPMERKING</isosts:translation>
           <isosts:translation xml:lang="ru">ПРИМЕЧАНИЕ</isosts:translation>
         </isosts:string>
-        <isosts:string name="section-name">
-          <isosts:translation xml:lang="en">Section</isosts:translation>
-        </isosts:string>
       </isosts:i18n>    
     </xsl:document>
   </xsl:variable>
@@ -70,6 +67,7 @@
   <xsl:variable name="annex_label_regEx" select="concat('^\s*(Annexe?|Приложение|Aa?nhang)', $space_regEx)"/>
   
   <xsl:variable name="figur_label_regEx" select="concat('^\s*(Figure|Bild|Figuur|Рисунок)', $space_regEx)"/>
+  
   
   <xsl:key name="i18n" match="isosts:string/isosts:translation" use="string-join((../@name, @xml:lang), '__')"/>
   

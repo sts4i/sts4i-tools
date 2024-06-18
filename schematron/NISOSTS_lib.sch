@@ -916,15 +916,18 @@
     </rule>
   </pattern>
   
-  <pattern id="table_border_wrong_value">
-    <rule id="table_border_wrong_value_rule1" context="*[@border]">
-     <assert test="number(@border) = floor(number(@border)) and number(@border) >= 0 " id="table_border_wrong_value_a1" role="warning">
+  <pattern id="table_wrong_attrs">
+    <rule id="table_border_wrong_value_rule1" context="table[@border]">
+     <assert test=" @border castable as xs:nonNegativeInteger" id="table_border_wrong_value_a1" role="warning">
        The value of @border should be 0 or a positive integer. Found: <value-of select="@border"/>
+       <sbf:xsl-fix href="xslt-fixes/table-attr.xsl" mode="change_border_value"/>
      </assert>
-      <report test="matches(@border, 'none', 'i') " id="table_border_wrong_value_r1" role="warning">
-       The value of @border should be 0.
-       <sbf:xsl-fix href="xslt-fixes/border.xsl" mode="change_value"/>
-     </report>
+    </rule>
+    <rule id="table_colspan_wrong_value_rule1" context="(td | th)[@colspan]">
+      <assert test="@colspan castable as xs:positiveInteger" id="table_colspan_wrong_value_a1" role="warning">
+       The value of @colspan should a positive integer. Found: <value-of select="@colspan"/>
+        <sbf:xsl-fix href="xslt-fixes/table-attr.xsl" mode="change_colspan_value"/>
+     </assert>
     </rule>
   </pattern>
   
