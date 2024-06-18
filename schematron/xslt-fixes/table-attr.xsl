@@ -20,7 +20,7 @@
    <xsl:attribute name="{name()}"
      select=" if(. castable as xs:decimal and not(matches(., '^-')))
               then round(.)
-              else '1'"/>/>
+              else '1'"/>
  </xsl:template>
  
 </xsl:stylesheet>
