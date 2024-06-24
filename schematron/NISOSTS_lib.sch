@@ -925,9 +925,18 @@
     </rule>
     <rule id="table_colspan_wrong_value_rule1" context="(td | th)[@colspan]">
       <assert test="@colspan castable as xs:positiveInteger" id="table_colspan_wrong_value_a1" role="warning">
-       The value of @colspan should a positive integer. Found: <value-of select="@colspan"/>
+       The value of @colspan should be a positive integer. Found: <value-of select="@colspan"/>
         <sbf:xsl-fix href="xslt-fixes/table-attr.xsl" mode="change_colspan_value"/>
      </assert>
+    </rule>
+  </pattern>
+  
+  
+  <pattern id="milestone_is_amendement">
+    <rule id="milestone_is_amendement_rule1" context="milestone-start[@rationale = 'A1'] | milestone-end[preceding::milestone-start[1]/@rationale = 'A1']">
+      <report id="milestone_is_amendement_r1" test="true()">
+        It seems like this '<name/>' should be change markup.
+      </report>
     </rule>
   </pattern>
   
