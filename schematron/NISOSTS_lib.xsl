@@ -29,6 +29,9 @@
           <isosts:translation xml:lang="nl">Aanhang</isosts:translation>
           <isosts:translation xml:lang="ru">Приложение</isosts:translation>
         </isosts:string>
+         <isosts:string name="clause-name">
+          <isosts:translation xml:lang="en">Clause</isosts:translation>
+        </isosts:string>
         <isosts:string name="annex-type-informative">
           <isosts:translation xml:lang="en">informative</isosts:translation>
           <isosts:translation xml:lang="de">informativ</isosts:translation>

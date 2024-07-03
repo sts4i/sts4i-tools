@@ -333,13 +333,13 @@
                  <data type="string" datatypeLibrary=""/>
               </attribute>
             </element>
-            <list>
+            <!--<list>
               <oneOrMore>
                 <data type="QName"/>
               </oneOrMore>
-            </list>
+            </list>-->
+            <text/>
           </choice>
-          
         </element>
       </zeroOrMore>
     </element>

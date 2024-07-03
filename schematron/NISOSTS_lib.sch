@@ -208,7 +208,7 @@
   </pattern>
 
   <pattern id="NISOSTS_annex-type-in-bold-title">
-    <rule id="NISOSTS_annex-type-in-bold-title_rule1" context="title[bold[normalize-space()]]">
+    <rule id="NISOSTS_annex-type-in-bold-title_rule1" context="app[empty(annex-type)]/title[bold[normalize-space()]]">
       <report test="node()[1]/self::text()[normalize-space()]" role="warning" id="NISOSTS_annex-type-in-bold-title_r1"
         >There is probably an annex-type identifier string at the beginning of a title that has also bold tags. This
         should go into an annex-type element. <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="annex-type"/>
