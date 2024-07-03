@@ -435,7 +435,11 @@
           else
             true()])"
         id="report-illegal-nesting">In context <value-of select="'$context'"/>, the following elements are prohibited:
-          <value-of select="string-join($tokenized, ', ')"/>.</report>
+          <value-of select="string-join($tokenized, ', ')"/>.
+        <sbf:xsl-fix href="xslt-fixes/exclusions.xsl" mode="extract-trailing-inclusions">
+          <sbf:param name="sbf:pattern-ids">exclusion-non-norm</sbf:param>
+        </sbf:xsl-fix>
+      </report>
     </rule>
   </pattern>
 

@@ -327,11 +327,19 @@
           <attribute name="name">
             <data type="NMTOKEN"/>
           </attribute>
-          <element name="value-of" ns="http://www.w3.org/1999/XSL/Transform">
-            <attribute name="select">
-               <data type="string" datatypeLibrary=""/>
-            </attribute>
-          </element>
+          <choice>
+            <element name="value-of" ns="http://www.w3.org/1999/XSL/Transform">
+              <attribute name="select">
+                 <data type="string" datatypeLibrary=""/>
+              </attribute>
+            </element>
+            <list>
+              <oneOrMore>
+                <data type="QName"/>
+              </oneOrMore>
+            </list>
+          </choice>
+          
         </element>
       </zeroOrMore>
     </element>
