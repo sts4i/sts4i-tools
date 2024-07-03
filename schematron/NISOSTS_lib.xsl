@@ -60,7 +60,7 @@
     </xsl:document>
   </xsl:variable>
   
-  <xsl:variable name="space_regEx" select="'[\s\p{Zs}&#x200B;&#x2060;]+'"/>
+   <xsl:variable name="space_regEx" select="'[\s\p{Zs}&#x200B;&#x2060;]+'"/>
   
   <xsl:variable name="table_label_regEx" select="concat('^\s*(Table(au)?|Таблица|Tabel(le)?)', $space_regEx)"/>
   

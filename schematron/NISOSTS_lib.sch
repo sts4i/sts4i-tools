@@ -326,6 +326,17 @@
       <assert test="isosts:lang(.)" role="warning" id="body-language-available">The content language cannot be
         determined.</assert>
     </rule>
+     <rule id="no_content-language_rule1" context="(front | adoption-front)/*[ends-with(name(), '-meta')]">
+      <report id="no_content-language_r1" role="error" test="not(content-language)">
+        content-language is missing
+      </report>
+    </rule>
+    <rule id="first_title_in_content-language" context="/(standard|adoption)/descendant::*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
+      <assert id="first_title_in_content-language_r1" role="warning" test="matches(@xml:lang, ../content-language)">
+        The first <name/> should be in the 'content-language: <value-of select="../content-language"/>'.
+        Found: '<value-of select="@xml:lang"/>'
+      </assert>
+    </rule>
   </pattern>
 
   <pattern id="adoption-nesting">
@@ -941,6 +952,14 @@
       <report id="milestone_is_amendement_r1" test="true()">
         It seems like this '<name/>' should be change markup.
       </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="missing_referenced_id">
+    <rule id="missing_referenced_id_rule1" context="*[@rid]">
+      <assert id="missing_referenced_id_r1" test="exists(key('by-id', @rid))" role="warning">
+         This <name/> has a '@rid' without a corresponding '@id' in the document.      
+      </assert>
     </rule>
   </pattern>
   
