@@ -74,5 +74,24 @@
      </term-sec>
    </xsl:for-each>
  </xsl:template>
+  
+  
+  <xsl:template match="tbx:termEntry[empty(@id)][../label]" mode="add_id">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:attribute name="id" select="string-join(('term', ../label/normalize-space()), '_')"/>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+   <xsl:template match="tbx:entailedTerm[@xtarget]
+                                        [key('by-id',substring-after(@xtarget, '#'))]" 
+                                         mode="xtarget_to_target">
+    <xsl:copy>
+      <xsl:apply-templates select="@* except @xtarget" mode="#current"/>
+      <xsl:attribute name="target" select="key('by-id',substring-after(@xtarget, '#'))/tbx:termEntry/@id"/>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -964,6 +964,34 @@
   </pattern>
   
   
+  <pattern id="duplicate_id">
+  <rule context="*[@id]" id="duplicate_id_rule1">
+    <report test="count(key('by-id', @id)) gt 1" id="duplicate_id_id_a1">
+      Duplicated id in element '<name/>'. Found: <value-of select="@id"/> At: <value-of select="key('by-id', @id) ! path(.)"/>
+      <sbf:xsl-fix href="xslt-fixes/ids.xsl" mode="change_id" />
+    </report>
+  </rule>
+</pattern>
+  
+  <pattern id="termEntry_missing_id">
+  <rule context="tbx:termEntry" id="termEntry_missing_id_rule1">
+    <report test="empty(@id)" id="termEntry_missing_id_r1">
+     This <name/> is missing an ID.
+      <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="add_id" />
+    </report>
+  </rule>
+</pattern>
+  
+  <pattern id="entailedTerm_wrong_target_attr">
+  <rule context="tbx:entailedTerm[@xtarget]" id="entailedTerm_wrong_target_attr_rule1">
+    <report test="key('by-id',substring-after(@xtarget, '#'))" id="entailedTerm_wrong_target_attr_r1">
+     This <name/> should use '@target' instead of '@xtarget'
+      <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="xtarget_to_target" depends-on="termEntry_missing_id_r1"/>
+    </report>
+  </rule>
+</pattern>
+  
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>

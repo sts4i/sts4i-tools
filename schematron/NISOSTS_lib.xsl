@@ -169,6 +169,8 @@
      <xsl:param name="context" as="element(label)"/>
     <xsl:sequence select="$context => replace('[()\[\]{}]', '') => replace('\.', '\\.')"/>
   </xsl:function>
+  
+  
  
   
   
