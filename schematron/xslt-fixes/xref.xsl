@@ -22,4 +22,16 @@
     </xsl:copy>
   </xsl:template>
   
+   
+ <xsl:template match="xref
+      [.='']
+      [exists(key('by-id', @rid))]
+      [exists(key('by-id', @rid)/label)]"
+   mode="add_label">
+   <xsl:copy>
+   <xsl:apply-templates select="@*" mode="#current"/>
+     <xsl:value-of select="key('by-id', @rid)/label"/>
+    </xsl:copy>
+  </xsl:template>
+  
 </xsl:stylesheet>

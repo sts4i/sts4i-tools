@@ -329,6 +329,7 @@
      <rule id="no_content-language_rule1" context="(front | adoption-front)/*[ends-with(name(), '-meta')]">
       <report id="no_content-language_r1" role="error" test="not(content-language)">
         content-language is missing
+        <sbf:xsl-fix href="xslt-fixes/content-language.xsl" mode="add_content-language" depends-on="adoption-nesting_r1"/>
       </report>
     </rule>
     <rule id="first_title_in_content-language" context="/(standard|adoption)/descendant::*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
@@ -990,6 +991,25 @@
     </report>
   </rule>
 </pattern>
+  
+  <pattern id="majority_of_text_not_in_content-language">
+  <rule id="majority_of_text_not_in_content-language_rule1" context="front | adoption-front | body | back">
+      <assert id="majority_of_text_not_in_content-language_a1" role="warning" test="isosts:lang(.) = isosts:doc-lang(..)">
+       The content-language: '<value-of select="isosts:lang(.)"/>' does not match with the most frequently occurring language: '<value-of select="isosts:doc-lang(..)"/>' in the document.
+      </assert>
+    </rule>
+  </pattern>
+  
+  
+  <pattern id="empty_xref">
+  <rule id="empty_xref_rule1" context="xref">
+      <report id="empty_xref_r1" role="warning" test=".='' and exists(key('by-id', @rid))">
+       This <name/> is empty. It should contain the label of the referenced element: <value-of select="name(key('by-id', @rid))"/> at <value-of select="path(key('by-id', @rid))"/>
+        <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="add_label"/>
+      </report>
+    </rule>
+  </pattern>
+ 
   
   
   <diagnostics>
