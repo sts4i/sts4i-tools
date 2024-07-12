@@ -10,6 +10,8 @@
 
   <xsl:key name="by-id" match="*[@id]" use="@id"/>
   <xsl:key name="by-rid" match="*[@rid]" use="@rid"/>
+  
+<xsl:variable name="doc-lang" select="isosts:doc-lang(/)"/>
 
   <xsl:variable name="i18n-strings" as="document-node(element(isosts:i18n))">
     <xsl:document>
@@ -58,6 +60,9 @@
           <isosts:translation xml:lang="nl">OPMERKING</isosts:translation>
           <isosts:translation xml:lang="ru">ПРИМЕЧАНИЕ</isosts:translation>
         </isosts:string>
+        <isosts:string name="dimension-heading">
+          <isosts:translation xml:lang="de">Maße</isosts:translation>
+        </isosts:string>
       </isosts:i18n>
     </xsl:document>
   </xsl:variable>
@@ -95,6 +100,11 @@
     <xsl:param name="i18n-string-name" as="xs:string"/>
     <xsl:param name="context" as="element(*)"/>
     <xsl:sequence select="key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)"/>
+  </xsl:function>
+  
+  <xsl:function name="isosts:i18n-strings-no-lang" as="xs:string*">
+    <xsl:param name="i18n-string-name" as="xs:string"/>
+    <xsl:sequence select="key('i18n', string-join(($i18n-string-name, $doc-lang), '__'), $i18n-strings)"/>
   </xsl:function>
 
   <xsl:function name="isosts:std-meta-type" as="xs:string">
@@ -179,16 +189,17 @@
   </xsl:function>
 
 
+
   <xsl:variable name="de_words"
-    select="'der', 'das', 'oder', 'und', 'einführung', 'einleitung', 'vorwort', 'anhang', 'anwendungsbereich', 'geltungsbereich', 'zweck'"/>
+    select="'der', 'das', 'oder', 'und', 'einführung', 'einleitung', 'vorwort', 'anhang', 'anwendungsbereich', 'geltungsbereich', 'zweck', 'tabelle', 'bild'"/>
   <xsl:variable name="en_words"
-    select="'and', 'of', 'or', 'the', 'to', 'preface', 'annex', 'scope', 'field of application', 'key'"/>
+    select="'and', 'of', 'or', 'the', 'to', 'preface', 'annex', 'scope', 'field of application', 'key', 'table'"/>
   <xsl:variable name="fr_words"
-    select="'et', 'la', 'le', 'ou', 'où', 'avant-propos', 'préface', 'annexe', 'domaine', 'légende'"/>
+    select="'et', 'la', 'le', 'ou', 'où', 'avant-propos', 'préface', 'annexe', 'domaine', 'légende', 'tablau'"/>
    <xsl:variable name="nl_words" 
-     select="'het', 'een', 'legenda', 'aanhang', 'informatief', 'waarin', 'opmerking', 'normatief', 'voorwoord', 'termen', 'Zijn'"/>
+     select="'het', 'een', 'legenda', 'aanhang', 'informatief', 'waarin', 'opmerking', 'normatief', 'voorwoord', 'termen', 'zijn', 'tabel', 'figuur'"/>
   <xsl:variable name="ru_words" 
-    select="'справочное', 'приложение', 'примечание'"/>
+    select="'справочное', 'приложение', 'примечание', 'таблица', 'рисунок'"/>
 
 
   <xsl:function name="isosts:word-lang" as="xs:string">
@@ -286,9 +297,9 @@
 
 
   <xsl:function name="isosts:doc-lang" as="xs:string?">
-    <xsl:param name="doc-lang-root" as="node()"/>
+    <xsl:param name="context" as="node()"/>
     <xsl:call-template name="doc-lang">
-      <xsl:with-param name="doc-lang-root" select="$doc-lang-root"/>
+      <xsl:with-param name="doc-lang-root" select="$context"/>
     </xsl:call-template>
   </xsl:function>
 

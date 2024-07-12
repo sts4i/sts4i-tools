@@ -33,5 +33,16 @@
      <xsl:value-of select="key('by-id', @rid)/label"/>
     </xsl:copy>
   </xsl:template>
-  
+
+<xsl:template match="xref
+  [@ref-type = 'table-fn']
+  [not(@rid)]" 
+  mode="add_rid">
+  <xsl:copy>
+    <xsl:attribute name="rid">
+      <xsl:value-of select="following::table-wrap-foot/descendant::fn[matches(normalize-space(label), normalize-space(current()))]/@id"/>
+    </xsl:attribute>
+    <xsl:apply-templates select="@*, node()" mode="#current"/>
+  </xsl:copy>
+</xsl:template>
 </xsl:stylesheet>

@@ -32,6 +32,7 @@
   <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
 
   <let name="legend-content-type" value="'fig-index'"/>
+
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>
 
   <pattern id="unexpected-namespace-uris">
@@ -994,12 +995,11 @@
   
   <pattern id="majority_of_text_not_in_content-language">
   <rule id="majority_of_text_not_in_content-language_rule1" context="front | adoption-front | body | back">
-      <assert id="majority_of_text_not_in_content-language_a1" role="warning" test="isosts:lang(.) = isosts:doc-lang(..)">
-       The content-language: '<value-of select="isosts:lang(.)"/>' does not match with the most frequently occurring language: '<value-of select="isosts:doc-lang(..)"/>' in the document.
+      <assert id="majority_of_text_not_in_content-language_a1" role="warning" test="isosts:lang(.) = $doc-lang">
+       The content-language: '<value-of select="isosts:lang(.)"/>' does not match with the most frequently occurring language: '<value-of select="$doc-lang"/>' in the document.
       </assert>
     </rule>
   </pattern>
-  
   
   <pattern id="empty_xref">
   <rule id="empty_xref_rule1" context="xref">
@@ -1009,6 +1009,44 @@
       </report>
     </rule>
   </pattern>
+  
+  <pattern id="no_content-language_legends">
+  <rule id="fig_legend_in_def-list" context="def-list[empty(isosts:lang(.))]
+    [@list-content = 'figure']">
+      <report id="legend_in_def-list_r1" role="warning" test="matches(title, isosts:i18n-strings-no-lang('key-heading'))">
+      This <name/> seems to be a legend.
+         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="legends" depends-on="no_content-language_r1"/>
+      </report>
+    </rule>
+    <rule id="table-wrap_legend_in_table-wrap-foot" context="table-wrap-foot[not(isosts:lang(.) = $doc-lang)]">
+      <report id="table-wrap_legend_in_table-wrap-foot_r1" role="warning" test="p[matches(., isosts:i18n-strings-no-lang('key-heading'))]">
+      This <name/> seems to contain a legend.
+         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="table-wrap-foot_p_to_legend"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="xref_table-fn_no_rid">
+    <rule context="xref[@ref-type = 'table-fn'][not(.='')]" id="xref_table-fn_no_rid_rule1">
+      <assert test="@rid" id="xref_table-fn_no_rid_r1">
+        This <name/> needs a @rid 
+        <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="add_rid"/>
+      </assert>
+    </rule>
+  </pattern>
+ 
+ <pattern id="dimensions_not_in_fig_caption">
+   <rule id="dimensions_not_in_caption_rule1" 
+     context="p[empty(isosts:lang(.))]
+     [matches(., isosts:i18n-strings-no-lang('dimension-heading'))]
+     [following-sibling::*[1]/self::fig]">
+     <report id="dimensions_not_in_caption_r" 
+       test="true()">
+       This <name/> should be put in the caption of the following fig.
+       <sbf:xsl-fix href="xslt-fixes/caption.xsl" mode="add_p_to_caption"/>
+     </report>
+   </rule>
+ </pattern>
  
   
   

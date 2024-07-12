@@ -15,7 +15,7 @@
    <xsl:variable name="before-content-language" as="element(*)*" select="title-wrap | proj-id | release-version | std-ident | std-org | std-org-group"/>
     <xsl:apply-templates select="@*, $before-content-language" mode="#current"/>
      <content-language>
-        <xsl:value-of select="isosts:doc-lang(../..)"/>
+        <xsl:value-of select="$doc-lang"/>
      </content-language>
     <xsl:apply-templates select="node() except $before-content-language" mode="#current"/>
     </xsl:copy>

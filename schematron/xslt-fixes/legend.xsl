@@ -411,8 +411,23 @@
       table-wrap[@content-type = 'fig-index']/table[1][count(*/tr) = 1]"
     mode="AFNOR_table-wrap_fig_legend"/>
   
- 
+  
+ <xsl:template match="table-wrap[table-wrap-foot/p[matches(., isosts:i18n-strings-no-lang('key-heading'))]]" 
+   mode="table-wrap-foot_p_to_legend">
+    <xsl:copy>
+   <xsl:variable name="before-content-language" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
+    <xsl:apply-templates select="@*, $before-content-language" mode="#current"/>
+     <legend>
+       <title>
+         <xsl:value-of select="table-wrap-foot/p[matches(., isosts:i18n-strings-no-lang('key-heading'))]"/>
+       </title>
+       <xsl:apply-templates select="table-wrap-foot/p[preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('key-heading'))]]" mode="add_p"/>
+     </legend>
+    <xsl:apply-templates select="node() except $before-content-language" mode="#current"/>
+    </xsl:copy>
+ </xsl:template>
 
+<xsl:template match="table-wrap-foot/p" mode="table-wrap-foot_p_to_legend"/>
 
   
 </xsl:stylesheet>
