@@ -48,7 +48,7 @@
         ('ali', 'mml',
         'xi', 'xsi',
         'tbx',
-        'xlink', 'xml')"/>
+        'xlink', 'xml', 'c')"/>
 
     <rule id="unexpected-namespace-uris_rule1" context="*[namespace::*]">
       <assert
