@@ -833,7 +833,6 @@
     <let name="elements" value="descendant::*[matches(name(), $illegal_elements)]"/>
     <rule id="AFNOR_remove_enrichments_rule1" context="/*" >
       <report test="$elements" id="AFNOR_remove_enrichments_r1" role="warning">
-       <!-- Found at least on illegal element (<value-of select="$illegal_elements"/>)-->
         <value-of select="$elements ! isosts:illegal(.)"/>
         <sbf:xsl-fix href="xslt-fixes/enrichments.xsl" mode="remove_enrichments"/>
       </report>
@@ -1048,6 +1047,23 @@
    </rule>
  </pattern>
  
+  <pattern id="legend_in_tr">
+    <rule id="legend_in_tr_rule1" context="tr">
+      <report test="descendant::*[matches(., isosts:i18n-strings('key-heading', .))]" id="legend_in_tr_r1">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="tr_to_legend"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="disp-formula_legend_in_def-list">
+    <rule id="disp-formula_legend_in_def-list_rule1" context="p[preceding-sibling::*[1]/self::disp-formula][following-sibling::*[1]/self::def-list]">
+      <report test="matches(., isosts:i18n-strings('where-heading', .))" id="disp-formula_legend_in_def-list_r1">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend"/>
+      </report>
+    </rule>
+  </pattern>
   
   
   <diagnostics>

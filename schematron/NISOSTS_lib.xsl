@@ -302,6 +302,16 @@
       <xsl:with-param name="doc-lang-root" select="$context"/>
     </xsl:call-template>
   </xsl:function>
+  
+  
+   <xsl:function name="isosts:tbf-id" as="xs:string">
+    <xsl:param name="context" as="element(table-wrap)"/>
+     <xsl:variable name="sec" select="$context/ancestor::*[self::app | self::sec][1]"/>
+      <xsl:variable name="this-sec-tbfs" select="$sec//table-wrap[empty(label)]
+                                                           [ancestor::*[self::app | self::sec][1] is $sec]"/>
+      <xsl:variable name="tbf-number" select="index-of(for $tw in $this-sec-tbfs return generate-id($tw), generate-id($context))"/>
+     <xsl:sequence select="string-join(($sec/@id, 'tbf', $tbf-number), '-')"/>
+  </xsl:function>
 
 
 
