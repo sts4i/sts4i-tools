@@ -99,7 +99,7 @@
   <xsl:function name="isosts:i18n-strings" as="xs:string*">
     <xsl:param name="i18n-string-name" as="xs:string"/>
     <xsl:param name="context" as="element(*)"/>
-    <xsl:sequence select="key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)"/>
+    <xsl:sequence select="(key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings), 'n/a')[1]"/>
   </xsl:function>
   
   <xsl:function name="isosts:i18n-strings-no-lang" as="xs:string*">

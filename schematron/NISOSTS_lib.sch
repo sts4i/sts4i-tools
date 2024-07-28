@@ -334,7 +334,7 @@
       </report>
     </rule>
     <rule id="first_title_in_content-language" context="/(standard|adoption)/descendant::*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
-      <assert id="first_title_in_content-language_r1" role="warning" test="matches(@xml:lang, ../content-language)">
+      <assert id="first_title_in_content-language_r1" role="warning" test="exists(../content-language[matches(current()/@xml:lang, .)])">
         The first <name/> should be in the 'content-language: <value-of select="../content-language"/>'.
         Found: '<value-of select="@xml:lang"/>'
       </assert>
