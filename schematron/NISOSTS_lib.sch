@@ -112,7 +112,7 @@
           (title | caption/title) = isosts:i18n-strings('key-heading', .)
           and (xs:decimal($target-niso-version) ge 1.2)"
         role="warning" id="NISOSTS_lib_figure_keys_r3"> Put the figure key in a NISO STS 1.2 legend element. <sbf:xsl-fix
-          href="xslt-fixes/legend.xsl" mode="legends"/>
+          href="xslt-fixes/legend.xsl" mode="legends" depends-on="DIN_fig_legend_in_table-wrap_r1"/>
       </report>
     </rule>
   </pattern>
@@ -895,9 +895,14 @@
     </rule>
   </pattern>-->
   
+  
   <pattern id="AFNOR_duplicate_dash">
     <rule id="AFNOR_duplicate_dash_rule1" context="title">
      <report test="*[1]/text()[matches(. ,'^\p{Pd}')]" id="duplicate_dash_r1" role="warning">
+       The 'title' contains a dash at the beginning 
+       <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="remove_dash"/>
+     </report> 
+      <report test="text()[matches(., '^\p{Pd}')]" id="duplicate_dash_r2" role="warning">
        The 'title' contains a dash at the beginning 
        <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="remove_dash"/>
      </report> 
@@ -1057,13 +1062,35 @@
   </pattern>
   
   <pattern id="disp-formula_legend_in_def-list">
-    <rule id="disp-formula_legend_in_def-list_rule1" context="p[preceding-sibling::*[1]/self::disp-formula][following-sibling::*[1]/self::def-list]">
-      <report test="matches(., isosts:i18n-strings('where-heading', .))" id="disp-formula_legend_in_def-list_r1">
+    <rule id="disp-formula_legend_in_def-list_rule1" context="def-list[preceding-sibling::disp-formula]">
+      <report test="preceding-sibling::p[matches(., isosts:i18n-strings('where-heading', .))]" id="disp-formula_legend_in_def-list_r1">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend"/>
       </report>
     </rule>
   </pattern>
+  
+  
+  <pattern id="DIN_fig_legend_in_table-wrap">
+    <rule id="DIN_fig_legend_in_table-wrap_rule1" context="fig[def-list[@list-type = 'key'][following-sibling::*[1]/self::table-wrap[descendant::disp-formula]]]">
+      <report test="following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]" id="DIN_fig_legend_in_table-wrap_r1">
+        There seems to be multiple legends here.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="multiple_legends"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  
+   <pattern id="symbol_table_disp-formula">
+    <rule id="symbol_table_disp-formula_rule1" context="table-wrap[matches(caption/title, 'Symbole')]
+      [count(table/col) = 2]/descendant::p/disp-formula">
+      <report test="true()" id="symbol_table_disp-formula_r1">
+        This <name/> should be an 'inline-formula'.
+        <sbf:xsl-fix href="xslt-fixes/formula.xsl" mode="disp-formula_to_inline-formula"/>
+      </report>
+    </rule>
+  </pattern>
+  
   
   
   <diagnostics>

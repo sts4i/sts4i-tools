@@ -290,7 +290,12 @@
   </xsl:template>
 
   <xsl:template match="title/*[1]/text()[matches(., '^\p{Pd}')]" mode="remove_dash">
-    <xsl:value-of select="replace(., '\p{Pd}', '')"/>
+    <xsl:value-of select="replace(., '\p{Pd}\s*', '')"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="title/text()[matches(., '^\p{Pd}')]" mode="remove_dash">
+    <xsl:value-of select="replace(., '\p{Pd}\s*', '')"/>
   </xsl:template>
 
 
@@ -316,5 +321,10 @@
        <xsl:apply-templates select="node() except main-title-wrap" mode="#current"/>
       </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="caption/text()"  mode="caption_put_text_in_element">
+    
+  </xsl:template>
+  
 
 </xsl:stylesheet>
