@@ -30,6 +30,9 @@
   <ns prefix="tbx" uri="urn:iso:std:iso:30042:ed-1"/>
   <ns prefix="c" uri="http://www.w3.org/ns/xproc-step"/>
   <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
+  <ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
+  <ns prefix="file" uri="http://expath.org/ns/file"/>
+ 
 
   <let name="legend-content-type" value="'fig-index'"/>
 
@@ -1046,7 +1049,7 @@
      [following-sibling::*[1]/self::fig]">
      <report id="dimensions_not_in_caption_r" 
        test="true()">
-       This <name/> should be put in the caption of the following fig.
+       This <name/> should have an @content-type="units" and be put in the caption of the following fig.
        <sbf:xsl-fix href="xslt-fixes/caption.xsl" mode="add_p_to_caption"/>
      </report>
    </rule>
@@ -1084,13 +1087,60 @@
    <pattern id="symbol_table_disp-formula">
     <rule id="symbol_table_disp-formula_rule1" context="table-wrap[matches(caption/title, 'Symbole')]
       [count(table/col) = 2]/descendant::p/disp-formula">
-      <report test="true()" id="symbol_table_disp-formula_r1">
+      <report test="true()" id="symbol_table_disp-formula_r1" role="warning">
         This <name/> should be an 'inline-formula'.
         <sbf:xsl-fix href="xslt-fixes/formula.xsl" mode="disp-formula_to_inline-formula"/>
       </report>
     </rule>
   </pattern>
   
+
+  <pattern id="media">
+    <rule id="media_folder_missing_rule1" context="/*">
+      <let name="base" value="concat('^',replace(base-uri(/*), '^.*/', ''), '$')"/>
+      <let name="files" value="file:list(file:parent(base-uri(/*)), true())[not(matches(., $base) or ends-with(., '/'))]"/>
+      <assert test="file:exists(concat(file:parent(base-uri(/*)), '/media'))" id="media_folder_missing_a1" role="warning">
+       No 'media' folder exists. All referenced files should be put there.
+       <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="create_media_folder"/>
+      </assert>
+      <report test=" some $f in $files satisfies exists($f)" id="files_not_in_media_folder">
+        These files: <value-of select="string-join($files, ', ')"/> are not in the 'media' folder. All referenced files should be put there.
+        <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="move_files"/>
+      </report>
+    </rule>
+     <rule id="href_path_not_correct" context="(graphic|inline-graphic)[@xlink:href]">
+      <let name="files" value="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
+      <let name="expected-path" value="if($files[matches(., '\.png$')]) 
+                                       then 
+                                            if (contains($files[matches(., '\.png$')], '/')) 
+                                            then concat('media/', substring-after($files[matches(., '\.png$')], '/')[last()])
+                                            else concat('media/', $files[matches(., '\.png$')])
+                                       else 
+                                            if (contains($files[1], '/'))
+                                            then concat('media/', substring-after($files[1], '/')[last()])
+                                            else concat('media/', $files[1])"/>
+      <assert test="@xlink:href = $expected-path" id="href_path_not_correct_r1">
+        The value of @xlink:href (<value-of select="@xlink:href"/>) does not match the expected path.
+        Expected: <value-of select="$expected-path"/>
+        <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="change_href"/>
+      </assert>
+    </rule>
+  </pattern>
+
+
+
+   <pattern id="image_misssing">
+    <rule id="image_misssing_rule1" context="(graphic|inline-graphic)[@xlink:href]">
+      <let name="files" value="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
+      <let name="paths" value="for $f 
+                              in $files 
+                              return resolve-uri($f, base-uri(/*))"/>
+      <assert test="some $p in $paths satisfies exists($p)" id="image_misssing_a1" role="warning">
+        The value of @xlink:href (<value-of select="@xlink:href"/>) references a file that does not exist.
+      </assert>
+    </rule>
+  </pattern>
+
   
   
   <diagnostics>

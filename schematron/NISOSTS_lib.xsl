@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:isosts="http://www.iso.org/ns/isosts"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tr="http://transpect.io" xmlns:tbx="urn:iso:std:iso:30042:ed-1"
+  xmlns:file="http://expath.org/ns/file"
   version="3.0" exclude-result-prefixes="xs isosts">
 
   <xsl:param name="fail-on-error" select="'yes'"/>
@@ -312,8 +313,15 @@
       <xsl:variable name="tbf-number" select="index-of(for $tw in $this-sec-tbfs return generate-id($tw), generate-id($context))"/>
      <xsl:sequence select="string-join(($sec/@id, 'tbf', $tbf-number), '-')"/>
   </xsl:function>
-
-
-
+  
+  
+   <xsl:function name="isosts:basename-to-regex" as="xs:string">
+    <xsl:param name="input" as="xs:string"/>
+     <xsl:variable name="parenthesis" select="replace(replace($input, '\)', '\\)'), '\(', '\\(')"/>
+     <xsl:sequence select="if(not(matches($input, '\.\d?[A-z].*')))
+       then concat('(^|/)', $parenthesis, '(\.\d?[A-z].*|$)')
+       else concat('(^|/)', $parenthesis, '$')"/>
+   </xsl:function>
+  
 
 </xsl:stylesheet>

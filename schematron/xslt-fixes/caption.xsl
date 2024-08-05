@@ -14,11 +14,9 @@
    [preceding-sibling::*[1]/self::p [matches(., isosts:i18n-strings-no-lang('dimension-heading'))]]/caption" 
    mode="add_p_to_caption">
    <xsl:copy>
-     <xsl:apply-templates select="@*, node()" mode="#current"/>
-     <p>
+     <xsl:apply-templates select="@*" mode="#current"/>
        <xsl:attribute name="content-type" select="'units'"/>
-       <xsl:apply-templates select="../preceding-sibling::* [1]" mode="add_p"/>
-     </p>
+       <xsl:apply-templates select="node(), ../preceding-sibling::* [1]" mode="add_p"/>
    </xsl:copy>
  </xsl:template>
   
