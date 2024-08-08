@@ -75,6 +75,8 @@
   <xsl:variable name="annex_label_regEx" select="concat('^\s*(Annexe?|Приложение|Aa?nhang)', $space_regEx)"/>
 
   <xsl:variable name="figur_label_regEx" select="concat('^\s*(Figure|Bild|Figuur|Рисунок)', $space_regEx)"/>
+  
+  <xsl:variable name="image_file_extension_regEx" select="'\.(png|jpg|svg|tif|gif)$'"/>
 
 
   <xsl:key name="i18n" match="isosts:string/isosts:translation" use="string-join((../@name, @xml:lang), '__')"/>

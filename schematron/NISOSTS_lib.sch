@@ -1094,8 +1094,8 @@
     </rule>
   </pattern>
   
-
-  <pattern id="media">
+  
+  <pattern id="media" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
     <rule id="media_folder_missing_rule1" context="/*">
       <let name="base" value="concat('^',replace(base-uri(/*), '^.*/', ''), '$')"/>
       <let name="files" value="file:list(file:parent(base-uri(/*)), true())[not(matches(., $base) or ends-with(., '/'))]"/>
@@ -1103,12 +1103,12 @@
        No 'media' folder exists. All referenced files should be put there.
        <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="create_media_folder"/>
       </assert>
-      <report test=" some $f in $files satisfies exists($f)" id="files_not_in_media_folder">
-        These files: <value-of select="string-join($files, ', ')"/> are not in the 'media' folder. All referenced files should be put there.
+      <report test=" some $f in $files satisfies exists($f)" id="files_not_in_media_folder" role="warning">
+        These files: <value-of select="string-join($files[not(matches(., 'media/[^/]+\.\d?[A-z].*$'))], ', ')"/> are not in the 'media' folder. All referenced files should be put there.
         <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="move_files"/>
       </report>
     </rule>
-     <rule id="href_path_not_correct" context="(graphic|inline-graphic)[@xlink:href]">
+     <rule id="href_path" context="(graphic|inline-graphic)[@xlink:href]">
       <let name="files" value="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
       <let name="expected-path" value="if($files[matches(., '\.png$')]) 
                                        then 
@@ -1119,7 +1119,12 @@
                                             if (contains($files[1], '/'))
                                             then concat('media/', substring-after($files[1], '/')[last()])
                                             else concat('media/', $files[1])"/>
-      <assert test="@xlink:href = $expected-path" id="href_path_not_correct_r1">
+       <let name="count-files" value="count($files)"/>
+      <report test="$count-files gt 1" id="ambiguous_href_r1" role="warning">
+        The value of @xlink:href (<value-of select="@xlink:href"/>) is ambigous.
+        Found <value-of select="$count-files"/> files that the value of @xlink:href could reference which are: <value-of select="string-join($files, ', ')"/>
+      </report>
+      <assert test="@xlink:href = $expected-path" id="href_path_not_correct_r1" role="warning">
         The value of @xlink:href (<value-of select="@xlink:href"/>) does not match the expected path.
         Expected: <value-of select="$expected-path"/>
         <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="change_href"/>
@@ -1127,9 +1132,20 @@
     </rule>
   </pattern>
 
+<pattern id="wrong_file_extensions" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
+   <let name="base" value="concat('^',replace(base-uri(/*), '^.*/', ''), '$')"/>
+   <let name="files" value="file:list(file:parent(base-uri(/*)), true())[not(matches(., $base) or ends-with(., '/'))][matches(., '\.(png|jpe?g|gif|svg|tiff?)$', 'i')]"/>
+   <let name="wrong_file_extension" value="$files[not(matches(. , $image_file_extension_regEx))]"/>
+  <rule id="wrong_img_file_extensions_rule1" context="/*">
+     <report test="some $w in $wrong_file_extension satisfies exists($w)" id="wrong_img_file_extensions_r1" role="warning">
+        Found <value-of select="count($wrong_file_extension)"/> image(s) with a wrong file extension.
+        Image(s): <value-of select="string-join($wrong_file_extension, ', ')"/>
+       <sbf:xsl-fix href="xslt-fixes/media.xsl" mode="change_img_file_extensions"/>
+      </report>
+  </rule>
+</pattern>
 
-
-   <pattern id="image_misssing">
+   <pattern id="image_misssing" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
     <rule id="image_misssing_rule1" context="(graphic|inline-graphic)[@xlink:href]">
       <let name="files" value="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
       <let name="paths" value="for $f 
@@ -1138,6 +1154,16 @@
       <assert test="some $p in $paths satisfies exists($p)" id="image_misssing_a1" role="warning">
         The value of @xlink:href (<value-of select="@xlink:href"/>) references a file that does not exist.
       </assert>
+    </rule>
+  </pattern>
+  
+  
+  <pattern id="def-list_title_in_def-head">
+    <rule id="def-list_title_in_def-head_rule1" context="def-head">
+      <report test="parent::def-list[not(title and term-head)]" id="def-list_title_in_def-head_r1" role="warning">
+        It seems like this <name/> should be a title element instead.
+        <sbf:xsl-fix href="xslt-fixes/def-list.xsl" mode="def-head_to_title"/>
+      </report>
     </rule>
   </pattern>
 

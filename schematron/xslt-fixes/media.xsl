@@ -39,27 +39,30 @@
           resolve-uri($f, base-uri(/*))"/>
     <xsl:message
       select="
-        '############## moved files:',string-join($files, ', '),  'to media folder',
+        '############## moved files:', string-join($files[not(matches(., 'media/[^/]+\.\d?[A-z].*$'))], ', '), 'to media folder',
         for $p in $paths
         return
-          if(not(matches($p, 'media/[^/]+\.\d?[A-z].*$')))
-          then file:move($p, $target)
-          else ''"/>
+          if (not(matches($p, 'media/[^/]+\.\d?[A-z].*$')))
+          then
+            file:move($p, $target)
+          else
+            ''"/>
     <xsl:if test="not(empty($dirs))">
-    <xsl:message
-      select="
-        '############## deleted empty directories:', string-join($dirs, ', '),
-        for $p in $del-paths
-        return
-          file:delete($p, true())"/>
-     </xsl:if>
+      <xsl:message
+        select="
+          '############## deleted empty directories:', string-join($dirs, ', '),
+          for $p in reverse($del-paths)
+          return
+            file:delete($p, true())"
+      />
+    </xsl:if>
     <xsl:copy>
       <xsl:apply-templates select="node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
 
 
-  <xsl:template match="(graphic|inline-graphic)[@xlink:href]" mode="change_href">
+  <xsl:template match="(graphic | inline-graphic)[@xlink:href]" mode="change_href">
     <xsl:variable name="files"
       select="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
     <xsl:variable name="paths"
@@ -91,7 +94,37 @@
     </xsl:copy>
   </xsl:template>
 
-
+  <xsl:template mode="change_img_file_extensions" match="/*">
+    <xsl:variable name="img_regEx" select="'\.(png|jpe?g|gif|svg|tiff?)$'"/>
+    <xsl:variable name="base" select="replace(replace(base-uri(/*), '\.fixed\.xml$', '.xml'), '^.*/', '')"/>
+    <xsl:variable name="files"
+      select="file:list(file:parent(base-uri(/*)), true())[not(matches(., concat('^', $base, '$')) or ends-with(., '/'))][matches(., $img_regEx, 'i')]"/>
+    <xsl:variable name="wrong_file_extension" select="$files[not(matches(., $image_file_extension_regEx))]"/>
+    <xsl:variable name="old-paths"
+      select="
+        for $w
+        in $wrong_file_extension
+        return
+          resolve-uri($w, base-uri(/*))"/>
+    <xsl:variable name="fixed_extensions"
+      select="$wrong_file_extension ! replace(replace(lower-case(replace(., 'media/.+\.?.+\.', '')), 'jpeg$', 'jpg', 'i'), 'tiff$', 'tif')"/>
+    <xsl:variable name="new-paths"
+      select="
+        for $o
+        in $old-paths
+        return
+          replace($o, $img_regEx, $fixed_extensions[index-of($old-paths, $o)], 'i')"/>
+    <xsl:message
+      select="
+        '############## changed file extensions',
+        for $o in $old-paths
+        return
+          file:move($old-paths[index-of($old-paths, $o)], $new-paths[index-of($old-paths, $o)])
+        , 'renamed files:', string-join($wrong_file_extension, ', '), 'to:', string-join($new-paths ! replace(., substring-before(., 'media'), ''), ', ')"/>
+    <xsl:copy>
+      <xsl:apply-templates select="node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
 
 
 </xsl:stylesheet>
