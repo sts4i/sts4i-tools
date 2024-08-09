@@ -32,6 +32,7 @@
   <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
   <ns prefix="file" uri="http://expath.org/ns/file"/>
+  <ns prefix="hub" uri="http://transpect.io/hub"/>
  
 
   <let name="legend-content-type" value="'fig-index'"/>
@@ -1125,7 +1126,7 @@
                                             else concat('media/', $files[1])"/>
        <let name="count-files" value="count($files)"/>
       <report test="$count-files gt 1" id="ambiguous_href_r1" role="warning">
-        The value of @xlink:href (<value-of select="@xlink:href"/>) is ambigous.
+        The value of @xlink:href (<value-of select="@xlink:href"/>) is ambiguous.
         Found <value-of select="$count-files"/> files that the value of @xlink:href could reference which are: <value-of select="string-join($files, ', ')"/>
       </report>
       <assert test="@xlink:href = $expected-path" id="href_path_not_correct_r1" role="warning">
@@ -1170,8 +1171,31 @@
       </report>
     </rule>
   </pattern>
-
   
+  <pattern id="DIN_unusual_target">
+    <rule id="DIN_unusual_target_rule1" context="*[@rid]">
+      <report test="key('by-id', @rid)/self::target[parent::label]" id="DIN_unusual_target_r1">
+        This <name/> references a target inside a label. It should reference the preceeding element: <value-of select="name(key('by-id', @rid)/../..)"/>
+        <sbf:xsl-fix href="xslt-fixes/rid.xsl" mode="change_rid"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="DIN_table-wrap-foot_is_tr">
+    <rule id="DIN_table-wrap-foot_is_tr_rule1" context="tr[last()]">
+      <report test="descendant::p[@specific-use = 'Tablefootnote']" id="DIN_table-wrap-foot_is_tr_r1" role="warning">
+        This <name/> seems like it should be a table-wrap-foot instead.
+      </report>
+    </rule>
+  </pattern>
+  
+  <!--<pattern id="table_fn_wrong_order">
+    <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
+      <report test="hub:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_r1" role="warning">
+        The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
+      </report>
+    </rule>
+  </pattern>-->
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)

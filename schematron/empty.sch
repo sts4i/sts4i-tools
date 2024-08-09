@@ -6,7 +6,7 @@
   xml:lang="de">
   <pattern id="id_empty_pattern">
     <rule id="id_empty_rule" context="adoption">
-      <report role="error" test="true()">This should never fire</report>
+      <report id="empty_report" role="error" test="true()">This should never fire</report>
     </rule>
   </pattern>
 </schema>
