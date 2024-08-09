@@ -1070,6 +1070,10 @@
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend"/>
       </report>
+      <report test="preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]" id="disp-formula_legend_in_def-list_r2">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend_no_lang"/>
+      </report>
     </rule>
   </pattern>
   
@@ -1095,7 +1099,7 @@
   </pattern>
   
   
-  <pattern id="media" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
+  <pattern id="media" sbf:product-version-regex="^[PE]E">
     <rule id="media_folder_missing_rule1" context="/*">
       <let name="base" value="concat('^',replace(base-uri(/*), '^.*/', ''), '$')"/>
       <let name="files" value="file:list(file:parent(base-uri(/*)), true())[not(matches(., $base) or ends-with(., '/'))]"/>
@@ -1132,7 +1136,7 @@
     </rule>
   </pattern>
 
-<pattern id="wrong_file_extensions" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
+<pattern id="wrong_file_extensions" sbf:product-version-regex="^[PE]E">
    <let name="base" value="concat('^',replace(base-uri(/*), '^.*/', ''), '$')"/>
    <let name="files" value="file:list(file:parent(base-uri(/*)), true())[not(matches(., $base) or ends-with(., '/'))][matches(., '\.(png|jpe?g|gif|svg|tiff?)$', 'i')]"/>
    <let name="wrong_file_extension" value="$files[not(matches(. , $image_file_extension_regEx))]"/>
@@ -1145,7 +1149,7 @@
   </rule>
 </pattern>
 
-   <pattern id="image_misssing" sbf:use-when="matches(system-property('xsl:product-version'), 'PE|EE')">
+   <pattern id="image_misssing" sbf:product-version-regex="^[PE]E">
     <rule id="image_misssing_rule1" context="(graphic|inline-graphic)[@xlink:href]">
       <let name="files" value="file:list(file:parent(base-uri(/*)), true())[matches(., isosts:basename-to-regex(current()/@xlink:href))]"/>
       <let name="paths" value="for $f 

@@ -131,8 +131,8 @@
         </attribute>
       </optional>
       <optional>
-        <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
-           <ref name="exprValue"/>
+        <attribute name="product-version-regex" ns="http://transpect.io/schematron-batch-fix">
+           <data type="string"/>
         </attribute>
       </optional>
       <optional>
@@ -228,9 +228,9 @@
    
    <define name="rule">
     <element name="rule">
-      <optional>
-      <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
-           <ref name="exprValue"/>
+       <optional>
+        <attribute name="product-version-regex" ns="http://transpect.io/schematron-batch-fix">
+           <data type="string"/>
         </attribute>
       </optional>
       <optional>
@@ -317,9 +317,9 @@
     <attribute name="test">
       <ref name="exprValue"/>
     </attribute>
-    <optional>
-      <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
-           <ref name="exprValue"/>
+     <optional>
+        <attribute name="product-version-regex" ns="http://transpect.io/schematron-batch-fix">
+           <data type="string"/>
         </attribute>
       </optional>
     <optional>

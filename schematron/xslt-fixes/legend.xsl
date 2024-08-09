@@ -481,6 +481,31 @@
     mode="p_and_def-list_to_legend"/>
   
   
+  
+  <xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]]
+  [following-sibling::def-list]" 
+  mode="p_and_def-list_to_legend_no_lang">
+  <xsl:copy>
+  <xsl:apply-templates select="@*, node()" mode="#current"/>
+    <legend>
+      <title>
+        <xsl:value-of select="following-sibling::*[1]"/>
+      </title>
+       <xsl:apply-templates select="following-sibling::def-list[1]" mode="add_def-list"/>
+    </legend>
+   </xsl:copy>
+</xsl:template>
+  
+  <xsl:template mode="p_and_def-list_to_legend_no_lang" 
+   match="p[matches(., isosts:i18n-strings-no-lang('where-heading'))]
+   [preceding-sibling::*[1]/self::disp-formula]"/>
+  
+  <xsl:template match="def-list[preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]]
+    [preceding-sibling::*[position() &lt;= 2]/self::disp-formula]" 
+    mode="p_and_def-list_to_legend_no_lang"/>
+  
+  
+  
   <xsl:template match="fig[def-list[@list-type = 'key'][following-sibling::*[1]/self::table-wrap[descendant::disp-formula]]]
     [following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]]" mode="multiple_legends">
     <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
