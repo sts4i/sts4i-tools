@@ -25,6 +25,21 @@
       </element>
     </define>
     
+    <define name="foreign-attributes">
+    <zeroOrMore>
+      <attribute>
+        <anyName>
+          <except>
+            <nsName ns=""/>
+            <nsName ns="http://www.w3.org/XML/1998/namespace"/>
+            <nsName ns="http://purl.oclc.org/dsdl/schematron"/>
+            <nsName ns="http://transpect.io/schematron-batch-fix"/>
+          </except>
+        </anyName>
+      </attribute>
+    </zeroOrMore>
+  </define>
+    
     <define name="assert">
       <element name="assert">
         <ref name="assert-report-atts"/>
@@ -108,6 +123,16 @@
       <optional>
         <attribute name="documents">
           <ref name="pathValue"/>
+        </attribute>
+      </optional>
+       <optional>
+        <attribute name="alternative-for" ns="http://transpect.io/schematron-batch-fix">
+          <data type="string"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
+           <ref name="exprValue"/>
         </attribute>
       </optional>
       <optional>
@@ -204,6 +229,11 @@
    <define name="rule">
     <element name="rule">
       <optional>
+      <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
+           <ref name="exprValue"/>
+        </attribute>
+      </optional>
+      <optional>
         <attribute name="flag">
           <ref name="flagValue"/>
         </attribute>
@@ -287,6 +317,11 @@
     <attribute name="test">
       <ref name="exprValue"/>
     </attribute>
+    <optional>
+      <attribute name="use-when" ns="http://transpect.io/schematron-batch-fix">
+           <ref name="exprValue"/>
+        </attribute>
+      </optional>
     <optional>
       <attribute name="flag">
         <ref name="flagValue"/>
