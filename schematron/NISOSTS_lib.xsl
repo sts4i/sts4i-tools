@@ -324,6 +324,114 @@
        then concat('(^|/)', $parenthesis, '(\.\d?[A-z].*|$)')
        else concat('(^|/)', $parenthesis, '$')"/>
    </xsl:function>
+ 
   
+  <xsl:function name="isosts:letters-to-number" as="xs:integer">
+  <!--wrapper for 1-parameter-call; default: type=1-->
+    <xsl:param name="string" as="xs:string"/>
+    <xsl:sequence select="isosts:letters-to-number($string,1)"/>
+  </xsl:function>
+  
+  <xsl:function name="isosts:letters-to-number" as="xs:integer">
+    <!-- a, b, c, …, aa, ab, … to 1, 2, 3, …, 27, 28, …
+      Maybe this function should also deal with a, b, c, …, aa, bb, cc, … -->
+    
+    <xsl:param name="string" as="xs:string"/>
+    <xsl:param name="type"/>
+    <!--possible values: 1: normal: a..z, aa, ab..az, ba, bb
+                         2: double digits: a..z, aa, bb..zz-->
+    
+    <xsl:variable name="offset" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="matches($string, '^[a-z][a-z]*$')">
+          <xsl:sequence select="96"/>
+        </xsl:when>
+        <xsl:when test="matches($string, '^[A-Z][A-Z]*$')">
+          <xsl:sequence select="64"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="-1"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$type = 2">
+        <!-- length ordered letter groups aa,bb -->
+        <xsl:choose>
+          <xsl:when test="$offset = -1">
+            <xsl:sequence select="0"/><!-- or throw an error? -->
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="nums" as="xs:integer+">
+              <xsl:for-each select="string-to-codepoints($string)">
+                <xsl:sequence select="."/>
+              </xsl:for-each>
+            </xsl:variable>
+            <xsl:variable name="length" as="xs:integer" select="count($nums)"/>
+            <xsl:sequence select="xs:integer((sum($nums) div $length) + (26 * ($length - 1)) - $offset)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- lexicographic ordered letters aa,ab -->
+        <xsl:choose>
+          <xsl:when test="$offset = -1">
+            <xsl:sequence select="0"/><!-- or throw an error? -->
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="nums" as="xs:integer+">
+              <xsl:for-each select="reverse(string-to-codepoints($string))">
+                <xsl:sequence select="(. - $offset) * isosts:pow(26, position() - 1)"/>
+              </xsl:for-each>
+            </xsl:variable>
+            <xsl:sequence select="xs:integer(sum($nums))"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="isosts:pow" as="xs:integer">
+    <xsl:param name="base" as="xs:integer"/>
+    <xsl:param name="power" as="xs:integer"/>
+    <xsl:choose>
+      <xsl:when test="$power eq 0">
+        <xsl:sequence select="1"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$base * isosts:pow($base, $power - 1)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+    
+  <xsl:function name="isosts:is-incrementing-alpha-sequence" as="xs:boolean">
+    <xsl:param name="marks" as="xs:string*"/>
+    <xsl:choose>
+      <xsl:when test="count($marks) = 0">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:when test="count($marks) = 1">
+        <xsl:sequence select="true()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="tmp" as="xs:boolean+">
+          <xsl:for-each select="$marks[position() gt 1]">
+            <xsl:variable name="pos" as="xs:integer" select="position()"/>
+            <xsl:sequence select="isosts:letters-to-number(.) = isosts:letters-to-number($marks[position() = $pos ]) + 1"/>
+          </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="tmp2" as="xs:boolean+">
+          <xsl:for-each select="$marks[position() gt 1]">
+            <xsl:variable name="pos" as="xs:integer" select="position()"/>
+            <xsl:sequence select="isosts:letters-to-number(.,2) = isosts:letters-to-number($marks[position() = $pos ],2) + 1"/>
+          </xsl:for-each>
+        </xsl:variable>
+        <xsl:sequence select="every $b in $tmp satisfies $b or (every $b in $tmp2 satisfies $b)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+
+
 
 </xsl:stylesheet>

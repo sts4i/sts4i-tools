@@ -32,7 +32,6 @@
   <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
   <ns prefix="file" uri="http://expath.org/ns/file"/>
-  <ns prefix="hub" uri="http://transpect.io/hub"/>
  
 
   <let name="legend-content-type" value="'fig-index'"/>
@@ -1189,13 +1188,14 @@
     </rule>
   </pattern>
   
-  <!--<pattern id="table_fn_wrong_order">
+  <pattern id="table_fn_wrong_order">
     <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
-      <report test="hub:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_r1" role="warning">
+      <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_r1" role="warning">
         The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
-      </report>
+      </assert>
     </rule>
-  </pattern>-->
+  </pattern>
+  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
