@@ -431,7 +431,10 @@
     </xsl:choose>
   </xsl:function>
 
-
-
+  
+  <xsl:function name="isosts:uni-chars">
+    <xsl:param name="context" as="text()*"/>
+    <xsl:sequence select="distinct-values(for $t in $context return string-to-codepoints($t))"/>
+  </xsl:function>
 
 </xsl:stylesheet>

@@ -21,6 +21,8 @@
   <!-- Set the allow-foreign parameter to 'true' when invoking the default ISO Schematron
     implementation -->
 
+<sbf:extends href="http://niso-sts.org/sts4i-tools/schematron/unicode.sch"/>
+
   <xsl:import href="http://transpect.io/xslt-util/num/xsl/num.xsl"/>
 
   <xsl:param name="target-niso-version"/>
@@ -37,7 +39,7 @@
   <let name="legend-content-type" value="'fig-index'"/>
 
   <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>
-
+  
   <pattern id="unexpected-namespace-uris">
     <let name="expected-ns-uris"
       value="
@@ -1195,7 +1197,6 @@
       </assert>
     </rule>
   </pattern>
-  
   
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
