@@ -1,16 +1,21 @@
 <schema xmlns="http://purl.oclc.org/dsdl/schematron"
         xmlns:c="http://www.w3.org/ns/xproc-step"
+        xmlns:isosts="http://www.iso.org/ns/isosts"
+        xmlns:sbf="http://transpect.io/schematron-batch-fix"
         xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
         queryBinding="xslt2"
         xml:lang="en">
+   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
    <pattern id="LATINSMALLLETTERNWITHLONGRIGHTLEG">
       <rule context="/*" id="LATINSMALLLETTERNWITHLONGRIGHTLEG_rule">
          <let name="value" value="414"/>
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="LATINSMALLLETTERNWITHLONGRIGHTLEG_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'LATIN SMALL LETTER N WITH LONG RIGHT LEG' use the char 'GREEK SMALL LETTER ETA' (03B7) instead.
-            </report>
+              This Document contains the char 'LATIN SMALL LETTER N WITH LONG RIGHT LEG' (019E) use the char 'GREEK SMALL LETTER ETA' (03B7) instead.
+              <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl"
+                         mode="LATINSMALLLETTERNWITHLONGRIGHTLEG"/>
+         </report>
       </rule>
    </pattern>
    <pattern id="CyrillicSupplement">
@@ -669,8 +674,9 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGENCLOSINGCIRCLE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ENCLOSING CIRCLE' use the char 'WHITE CIRCLE' (25CB) instead.
-            </report>
+              This Document contains the char 'COMBINING ENCLOSING CIRCLE' (20DD) use the char 'WHITE CIRCLE' (25CB) instead.
+              <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGENCLOSINGCIRCLE"/>
+         </report>
       </rule>
    </pattern>
    <pattern id="COMBININGRIGHTARROWABOVE">
@@ -679,8 +685,9 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGRIGHTARROWABOVE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING RIGHT ARROW ABOVE' use the char 'RIGHTWARDS ARROW' (2192) instead.
-            </report>
+              This Document contains the char 'COMBINING RIGHT ARROW ABOVE' (20D7) use the char 'RIGHTWARDS ARROW' (2192) instead.
+              <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGRIGHTARROWABOVE"/>
+         </report>
       </rule>
    </pattern>
    <pattern id="COMBININGENCLOSINGSQUARE">
@@ -689,8 +696,9 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGENCLOSINGSQUARE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ENCLOSING SQUARE' use the char 'WHITE SQUARE' (25A1) instead.
-            </report>
+              This Document contains the char 'COMBINING ENCLOSING SQUARE' (20DE) use the char 'WHITE SQUARE' (25A1) instead.
+              <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGENCLOSINGSQUARE"/>
+         </report>
       </rule>
    </pattern>
    <pattern id="COMBININGANTICLOCKWISEARROWABOVE">
@@ -699,8 +707,10 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGANTICLOCKWISEARROWABOVE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ANTICLOCKWISE ARROW ABOVE' use the char 'TOP ARC ANTICLOCKWISE ARROW' (293A) instead.
-            </report>
+              This Document contains the char 'COMBINING ANTICLOCKWISE ARROW ABOVE' (20D4) use the char 'TOP ARC ANTICLOCKWISE ARROW' (293A) instead.
+              <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl"
+                         mode="COMBININGANTICLOCKWISEARROWABOVE"/>
+         </report>
       </rule>
    </pattern>
    <pattern id="BoxDrawing">

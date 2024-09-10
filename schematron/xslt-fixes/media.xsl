@@ -12,7 +12,7 @@
     <xsl:variable name="target" select="concat(file:parent(base-uri(/*)), '/media')"/>
     <xsl:message select="'############## created media folder', file:create-dir($target)"/>
     <xsl:copy>
-      <xsl:apply-templates select="node()" mode="#current"/>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
 
@@ -57,7 +57,7 @@
       />
     </xsl:if>
     <xsl:copy>
-      <xsl:apply-templates select="node()" mode="#current"/>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
 
@@ -122,7 +122,7 @@
           file:move($old-paths[index-of($old-paths, $o)], $new-paths[index-of($old-paths, $o)])
         , 'renamed files:', string-join($wrong_file_extension, ', '), 'to:', string-join($new-paths ! replace(., substring-before(., 'media'), ''), ', ')"/>
     <xsl:copy>
-      <xsl:apply-templates select="node()" mode="#current"/>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
 
