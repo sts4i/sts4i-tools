@@ -12,7 +12,7 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="LATINSMALLLETTERNWITHLONGRIGHTLEG_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'LATIN SMALL LETTER N WITH LONG RIGHT LEG' (019E) use the char 'GREEK SMALL LETTER ETA' (03B7) instead.
+              This Document contains the char 'LATIN SMALL LETTER N WITH LONG RIGHT LEG' (019E, ƞ) use the char 'GREEK SMALL LETTER ETA' (03B7, η) instead.
               <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl"
                          mode="LATINSMALLLETTERNWITHLONGRIGHTLEG"/>
          </report>
@@ -26,7 +26,8 @@
          <report id="CyrillicSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cyrillic Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Armenian">
@@ -37,7 +38,8 @@
          <report id="Armenian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Armenian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Hebrew">
@@ -48,7 +50,8 @@
          <report id="Hebrew_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hebrew' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicSupplement">
@@ -59,7 +62,8 @@
          <report id="ArabicSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Thaana">
@@ -70,7 +74,8 @@
          <report id="Thaana_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Thaana' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="NKo">
@@ -81,7 +86,8 @@
          <report id="NKo_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'NKo' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Samaritan">
@@ -92,7 +98,8 @@
          <report id="Samaritan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Samaritan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Mandaic">
@@ -103,7 +110,8 @@
          <report id="Mandaic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mandaic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SyriacSupplement">
@@ -114,7 +122,8 @@
          <report id="SyriacSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Syriac Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicExtended-B">
@@ -125,7 +134,8 @@
          <report id="ArabicExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicExtended-A">
@@ -136,7 +146,8 @@
          <report id="ArabicExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Devanagari">
@@ -147,7 +158,8 @@
          <report id="Devanagari_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Devanagari' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Bengali">
@@ -158,7 +170,8 @@
          <report id="Bengali_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bengali' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Gurmukhi">
@@ -169,7 +182,8 @@
          <report id="Gurmukhi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Gurmukhi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Gujarati">
@@ -180,7 +194,8 @@
          <report id="Gujarati_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Gujarati' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Oriya">
@@ -191,7 +206,8 @@
          <report id="Oriya_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Oriya' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tamil">
@@ -202,7 +218,8 @@
          <report id="Tamil_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tamil' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Telugu">
@@ -213,7 +230,8 @@
          <report id="Telugu_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Telugu' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Kannada">
@@ -224,7 +242,8 @@
          <report id="Kannada_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kannada' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Malayalam">
@@ -235,7 +254,8 @@
          <report id="Malayalam_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Malayalam' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Sinhala">
@@ -246,7 +266,8 @@
          <report id="Sinhala_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sinhala' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Thai">
@@ -257,7 +278,8 @@
          <report id="Thai_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Thai' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Lao">
@@ -268,7 +290,8 @@
          <report id="Lao_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lao' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tibetan">
@@ -279,7 +302,8 @@
          <report id="Tibetan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tibetan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Myanmar">
@@ -290,7 +314,8 @@
          <report id="Myanmar_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Myanmar' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Georgian">
@@ -301,7 +326,8 @@
          <report id="Georgian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Georgian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HangulJamo">
@@ -312,7 +338,8 @@
          <report id="HangulJamo_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hangul Jamo' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Ethiopic">
@@ -323,7 +350,8 @@
          <report id="Ethiopic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ethiopic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EthiopicSupplement">
@@ -334,7 +362,8 @@
          <report id="EthiopicSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ethiopic Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Cherokee">
@@ -345,7 +374,8 @@
          <report id="Cherokee_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cherokee' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="UnifiedCanadianAboriginalSyllabics">
@@ -356,7 +386,8 @@
          <report id="UnifiedCanadianAboriginalSyllabics_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Unified Canadian Aboriginal Syllabics' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Ogham">
@@ -367,7 +398,8 @@
          <report id="Ogham_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ogham' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Runic">
@@ -378,7 +410,8 @@
          <report id="Runic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Runic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tagalog">
@@ -389,7 +422,8 @@
          <report id="Tagalog_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tagalog' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Hanunoo">
@@ -400,7 +434,8 @@
          <report id="Hanunoo_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hanunoo' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Buhid">
@@ -411,7 +446,8 @@
          <report id="Buhid_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Buhid' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tagbanwa">
@@ -422,7 +458,8 @@
          <report id="Tagbanwa_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tagbanwa' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Khmer">
@@ -433,7 +470,8 @@
          <report id="Khmer_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Khmer' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Mongolian">
@@ -444,7 +482,8 @@
          <report id="Mongolian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mongolian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="UnifiedCanadianAboriginalSyllabicsExtended">
@@ -455,7 +494,8 @@
          <report id="UnifiedCanadianAboriginalSyllabicsExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Unified Canadian Aboriginal Syllabics Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Limbu">
@@ -466,7 +506,8 @@
          <report id="Limbu_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Limbu' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TaiLe">
@@ -477,7 +518,8 @@
          <report id="TaiLe_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tai Le' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="NewTaiLue">
@@ -488,7 +530,8 @@
          <report id="NewTaiLue_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'New Tai Lue' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KhmerSymbols">
@@ -499,7 +542,8 @@
          <report id="KhmerSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Khmer Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Buginese">
@@ -510,7 +554,8 @@
          <report id="Buginese_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Buginese' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TaiTham">
@@ -521,7 +566,8 @@
          <report id="TaiTham_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tai Tham' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CombiningDiacriticalMarksExtended">
@@ -532,7 +578,8 @@
          <report id="CombiningDiacriticalMarksExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Combining Diacritical Marks Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Balinese">
@@ -543,7 +590,8 @@
          <report id="Balinese_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Balinese' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Sundanese">
@@ -554,7 +602,8 @@
          <report id="Sundanese_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sundanese' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Batak">
@@ -565,7 +614,8 @@
          <report id="Batak_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Batak' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Lepcha">
@@ -576,7 +626,8 @@
          <report id="Lepcha_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lepcha' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OlChiki">
@@ -587,7 +638,8 @@
          <report id="OlChiki_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ol Chiki' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CyrillicExtended-C">
@@ -598,7 +650,8 @@
          <report id="CyrillicExtended-C_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cyrillic Extended-C' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="GeorgianExtended">
@@ -609,7 +662,8 @@
          <report id="GeorgianExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Georgian Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SundaneseSupplement">
@@ -620,7 +674,8 @@
          <report id="SundaneseSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sundanese Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="VedicExtensions">
@@ -631,7 +686,8 @@
          <report id="VedicExtensions_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Vedic Extensions' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PhoneticExtensions">
@@ -642,7 +698,8 @@
          <report id="PhoneticExtensions_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Phonetic Extensions' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LatinExtendedAdditional">
@@ -653,7 +710,8 @@
          <report id="LatinExtendedAdditional_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Latin Extended Additional' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CurrencySymbols">
@@ -665,7 +723,8 @@
          <report id="CurrencySymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end and (some $e in $exceptions satisfies not($e = $u))">
               This Document contains chars of the unicode-block 'Currency Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end][not(. = $exceptions)] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="COMBININGENCLOSINGCIRCLE">
@@ -674,7 +733,7 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGENCLOSINGCIRCLE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ENCLOSING CIRCLE' (20DD) use the char 'WHITE CIRCLE' (25CB) instead.
+              This Document contains the char 'COMBINING ENCLOSING CIRCLE' (20DD, ⃝) use the char 'WHITE CIRCLE' (25CB, ○) instead.
               <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGENCLOSINGCIRCLE"/>
          </report>
       </rule>
@@ -685,7 +744,7 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGRIGHTARROWABOVE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING RIGHT ARROW ABOVE' (20D7) use the char 'RIGHTWARDS ARROW' (2192) instead.
+              This Document contains the char 'COMBINING RIGHT ARROW ABOVE' (20D7, ⃗) use the char 'RIGHTWARDS ARROW' (2192, →) instead.
               <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGRIGHTARROWABOVE"/>
          </report>
       </rule>
@@ -696,7 +755,7 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGENCLOSINGSQUARE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ENCLOSING SQUARE' (20DE) use the char 'WHITE SQUARE' (25A1) instead.
+              This Document contains the char 'COMBINING ENCLOSING SQUARE' (20DE, ⃞) use the char 'WHITE SQUARE' (25A1, □) instead.
               <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl" mode="COMBININGENCLOSINGSQUARE"/>
          </report>
       </rule>
@@ -707,7 +766,7 @@
          <let name="uni-chars" value="isosts:uni-chars(descendant::text())"/>
          <report id="COMBININGANTICLOCKWISEARROWABOVE_report"
                  test="some $u in $uni-chars satisfies $value = $u">
-              This Document contains the char 'COMBINING ANTICLOCKWISE ARROW ABOVE' (20D4) use the char 'TOP ARC ANTICLOCKWISE ARROW' (293A) instead.
+              This Document contains the char 'COMBINING ANTICLOCKWISE ARROW ABOVE' (20D4, ⃔) use the char 'TOP ARC ANTICLOCKWISE ARROW' (293A, ⤺) instead.
               <sbf:xsl-fix href="xslt-fixes/char_misuse.xsl"
                          mode="COMBININGANTICLOCKWISEARROWABOVE"/>
          </report>
@@ -721,7 +780,8 @@
          <report id="BoxDrawing_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Box Drawing' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MiscellaneousMathematicalSymbols-B">
@@ -732,7 +792,8 @@
          <report id="MiscellaneousMathematicalSymbols-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Miscellaneous Mathematical Symbols-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="GeorgianSupplement">
@@ -743,7 +804,8 @@
          <report id="GeorgianSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Georgian Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tifinagh">
@@ -754,7 +816,8 @@
          <report id="Tifinagh_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tifinagh' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EthiopicExtended">
@@ -765,7 +828,8 @@
          <report id="EthiopicExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ethiopic Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CyrillicExtended-A">
@@ -776,7 +840,8 @@
          <report id="CyrillicExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cyrillic Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SupplementalPunctuation">
@@ -787,7 +852,8 @@
          <report id="SupplementalPunctuation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Supplemental Punctuation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="IdeographicDescriptionCharacters">
@@ -798,7 +864,8 @@
          <report id="IdeographicDescriptionCharacters_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ideographic Description Characters' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKSymbolsandPunctuation">
@@ -809,7 +876,8 @@
          <report id="CJKSymbolsandPunctuation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Symbols and Punctuation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Hiragana">
@@ -820,7 +888,8 @@
          <report id="Hiragana_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hiragana' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Kanbun">
@@ -831,7 +900,8 @@
          <report id="Kanbun_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kanbun' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="BopomofoExtended">
@@ -842,7 +912,8 @@
          <report id="BopomofoExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bopomofo Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKStrokes">
@@ -853,7 +924,8 @@
          <report id="CJKStrokes_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Strokes' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KatakanaPhoneticExtensions">
@@ -864,7 +936,8 @@
          <report id="KatakanaPhoneticExtensions_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Katakana Phonetic Extensions' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EnclosedCJKLettersandMonths">
@@ -875,7 +948,8 @@
          <report id="EnclosedCJKLettersandMonths_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Enclosed CJK Letters and Months' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKCompatibility">
@@ -886,7 +960,8 @@
          <report id="CJKCompatibility_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Compatibility' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionA">
@@ -897,7 +972,8 @@
          <report id="CJKUnifiedIdeographsExtensionA_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographs">
@@ -908,7 +984,8 @@
          <report id="CJKUnifiedIdeographs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="YiSyllables">
@@ -919,7 +996,8 @@
          <report id="YiSyllables_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Yi Syllables' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Lisu">
@@ -930,7 +1008,8 @@
          <report id="Lisu_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lisu' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Vai">
@@ -941,7 +1020,8 @@
          <report id="Vai_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Vai' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CyrillicExtended-B">
@@ -952,7 +1032,8 @@
          <report id="CyrillicExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cyrillic Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Bamum">
@@ -963,7 +1044,8 @@
          <report id="Bamum_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bamum' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LatinExtended-D">
@@ -974,7 +1056,8 @@
          <report id="LatinExtended-D_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Latin Extended-D' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SylotiNagri">
@@ -985,7 +1068,8 @@
          <report id="SylotiNagri_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Syloti Nagri' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CommonIndicNumberForms">
@@ -996,7 +1080,8 @@
          <report id="CommonIndicNumberForms_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Common Indic Number Forms' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Phags-pa">
@@ -1007,7 +1092,8 @@
          <report id="Phags-pa_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Phags-pa' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Saurashtra">
@@ -1018,7 +1104,8 @@
          <report id="Saurashtra_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Saurashtra' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="DevanagariExtended">
@@ -1029,7 +1116,8 @@
          <report id="DevanagariExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Devanagari Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KayahLi">
@@ -1040,7 +1128,8 @@
          <report id="KayahLi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kayah Li' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Rejang">
@@ -1051,7 +1140,8 @@
          <report id="Rejang_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Rejang' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HangulJamoExtended-A">
@@ -1062,7 +1152,8 @@
          <report id="HangulJamoExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hangul Jamo Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Javanese">
@@ -1073,7 +1164,8 @@
          <report id="Javanese_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Javanese' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MyanmarExtended-B">
@@ -1084,7 +1176,8 @@
          <report id="MyanmarExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Myanmar Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Cham">
@@ -1095,7 +1188,8 @@
          <report id="Cham_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cham' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MyanmarExtended-A">
@@ -1106,7 +1200,8 @@
          <report id="MyanmarExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Myanmar Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TaiViet">
@@ -1117,7 +1212,8 @@
          <report id="TaiViet_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tai Viet' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MeeteiMayekExtensions">
@@ -1128,7 +1224,8 @@
          <report id="MeeteiMayekExtensions_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Meetei Mayek Extensions' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EthiopicExtended-A">
@@ -1139,7 +1236,8 @@
          <report id="EthiopicExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ethiopic Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LatinExtended-E">
@@ -1150,7 +1248,8 @@
          <report id="LatinExtended-E_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Latin Extended-E' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CherokeeSupplement">
@@ -1161,7 +1260,8 @@
          <report id="CherokeeSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cherokee Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MeeteiMayek">
@@ -1172,7 +1272,8 @@
          <report id="MeeteiMayek_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Meetei Mayek' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HangulSyllables">
@@ -1183,7 +1284,8 @@
          <report id="HangulSyllables_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hangul Syllables' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HangulJamoExtended-B">
@@ -1194,7 +1296,8 @@
          <report id="HangulJamoExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hangul Jamo Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HighSurrogates">
@@ -1205,7 +1308,8 @@
          <report id="HighSurrogates_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'High Surrogates' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HighPrivateUseSurrogates">
@@ -1216,7 +1320,8 @@
          <report id="HighPrivateUseSurrogates_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'High Private Use Surrogates' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LowSurrogates">
@@ -1227,7 +1332,8 @@
          <report id="LowSurrogates_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Low Surrogates' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PrivateUseArea">
@@ -1238,7 +1344,8 @@
          <report id="PrivateUseArea_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Private Use Area' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKCompatibilityIdeographs">
@@ -1249,7 +1356,8 @@
          <report id="CJKCompatibilityIdeographs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Compatibility Ideographs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicPresentationForms-A">
@@ -1260,7 +1368,8 @@
          <report id="ArabicPresentationForms-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Presentation Forms-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CombiningHalfMarks">
@@ -1271,7 +1380,8 @@
          <report id="CombiningHalfMarks_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Combining Half Marks' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKCompatibilityForms">
@@ -1282,7 +1392,8 @@
          <report id="CJKCompatibilityForms_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Compatibility Forms' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SmallFormVariants">
@@ -1293,7 +1404,8 @@
          <report id="SmallFormVariants_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Small Form Variants' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AegeanNumbers">
@@ -1304,7 +1416,8 @@
          <report id="AegeanNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Aegean Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AncientGreekNumbers">
@@ -1315,7 +1428,8 @@
          <report id="AncientGreekNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ancient Greek Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AncientSymbols">
@@ -1326,7 +1440,8 @@
          <report id="AncientSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ancient Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PhaistosDisc">
@@ -1337,7 +1452,8 @@
          <report id="PhaistosDisc_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Phaistos Disc' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Lycian">
@@ -1348,7 +1464,8 @@
          <report id="Lycian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lycian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Carian">
@@ -1359,7 +1476,8 @@
          <report id="Carian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Carian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CopticEpactNumbers">
@@ -1370,7 +1488,8 @@
          <report id="CopticEpactNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Coptic Epact Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldItalic">
@@ -1381,7 +1500,8 @@
          <report id="OldItalic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Italic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Gothic">
@@ -1392,7 +1512,8 @@
          <report id="Gothic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Gothic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldPermic">
@@ -1403,7 +1524,8 @@
          <report id="OldPermic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Permic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Ugaritic">
@@ -1414,7 +1536,8 @@
          <report id="Ugaritic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ugaritic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldPersian">
@@ -1425,7 +1548,8 @@
          <report id="OldPersian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Persian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Deseret">
@@ -1436,7 +1560,8 @@
          <report id="Deseret_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Deseret' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Shavian">
@@ -1447,7 +1572,8 @@
          <report id="Shavian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Shavian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Osmanya">
@@ -1458,7 +1584,8 @@
          <report id="Osmanya_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Osmanya' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Osage">
@@ -1469,7 +1596,8 @@
          <report id="Osage_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Osage' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Elbasan">
@@ -1480,7 +1608,8 @@
          <report id="Elbasan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Elbasan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CaucasianAlbanian">
@@ -1491,7 +1620,8 @@
          <report id="CaucasianAlbanian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Caucasian Albanian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Vithkuqi">
@@ -1502,7 +1632,8 @@
          <report id="Vithkuqi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Vithkuqi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LinearA">
@@ -1513,7 +1644,8 @@
          <report id="LinearA_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Linear A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LatinExtended-F">
@@ -1524,7 +1656,8 @@
          <report id="LatinExtended-F_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Latin Extended-F' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CypriotSyllabary">
@@ -1535,7 +1668,8 @@
          <report id="CypriotSyllabary_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cypriot Syllabary' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ImperialAramaic">
@@ -1546,7 +1680,8 @@
          <report id="ImperialAramaic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Imperial Aramaic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Palmyrene">
@@ -1557,7 +1692,8 @@
          <report id="Palmyrene_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Palmyrene' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Nabataean">
@@ -1568,7 +1704,8 @@
          <report id="Nabataean_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Nabataean' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Hatran">
@@ -1579,7 +1716,8 @@
          <report id="Hatran_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hatran' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Phoenician">
@@ -1590,7 +1728,8 @@
          <report id="Phoenician_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Phoenician' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Lydian">
@@ -1601,7 +1740,8 @@
          <report id="Lydian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lydian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MeroiticHieroglyphs">
@@ -1612,7 +1752,8 @@
          <report id="MeroiticHieroglyphs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Meroitic Hieroglyphs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MeroiticCursive">
@@ -1623,7 +1764,8 @@
          <report id="MeroiticCursive_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Meroitic Cursive' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Kharoshthi">
@@ -1634,7 +1776,8 @@
          <report id="Kharoshthi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kharoshthi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldSouthArabian">
@@ -1645,7 +1788,8 @@
          <report id="OldSouthArabian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old South Arabian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldNorthArabian">
@@ -1656,7 +1800,8 @@
          <report id="OldNorthArabian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old North Arabian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Manichaean">
@@ -1667,7 +1812,8 @@
          <report id="Manichaean_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Manichaean' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Avestan">
@@ -1678,7 +1824,8 @@
          <report id="Avestan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Avestan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="InscriptionalParthian">
@@ -1689,7 +1836,8 @@
          <report id="InscriptionalParthian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Inscriptional Parthian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="InscriptionalPahlavi">
@@ -1700,7 +1848,8 @@
          <report id="InscriptionalPahlavi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Inscriptional Pahlavi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PsalterPahlavi">
@@ -1711,7 +1860,8 @@
          <report id="PsalterPahlavi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Psalter Pahlavi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldTurkic">
@@ -1722,7 +1872,8 @@
          <report id="OldTurkic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Turkic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldHungarian">
@@ -1733,7 +1884,8 @@
          <report id="OldHungarian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Hungarian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="HanifiRohingya">
@@ -1744,7 +1896,8 @@
          <report id="HanifiRohingya_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Hanifi Rohingya' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="RumiNumeralSymbols">
@@ -1755,7 +1908,8 @@
          <report id="RumiNumeralSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Rumi Numeral Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Yezidi">
@@ -1766,7 +1920,8 @@
          <report id="Yezidi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Yezidi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicExtended-C">
@@ -1777,7 +1932,8 @@
          <report id="ArabicExtended-C_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Extended-C' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldSogdian">
@@ -1788,7 +1944,8 @@
          <report id="OldSogdian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Sogdian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Sogdian">
@@ -1799,7 +1956,8 @@
          <report id="Sogdian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sogdian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OldUyghur">
@@ -1810,7 +1968,8 @@
          <report id="OldUyghur_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Old Uyghur' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Chorasmian">
@@ -1821,7 +1980,8 @@
          <report id="Chorasmian_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Chorasmian' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Elymaic">
@@ -1832,7 +1992,8 @@
          <report id="Elymaic_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Elymaic' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Brahmi">
@@ -1843,7 +2004,8 @@
          <report id="Brahmi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Brahmi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Kaithi">
@@ -1854,7 +2016,8 @@
          <report id="Kaithi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kaithi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SoraSompeng">
@@ -1865,7 +2028,8 @@
          <report id="SoraSompeng_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sora Sompeng' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Chakma">
@@ -1876,7 +2040,8 @@
          <report id="Chakma_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Chakma' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Mahajani">
@@ -1887,7 +2052,8 @@
          <report id="Mahajani_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mahajani' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Sharada">
@@ -1898,7 +2064,8 @@
          <report id="Sharada_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sharada' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SinhalaArchaicNumbers">
@@ -1909,7 +2076,8 @@
          <report id="SinhalaArchaicNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sinhala Archaic Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Khojki">
@@ -1920,7 +2088,8 @@
          <report id="Khojki_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Khojki' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Multani">
@@ -1931,7 +2100,8 @@
          <report id="Multani_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Multani' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Khudawadi">
@@ -1942,7 +2112,8 @@
          <report id="Khudawadi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Khudawadi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Grantha">
@@ -1953,7 +2124,8 @@
          <report id="Grantha_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Grantha' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Newa">
@@ -1964,7 +2136,8 @@
          <report id="Newa_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Newa' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tirhuta">
@@ -1975,7 +2148,8 @@
          <report id="Tirhuta_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tirhuta' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Siddham">
@@ -1986,7 +2160,8 @@
          <report id="Siddham_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Siddham' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Modi">
@@ -1997,7 +2172,8 @@
          <report id="Modi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Modi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MongolianSupplement">
@@ -2008,7 +2184,8 @@
          <report id="MongolianSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mongolian Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Takri">
@@ -2019,7 +2196,8 @@
          <report id="Takri_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Takri' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Ahom">
@@ -2030,7 +2208,8 @@
          <report id="Ahom_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ahom' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Dogra">
@@ -2041,7 +2220,8 @@
          <report id="Dogra_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Dogra' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="WarangCiti">
@@ -2052,7 +2232,8 @@
          <report id="WarangCiti_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Warang Citi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="DivesAkuru">
@@ -2063,7 +2244,8 @@
          <report id="DivesAkuru_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Dives Akuru' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Nandinagari">
@@ -2074,7 +2256,8 @@
          <report id="Nandinagari_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Nandinagari' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ZanabazarSquare">
@@ -2085,7 +2268,8 @@
          <report id="ZanabazarSquare_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Zanabazar Square' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Soyombo">
@@ -2096,7 +2280,8 @@
          <report id="Soyombo_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Soyombo' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="UnifiedCanadianAboriginalSyllabicsExtended-A">
@@ -2107,7 +2292,8 @@
          <report id="UnifiedCanadianAboriginalSyllabicsExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Unified Canadian Aboriginal Syllabics Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PauCinHau">
@@ -2118,7 +2304,8 @@
          <report id="PauCinHau_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Pau Cin Hau' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="DevanagariExtended-A">
@@ -2129,7 +2316,8 @@
          <report id="DevanagariExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Devanagari Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Bhaiksuki">
@@ -2140,7 +2328,8 @@
          <report id="Bhaiksuki_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bhaiksuki' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Marchen">
@@ -2151,7 +2340,8 @@
          <report id="Marchen_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Marchen' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MasaramGondi">
@@ -2162,7 +2352,8 @@
          <report id="MasaramGondi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Masaram Gondi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="GunjalaGondi">
@@ -2173,7 +2364,8 @@
          <report id="GunjalaGondi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Gunjala Gondi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Makasar">
@@ -2184,7 +2376,8 @@
          <report id="Makasar_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Makasar' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Kawi">
@@ -2195,7 +2388,8 @@
          <report id="Kawi_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kawi' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="LisuSupplement">
@@ -2206,7 +2400,8 @@
          <report id="LisuSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Lisu Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TamilSupplement">
@@ -2217,7 +2412,8 @@
          <report id="TamilSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tamil Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Cuneiform">
@@ -2228,7 +2424,8 @@
          <report id="Cuneiform_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cuneiform' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CuneiformNumbersandPunctuation">
@@ -2239,7 +2436,8 @@
          <report id="CuneiformNumbersandPunctuation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cuneiform Numbers and Punctuation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EarlyDynasticCuneiform">
@@ -2250,7 +2448,8 @@
          <report id="EarlyDynasticCuneiform_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Early Dynastic Cuneiform' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Cypro-Minoan">
@@ -2261,7 +2460,8 @@
          <report id="Cypro-Minoan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cypro-Minoan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EgyptianHieroglyphs">
@@ -2272,7 +2472,8 @@
          <report id="EgyptianHieroglyphs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Egyptian Hieroglyphs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EgyptianHieroglyphFormatControls">
@@ -2283,7 +2484,8 @@
          <report id="EgyptianHieroglyphFormatControls_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Egyptian Hieroglyph Format Controls' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AnatolianHieroglyphs">
@@ -2294,7 +2496,8 @@
          <report id="AnatolianHieroglyphs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Anatolian Hieroglyphs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="BamumSupplement">
@@ -2305,7 +2508,8 @@
          <report id="BamumSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bamum Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Mro">
@@ -2316,7 +2520,8 @@
          <report id="Mro_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mro' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tangsa">
@@ -2327,7 +2532,8 @@
          <report id="Tangsa_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tangsa' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="BassaVah">
@@ -2338,7 +2544,8 @@
          <report id="BassaVah_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Bassa Vah' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PahawhHmong">
@@ -2349,7 +2556,8 @@
          <report id="PahawhHmong_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Pahawh Hmong' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Medefaidrin">
@@ -2360,7 +2568,8 @@
          <report id="Medefaidrin_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Medefaidrin' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Miao">
@@ -2371,7 +2580,8 @@
          <report id="Miao_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Miao' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="IdeographicSymbolsandPunctuation">
@@ -2382,7 +2592,8 @@
          <report id="IdeographicSymbolsandPunctuation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ideographic Symbols and Punctuation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tangut">
@@ -2393,7 +2604,8 @@
          <report id="Tangut_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tangut' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TangutComponents">
@@ -2404,7 +2616,8 @@
          <report id="TangutComponents_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tangut Components' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KhitanSmallScript">
@@ -2415,7 +2628,8 @@
          <report id="KhitanSmallScript_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Khitan Small Script' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TangutSupplement">
@@ -2426,7 +2640,8 @@
          <report id="TangutSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tangut Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KanaExtended-B">
@@ -2437,7 +2652,8 @@
          <report id="KanaExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kana Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KanaSupplement">
@@ -2448,7 +2664,8 @@
          <report id="KanaSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kana Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KanaExtended-A">
@@ -2459,7 +2676,8 @@
          <report id="KanaExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kana Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SmallKanaExtension">
@@ -2470,7 +2688,8 @@
          <report id="SmallKanaExtension_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Small Kana Extension' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Nushu">
@@ -2481,7 +2700,8 @@
          <report id="Nushu_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Nushu' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Duployan">
@@ -2492,7 +2712,8 @@
          <report id="Duployan_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Duployan' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ShorthandFormatControls">
@@ -2503,7 +2724,8 @@
          <report id="ShorthandFormatControls_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Shorthand Format Controls' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ZnamennyMusicalNotation">
@@ -2514,7 +2736,8 @@
          <report id="ZnamennyMusicalNotation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Znamenny Musical Notation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ByzantineMusicalSymbols">
@@ -2525,7 +2748,8 @@
          <report id="ByzantineMusicalSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Byzantine Musical Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MusicalSymbols">
@@ -2536,7 +2760,8 @@
          <report id="MusicalSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Musical Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AncientGreekMusicalNotation">
@@ -2547,7 +2772,8 @@
          <report id="AncientGreekMusicalNotation_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ancient Greek Musical Notation' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="KaktovikNumerals">
@@ -2558,7 +2784,8 @@
          <report id="KaktovikNumerals_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Kaktovik Numerals' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MayanNumerals">
@@ -2569,7 +2796,8 @@
          <report id="MayanNumerals_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mayan Numerals' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TaiXuanJingSymbols">
@@ -2580,7 +2808,8 @@
          <report id="TaiXuanJingSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tai Xuan Jing Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CountingRodNumerals">
@@ -2591,7 +2820,8 @@
          <report id="CountingRodNumerals_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Counting Rod Numerals' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MathematicalAlphanumericSymbols">
@@ -2602,7 +2832,8 @@
          <report id="MathematicalAlphanumericSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mathematical Alphanumeric Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SuttonSignWriting">
@@ -2613,7 +2844,8 @@
          <report id="SuttonSignWriting_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Sutton SignWriting' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="GlagoliticSupplement">
@@ -2624,7 +2856,8 @@
          <report id="GlagoliticSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Glagolitic Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CyrillicExtended-D">
@@ -2635,7 +2868,8 @@
          <report id="CyrillicExtended-D_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Cyrillic Extended-D' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="NyiakengPuachueHmong">
@@ -2646,7 +2880,8 @@
          <report id="NyiakengPuachueHmong_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Nyiakeng Puachue Hmong' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Toto">
@@ -2657,7 +2892,8 @@
          <report id="Toto_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Toto' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Wancho">
@@ -2668,7 +2904,8 @@
          <report id="Wancho_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Wancho' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="NagMundari">
@@ -2679,7 +2916,8 @@
          <report id="NagMundari_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Nag Mundari' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EthiopicExtended-B">
@@ -2690,7 +2928,8 @@
          <report id="EthiopicExtended-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ethiopic Extended-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MendeKikakui">
@@ -2701,7 +2940,8 @@
          <report id="MendeKikakui_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mende Kikakui' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Adlam">
@@ -2712,7 +2952,8 @@
          <report id="Adlam_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Adlam' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="IndicSiyaqNumbers">
@@ -2723,7 +2964,8 @@
          <report id="IndicSiyaqNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Indic Siyaq Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="OttomanSiyaqNumbers">
@@ -2734,7 +2976,8 @@
          <report id="OttomanSiyaqNumbers_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Ottoman Siyaq Numbers' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ArabicMathematicalAlphabeticSymbols">
@@ -2745,7 +2988,8 @@
          <report id="ArabicMathematicalAlphabeticSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Arabic Mathematical Alphabetic Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MahjongTiles">
@@ -2756,7 +3000,8 @@
          <report id="MahjongTiles_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Mahjong Tiles' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="DominoTiles">
@@ -2767,7 +3012,8 @@
          <report id="DominoTiles_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Domino Tiles' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="PlayingCards">
@@ -2778,7 +3024,8 @@
          <report id="PlayingCards_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Playing Cards' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EnclosedAlphanumericSupplement">
@@ -2789,7 +3036,8 @@
          <report id="EnclosedAlphanumericSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Enclosed Alphanumeric Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="EnclosedIdeographicSupplement">
@@ -2800,7 +3048,8 @@
          <report id="EnclosedIdeographicSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Enclosed Ideographic Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="MiscellaneousSymbolsandPictographs">
@@ -2811,7 +3060,8 @@
          <report id="MiscellaneousSymbolsandPictographs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Miscellaneous Symbols and Pictographs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Emoticons">
@@ -2822,7 +3072,8 @@
          <report id="Emoticons_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Emoticons' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="TransportandMapSymbols">
@@ -2833,7 +3084,8 @@
          <report id="TransportandMapSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Transport and Map Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="AlchemicalSymbols">
@@ -2844,7 +3096,8 @@
          <report id="AlchemicalSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Alchemical Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="GeometricShapesExtended">
@@ -2855,7 +3108,8 @@
          <report id="GeometricShapesExtended_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Geometric Shapes Extended' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SupplementalArrows-C">
@@ -2866,7 +3120,8 @@
          <report id="SupplementalArrows-C_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Supplemental Arrows-C' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SupplementalSymbolsandPictographs">
@@ -2877,7 +3132,8 @@
          <report id="SupplementalSymbolsandPictographs_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Supplemental Symbols and Pictographs' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="ChessSymbols">
@@ -2888,7 +3144,8 @@
          <report id="ChessSymbols_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Chess Symbols' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SymbolsandPictographsExtended-A">
@@ -2899,7 +3156,8 @@
          <report id="SymbolsandPictographsExtended-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Symbols and Pictographs Extended-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SymbolsforLegacyComputing">
@@ -2910,7 +3168,8 @@
          <report id="SymbolsforLegacyComputing_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Symbols for Legacy Computing' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionB">
@@ -2921,7 +3180,8 @@
          <report id="CJKUnifiedIdeographsExtensionB_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionC">
@@ -2932,7 +3192,8 @@
          <report id="CJKUnifiedIdeographsExtensionC_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension C' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionD">
@@ -2943,7 +3204,8 @@
          <report id="CJKUnifiedIdeographsExtensionD_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension D' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionE">
@@ -2954,7 +3216,8 @@
          <report id="CJKUnifiedIdeographsExtensionE_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension E' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionF">
@@ -2965,7 +3228,8 @@
          <report id="CJKUnifiedIdeographsExtensionF_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension F' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKCompatibilityIdeographsSupplement">
@@ -2976,7 +3240,8 @@
          <report id="CJKCompatibilityIdeographsSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Compatibility Ideographs Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionG">
@@ -2987,7 +3252,8 @@
          <report id="CJKUnifiedIdeographsExtensionG_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension G' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="CJKUnifiedIdeographsExtensionH">
@@ -2998,7 +3264,8 @@
          <report id="CJKUnifiedIdeographsExtensionH_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'CJK Unified Ideographs Extension H' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="Tags">
@@ -3009,7 +3276,8 @@
          <report id="Tags_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Tags' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="VariationSelectorsSupplement">
@@ -3020,7 +3288,8 @@
          <report id="VariationSelectorsSupplement_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Variation Selectors Supplement' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SupplementaryPrivateUseArea-A">
@@ -3031,7 +3300,8 @@
          <report id="SupplementaryPrivateUseArea-A_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Supplementary Private Use Area-A' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
    <pattern id="SupplementaryPrivateUseArea-B">
@@ -3042,7 +3312,8 @@
          <report id="SupplementaryPrivateUseArea-B_report"
                  test="some $u in $uni-chars satisfies $start &lt;= $u and $u &lt;= $end">
               This Document contains chars of the unicode-block 'Supplementary Private Use Area-B' which are not permitted.
-            </report>
+              (<value-of select="string-join( $uni-chars[$start &lt;= .][. &lt;= $end] ! codepoints-to-string(.), ',')"/>)
+              </report>
       </rule>
    </pattern>
 </schema>
