@@ -196,7 +196,13 @@
       </p:insert>
       
     </p:viewport>
-    
+
+    <p:viewport match="c:file[exists(standard | adoption)]" name="fix-base-uris">
+      <p:add-attribute attribute-name="xml:base" match="/*">
+        <p:with-option name="attribute-value" select="resolve-uri(/*/@name, base-uri())"/>
+      </p:add-attribute>
+    </p:viewport>
+
     <tr:store-debug>
       <p:with-option name="pipeline-step" select="'find-files/result'"/>
       <p:with-option name="active" select="$debug"/>
