@@ -120,7 +120,7 @@
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:if test="@id = ('NISO_disp-formula_alt-graphic', 'disp-formula_alt-graphic')">
-    <xsl:message select="'aaaaaa ', @id = $alternatives-for/../@id, string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>  
+    <!--<xsl:message select="'aaaaaa ', @id = $alternatives-for/../@id, string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>-->  
     </xsl:if>
     <xsl:if test="(
                     ($selected-alternatives = @id)
@@ -141,7 +141,7 @@
                       )
                   (:and
                   not($alternatives-for = @id):)">
-<xsl:message select="'AAAAAAAAAAAA ', string(@id), ' :: ',string-join($selected-alternatives, ' ')"></xsl:message>
+<!--<xsl:message select="'AAAAAAAAAAAA ', string(@id), ' :: ',string-join($selected-alternatives, ' ')"></xsl:message>-->
       <xsl:next-match/>
     </xsl:if>
   </xsl:template>
