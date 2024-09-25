@@ -1058,8 +1058,16 @@
  </pattern>
  
   <pattern id="legend_in_tr">
-    <rule id="legend_in_tr_rule1" context="tr">
-      <report test="descendant::*[matches(., isosts:i18n-strings('key-heading', .))]" id="legend_in_tr_r1">
+    <rule id="legend_in_tr_rule1" context="tr[last()]">
+      <report test="descendant::p[1]
+        [lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]" 
+        id="legend_in_tr_r1">
+        This <name/> seems to be a legend.
+        <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="tr_to_legend"/>
+      </report>
+      <report test="descendant::p[1]
+        [lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))]" 
+        id="legend_in_tr_r2">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="tr_to_legend"/>
       </report>
@@ -1192,12 +1200,12 @@
   
   <pattern id="table_fn_wrong_order">
     <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
-      <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_r1" role="warning">
+      <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_a1" role="warning">
         The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
       </assert>
     </rule>
   </pattern>
-  
+
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>

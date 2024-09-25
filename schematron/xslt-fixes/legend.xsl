@@ -429,21 +429,27 @@
 
 <xsl:template match="table-wrap-foot/p" mode="table-wrap-foot_p_to_legend"/>
 
-<xsl:template match="table-wrap[descendant::tr[descendant::*[matches(., isosts:i18n-strings('key-heading', .))]][last()]]" mode="tr_to_legend">
+<xsl:template match="table-wrap[descendant::tr[descendant::p[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))
+    or lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]]
+  [last()]]" 
+  mode="tr_to_legend">
     <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
     <xsl:copy>
       <xsl:apply-templates select="@*, $before-legend" mode="#current"/>
       <legend>
         <title>
-          <xsl:value-of select="descendant::tr[last()]/descendant::*[matches(., isosts:i18n-strings('key-heading', .))][last()]"/>
+          <xsl:value-of select="descendant::tr[last()]/descendant::p[1]"/>
         </title>
-        <xsl:apply-templates select="descendant::tr[last()]/td/*[not(matches(., isosts:i18n-strings('key-heading', .)))]" mode="#current"/>
+        <xsl:apply-templates select="descendant::tr[last()]/td/p[not(position() = 1)]" mode="#current"/>
       </legend>
       <xsl:apply-templates select="node() except $before-legend" mode="#current"/>
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tr[descendant::*[matches(., isosts:i18n-strings('key-heading', .))]][last()]" mode="tr_to_legend"/>
+  <xsl:template match="tr[descendant::p[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))
+    or lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]]
+    [last()]" 
+    mode="tr_to_legend"/>
   
   
 <xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
