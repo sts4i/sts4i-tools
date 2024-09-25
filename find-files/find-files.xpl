@@ -197,6 +197,19 @@
       
     </p:viewport>
     
+<!-- this step basically does nothing but fix a base-uri bug in validate.xpl-->
+    <p:xslt name="fix-base-uri-bug">
+      <p:input port="stylesheet">
+        <p:inline>
+          <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            exclude-result-prefixes="xs" version="3.0">
+            <xsl:mode on-no-match="shallow-copy"/>
+          </xsl:stylesheet>
+        </p:inline>
+      </p:input>
+      <p:input port="parameters"><p:empty/></p:input>
+    </p:xslt>
+
     <tr:store-debug>
       <p:with-option name="pipeline-step" select="'find-files/result'"/>
       <p:with-option name="active" select="$debug"/>
