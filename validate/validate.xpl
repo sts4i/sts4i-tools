@@ -15,12 +15,18 @@
     <p:document href="http://niso-sts.org/sts4i-tools/schematron/empty.sch"/>
   </p:input>
 
-  <p:output port="htmlreport" primary="true"/>
+  <p:output port="htmlreport" primary="true">
+    <p:pipe port="result" step="svrl2html"/>
+  </p:output>
   <p:serialization port="htmlreport" omit-xml-declaration="false" method="xhtml"/>
   <p:output port="errors" sequence="true">
     <p:pipe port="result" step="insert-post-fix-svrl"/>
   </p:output>
   <p:serialization port="errors" omit-xml-declaration="false"/>
+  <p:output port="log" sequence="true">
+    <p:pipe port="result" step="html2log"/>
+  </p:output>
+  <p:serialization port="log" omit-xml-declaration="false"/>
   
   <p:documentation>see find-files.xpl for options documentation</p:documentation>
   <p:option name="input-filename-regex" select="'\.xml$'"/>
@@ -385,6 +391,8 @@
     <p:with-option name="active" select="$debug"/>
     <p:with-option name="base-uri" select="$debug-dir-uri"/>
   </tr:store-debug>
+  
+  
 
   <p:xslt name="svrl2html">
     <p:with-param name="common-path" select="/*/@xml:base">
@@ -397,5 +405,20 @@
       <p:document href="svrl2html.xsl"/>
     </p:input>
   </p:xslt>
+  
+  <p:xslt name="html2log">
+    <p:input port="source">
+      <p:pipe port="result" step="svrl2html"/>
+    </p:input>
+    <p:input port="parameters">
+      <p:empty/>
+    </p:input>
+    <p:input port="stylesheet">
+      <p:document href="html2log.xsl"/>
+    </p:input>
+  </p:xslt>
+  
+  <p:sink name="sink6"/>
+  
 
 </p:declare-step>
