@@ -23,10 +23,10 @@
     <p:pipe port="result" step="insert-post-fix-svrl"/>
   </p:output>
   <p:serialization port="errors" omit-xml-declaration="false"/>
-  <p:output port="log" sequence="true">
-    <p:pipe port="result" step="html2log"/>
+  <p:output port="shortreport" sequence="true">
+    <p:pipe port="result" step="html2shortreport"/>
   </p:output>
-  <p:serialization port="log" omit-xml-declaration="false"/>
+  <p:serialization port="shortreport" omit-xml-declaration="false"/>
   
   <p:documentation>see find-files.xpl for options documentation</p:documentation>
   <p:option name="input-filename-regex" select="'\.xml$'"/>
@@ -406,7 +406,7 @@
     </p:input>
   </p:xslt>
   
-  <p:xslt name="html2log">
+  <p:xslt name="html2shortreport">
     <p:input port="source">
       <p:pipe port="result" step="svrl2html"/>
     </p:input>
