@@ -555,4 +555,20 @@
     [parent::fig[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]]]" mode="multiple_legends"/>
   
   
+  <xsl:template match="fig[normative-note[@content-type='legend']]
+    [matches(normative-note/title, isosts:i18n-strings('key-heading', .))]" mode="legends">
+    <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
+    <xsl:copy>
+    <legend>
+      <xsl:apply-templates select="normative-note" mode="#current"/>
+    </legend>
+     <xsl:apply-templates select="node() except ($before-legend, normative-note)" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="normative-note[@content-type='legend']
+    [matches(title, isosts:i18n-strings('key-heading', .))]" mode="legends">
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  
 </xsl:stylesheet>

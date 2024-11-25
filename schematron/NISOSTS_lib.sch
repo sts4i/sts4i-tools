@@ -542,7 +542,7 @@
   <pattern id="entailedTerm">
     <rule id="xref-to-entailedTerm"
       context="
-        xref[key('by-id', @rid)/self::term-sec]
+        tbx:termEntry/descendant::xref[key('by-id', @rid)/self::term-sec]
         [count(italic) = 1]
         [normalize-space(italic[1]) = //tbx:term]
         [count(text()[matches(., '\(\d+\.\d+\)')]) = 1]">
@@ -1202,6 +1202,20 @@
     <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
       <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_a1" role="warning">
         The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
+      </assert>
+    </rule>
+  </pattern>
+  
+  <pattern id="OSD_xref_custom-type_termEntry">
+    <rule id="OSD_xref_custom-type_termEntry_rule1" 
+      context="xref[not(ancestor::tbx:termEntry)]
+      [key('by-id', @rid)/self::term-sec]">
+      <assert id="OSD_xref_custom-type_termEntry_a1" 
+        test="@ref-type = 'custom'
+        and @custom-type = 'term-entry'">
+        This '<name/>' is referencing a 'term-sec' and does not adhere to the OSD style.
+        It should have an '@ref-type="custom"' and an '@custom-type="term-entry"'.
+        <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="to_OSD_style"/>
       </assert>
     </rule>
   </pattern>

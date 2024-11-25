@@ -4,7 +4,9 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:tbx="urn:iso:std:iso:30042:ed-1"
   exclude-result-prefixes="sc xs isosts" version="2.0">
+
 
   <xsl:import href="identity.xsl"/>
   <xsl:import href="../NISOSTS_lib.xsl"/>
@@ -45,4 +47,18 @@
     <xsl:apply-templates select="@*, node()" mode="#current"/>
   </xsl:copy>
 </xsl:template>
+  
+ <xsl:template match="xref[not(ancestor::tbx:termEntry)]
+      [key('by-id', @rid)/self::term-sec]
+      [not(@ref-type = 'custom')]
+      [not(@custom-type = 'term-entry')]"
+      mode="to_OSD_style">
+   <xsl:copy>
+     <xsl:apply-templates select="@*" mode="#current"/>
+     <xsl:attribute name="ref-type" select="'custom'"/>
+     <xsl:attribute name="custom-type" select="'term-entry'"/>
+     <xsl:apply-templates select="node()" mode="#current"/>
+   </xsl:copy>
+ </xsl:template>
+  
 </xsl:stylesheet>

@@ -9,7 +9,7 @@
   <xsl:import href="identity.xsl"/>
 
 
-  <xsl:template match="xref[@ref-type = 'other']
+  <xsl:template match="tbx:termEntry/descendant::xref[@ref-type = 'other']
                            [key('by-id', @rid)/self::term-sec]
                            [count(italic) = 1]
                            [some $t in //tbx:term satisfies contains(normalize-space(italic[1]), $t)]
@@ -31,7 +31,7 @@
     </xsl:choose>
   </xsl:template>-->
   
-  <xsl:template match="xref/italic" mode="SN-italic-entailedTerm">
+  <xsl:template match="tbx:termEntry/descendant::xref/italic" mode="SN-italic-entailedTerm">
     <xsl:param name="do-the-needful" as="xs:boolean?" tunnel="yes"/>
     <xsl:choose>
       <xsl:when test="$do-the-needful">
@@ -46,7 +46,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="xref/text()" mode="SN-italic-entailedTerm">
+  <xsl:template match="tbx:termEntry/descendant::xref/text()" mode="SN-italic-entailedTerm">
     <xsl:param name="do-the-needful" as="xs:boolean?" tunnel="yes"/>
     <xsl:variable name="context" as="element(xref)" select=".."/>
     <xsl:choose>
