@@ -5,46 +5,40 @@
 
   <xsl:import href="identity.xsl"/>
 
-  
-  <xsl:function name="isosts:para-interruptor" as="xs:boolean">
-    <xsl:param name="context" as="node()"/>
-    <xsl:sequence select="exists($context/(self::array | self::boxed-text | self::def-list | self::disp-formula | self::disp-formula-group | 
-      self::disp-quote | self::fig | self::fig-group | self::list | self::non-normative-example | self::non-normative-note | self::supplementary-material | 
-      self::table-wrap | self::table-wrap-group))"/>    
-  </xsl:function>
+  <xsl:include href="../NISOSTS_lib.xsl"/>
 
-
-  <xsl:template match="(th|td)[some $n in node() satisfies isosts:para-interruptor($n)]
-    [text() ! normalize-space(.) != '']" 
+  <xsl:template match="(th|td)[some $n in node() satisfies isosts:is-para-interruptor($n)]
+                              [text()[normalize-space(.)]]" 
     mode="split-paras">
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="#current"/>
-    <xsl:for-each-group select="node()" group-adjacent="isosts:para-interruptor(.)">
-      <xsl:choose>
-        <xsl:when test="current-grouping-key()">
-          <xsl:copy-of select="current-group()"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <p>
-            <xsl:copy-of select="current-group()"/>
-          </p>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each-group>
+      <xsl:for-each-group select="node()" group-adjacent="isosts:is-para-interruptor(.)">
+        <xsl:choose>
+          <xsl:when test="current-grouping-key()">
+            <xsl:apply-templates select="current-group()" mode="#current"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <p>
+              <xsl:apply-templates select="current-group()" mode="#current"/>
+            </p>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="p[some $n in node() satisfies isosts:para-interruptor($n)]" 
+  <xsl:template match="p[some $n in node() satisfies isosts:is-para-interruptor($n)]" 
     mode="split-paras">
     <xsl:variable name="attr" select="@* except @id" as="attribute(*)*"/>
     <xsl:variable name="id" select="@id" as="attribute(id)?"/>
-    <xsl:for-each-group select="node()[normalize-space(.) != '']" group-adjacent="isosts:para-interruptor(.)">
+    <xsl:variable name="context" as="element(p)" select="."/>
+    <xsl:for-each-group select="node()" group-adjacent="isosts:is-para-interruptor(.)">
       <xsl:choose>
         <xsl:when test="current-grouping-key()">
-          <xsl:copy-of select="current-group()"/>
+          <xsl:apply-templates select="current-group()" mode="#current"/>
         </xsl:when>
         <xsl:otherwise>
-          <p>
+          <xsl:copy select="$context">
             <xsl:if test="exists($id)">
               <xsl:choose>
                 <xsl:when test="position() = 1">
@@ -55,15 +49,12 @@
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:if>
-            <xsl:for-each select="$attr">
-              <xsl:attribute name="{name()}" select="."/>
-            </xsl:for-each>
-            <xsl:copy-of select="current-group()"/>
-          </p>
+            <xsl:apply-templates select="$attr" mode="#current"/>
+            <xsl:apply-templates select="current-group()" mode="#current"/>
+          </xsl:copy>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
-
 
 </xsl:stylesheet>

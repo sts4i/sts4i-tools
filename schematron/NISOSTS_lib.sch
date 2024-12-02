@@ -21,7 +21,7 @@
   <!-- Set the allow-foreign parameter to 'true' when invoking the default ISO Schematron
     implementation -->
 
-<sbf:extends href="http://niso-sts.org/sts4i-tools/schematron/unicode.sch"/>
+  <sbf:extends href="http://niso-sts.org/sts4i-tools/schematron/unicode.sch"/>
 
   <xsl:import href="http://transpect.io/xslt-util/num/xsl/num.xsl"/>
 
