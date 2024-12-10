@@ -34,6 +34,7 @@
   <ns uri="http://www.w3.org/1998/Math/MathML" prefix="mml"/>
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
   <ns prefix="file" uri="http://expath.org/ns/file"/>
+  <ns prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance"/>
  
 
   <let name="legend-content-type" value="'fig-index'"/>
@@ -48,35 +49,32 @@
         'http://www.niso.org/schemas/ali/1.0/', 'http://www.w3.org/2001/XInclude',
         'http://www.w3.org/2001/XMLSchema-instance', 'http://www.w3.org/ns/xproc-step')"/>
 
-    <let name="expected-ns-prefixes"
-      value="
-        ('ali', 'mml',
-        'xi', 'xsi',
-        'tbx',
-        'xlink', 'xml', 'c')"/>
+    <let name="expected-ns-prefixes" value="('ali', 'mml',
+                                             'xi', 'xsi',
+                                             'tbx',
+                                             'xlink', 'xml', 'c')"/>
 
     <rule id="unexpected-namespace-uris_rule1" context="*[namespace::*]">
-      <assert
-        test="
-          every $n in (namespace::* ! string(.))
-            satisfies ($n = $expected-ns-uris or $n = ../namespace::* ! string(.))"
-        id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>. Found: <value-of
-          select="string-join(namespace::*[not(string(.) = $expected-ns-uris)] ! string-join((name(.), string(.)), ':'), ', ')"
-        />
+      <assert test="every $n in (namespace::* ! string(.))
+                    satisfies ($n = $expected-ns-uris or $n = ../namespace::* ! string(.))"
+              id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>. Found: <value-of
+                select="string-join(namespace::*[not(string(.) = $expected-ns-uris)] ! string-join((name(.), string(.)), ':'), ', ')"/>
       </assert>
 
-      <assert
-        test="
-          every $n in (namespace::* ! name(.))
-            satisfies ($n = $expected-ns-prefixes or $n = ../namespace::* ! name(.))"
+      <assert test="every $n in (namespace::* ! name(.))
+                    satisfies ($n = $expected-ns-prefixes or $n = ../namespace::* ! name(.))"
         id="unexpected-namespace-prefix">Unexpected prefix in namespace declaration in <name/>. Found: <value-of
-          select="string-join(namespace::*[not(name(.) = $expected-ns-prefixes)] ! string-join((name(.), string(.)), ':'), ', ')"
-        />
+          select="string-join(namespace::*[not(name(.) = $expected-ns-prefixes)] ! string-join((name(.), string(.)), ':'), ', ')"/>
       </assert>
-
     </rule>
+  </pattern>
 
-
+  <pattern id="xsd">
+    <rule id="xsd_rule1" context="/*">
+      <assert test="empty(@xsi:noNamespaceSchemaLocation)" id="xsd_a1">The attribute xsi:noNamespaceSchemaLocation is invalid with respect to the DTD.
+        <sbf:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="xsd"/>
+      </assert>
+    </rule>
   </pattern>
 
   <pattern id="legacy-meta">
@@ -338,10 +336,15 @@
         <sbf:xsl-fix href="xslt-fixes/content-language.xsl" mode="add_content-language" depends-on="adoption-nesting_r1"/>
       </report>
     </rule>
-    <rule id="first_title_in_content-language" context="/(standard|adoption)/descendant::*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
-      <assert id="first_title_in_content-language_r1" role="warning" test="exists(../content-language[matches(current()/@xml:lang, .)])">
-        The first <name/> should be in the 'content-language: <value-of select="../content-language"/>'.
-        Found: '<value-of select="@xml:lang"/>'
+    <rule id="first_title_in_content-language" context="(front | adoption-front)/*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
+      <assert id="first_title_in_content-language_r1" role="warning" test="@xml:lang = ../content-language">
+        The first <name/> should have an xml:lang attribute that matches the content-language (if present or determined by another fix).
+      </assert>
+    </rule>
+    <rule id="first_title_in_content-language2" context="(front | adoption-front)/*[ends-with(name(), '-meta')]/title-wrap[1]">
+      <assert id="first_title_in_content-language_r2" role="warning" test="@xml:lang = ../content-language">
+        The first <name/> should have an xml:lang attribute (that matches the content-language).
+        <sbf:xsl-fix href="xslt-fixes/content-language.xsl" mode="title-wrap-add-lang" depends-on="no_content-language_r1"/>
       </assert>
     </rule>
   </pattern>
@@ -623,9 +626,7 @@
       </report>
     </rule>
     <rule id="main_in_main-title-wrap_empty_rule1"
-      context="
-        main-title-wrap[main=''][matches(subtitle, $dash-in-space-regex)]
-        ">
+      context="main-title-wrap[main=''][matches(subtitle, $dash-in-space-regex)]">
       <report id="main_in_main-title-wrap_empty_r1" role="warning" test="true()">
         <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="main-title-wrap-only-subtitle"/>
         Element 'main' in 'main-title-wrap' is empty
@@ -1217,6 +1218,22 @@
         It should have an '@ref-type="custom"' and an '@custom-type="term-entry"'.
         <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="to_OSD_style"/>
       </assert>
+    </rule>
+  </pattern>
+
+  <pattern id="pi-in-break">
+    <rule context="break" id="pi-in-break_rule1">
+      <report test="exists(processing-instruction())" id="pi-in-break_r1">Any content, including processing instructions, are not allowed in break. 
+        <sbf:xsl-fix href="xslt-fixes/inline.xsl" mode="pi-in-break"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="fn-type-on-xref">
+    <rule context="xref[@fn-type]" id="fn-type-on-xref_rule1">
+      <report test="true()" id="fn-type-on-xref_r1">fn-type is not an allowed attribute on xref. 
+        <sbf:xsl-fix href="xslt-fixes/inline.xsl" mode="fn-type-on-xref"/>
+      </report>
     </rule>
   </pattern>
 

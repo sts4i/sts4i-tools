@@ -326,5 +326,15 @@
     
   </xsl:template>
   
+  <xsl:template match="main-title-wrap" mode="dissolve-main-title-wrap">
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="main-title-wrap/subtitle" mode="dissolve-main-title-wrap">
+    <compl>
+      <xsl:apply-templates select="@* except @specific-use, node()" mode="#current"/>  
+    </compl>
+  </xsl:template>
+  
 
 </xsl:stylesheet>

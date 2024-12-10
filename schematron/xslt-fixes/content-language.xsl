@@ -20,5 +20,12 @@
     <xsl:apply-templates select="node() except $before-content-language" mode="#current"/>
     </xsl:copy>
  </xsl:template>
+  
+  <xsl:template match="(front | adoption-front)/*[ends-with(name(), '-meta')]/title-wrap[1][empty(@xml:lang)]" mode="title-wrap-add-lang">
+    <xsl:copy>
+      <xsl:attribute name="xml:lang" select="../content-language"/>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+ </xsl:template>
  
 </xsl:stylesheet>
