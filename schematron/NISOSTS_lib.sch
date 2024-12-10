@@ -1229,14 +1229,6 @@
     </rule>
   </pattern>
   
-  <pattern id="fn-type-on-xref">
-    <rule context="xref[@fn-type]" id="fn-type-on-xref_rule1">
-      <report test="true()" id="fn-type-on-xref_r1">fn-type is not an allowed attribute on xref. 
-        <sbf:xsl-fix href="xslt-fixes/inline.xsl" mode="fn-type-on-xref"/>
-      </report>
-    </rule>
-  </pattern>
-
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>

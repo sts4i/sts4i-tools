@@ -15,6 +15,4 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="xref/@fn-type" mode="fn-type-on-xref"/>
-  
 </xsl:stylesheet>

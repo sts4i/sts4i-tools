@@ -171,7 +171,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xref ref-type="{if (ancestor::table-wrap) then 'table-fn' else 'fn'}">
-          <xsl:apply-templates select="@* except @id" mode="#current"/>
+          <xsl:apply-templates select="@* except (@id, @fn-type)" mode="#current"/>
           <xsl:attribute name="rid" select="$generated-id"/>
           <sup>
             <xsl:value-of select="concat((replace(label, '\)$', ''), tokenize($generated-id,'[_\.]')[last()])[1],')')"/>
