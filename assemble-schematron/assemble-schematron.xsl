@@ -76,7 +76,7 @@
     <xsl:param name="xsl-fixes-for" as="element(sbf:xsl-fix-for)*" select="()" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:param name="dependencies" as="element(sbf:dependency)*" tunnel="yes"/>
-    <xsl:apply-templates select="doc(@href)/sch:schema/node()" mode="#current">
+    <xsl:apply-templates select="doc(resolve-uri(@href, base-uri(/*)))/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sbf:alternative-for)"/>
       <xsl:with-param name="xsl-fixes-for" tunnel="yes" select="($xsl-fixes-for, sbf:xsl-fix-for)"/>
@@ -184,7 +184,7 @@
                         [namespace-uri() = 'http://www.w3.org/1999/XSL/Transform']
                         [empty(@use-when)]" mode="resolve-extends">
     <xsl:comment select="string-join((name(), @href, '&#xa;'), ' ')"/>
-    <xsl:apply-templates select="doc(@href)/*/node()" mode="#current"/>
+    <xsl:apply-templates select="doc(resolve-uri(@href, base-uri(/*)))/*/node()" mode="#current"/>
   </xsl:template>
   
   <xsl:template match="*[local-name() = ('import', 'include')]

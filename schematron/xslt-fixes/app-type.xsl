@@ -6,7 +6,7 @@
   exclude-result-prefixes="sc xs isosts" version="2.0">
 
   <xsl:import href="identity.xsl"/>
-  <xsl:import href="../NISOSTS_lib.xsl"/>
+  <xsl:import href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>
 
   <xsl:template match="annex-type[parent::app/@content-type = 'inform-annex']" mode="annex-type">
     <xsl:variable name="expected" select="concat('(', isosts:i18n-strings('annex-type-informative', .), ')')"/>

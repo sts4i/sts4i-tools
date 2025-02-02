@@ -39,7 +39,7 @@
 
   <let name="legend-content-type" value="'fig-index'"/>
 
-  <xsl:include href="http://niso-sts.org/sts4i-tools/schematron/NISOSTS_lib.xsl"/>
+  <xsl:include href="NISOSTS_lib.xsl"/>
   
   <pattern id="unexpected-namespace-uris">
     <let name="expected-ns-uris"

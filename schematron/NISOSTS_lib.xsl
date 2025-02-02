@@ -433,7 +433,7 @@
 
   
   <xsl:function name="isosts:uni-chars">
-    <xsl:param name="context" as="text()*"/>
+    <xsl:param name="context" as="node()*"/>
     <xsl:sequence select="distinct-values(for $t in $context return string-to-codepoints($t))"/>
   </xsl:function>
 
