@@ -403,9 +403,15 @@
   
   <define name="sbf_pattern">
     <element name="pattern" ns="http://transpect.io/schematron-batch-fix">
-      <attribute name="selected-alternative">
-        <data type="NMTOKEN"/>
-      </attribute>
+      <choice>
+        <attribute name="selected-alternative">
+          <data type="NMTOKEN"/>
+        </attribute>
+        <attribute name="deselect">
+          <data type="NMTOKEN"/>
+        </attribute>
+
+      </choice>
     </element>
   </define>
   <define name="xsl-fix-for">
