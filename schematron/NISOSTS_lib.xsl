@@ -440,7 +440,10 @@
 
   <xsl:function name="isosts:is-para-interruptor" as="xs:boolean">
     <xsl:param name="context" as="node()"/>
-    <xsl:apply-templates select="$context" mode="isosts:is-para-interruptor"/>
+    <xsl:variable name="prelim" as="xs:boolean?">
+      <xsl:apply-templates select="$context" mode="isosts:is-para-interruptor"/>  
+    </xsl:variable>
+    <xsl:sequence select="($prelim, false())[1]"/>
   </xsl:function>
   
   <xsl:template match="array | boxed-text | def-list | disp-formula | disp-formula-group | 
@@ -453,7 +456,7 @@
     <xsl:apply-templates select="preceding-sibling::node()[1]" mode="#current"/>
   </xsl:template>
   
-  <xsl:template match="node()" mode="isosts:is-para-interruptor" as="xs:boolean" priority="-1">
+  <xsl:template match="node()" mode="isosts:is-para-interruptor" as="xs:boolean" priority="-0.25">
     <xsl:sequence select="false()"/>
   </xsl:template>
   
