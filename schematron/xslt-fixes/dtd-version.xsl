@@ -22,4 +22,6 @@
   
   <xsl:template match="@xsi:noNamespaceSchemaLocation" mode="xsd"/>
 
+  <xsl:template match="/*/@dtd-version" mode="remove-dtd-version"/>
+
 </xsl:stylesheet>
