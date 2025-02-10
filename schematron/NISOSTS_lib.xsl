@@ -449,7 +449,9 @@
   <xsl:template match="array | boxed-text | def-list | disp-formula | disp-formula-group | 
       disp-quote | fig | fig-group | list | non-normative-example | non-normative-note | supplementary-material | 
       table-wrap | table-wrap-group" mode="isosts:is-para-interruptor" as="xs:boolean">
-    <xsl:sequence select="true()"/>
+    <xsl:sequence select="if (parent::td | parent::th) 
+                          then exists(../text()[normalize-space()])
+                          else true()"/>
   </xsl:template>
   
   <xsl:template match="processing-instruction() | comment() | text()[not(normalize-space())]" mode="isosts:is-para-interruptor" as="xs:boolean?">
