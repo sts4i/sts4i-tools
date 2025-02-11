@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:isosts="http://www.iso.org/ns/isosts"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:sc="http://transpect.io/schematron-config"
   exclude-result-prefixes="sc xs" version="2.0">
@@ -58,6 +59,47 @@
         <xsl:apply-templates select="ref-list" mode="rmv-ref-list-title"/>
     </xsl:copy>
   </xsl:template>
+
+
+
+  <xsl:template match="app-group[isosts:is-ref-list-wrapper-app-group(.)]" mode="unwrap-app-around-ref-list" priority="1">
+    <xsl:comment select="isosts:is-ref-list-wrapper-app-group(.)"></xsl:comment>
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="app-group[app[isosts:is-ref-list-wrapper-app(.)]]" mode="unwrap-app-around-ref-list">
+    <xsl:copy>
+      <xsl:apply-templates select="@*, node() except app[isosts:is-ref-list-wrapper-app(.)]" mode="#current"/>  
+    </xsl:copy>
+    <xsl:apply-templates select="app[isosts:is-ref-list-wrapper-app(.)]" mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="app[isosts:is-ref-list-wrapper-app(.)]" mode="unwrap-app-around-ref-list">
+    <xsl:apply-templates select="node() except (label | title)" mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="app[isosts:is-ref-list-wrapper-app(.)]/ref-list" mode="unwrap-app-around-ref-list">
+    <xsl:copy>
+      <xsl:apply-templates select="@*, ../(label | title)" mode="#current"/>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+    
+  </xsl:template>
+  
+  <xsl:function name="isosts:is-ref-list-wrapper-app" as="xs:boolean">
+    <xsl:param name="_app" as="element(app)"/>
+    <xsl:sequence select="every $c in $_app/*[not(name() = ('label', 'title'))]
+                          satisfies $c/self::ref-list[@content-type = 'bibl'][empty(label | title)]"/>
+  </xsl:function>
+  
+  <xsl:function name="isosts:is-ref-list-wrapper-app-group" as="xs:boolean">
+    <xsl:param name="app-group" as="element(app-group)"/>
+    <xsl:sequence select="exists($app-group[app[ref-list[@content-type = 'bibl']]]
+                                      [every $app in app satisfies (
+                                        exists($app/ref-list[@content-type = 'bibl'][empty(label | title)])
+                                        and isosts:is-ref-list-wrapper-app($app)
+                                       )])"/>
+  </xsl:function>
 
 
 </xsl:stylesheet>
