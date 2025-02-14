@@ -6,7 +6,7 @@
 
   <xsl:import href="identity.xsl"/>
 
-  <xsl:template match="fn-group" mode="ungroup-fn"/>
+  <xsl:template match="fn-group" mode="ungroup-fn unwrap-fn-group"/>
 
   <xsl:template match="xref[@ref-type = ('fn', 'table-fn')]
                            [. is (key('by-rid', @rid) (: all xrefs that point to fn with ID @rid :)
@@ -25,6 +25,28 @@
                                    ]
                                  )[1]
                            ]" mode="ungroup-fn"> 
+    <xsl:apply-templates select="key('by-id', @rid)" mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="xref[@ref-type = ('fn', 'table-fn')]
+                           [. is (key('by-rid', @rid) (: all xrefs that point to fn with ID @rid :)
+                                   [@ref-type = ('fn', 'table-fn')]
+                                   [not(ancestor::fn) (: ignore refs from one fn to another :)]
+                                   [if (exists(key('by-id', @rid)/ancestor::table-wrap))
+                                    then boolean(
+                                      key('by-id', @rid)/ancestor::table-wrap[last()] 
+                                      is 
+                                      ancestor::table-wrap[last()]
+                                      (: will also return false() if either of the lhs and rhs 
+                                      around 'is' is empty, i.e., if the fn or the
+                                      xref are not in a table :)
+                                    )
+                                    else true()
+                                   ]
+                                 )[1]
+                           ]
+                           [not(key('by-id',@rid)[parent::fn-group[parent::table-wrap-foot]])]" mode="unwrap-fn-group">
+    <xsl:next-match/>
     <xsl:apply-templates select="key('by-id', @rid)" mode="#current"/>
   </xsl:template>
   
@@ -189,6 +211,8 @@
     <xsl:attribute name="id" select="(@id, concat('fn_', generate-id()))[1]"/>
   </xsl:template>
   
-
+  <xsl:template match="table-wrap-foot/fn-group" mode="unwrap-fn-group">
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
 
   </xsl:stylesheet>
