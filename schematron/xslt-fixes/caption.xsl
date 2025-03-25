@@ -20,13 +20,24 @@
    </xsl:copy>
  </xsl:template>
   
+  <xsl:template match="fig
+    [preceding-sibling::*[1]/self::p [matches(., isosts:i18n-strings-no-lang('dimension-heading'))]]/caption" 
+    mode="add_dimension_p_to_caption">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:attribute name="content-type" select="'dimension'"/>
+      <xsl:apply-templates select="node(), ../preceding-sibling::* [1]" mode="add_p"/>
+    </xsl:copy>
+  </xsl:template>
   
   <xsl:template match="p
      [matches(., isosts:i18n-strings-no-lang('dimension-heading'))]
      [following-sibling::*[1]/self::fig]" 
-   mode="add_p_to_caption"/>
+     mode="add_p_to_caption add_dimension_p_to_caption"/>
 
- 
+  <xsl:template match="@content-type[.=('Units','units')]" mode="units-content-type">
+    <xsl:attribute name="{name()}" select="'dimension'"/>
+  </xsl:template>
    
  
  
