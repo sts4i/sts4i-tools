@@ -78,6 +78,7 @@
     <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:param name="deselected-patterns" as="attribute(deselect)*" select="()" tunnel="yes"/>
     <xsl:param name="dependencies" as="element(sbf:dependency)*" tunnel="yes"/>
+    <xsl:param name="pattern-ids" as="attribute(id)*" tunnel="yes"/>
     <xsl:apply-templates select="doc(resolve-uri(@href, base-uri(/*)))/sch:schema/node()" mode="#current">
       <xsl:with-param name="lets" select="($lets, ..//sch:let[not(ancestor::sch:pattern)])" tunnel="yes"/>
       <xsl:with-param name="alternatives-for" tunnel="yes" select="($alternatives-for, //@sbf:alternative-for)"/>
@@ -88,6 +89,8 @@
         select="($deselected-patterns, sbf:pattern/@deselect)"/>
       <xsl:with-param name="dependencies" as="element(sbf:dependency)*" tunnel="yes"
         select="($dependencies, sbf:dependency)"/>
+      <xsl:with-param name="pattern-ids" as="attribute(id)*" tunnel="yes"
+        select="($pattern-ids, ..//sch:pattern/@id)"/>
     </xsl:apply-templates>
   </xsl:template>
   
@@ -119,11 +122,14 @@
   
   -->
   
-  
   <xsl:template match="sch:pattern[@id]" mode="resolve-extends" priority="2">
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
     <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
     <xsl:param name="deselected-patterns" as="attribute(deselect)*" select="()" tunnel="yes"/>
+    <xsl:param name="pattern-ids" as="attribute(id)*" tunnel="yes"/>
+    <xsl:if test="@id = $pattern-ids">
+      <xsl:message terminate="yes" select="'Duplicate pattern ID ', string(@id), ' must be changed in ', $pattern-ids[. = current()/@id]/base-uri()"/>
+    </xsl:if>
     <xsl:if test="@id = ('NISO_disp-formula_alt-graphic', 'disp-formula_alt-graphic')">
     <!--<xsl:message select="'aaaaaa ', @id = $alternatives-for/../@id, string-join($alternatives-for, ' '), '::', string(@id), '   ::::   ', string-join($selected-alternatives, ' ')"></xsl:message>-->  
     </xsl:if>
@@ -162,21 +168,6 @@
   
   <xsl:template match="sch:let[empty(ancestor::sch:pattern)]" mode="resolve-extends"/>
 
-  <xsl:template match="sch:pattern[@id]" mode="resolve-extends_">
-    <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" tunnel="yes"/>
-    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
-    <xsl:if test="not($alternatives-for = @id)">
-      <xsl:next-match/>
-    </xsl:if>
-  </xsl:template>
-  
-  <xsl:template match="sch:pattern[@sbf:alternative-for]" mode="resolve-extends_">
-    <xsl:param name="selected-alternatives" as="attribute(selected-alternative)*" select="()" tunnel="yes"/>
-    <xsl:if test="$selected-alternatives = @id">
-      <xsl:next-match/>
-    </xsl:if>
-  </xsl:template>
-  
   <xsl:template match="sch:pattern/@id" mode="resolve-extends">
     <xsl:next-match/>
     <xsl:attribute name="xml:base" 
