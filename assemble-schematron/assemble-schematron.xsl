@@ -71,6 +71,13 @@
     <xsl:apply-templates select="$resolve-extends" mode="filter"/>
   </xsl:template>
   
+  <xsl:template match="/sch:schema/@*[last()]" mode="resolve-extends">
+    <xsl:next-match/>
+    <sch:title>
+      <xsl:value-of select="tokenize(base-uri(), '/')[last()]"/>
+    </sch:title>
+  </xsl:template>
+  
   <xsl:template match="sbf:extends" mode="resolve-extends">
     <xsl:param name="lets" as="element(sch:let)*" tunnel="yes"/>
     <xsl:param name="alternatives-for" as="attribute(sbf:alternative-for)*" select="()" tunnel="yes"/>

@@ -128,6 +128,7 @@
 
     <xsl:call-template name="output-table">
       <xsl:with-param name="content" select="if ($content) then $content else $ok" />
+      <xsl:with-param name="title" select="string-join(distinct-values(/reports/svrl:schematron-output/@title), ' ')" />
     </xsl:call-template>
   </xsl:template>
   
@@ -206,11 +207,14 @@
   <xsl:template name="output-table">
     <xsl:param name="pre" as="element(*)*"/>
     <xsl:param name="content" as="element(html:tr)*"/>
+    <xsl:param name="title" as="xs:string?"/>
     <xsl:if test="$content">
       <html xmlns="http://www.w3.org/1999/xhtml">
         <head xmlns="http://www.w3.org/1999/xhtml">
           <meta charset="UTF-8"/>
-          <title xmlns="http://www.w3.org/1999/xhtml"></title>
+          <title xmlns="http://www.w3.org/1999/xhtml">
+            <xsl:value-of select="$title"/>
+          </title>
           <style type="text/css">
             body {font-family: Calibri, Helvetica, sans-serif; background-color: #eee}
             @media(min-width: 1200px) {#tr-minitoc {position:fixed; display:block !important; max-width:20%; width:20%; overflow-y:auto; height:100%}}
@@ -224,6 +228,7 @@
             ul.header-list {color: #fff;}
             ul.header-list.right {float: right; padding-right: 2%}
             li.name {font-size: 150%; padding-right: 20px}
+            li.profile {padding-right: 20px; padding-top: 8px}
             li.date {padding-top: 8px}
             ul.header-list li {float: left;}
             @media(min-width: 1200px) {div.content {width:75% !important;}}
@@ -248,6 +253,9 @@
             </ul>
             <ul class="header-list right">
               <li class="name">Nationales Prüfprofil</li>
+              <li class="profile">
+                <xsl:value-of select="$title"/>
+              </li>
               <li class="date">
                 <xsl:value-of select="format-dateTime(current-dateTime(), '[Y0001]-[M01]-[D01], [H01]:[m01]')"/>
               </li>
