@@ -72,7 +72,7 @@
                     </td>
                     <td class="pattern-id">
                       <xsl:value-of select="tokenize(svrl:text/sch:span[@class = 'rule-base-uri'], '/')[last()], 
-                                            $active-pattern/@id, @id" separator=" + "/>
+                                            $active-pattern/@id, @id" separator=" > "/>
                     </td>
                     <xsl:variable name="corresponding-post-fix-report" as="document-node(element(*))?"
                       select="$post-fix-reports[base-uri(/*) = replace(base-uri(current()), '\.xml\.val$', '.fixed.xml.val')]"/>
