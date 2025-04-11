@@ -116,7 +116,7 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template match="nat-meta | reg-mata | int-meta" mode="legacy-meta">
+  <xsl:template match="nat-meta | reg-mata | iso-meta" mode="legacy-meta">
     <std-meta>
       <xsl:apply-templates select="@* | node()" mode="#current"/>
     </std-meta>
