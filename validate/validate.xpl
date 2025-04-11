@@ -41,6 +41,11 @@
             then '-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.2 20221031//EN'
             else '-//NISO//DTD NISO STS Interchange Tag Set (NISO STS) DTD with MathML 3.0 v1.0 20171031//EN'"/>
   <p:option name="enforce-default-doctype" select="'true'"/>
+  <p:option name="keep-srcpath" select="'pi_changed'">
+    <p:documentation>Whether to keep srcpath attributes in the result. Possible values: 'no' (remove them),
+    'pi_always': keep them as processing instructions, 'pi_changed': only keep them if the current path differs,
+    'yes': keep them</p:documentation>
+  </p:option>
   <p:option name="debug-dir-uri" select="''"/>
   <p:option name="debug" select="'no'"/>
   
@@ -355,7 +360,58 @@
           <p:with-option name="message" select="'PPPPPPPPPPP ', base-uri(/*)"/>
         </cx:message>-->
         <p:delete match="/*/@xml:base" name="delete-xml-base-attr"/>
-        <p:delete match="@srcpath" name="delete-srcpath"/>
+        <p:choose>
+          <p:when test="$keep-srcpath = ('pi_changed', 'pi_always')">
+            <p:xslt name="srcpaths-to-PIs">
+              <p:input port="parameters"><p:empty/></p:input>
+              <p:with-param name="keep-srcpath" select="$keep-srcpath"/>
+              <p:input port="stylesheet">
+                <p:inline>
+                  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="3.0">
+                    <xsl:param name="keep-srcpath" as="xs:string"/>
+                    <xsl:mode on-no-match="shallow-copy"/>
+                    <xsl:template match="*[@srcpath]">
+                      <xsl:variable name="is-empty" as="xs:boolean" select="empty(node())">
+                        <!--elements declared EMPTY, such as page-count, will become invalid if the contain a PI
+                        We don’t know the element’s declaration here, so we just look at the actual emptiness --> 
+                      </xsl:variable>
+                      <xsl:variable name="pi-name" as="xs:string" select="if ($is-empty) then 'prev-srcpath' else 'srcpath'"/>
+                      <xsl:variable name="conditional-pi" as="processing-instruction()?">
+                        <xsl:choose>
+                          <xsl:when test="$keep-srcpath = 'pi_always'">
+                            <xsl:processing-instruction name="{$pi-name}" select="@srcpath"/>
+                          </xsl:when>
+                          <xsl:when test="$keep-srcpath = 'pi_changed'">
+                            <xsl:variable name="current-srcpath" select="path(.) => replace('/Q\{\}', '/')"/>
+                            <xsl:if test="not($current-srcpath = @srcpath)">
+                              <xsl:processing-instruction name="{$pi-name}" select="@srcpath"/>  
+                            </xsl:if>
+                          </xsl:when>
+                        </xsl:choose>
+                      </xsl:variable>
+                      <xsl:copy>
+                        <xsl:apply-templates select="@* except @srcpath"/>
+                        <xsl:if test="not($is-empty)">
+                          <xsl:sequence select="$conditional-pi"/>
+                        </xsl:if>
+                        <xsl:apply-templates/>
+                      </xsl:copy>
+                      <xsl:if test="$is-empty">
+                        <xsl:sequence select="$conditional-pi"/>
+                      </xsl:if>
+                    </xsl:template>
+                  </xsl:stylesheet>
+                </p:inline>
+              </p:input>
+            </p:xslt>    
+          </p:when>
+          <p:when test="not($keep-srcpath = 'yes')">
+            <p:delete match="@srcpath" name="delete-srcpath"/>    
+          </p:when>
+          <p:otherwise>
+            <p:identity/>
+          </p:otherwise>
+        </p:choose>
         <p:store omit-xml-declaration="false">
           <p:with-option name="href" select="base-uri(/*)">
             <p:pipe port="result" step="namespace-delete"/>
