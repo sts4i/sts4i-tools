@@ -27,15 +27,13 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
-
   <xsl:template match="*[@sbf:product-version-regex]" mode="resolve-extends" priority="100">
     <xsl:variable name="use-it" as="xs:boolean" select="matches(system-property('xsl:product-version'), @sbf:product-version-regex)"/>
     <xsl:if test="$use-it">
       <xsl:next-match/>
     </xsl:if>
   </xsl:template>
-
+  
   <xsl:template match="sch:report | sch:assert" mode="resolve-extends"
     xmlns="http://purl.oclc.org/dsdl/schematron">
     <xsl:param name="xsl-fixes-for" as="element(sbf:xsl-fix-for)*" tunnel="yes"/>
@@ -54,7 +52,7 @@
 <!--      <span class="attributes"><xslout:value-of select="string-join(@* ! string-join((name(.), .), '='), ' ')"/></span>
       <span class="name"><xslout:value-of select="name()"/></span>
       <span class="serialize"><xslout:copy-of select="."/></span>-->
-      <span class="rule-base-uri"><xsl:value-of select="base-uri()"/></span>
+      <span class="rule-base-uri"><xsl:value-of select="string-join(tokenize(base-uri(), '/')[position() gt last() - 3], '/')"/></span>
     </xsl:copy>
   </xsl:template>
   
