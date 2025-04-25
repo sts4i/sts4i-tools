@@ -449,9 +449,17 @@
   <xsl:template match="array | boxed-text | def-list | disp-formula | disp-formula-group | 
       disp-quote | fig | fig-group | list | non-normative-example | non-normative-note | supplementary-material | 
       table-wrap | table-wrap-group | preformat" mode="isosts:is-para-interruptor" as="xs:boolean">
-    <xsl:sequence select="if (parent::td | parent::th) 
-                          then exists(../text()[normalize-space()])
-                          else true()"/>
+    <xsl:choose>
+      <xsl:when test="parent::p[parent::list-item]">
+        <xsl:sequence select="false()"/>
+      </xsl:when>
+      <xsl:when test="parent::td | parent::th">
+        <xsl:sequence select="exists(../text()[normalize-space()])"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="true()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="processing-instruction() | comment() | text()[not(normalize-space())]" mode="isosts:is-para-interruptor" as="xs:boolean?">
@@ -461,6 +469,5 @@
   <xsl:template match="node()" mode="isosts:is-para-interruptor" as="xs:boolean" priority="-0.25">
     <xsl:sequence select="false()"/>
   </xsl:template>
-  
 
 </xsl:stylesheet>
