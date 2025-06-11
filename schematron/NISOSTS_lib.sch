@@ -904,11 +904,7 @@
   
   <pattern id="AFNOR_duplicate_dash">
     <rule id="AFNOR_duplicate_dash_rule1" context="title">
-     <report test="*[1]/text()[matches(. ,'^\p{Pd}')]" id="duplicate_dash_r1" role="warning">
-       The 'title' contains a dash at the beginning 
-       <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="remove_dash"/>
-     </report> 
-      <report test="text()[matches(., '^\p{Pd}')]" id="duplicate_dash_r2" role="warning">
+      <report test="(descendant::text())[1][matches(., '^\p{Pd}')]" id="duplicate_dash_r1" role="warning">
        The 'title' contains a dash at the beginning 
        <sbf:xsl-fix href="xslt-fixes/titles.xsl" mode="remove_dash"/>
      </report> 

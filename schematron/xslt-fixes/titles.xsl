@@ -289,12 +289,7 @@
     </xsl:analyze-string>
   </xsl:template>
 
-  <xsl:template match="title/*[1]/text()[matches(., '^\p{Pd}')]" mode="remove_dash">
-    <xsl:value-of select="replace(., '^\p{Pd}\s*', '')"/>
-  </xsl:template>
-  
-  
-  <xsl:template match="title/text()[matches(., '^\p{Pd}')]" mode="remove_dash">
+  <xsl:template match="title/(descendant::text())[1][matches(., '^\p{Pd}')]" mode="remove_dash">
     <xsl:value-of select="replace(., '^\p{Pd}\s*', '')"/>
   </xsl:template>
 
