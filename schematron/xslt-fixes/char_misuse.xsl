@@ -11,6 +11,14 @@
     
       <xsl:template match="text()[matches(.,'&#414;')]" mode="LATINSMALLLETTERNWITHLONGRIGHTLEG"><xsl:value-of select="replace(., '&#414;', '&#951;')"/></xsl:template>
     
+      <xsl:template match="text()[matches(.,'&#402;')]" mode="LATINSMALLLETTERFWITHHOOK"><xsl:value-of select="replace(., '&#402;', '&#119891;')"/></xsl:template>
+    
+      <xsl:template match="text()[matches(.,'&#1089;')]" mode="CYRILLICSMALLLETTERES"><xsl:value-of select="replace(., '&#1089;', '&#99;')"/></xsl:template>
+    
+      <xsl:template match="text()[matches(.,'&#1092;')]" mode="CYRILLICSMALLLETTEREF"><xsl:value-of select="replace(., '&#1092;', '&#981;')"/></xsl:template>
+    
+      <xsl:template match="text()[matches(.,'&#7599;')]" mode="MODIFIERLETTERSMALLNWITHRETROFLEXHOOK"><xsl:value-of select="replace(., '&#7599;', '&#951;')"/></xsl:template>
+    
       <xsl:template match="text()[matches(.,'&#8413;')]" mode="COMBININGENCLOSINGCIRCLE"><xsl:value-of select="replace(., '&#8413;', '&#9675;')"/></xsl:template>
     
       <xsl:template match="text()[matches(.,'&#8407;')]" mode="COMBININGRIGHTARROWABOVE"><xsl:value-of select="replace(., '&#8407;', '&#8594;')"/></xsl:template>

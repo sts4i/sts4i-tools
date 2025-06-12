@@ -202,7 +202,7 @@
    <xsl:variable name="nl_words" 
      select="'het', 'een', 'legenda', 'aanhang', 'informatief', 'waarin', 'opmerking', 'normatief', 'voorwoord', 'termen', 'zijn', 'tabel', 'figuur'"/>
   <xsl:variable name="ru_words" 
-    select="'справочное', 'приложение', 'примечание', 'таблица', 'рисунок'"/>
+    select="'справочное', 'приложение', 'примечание', 'таблица', 'рисунок', 'эта', 'через', 'по', 'на', 'за', 'от'"/>
 
 
   <xsl:function name="isosts:word-lang" as="xs:string">

@@ -923,9 +923,9 @@
   
   <pattern id="AFNOR_terms">
     <rule id="AFNOR_wrong_term_sec_rule1" context="sec[@sec-type = 'terms']">
-      <report test="not(term-sec) and
+      <report test="not(descendant::term-sec) and
          descendant::table-wrap [table/tbody/tr ! count(td) = 2]
-          [not(ancestor::table-wrap)]" id="AFNOR_wrong_term_sec_r2" role="warning">
+          [not(ancestor::table-wrap)]" id="AFNOR_wrong_term_sec_r1" role="warning">
         term-secs seem to be encoded inside a table-wrap.
         <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="change_sec"/>
      </report>
