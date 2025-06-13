@@ -294,7 +294,7 @@
   <pattern id="n12_table-cell_colors">
     <rule id="NISOSTS_table-cell_colors_1" context="*[self::td or self::th][matches(@style, 'background-color')]">
       <report id="NISOSTS_table-cell_colors_2"
-        test="not(matches(tokenize(tokenize(@style, '\s*;\s*')[matches(., 'background-color')], '\s*:\s*')[2], '^#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]\s*$', 'i'))"
+        test="not(matches(tokenize(tokenize(@style, '\s*;\s*')[matches(., 'background-color')][last()], '\s*:\s*')[2], '^#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]\s*$', 'i'))"
         role="warning" diagnostics="NISOSTS_table-cell_colors_2_de">Background-color must be represented by a hex code
           <sbf:xsl-fix href="xslt-fixes/table-cell_colors.xsl" mode="table-cell_colors"/>
       </report>
