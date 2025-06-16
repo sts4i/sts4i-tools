@@ -81,7 +81,7 @@
         test="
           $n/self::bold[matches(., '^[\p{P}\p{L}\d]+$')]
           (:[preceding-sibling::*[1][isosts:title-node-type(., ($n, $seen)) = 'inline-formula']]:)
-          [following-sibling::*[1][isosts:title-node-type(., ($n, $seen)) = 'inline-formula']]">
+          (:[following-sibling::*[1][isosts:title-node-type(., ($n, $seen)) = 'inline-formula']]:)">
         <xsl:sequence select="'inline-formula'"/>
       </xsl:when>
       <xsl:when test="exists($seen intersect $n)">
