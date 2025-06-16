@@ -279,14 +279,14 @@
       </xsl:for-each-group>
     </xsl:variable>
     <xsl:variable name="total" as="xs:integer" select="xs:integer(sum($sums))"/>
-    <xsl:variable name="percentages" as="element(percentage)+">
+    <xsl:variable name="percentages" as="element(percentage)*">
       <xsl:for-each select="$sums">
         <percentage l="{./@l}">
           <xsl:value-of select="xs:integer(. * 100 div $total)"/>
         </percentage>
       </xsl:for-each>
     </xsl:variable>
-      <xsl:if test="max($percentages) gt 50">
+      <xsl:if test="not(empty($percentages)) and max($percentages) gt 50">
         <xsl:value-of select="$percentages[. = max($percentages)]/@l"/>
       </xsl:if>
   </xsl:template>
