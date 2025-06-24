@@ -83,7 +83,7 @@
 
   <xsl:function name="isosts:lang" as="xs:string?">
     <xsl:param name="context" as="element(*)"/>
-    <xsl:variable name="content-language" as="element(content-language)?"
+    <xsl:variable name="content-language" as="element(content-language)*"
       select="
         $context/ancestor-or-self::*[name() = ('standard', 'adoption')]
         [(front | adoption-front)/*[ends-with(name(), '-meta')]/content-language]
@@ -96,7 +96,7 @@
         [1]
         /(front | adoption-front)/*[ends-with(name(), '-meta')]/doc-ident/language"/>
     <xsl:variable name="xml-lang" select="$context/ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
-    <xsl:sequence select="(string($xml-lang)[normalize-space()], string($content-language)[normalize-space()], string($doc-ident_language)[normalize-space()])[1]"/>
+    <xsl:sequence select="(string($xml-lang)[normalize-space()], string-join((distinct-values($content-language) ! string(.)),'_')[normalize-space()], string($doc-ident_language)[normalize-space()])[1]"/>
   </xsl:function>
 
   <xsl:function name="isosts:i18n-strings" as="xs:string*">

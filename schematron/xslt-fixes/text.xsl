@@ -12,6 +12,6 @@
  
  <xsl:template match="nat-meta/text()[normalize-space(.)]" mode="delete_text_in_nat-meta"/>
    
- 
+ <xsl:template match="p[not(child::node())][not(@*[not(name()='srcpath')])][following-sibling::*[not(self::label)] or preceding-sibling::*[not(self::label)]]" mode="delete-empty-p"/>
  
 </xsl:stylesheet>

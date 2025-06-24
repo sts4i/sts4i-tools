@@ -335,6 +335,9 @@
         content-language is missing
         <sbf:xsl-fix href="xslt-fixes/content-language.xsl" mode="add_content-language" depends-on="adoption-nesting_r1"/>
       </report>
+       <report id="multiple_content-language_r1" role="error" test="count(content-language) gt 1">
+        multiple content-language
+      </report>
     </rule>
     <rule id="first_title_in_content-language" context="(front | adoption-front)/*[ends-with(name(), '-meta')][content-language]/title-wrap[1][@xml:lang]">
       <assert id="first_title_in_content-language_r1" role="warning" test="@xml:lang = ../content-language">
@@ -930,8 +933,12 @@
         <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="change_sec"/>
      </report>
     </rule>
-    <rule id="AFNOR_non-normative-note_in_table-wrap_rule1" context="table-wrap[count(descendant::col) = 2]
-      [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]">
+    <rule id="AFNOR_non-normative-note_in_table-wrap_rule1" 
+          context="table-wrap[not(caption/title)]
+                             [not(table/thead)]
+                             [not(table/tfoot)]
+                             [count(descendant::col) = 2]
+                             [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]">
      <report test="true()" id="AFNOR_non-normative-note_in_table-wrap_r1" role="warning">
         non-normative-notes seem to be encoded inside <name/>.
        <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="table-wrap_to_non-normative-note"/>
@@ -1221,6 +1228,24 @@
     <rule context="break" id="pi-in-break_rule1">
       <report test="exists(processing-instruction())" id="pi-in-break_r1">Any content, including processing instructions, are not allowed in break. 
         <sbf:xsl-fix href="xslt-fixes/inline.xsl" mode="pi-in-break"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="delete-empty-p">
+    <rule context="p[not(child::node())][not(@*)][following-sibling::p or preceding-sibling::p]" id="delete-empty-p_rule1">
+      <report test="true()" id="delete-empty-p_r1">
+        Found empty p
+        <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete-empty-p"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="norm-refs-p-to-ref-list">
+    <rule id="norm-refs-p-to-ref-list_rule1" context="sec[@sec-type='norm-refs'][not(descendant::ref-list)][*[last()][self::p][count(node())=count(std[std-ref][title])]]">
+      <report id="norm-refs-p-to-ref-list_r1" test="true()">
+        paragraphs in normative references should be ref-list
+        <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="norm-refs-p-to-ref-list"/>
       </report>
     </rule>
   </pattern>

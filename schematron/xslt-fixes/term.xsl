@@ -10,8 +10,11 @@
   <xsl:import href="identity.xsl"/>
   <xsl:import href="../NISOSTS_lib.xsl"/>
   
- <xsl:template match="table-wrap[count(descendant::col) = 2]
-      [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]"
+ <xsl:template match="table-wrap[not(caption/title)]
+                                [not(table/thead)]
+                                [not(table/tfoot)]
+                                [count(descendant::col) = 2]
+                                [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]"
    mode="table-wrap_to_non-normative-note">
    <xsl:for-each select="descendant::tr">
      <non-normative-note>

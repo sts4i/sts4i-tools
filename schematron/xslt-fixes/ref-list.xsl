@@ -83,7 +83,6 @@
       <xsl:apply-templates select="@*, ../(label | title)" mode="#current"/>
       <xsl:apply-templates mode="#current"/>
     </xsl:copy>
-    
   </xsl:template>
   
   <xsl:function name="isosts:is-ref-list-wrapper-app" as="xs:boolean">
@@ -101,5 +100,26 @@
                                        )])"/>
   </xsl:function>
 
+  <xsl:template match="sec[@sec-type='norm-refs'][not(descendant::ref-list)][*[last()][self::p][count(node())=count(std[std-ref][title])]]" mode="norm-refs-p-to-ref-list">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:for-each-group select="node()[not(self::text()[not(normalize-space())])]" group-adjacent="if (self::p[count(node())=count(std[std-ref][title])]) then true() else false()">
+        <xsl:choose>
+          <xsl:when test="current-grouping-key() and current-group()[last()][not(following-sibling::*)]">
+            <ref-list>
+              <xsl:for-each select="current-group()">
+                <ref content-type="standard">
+                  <xsl:apply-templates select="node()" mode="#current"/>
+                </ref>
+              </xsl:for-each>
+            </ref-list>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="current-group()" mode="#current"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>
