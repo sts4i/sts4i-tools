@@ -121,5 +121,14 @@
       </xsl:for-each-group>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="back[not(descendant::ref-list)]" mode="add-empty-bibl">
+    <xsl:copy>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
+      <ref-list content-type="bibl" specific-use="list.of.documents">
+        <title>Bibliography</title>
+      </ref-list>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>
