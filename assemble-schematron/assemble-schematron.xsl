@@ -21,6 +21,8 @@
 
   <xsl:import href="http://transpect.io/xslt-util/xslt-based-catalog-resolver/xsl/resolve-uri-by-catalog.xsl"/>
 
+  <xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
+
   <xsl:template match="node() | @*" mode="resolve-extends filter">
     <xsl:copy>
       <xsl:apply-templates select="@*, node()" mode="#current"/>
