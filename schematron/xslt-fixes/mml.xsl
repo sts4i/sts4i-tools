@@ -17,5 +17,11 @@
     </xsl:element>
   </xsl:template>
   
+  <!-- mroot without index to msqrt -->
+  <xsl:template match="mml:mroot[count(*)=1][not(text()[normalize-space()])]" mode="mroot-to-msqrt">
+    <mml:msqrt>
+      <xsl:apply-templates select="@* | node()" mode="#current"/>
+    </mml:msqrt>
+  </xsl:template>
 
 </xsl:stylesheet>

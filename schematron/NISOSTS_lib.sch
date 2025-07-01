@@ -38,6 +38,9 @@
  
 
   <let name="legend-content-type" value="'fig-index'"/>
+  <let name="p-level-elements" value="('array', 'boxed-text', 'chem-struct-wrap', 'code', 'fig', 'fig-group', 'graphic', 'media', 
+    'preformat', 'table-wrap', 'table-wrap-group', 'disp-formula', 'disp-formula-group', 'def-list', 
+    'list', 'p', 'disp-quote', 'speech', 'statement', 'verse-group')"/>
 
   <xsl:include href="NISOSTS_lib.xsl"/>
   
@@ -1233,7 +1236,7 @@
   </pattern>
   
   <pattern id="delete-empty-p">
-    <rule context="p[not(child::node())][not(@*)][following-sibling::p or preceding-sibling::p]" id="delete-empty-p_rule1">
+    <rule context="p[not(child::node())][not(@*)][following-sibling::*[local-name()=$p-level-elements] or preceding-sibling::*[$p-level-elements]]" id="delete-empty-p_rule1">
       <report test="true()" id="delete-empty-p_r1">
         Found empty p
         <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete-empty-p"/>
@@ -1246,6 +1249,15 @@
       <report id="norm-refs-p-to-ref-list_r1" test="true()">
         paragraphs in normative references should be ref-list
         <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="norm-refs-p-to-ref-list"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="mroot-to-msqrt">
+    <rule id="mroot-to-msqrt_rule1" context="mml:mroot[count(*)=1][not(text()[normalize-space()])]">
+      <report test="true()" id="mroot-to-msqrt_r1" role="error">
+        mroot should have an index. Replacing with msqrt.
+        <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="mroot-to-msqrt"/>
       </report>
     </rule>
   </pattern>
