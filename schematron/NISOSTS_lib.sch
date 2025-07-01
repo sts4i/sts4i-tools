@@ -1262,16 +1262,21 @@
     </rule>
   </pattern>
   
-  <let name="wrapper-element-names" value="('msup', 
-    'msub', 
-    'msubsup', 
-    'mfrac', 
-    'mroot', 
-    'mmultiscripts', 
-    'mover', 
-    'munder', 
-    'munderover')"/>
-  
+  <let name="two-element-wrapper" value="('mfrac','mroot','msup','msub','mover','munder')"/>
+  <let name="three-element-wrapper" value="('msubsup','munderover')"/>
+  <let name="wrapper-element-names" value="('mmultiscripts',$two-element-wrapper,$three-element-wrapper)"/>
+
+  <pattern id="wrong-element-count">
+    <rule id="wrong-element-count_rule1" context="*[local-name()=$wrapper-element-names]">
+      <report test="local-name()=$two-element-wrapper and not(count(*)=2)" role="fatal" id="wrong-element-count_r1">
+        Element <name/> must include two elements
+      </report>
+      <report test="local-name()=$three-element-wrapper and not(count(*)=3)" role="fatal" id="wrong-element-count_r2">
+        Element <name/> must include three elements
+      </report>
+    </rule>
+  </pattern>
+
   <!-- remove empty mtext or mtable -->
   <pattern id="empty-math-elements">
     <rule id="empty-math-elements_rule1" 
