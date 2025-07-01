@@ -23,5 +23,22 @@
       <xsl:apply-templates select="@* | node()" mode="#current"/>
     </mml:msqrt>
   </xsl:template>
+  
+  <xsl:variable name="wrapper-element-names" select="('msup', 
+    'msub', 
+    'msubsup', 
+    'mfrac', 
+    'mroot', 
+    'mmultiscripts', 
+    'mover', 
+    'munder', 
+    'munderover')" as="xs:string+"/>
+  
+  <!-- remove empty mtext or mtable -->
+  <xsl:template match="*[local-name()=('mtext','mtable')]
+                        [not(* or text()[normalize-space()])]
+                        [not(parent::*/local-name() = $wrapper-element-names)]" mode="empty-math-elements">
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
 
 </xsl:stylesheet>

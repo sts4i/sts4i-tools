@@ -1262,6 +1262,29 @@
     </rule>
   </pattern>
   
+  <let name="wrapper-element-names" value="('msup', 
+    'msub', 
+    'msubsup', 
+    'mfrac', 
+    'mroot', 
+    'mmultiscripts', 
+    'mover', 
+    'munder', 
+    'munderover')"/>
+  
+  <!-- remove empty mtext or mtable -->
+  <pattern id="empty-math-elements">
+    <rule id="empty-math-elements_rule1" 
+          context="*[local-name()=('mtext','mtable')]
+                    [not(* or text()[normalize-space()])]
+                    [not(parent::*/local-name() = $wrapper-element-names)]">
+      <report test="true()" id="empty-math-elements_r1" role="error">
+        Empty <name/> is not allowed and would not have any effect.
+        <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="empty-math-elements"/> 
+      </report>
+    </rule>
+  </pattern>
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>
