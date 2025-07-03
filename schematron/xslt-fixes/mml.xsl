@@ -37,8 +37,15 @@
   <!-- remove empty mtext or mtable -->
   <xsl:template match="*[local-name()=('mtext','mtable')]
                         [not(* or text()[normalize-space()])]
-                        [not(parent::*/local-name() = $wrapper-element-names)]" mode="empty-math-elements">
+                        [not(parent::*/local-name() = $wrapper-element-names)] | 
+                       *:mtable[not(*:mtr)][not(parent::*/local-name() = $wrapper-element-names) or count(*)=1]" mode="empty-math-elements">
     <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="*:mtable[@*]/*:mtable" mode="empty-math-elements">
+    <xsl:copy>
+      <xsl:apply-templates select="parent::*:mtable/@* | @* | node()" mode="#current"/>
+    </xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>

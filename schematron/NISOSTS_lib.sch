@@ -941,7 +941,8 @@
                              [not(table/thead)]
                              [not(table/tfoot)]
                              [count(descendant::col) = 2]
-                             [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]">
+                             [not(descendant::*[@colspan])]
+                             [matches(descendant::td[1], concat('^',isosts:i18n-strings('note-label', .)), 'i')]">
      <report test="true()" id="AFNOR_non-normative-note_in_table-wrap_r1" role="warning">
         non-normative-notes seem to be encoded inside <name/>.
        <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="table-wrap_to_non-normative-note"/>
@@ -1236,7 +1237,10 @@
   </pattern>
   
   <pattern id="delete-empty-p">
-    <rule context="p[not(child::node())][not(@*)][following-sibling::*[local-name()=$p-level-elements] or preceding-sibling::*[$p-level-elements]]" id="delete-empty-p_rule1">
+    <rule context="p[not(child::node()[not(self::text()[not(normalize-space())])])]
+                    [not(@*)]
+                    [following-sibling::*[local-name()=$p-level-elements] or preceding-sibling::*[local-name()=$p-level-elements]]" 
+          id="delete-empty-p_rule1">
       <report test="true()" id="delete-empty-p_r1">
         Found empty p
         <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete-empty-p"/>
@@ -1280,12 +1284,49 @@
   <!-- remove empty mtext or mtable -->
   <pattern id="empty-math-elements">
     <rule id="empty-math-elements_rule1" 
-          context="*[local-name()=('mtext','mtable')]
+          context="*[local-name()=('mtext','mtable')][not(*:mtr)]">
+      <report test="self::*[local-name()=('mtext','mtable')]
                     [not(* or text()[normalize-space()])]
-                    [not(parent::*/local-name() = $wrapper-element-names)]">
-      <report test="true()" id="empty-math-elements_r1" role="error">
+                    [not(parent::*/local-name() = $wrapper-element-names)]" id="empty-math-elements_r1" role="error">
         Empty <name/> is not allowed and would not have any effect.
         <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="empty-math-elements"/> 
+      </report>
+      <report id="empty-math-elements_r2" role="error" test="self::*:mtable[not(*:mtr)][not(parent::*/local-name() = $wrapper-element-names) or count(*)=1]">
+        mtable must include table rows.
+        <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="empty-math-elements"/> 
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="p-in-ref">
+    <rule id="p-in-ref_rule1" context="ref[*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                               'non-normative-example', 'normative-example', 'notes-group'))]]">
+      <report test="not(preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                               'non-normative-example', 'normative-example', 'notes-group')]])" 
+              id="p-in-ref_r1" role="error">
+        Element <value-of select="*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                               'non-normative-example', 'normative-example', 'notes-group'))]/name()"/> not allowed in <name/>.
+        <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="p-in-ref"/>
+      </report>
+      <report test="preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                           'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                           'non-normative-example', 'normative-example', 'notes-group')]]" 
+              id="p-in-ref_r2" role="fatal">
+        Element <value-of select="*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                               'non-normative-example', 'normative-example', 'notes-group'))]/name()"/> not allowed in <name/>.
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="unknown-element-br">
+    <rule id="unknown-element-br_rule1" context="br">
+      <report id="unknown-element-br_r1" test="true()" role="fatal">
+        Element <name/> does not exist.
+        <sbf:xsl-fix href="xslt-fixes/break.xsl" mode="unknown-element-br"/>
       </report>
     </rule>
   </pattern>

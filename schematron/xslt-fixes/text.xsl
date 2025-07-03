@@ -16,7 +16,7 @@
                                                  'preformat', 'table-wrap', 'table-wrap-group', 'disp-formula', 'disp-formula-group', 'def-list', 
                                                  'list', 'p', 'disp-quote', 'speech', 'statement', 'verse-group')"/>
   
- <xsl:template match="p[not(child::node())]
+ <xsl:template match="p[not(child::node()[not(self::text()[not(normalize-space())])])]
                        [not(@*[not(name()='srcpath')])]
                        [following-sibling::*[local-name()=$p-level-elements] or preceding-sibling::*[local-name()=$p-level-elements]]" 
                mode="delete-empty-p"/>

@@ -100,9 +100,9 @@
         <p:documentation>output-base-uri apparently doesn't change as requested</p:documentation>
         <p:with-option name="attribute-value" select="replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
       </p:add-attribute>
-      <cx:message>
+      <!--<cx:message>
         <p:with-option name="message" select="'VVVVVVVVVVV ', ' ;; &#xa;', base-uri(/*), ' :: ', replace(base-uri(/*), '(\.fixed)?\.xml$', '.fixed.xml')"/>
-      </cx:message>
+      </cx:message>-->
       <tr:store-debug name="store-patched">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
@@ -195,9 +195,9 @@
       <p:with-option name="base-uri" select="$debug-dir-uri"/>
       <p:with-option name="pipeline-step" select="'fixes-source'"/>
     </tr:store-debug>
-    <cx:message>
+    <!--<cx:message>
       <p:with-option name="message" select="'3333333 ', $base-uri, ' :: ', $this-documents-error-ids-with-fixes"/> 
-    </cx:message>
+    </cx:message>-->
     <p:xslt name="select-fixes-for-current-doc" template-name="main">
       <p:with-param name="ids" select="$this-documents-error-ids-with-fixes"/>
       <p:with-param name="base-uri" select="$base-uri"/>
@@ -226,7 +226,7 @@
             <xsl:template match="/svrl:schematron-output">
               <xsl:param name="schematron" tunnel="yes" as="document-node(element(sch:schema))"/>
               <xsl:variable name="svrl" as="document-node()" select=".."/>
-              <xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>
+              <!--<xsl:message select="'aaaaaaaa ', $ids, count(tokenize($ids, '\s+')), count(key('by-id', tokenize($ids, '\s+')))"></xsl:message>-->
               <sbf:fixes-list>
                 <xsl:attribute name="xml:base" select="$base-uri"/>
                 <xsl:for-each-group select="tokenize($ids, '\s+') ! key('by-test-id', ., $svrl)[1] ! sbf:prepend-prerequisites(., $svrl, $schematron)" 
@@ -295,7 +295,7 @@
             <xsl:template match="sbf:param">
               <!-- this is the reason why we use the sbf:xsl-fix from SVRL rather than from Schematron (that we use as fallback
                 if there is no failed-assert/successful-report for a given dependency in the SVRL) --> 
-              <xsl:message select="'PPPPPPPPPPPPPPAAAAAAAAAAAAAAAAAa ', string(@name), ' :: ', string(.), ' :: ', ."></xsl:message>
+              <!--<xsl:message select="'PPPPPPPPPPPPPPAAAAAAAAAAAAAAAAAa ', string(@name), ' :: ', string(.), ' :: ', ."></xsl:message>-->
               <c:param name="{@name}" value="{string(.)}"/>
             </xsl:template>
           </xsl:stylesheet>
@@ -303,9 +303,9 @@
       </p:input>
     </p:xslt>
 
-    <cx:message>
+    <!--<cx:message>
       <p:with-option name="message" select="'444444444 ', count(/*/*), /*/*/name()"></p:with-option>
-    </cx:message>
+    </cx:message>-->
     <tr:store-debug name="store-fix-list">
         <p:with-option name="active" select="$debug"/>
         <p:with-option name="base-uri" select="$debug-dir-uri"/>
