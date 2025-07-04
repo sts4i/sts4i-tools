@@ -1339,6 +1339,18 @@
     </rule>
   </pattern>
   
+  <pattern id="multiple-labels">
+    <rule id="multiple-labels_rule1" context="*[count(label) gt 1]">
+      <report id="multiple-labels_r1" test="count(distinct-values(label))=1" role="warning">
+        There are multiple labels in this <name/>
+        <sbf:xsl-fix href="xslt-fixes/label.xsl" mode="multiple-labels"/>
+      </report>
+      <report id="multiple-labels_r2" test="count(distinct-values(label)) gt 1" role="error">
+        There is more than one different label in this <name/>
+      </report>
+    </rule>
+  </pattern>
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>
