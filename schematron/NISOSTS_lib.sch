@@ -41,6 +41,10 @@
   <let name="p-level-elements" value="('array', 'boxed-text', 'chem-struct-wrap', 'code', 'fig', 'fig-group', 'graphic', 'media', 
     'preformat', 'table-wrap', 'table-wrap-group', 'disp-formula', 'disp-formula-group', 'def-list', 
     'list', 'p', 'disp-quote', 'speech', 'statement', 'verse-group')"/>
+    
+  <let name="two-element-wrapper" value="('mfrac','mroot','msup','msub','mover','munder')"/>
+  <let name="three-element-wrapper" value="('msubsup','munderover')"/>
+  <let name="wrapper-element-names" value="('mmultiscripts',$two-element-wrapper,$three-element-wrapper)"/>
 
   <xsl:include href="NISOSTS_lib.xsl"/>
   
@@ -976,7 +980,7 @@
   
   <pattern id="missing_referenced_id">
     <rule id="missing_referenced_id_rule1" context="*[@rid]">
-      <assert id="missing_referenced_id_r1" test="exists(key('by-id', @rid))" role="warning">
+      <assert id="missing_referenced_id_r1" test="exists(key('by-id', @rid))" role="error">
          This <name/> has a '@rid' without a corresponding '@id' in the document.      
       </assert>
     </rule>
@@ -1265,10 +1269,6 @@
       </report>
     </rule>
   </pattern>
-  
-  <let name="two-element-wrapper" value="('mfrac','mroot','msup','msub','mover','munder')"/>
-  <let name="three-element-wrapper" value="('msubsup','munderover')"/>
-  <let name="wrapper-element-names" value="('mmultiscripts',$two-element-wrapper,$three-element-wrapper)"/>
 
   <pattern id="wrong-element-count">
     <rule id="wrong-element-count_rule1" context="*[local-name()=$wrapper-element-names]">
@@ -1327,6 +1327,14 @@
       <report id="unknown-element-br_r1" test="true()" role="fatal">
         Element <name/> does not exist.
         <sbf:xsl-fix href="xslt-fixes/break.xsl" mode="unknown-element-br"/>
+      </report>
+    </rule>
+  </pattern>
+  
+  <pattern id="same-label-footnotes">
+    <rule id="same-label-footnotes_rule1" context="fn[label=preceding-sibling::fn/label]">
+      <report id="same-label-footnotes_r1" test="true()" role="warning">
+        Multiple footnotes in the same context have the same label: <value-of select="label"/>
       </report>
     </rule>
   </pattern>
