@@ -1351,6 +1351,19 @@
     </rule>
   </pattern>
   
+  <pattern id="term-entry-in-sec">
+    <rule id="term-entry-in-sec_rule1" context="tbx:termEntry[not(parent::term-sec)]">
+      <let name="term-sec-parent-names" value="('abstract','ack','app','back','bio','body','boxed-text','notes','sec','term-sec')"/>
+      <report test="parent::*[parent::*/name()=$term-sec-parent-names] and matches(parent::*/name(),'sec')" id="term-entry-in-sec_r1" role="error">
+        tbx:termEntry can only be contained in term-sec. Current parent is <value-of select="parent::*/name()"/>
+        <sbf:xsl-fix href="xslt-fixes/term-entry.xsl" mode="term-entry-in-sec"/>
+      </report>
+      <report test="not(parent::*[parent::*/name()=$term-sec-parent-names]) or not(matches(parent::*/name(),'sec'))" role="fatal" id="term-entry-in-sec_r2">
+        tbx:termEntry can only be contained in term-sec. Current parent is <value-of select="parent::*/name()"/>
+      </report>
+    </rule>
+  </pattern>
+  
   <diagnostics>
     <diagnostic id="NISOSTS_lib_figure_keys_r1_de" xml:lang="de">Sollte dieser Absatz kein Titel (einer Legende)
       sein?</diagnostic>
