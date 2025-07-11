@@ -99,15 +99,19 @@
     <xsl:sequence select="(string($xml-lang)[normalize-space()], string-join((distinct-values($content-language) ! string(.)),'_')[normalize-space()], string($doc-ident_language)[normalize-space()])[1]"/>
   </xsl:function>
 
-  <xsl:function name="isosts:i18n-strings" as="xs:string*">
+  <xsl:function name="isosts:i18n-strings" as="xs:string+">
     <xsl:param name="i18n-string-name" as="xs:string"/>
     <xsl:param name="context" as="element(*)"/>
-    <xsl:sequence select="(key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings), 'n/a')[1]"/>
+    <xsl:sequence select="if (key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings)) 
+                          then key('i18n', string-join(($i18n-string-name, isosts:lang($context)), '__'), $i18n-strings) 
+                          else 'n/a'"/>
   </xsl:function>
   
-  <xsl:function name="isosts:i18n-strings-no-lang" as="xs:string*">
+  <xsl:function name="isosts:i18n-strings-no-lang" as="xs:string+">
     <xsl:param name="i18n-string-name" as="xs:string"/>
-    <xsl:sequence select="key('i18n', string-join(($i18n-string-name, $doc-lang), '__'), $i18n-strings)"/>
+    <xsl:sequence select="if (key('i18n', string-join(($i18n-string-name, $doc-lang), '__'), $i18n-strings))
+                          then key('i18n', string-join(($i18n-string-name, $doc-lang), '__'), $i18n-strings)
+                          else 'n/a'"/>
   </xsl:function>
 
   <xsl:function name="isosts:std-meta-type" as="xs:string">

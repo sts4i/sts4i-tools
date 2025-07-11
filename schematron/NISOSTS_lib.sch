@@ -1299,25 +1299,18 @@
   </pattern>
   
   <pattern id="p-in-ref">
-    <rule id="p-in-ref_rule1" context="ref[*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group'))]]">
-      <report test="not(preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group')]])" 
+    <let name="ref-allowed-child-elements" value="('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                   'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
+                                                   'non-normative-example', 'normative-example', 'notes-group')"></let>
+    <rule id="p-in-ref_rule1" context="ref[*[not(local-name()=$ref-allowed-child-elements)]]">
+      <report test="not(preceding-sibling::ref[*[local-name()=$ref-allowed-child-elements]])" 
               id="p-in-ref_r1" role="error">
-        Element <value-of select="*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group'))]/name()"/> not allowed in <name/>.
+        Element <value-of select="*[not(local-name()=$ref-allowed-child-elements)]/name()"/> not allowed in <name/>.
         <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="p-in-ref"/>
       </report>
-      <report test="preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                           'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                           'non-normative-example', 'normative-example', 'notes-group')]]" 
+      <report test="preceding-sibling::ref[*[local-name()=$ref-allowed-child-elements]]" 
               id="p-in-ref_r2" role="fatal">
-        Element <value-of select="*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group'))]/name()"/> not allowed in <name/>.
+        Element <value-of select="*[not(local-name()=$ref-allowed-child-elements)]/name()"/> not allowed in <name/>.
       </report>
     </rule>
   </pattern>
