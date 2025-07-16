@@ -24,7 +24,6 @@
   <sbf:extends href="http://niso-sts.org/sts4i-tools/schematron/unicode.sch"/>
 
   <xsl:import href="http://transpect.io/xslt-util/num/xsl/num.xsl"/>
-
   <xsl:param name="target-niso-version"/>
 
   <ns uri="http://www.iso.org/ns/isosts" prefix="isosts"/>
@@ -147,22 +146,23 @@
     </rule>
   </pattern>
 
-  <pattern id="NISOSTS_iso-like-ids">
-    <rule id="NISOSTS_iso-like-ids_1" context="sec[label[text()]] | app[label[text()]]">
-      <let name="annex-name" value="isosts:i18n-strings('annex-name', label)"/>
-      <let name="strip-adornments" value="replace(label, concat('^(', $annex-name, ')[\s\p{Zs}]+'), '')"/>
-      <assert test="@id = string-join(('sec', $strip-adornments), '_')" role="warning" id="NISOSTS_iso-like-ids_1_1"
-        diagnostics="NISOSTS_iso-like-ids_1_1_de">A section or appendix id must be 'sec_' + label (modulo text such as
-        'Annex ').</assert>
-    </rule>
-  </pattern>
-
   <pattern id="NISOSTS_fn-in-fn-group">
     <rule id="NISOSTS_fn-in-fn-group_1" context="fn">
       <assert test="exists(ancestor::fn-group)" id="NISOSTS_fn-in-fn-group_2" role="warning"> All fn must be grouped in
         fn-groups. <sbf:xsl-fix href="xslt-fixes/fn-group.xsl" mode="group-fn"
           depends-on="NISOSTS_table-key-in-footnotes_r1 continuation_footnotes_r1 duplicate_fn_marker_r1 AFNOR_remove_enrichments_r1"/>
       </assert>
+    </rule>
+  </pattern>
+  
+  <pattern id="NISOSTS_iso-like-ids">
+    <rule id="NISOSTS_iso-like-ids_1" context="sec[label[text()]] | app[label[text()]]">
+      <assert test="@id = isosts:id-string-by-label(.)" role="warning" id="NISOSTS_iso-like-ids_1_1"
+        diagnostics="NISOSTS_iso-like-ids_1_1_de">A section or appendix id must be 'sec_' + label (modulo text such as
+        'Annex '). 
+        <sbf:xsl-fix href="xslt-fixes/iso-like-ids.xsl" mode="iso-like-ids"
+          depends-on="NISOSTS_fn-in-fn-group_2"
+        /></assert>
     </rule>
   </pattern>
 
@@ -970,9 +970,10 @@
   </pattern>
   
   
+<!--  suppress milestone check/fixes until https://gitlab-ext.le-tex.de/din-xml/xproc-frontend/-/issues/1 is solved -->
   <pattern id="milestone_is_amendement">
     <rule id="milestone_is_amendement_rule1" context="milestone-start[@rationale = 'A1'] | milestone-end[preceding::milestone-start[1]/@rationale = 'A1']">
-      <report id="milestone_is_amendement_r1" test="true()">
+      <report id="milestone_is_amendement_r1" test="false()">
         It seems like this '<name/>' should be change markup.
       </report>
     </rule>
