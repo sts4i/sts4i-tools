@@ -106,7 +106,7 @@
         table-footnotes. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="table-key"/>
       </report>
     </rule>
-    <rule id="key_location" context="fig/*[not(name() = ('label', 'caption', 'legend'))]">
+    <rule id="key_location_rule1" context="fig/*[not(name() = ('label', 'caption', 'legend'))]">
       <report test="(p | self::p) = isosts:i18n-strings('key-heading', .)" role="warning"
         id="NISOSTS_lib_figure_keys_r1" diagnostics="NISOSTS_lib_figure_keys_r1_de"> Shouldn’t this p be a title (of a
         key)? </report>
@@ -122,6 +122,15 @@
           (title | caption/title) = isosts:i18n-strings('key-heading', .)
           and (xs:decimal($target-niso-version) ge 1.2)"
         role="warning" id="NISOSTS_lib_figure_keys_r3"> Put the figure key in a NISO STS 1.2 legend element. <sbf:xsl-fix
+          href="xslt-fixes/legend.xsl" mode="legends" depends-on="DIN_fig_legend_in_table-wrap_r1"/>
+      </report>
+    </rule>
+    <rule id="key_location_rule2" context="fig-group/caption/normative-note[@content-type='legend']">
+      <report
+        test="
+          (title) = isosts:i18n-strings('key-heading', .)
+          and (xs:decimal($target-niso-version) ge 1.2)"
+        role="warning" id="NISOSTS_lib_figure_keys_r4"> Put the figure key in a NISO STS 1.2 legend element. <sbf:xsl-fix
           href="xslt-fixes/legend.xsl" mode="legends" depends-on="DIN_fig_legend_in_table-wrap_r1"/>
       </report>
     </rule>
