@@ -111,6 +111,13 @@
                           then key('i18n', string-join(($i18n-string-name, $doc-lang), '__'), $i18n-strings)
                           else 'n/a'"/>
   </xsl:function>
+  
+  <xsl:function name="isosts:id-string-by-label">
+    <xsl:param name="node" as="element(*)"/>
+    <xsl:variable name="possible-annex-name" select="(isosts:i18n-strings('annex-name', $node/label[text()]), $node/generate-id())[1]"/>
+    <xsl:variable name="strip-adornments" select="replace(replace($node/label, concat('^(', $possible-annex-name, ')[\s\p{Zs}]+'), ''), '[\s&#xa0;]', '_')"/>
+    <xsl:sequence select="string-join(('sec', $strip-adornments), '_')"/>
+  </xsl:function>
 
   <xsl:function name="isosts:std-meta-type" as="xs:string">
     <xsl:param name="meta-elt" as="element(*)"/>
