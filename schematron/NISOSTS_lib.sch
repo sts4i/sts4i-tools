@@ -1221,9 +1221,9 @@
   </pattern>
   
   <pattern id="table_fn_wrong_order">
-    <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
+    <rule context="table-wrap-foot[descendant::fn]" id="fn_wrong_order_rule1">
       <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_a1" role="warning">
-        The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
+        The footnotes are not in alphabetical order. Found: <value-of select="string-join(descendant::fn/label/string(.), ', ')"/>
       </assert>
     </rule>
   </pattern>
