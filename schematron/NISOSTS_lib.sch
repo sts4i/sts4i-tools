@@ -978,16 +978,14 @@
     </rule>
   </pattern>
   
-  
-<!--  suppress milestone check/fixes until https://gitlab-ext.le-tex.de/din-xml/xproc-frontend/-/issues/1 is solved -->
-  <pattern id="milestone_is_amendement">
+  <!--<pattern id="milestone_is_amendement">
     <rule id="milestone_is_amendement_rule1" context="milestone-start[@rationale = 'A1'] | milestone-end[preceding::milestone-start[1]/@rationale = 'A1']">
-      <report id="milestone_is_amendement_r1" test="false()">
+      <report id="milestone_is_amendement_r1" test="true()">
         It seems like this '<name/>' should be change markup.
       </report>
     </rule>
   </pattern>
-  
+  -->
   <pattern id="missing_referenced_id">
     <rule id="missing_referenced_id_rule1" context="*[@rid]">
       <assert id="missing_referenced_id_r1" test="exists(key('by-id', @rid))" role="error">
@@ -995,7 +993,6 @@
       </assert>
     </rule>
   </pattern>
-  
   
   <pattern id="duplicate_id">
   <rule context="*[@id]" id="duplicate_id_rule1">
