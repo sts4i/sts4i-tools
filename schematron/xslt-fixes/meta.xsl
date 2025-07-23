@@ -10,7 +10,7 @@
   
   <xsl:mode name="normalize-meta-note" on-no-match="shallow-copy"/>
   
-    <xsl:template match="std-meta[custom-meta-group]
+    <xsl:template match="std-meta[empty(preceding-sibling::*:std-meta)][custom-meta-group]
                                [following-sibling::sec[@sec-type='titlepage'][empty(label/node())]]/custom-meta-group"
                 mode="meta-note">
     <meta-note content-type="standard.text">
@@ -19,7 +19,7 @@
     <xsl:next-match></xsl:next-match>
   </xsl:template>
   
-  <xsl:template match="std-meta[not(custom-meta-group)]
+  <xsl:template match="std-meta[empty(preceding-sibling::*:std-meta)][not(custom-meta-group)]
                                [following-sibling::sec[@sec-type='titlepage'][empty(label/node())]]"
                 mode="meta-note">
     <xsl:copy copy-namespaces="no">
