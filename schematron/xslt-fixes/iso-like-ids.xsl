@@ -12,10 +12,22 @@
 
   <xsl:mode name="iso-like-ids"/>
   
-  <xsl:key name="affected-sec-by-rid" match="*[self::sec or self::app][label[text()]][@id][@id ne isosts:id-string-by-label(.)]"
+  <xsl:function name="isosts:is-affected-sec" as="xs:boolean">
+    <xsl:param name="node"/>
+    <xsl:sequence select="exists($node[$is-doc-providing-unique-labels][self::sec or self::app]
+                                      [label[text()]][@id][@id ne isosts:id-string-by-label(.)])"/>
+  </xsl:function>
+  
+  <xsl:key name="affected-sec-by-rid" match="*[isosts:is-affected-sec(.)]"
     use="@id"/>
   
-  <xsl:template match="*[self::sec or self::app][label[text()]][@id][@id ne isosts:id-string-by-label(.)]/@id" mode="iso-like-ids">
+  <xsl:variable name="label-pool" select="//*[isosts:is-affected-sec(.)]/label[text()]"/>
+  
+  <xsl:variable name="is-doc-providing-unique-labels" as="xs:boolean">
+    <xsl:sequence select="count($label-pool/string(.)) = count(distinct-values($label-pool/string(.)))"/>
+  </xsl:variable>
+  
+  <xsl:template match="*[isosts:is-affected-sec(.)]/@id" mode="iso-like-ids">
     <xsl:attribute name="id" select="isosts:id-string-by-label(..)"/>
   </xsl:template>
   
