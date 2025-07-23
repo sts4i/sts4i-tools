@@ -979,16 +979,14 @@
     </rule>
   </pattern>
   
-  
-<!--  suppress milestone check/fixes until https://gitlab-ext.le-tex.de/din-xml/xproc-frontend/-/issues/1 is solved -->
-  <pattern id="milestone_is_amendement">
+  <!--<pattern id="milestone_is_amendement">
     <rule id="milestone_is_amendement_rule1" context="milestone-start[@rationale = 'A1'] | milestone-end[preceding::milestone-start[1]/@rationale = 'A1']">
-      <report id="milestone_is_amendement_r1" test="false()" role="warning">
+      <report id="milestone_is_amendement_r1" test="true()" role="warning">
         It seems like this '<name/>' should be change markup.
       </report>
     </rule>
   </pattern>
-  
+  -->
   <pattern id="missing_referenced_id">
     <rule id="missing_referenced_id_rule1" context="*[@rid]">
       <assert id="missing_referenced_id_r1" test="exists(key('by-id', @rid))" role="error">
@@ -996,7 +994,6 @@
       </assert>
     </rule>
   </pattern>
-  
   
   <pattern id="duplicate_id">
   <rule context="*[@id]" id="duplicate_id_rule1">
@@ -1222,9 +1219,9 @@
   </pattern>
   
   <pattern id="table_fn_wrong_order">
-    <rule context="table-wrap-foot" id="fn_wrong_order_rule1">
+    <rule context="table-wrap-foot[descendant::fn]" id="fn_wrong_order_rule1">
       <assert test="isosts:is-incrementing-alpha-sequence(descendant::fn/label)" id="fn_wrong_order_a1" role="warning">
-        The footnotes are not in alphabetical order. Found: <value-of select="descendant::fn/label"/>
+        The footnotes are not in alphabetical order. Found: <value-of select="string-join(descendant::fn/label/string(.), ', ')"/>
       </assert>
     </rule>
   </pattern>
