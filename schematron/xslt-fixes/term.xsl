@@ -14,6 +14,8 @@
                                 [not(table/thead)]
                                 [not(table/tfoot)]
                                 [count(descendant::col) = 2]
+                                [not(descendant::*[@colspan])]
+                                [not(descendant::*[@rowspan])]
                                 [matches(descendant::td[1], isosts:i18n-strings('note-label', .), 'i')]"
    mode="table-wrap_to_non-normative-note">
    <xsl:for-each select="descendant::tr">

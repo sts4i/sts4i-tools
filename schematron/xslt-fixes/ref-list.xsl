@@ -131,12 +131,24 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="ref[*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group'))]][not(preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
-                                                               'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                               'non-normative-example', 'normative-example', 'notes-group')]])]" mode="p-in-ref">
+  <xsl:template match="ref[*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 'mixed-citation', 
+                                               'std', 'non-normative-note', 'normative-note', 'non-normative-example', 'normative-example', 
+                                               'notes-group'))]]
+                          [not(preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                                      'mixed-citation', 'std', 'non-normative-note', 'normative-note',
+                                                                      'non-normative-example', 'normative-example', 'notes-group')]])]" 
+                mode="p-in-ref">
     <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+  
+  <xsl:template match="ref[text()[normalize-space()]]
+                          [not(preceding-sibling::ref[*[local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
+                                                                      'mixed-citation', 'std', 'non-normative-note', 'normative-note',
+                                                                      'non-normative-example', 'normative-example', 'notes-group')]])]" 
+                mode="p-in-ref">
+    <p>
+      <xsl:apply-templates mode="#current"/>  
+    </p>
   </xsl:template>
 
 </xsl:stylesheet>

@@ -885,6 +885,12 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:template match="tbx:grammaticalGender">
+    <xsl:if test=". != ('masculine','feminine','neuter')">
+      <xsl:value-of select="."/>
+    </xsl:if>
+  </xsl:template>
+  
   <xsl:template match="tbx:termType | tbx:normativeAuthorization">
     <!-- no rendering -->
   </xsl:template>

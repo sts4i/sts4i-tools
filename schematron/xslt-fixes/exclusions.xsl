@@ -8,6 +8,7 @@
   exclude-result-prefixes="sbf isosts xs" version="3.0">
 
   <xsl:import href="identity.xsl"/>
+  <xsl:import href="../NISOSTS_lib.xsl"/>
 
   <xsl:mode name="extract-trailing-inclusions"/>
 
@@ -34,7 +35,7 @@
     <xsl:param name="context" as="node()*"/>
     <xsl:sequence select="exists($n[self::bold|
                             self::italic|
-                            self::underlined|
+                            self::underline|
                             self::ext-link|
                             self::std|
                             self::fn|
@@ -77,10 +78,17 @@
                      " mode="extract-trailing-inclusions">
   <!-- only excludes or wrap unwanted elements around std if all content/formats give the same information.
        eg. only wrap bold from inside to the outside if every content is styled bold -->
-    <xsl:call-template name="move-single-element-inside-out">
-      <xsl:with-param name="children" select="node()"/>
-      <xsl:with-param name="container" select="."/>
-    </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="parent::*/name()=$element-parent-map(*[1]/name())">
+        <xsl:call-template name="move-single-element-inside-out">
+          <xsl:with-param name="children" select="node()"/>
+          <xsl:with-param name="container" select="."/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:next-match/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

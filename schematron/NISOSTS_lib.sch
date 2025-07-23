@@ -63,13 +63,13 @@
     <rule id="unexpected-namespace-uris_rule1" context="*[namespace::*]">
       <assert test="every $n in (namespace::* ! string(.))
                     satisfies ($n = $expected-ns-uris or $n = ../namespace::* ! string(.))"
-              id="unexpected-namespace-uris_a1">Unexpected namespace declaration in <name/>. Found: <value-of
+              id="unexpected-namespace-uris_a1" role="warning">Unexpected namespace declaration in <name/>. Found: <value-of
                 select="string-join(namespace::*[not(string(.) = $expected-ns-uris)] ! string-join((name(.), string(.)), ':'), ', ')"/>
       </assert>
 
       <assert test="every $n in (namespace::* ! name(.))
                     satisfies ($n = $expected-ns-prefixes or $n = ../namespace::* ! name(.))"
-        id="unexpected-namespace-prefix">Unexpected prefix in namespace declaration in <name/>. Found: <value-of
+        id="unexpected-namespace-prefix" role="warning">Unexpected prefix in namespace declaration in <name/>. Found: <value-of
           select="string-join(namespace::*[not(name(.) = $expected-ns-prefixes)] ! string-join((name(.), string(.)), ':'), ', ')"/>
       </assert>
     </rule>
@@ -77,7 +77,7 @@
 
   <pattern id="xsd">
     <rule id="xsd_rule1" context="/*">
-      <assert test="empty(@xsi:noNamespaceSchemaLocation)" id="xsd_a1">The attribute xsi:noNamespaceSchemaLocation is invalid with respect to the DTD.
+      <assert test="empty(@xsi:noNamespaceSchemaLocation)" id="xsd_a1" role="error">The attribute xsi:noNamespaceSchemaLocation is invalid with respect to the DTD.
         <sbf:xsl-fix href="xslt-fixes/dtd-version.xsl" mode="xsd"/>
       </assert>
     </rule>
@@ -96,7 +96,7 @@
     <title>Checks whether a key (a.k.a. legend) is part of the regular fig content, rather than in the caption</title>
     <p>Prior to NISO STS 1.2, there was no optimal or canonical way to place keys to figures yet.</p>
     <rule id="SN-key_location" context="fig/non-normative-note[@content-type = 'explanatory']">
-      <report test="true()" id="SN-key_location_r1">The legend needs to go into a NISO STS 1.2 legend element.
+      <report test="true()" id="SN-key_location_r1" role="warning">The legend needs to go into a NISO STS 1.2 legend element.
           <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="SN-legends"/></report>
     </rule>
     <rule id="NISOSTS_table-key-in-footnotes_rule1"
@@ -186,7 +186,7 @@
   <pattern id="NISOSTS_fn-in-metadata">
     <rule id="NISOSTS_fn-in-metadata_1"
       context="fn[ancestor::std-meta | ancestor::std-doc-meta | ancestor::iso-meta | ancestor::reg-meta | ancestor::nat-meta]">
-      <report test="true()" id="NISOSTS_fn-in-metadata_1_r1">Fn are not allowed in metadata elements.</report>
+      <report test="true()" id="NISOSTS_fn-in-metadata_1_r1" role="error">Fn are not allowed in metadata elements.</report>
     </rule>
   </pattern>
 
@@ -220,7 +220,7 @@
       context="
         label[text()][every $n in node()
           satisfies ($n/self::text())]" role="warning">
-      <assert test="normalize-space(.) = string(.)" id="NISOSTS_normalize-space-label_a1">The label contains additional
+      <assert test="normalize-space(.) = string(.)" id="NISOSTS_normalize-space-label_a1" role="warning">The label contains additional
         whitespace that might impede subsequent ID normalization, etc. <sbf:xsl-fix href="xslt-fixes/titles.xsl"
           mode="normalize-space-label"/>
       </assert>
@@ -424,13 +424,13 @@
   <pattern id="ref-list2app">
     <!-- Note: Putting bibliographic references into an appendix deviates from the IEC/ISO Coding Guidelines. -->
     <rule id="ref-list2app_rule1" context="back">
-      <report id="ref-list-back2app" test="ref-list">The element ref-list must be moved to an app with content-type
+      <report id="ref-list-back2app" test="ref-list" role="warning">The element ref-list must be moved to an app with content-type
         "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-back"/>
       </report>
-      <report id="ref-list-app-group2app" test="app-group/ref-list">The element ref-list must be moved to an app with
+      <report id="ref-list-app-group2app" test="app-group/ref-list" role="warning">The element ref-list must be moved to an app with
         content-type "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="ref-list-in-app"/>
       </report>
-      <report id="app-content-type" test="app[not(@content-type = 'bibl')]/ref-list">The app containing the bibliography
+      <report id="app-content-type" test="app[not(@content-type = 'bibl')]/ref-list" role="warning">The app containing the bibliography
         needs an attribute content-type with the value "bibl". <sbf:xsl-fix href="xslt-fixes/ref-list.xsl"
           mode="content-type-for-app"/>
       </report>
@@ -446,7 +446,7 @@
 
   <pattern id="math-without-mml">
     <rule id="math-without-mml-1" context="*[namespace-uri() = 'http://www.w3.org/1998/Math/MathML']">
-      <assert test="starts-with(name(), 'mml:')" id="math-without-mml-2">MathML elements must have an 'mml' namespace
+      <assert test="starts-with(name(), 'mml:')" id="math-without-mml-2" role="error">MathML elements must have an 'mml' namespace
         prefix <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="prefix"/>
       </assert>
     </rule>
@@ -474,7 +474,7 @@
             empty(ancestor::*[name() = $ancestorlegalizers])
           else
             true()])"
-        id="report-illegal-nesting">In context <value-of select="'$context'"/>, the following elements are prohibited:
+        id="report-illegal-nesting" role="warning">In context <value-of select="'$context'"/>, the following elements are prohibited:
           <value-of select="string-join($tokenized, ', ')"/>.
         <sbf:xsl-fix href="xslt-fixes/exclusions.xsl" mode="extract-trailing-inclusions">
           <sbf:param name="sbf:pattern-ids">exclusion-non-norm</sbf:param>
@@ -589,12 +589,12 @@
         or
         contains(std-ref[@type = 'dated'], ':')]"
       role="warning">
-      <report test="true()" id="release-date-empty-but-fallback-exists">release-date should be given <sbf:xsl-fix
+      <report test="true()" id="release-date-empty-but-fallback-exists" role="warning">release-date should be given <sbf:xsl-fix
           href="xslt-fixes/release-date.xsl" mode="infer"/>
       </report>
     </rule>
     <rule id="release-date-empty2" context="std-meta[empty(release-date)]" role="warning">
-      <report test="true()" id="release-date-empty-no-fallback-exists">release-date should be given (no fallback
+      <report test="true()" id="release-date-empty-no-fallback-exists" role="warning">release-date should be given (no fallback
         available)</report>
     </rule>
   </pattern>
@@ -675,7 +675,7 @@
 
   <pattern id="entailedTerm_in_named-content">
     <rule id="entailedTerm_in_named-content_rule1" context="named-content[@content-type = 'term']">
-      <report id="entailedTerm_in_named-content_r1" test="true()"> '<name/>' with '@content-type="term"' found instead
+      <report id="entailedTerm_in_named-content_r1" test="true()" role="warning"> '<name/>' with '@content-type="term"' found instead
         of Element 'entailedTerm' <sbf:xsl-fix href="xslt-fixes/entailedTerm.xsl"
           mode="named-content_content-type_term_to_entailedTerm"/>
       </report>
@@ -711,7 +711,7 @@
 
   <pattern id="continuation_footnotes">
     <rule id="continuation_footnotes_rule1" context="table-wrap-foot | fn-group">
-      <report test="fn[position() gt 1][empty(label)][preceding-sibling::fn[label]]" id="continuation_footnotes_r1">
+      <report test="fn[position() gt 1][empty(label)][preceding-sibling::fn[label]]" id="continuation_footnotes_r1" role="error">
         This footnote has no label. Is it a continuation footnote? </report>
     </rule>
   </pattern>
@@ -721,12 +721,12 @@
       context="
         fig/table-wrap[@content-type = 'key'][empty(caption/title)]
         [(table/(thead | tbody)/tr[1])[1]/*[1] ! normalize-space(.) ! lower-case(.) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]">
-      <report test="true()" id="legend_is_table_r1"> table-wrap appears to be a legend with a title inside a td
+      <report test="true()" id="legend_is_table_r1" role="warning"> table-wrap appears to be a legend with a title inside a td
           <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
       </report>
     </rule>
     <rule id="legend_is_table_rule2" context="fig/table-wrap[@content-type = 'key'][empty(caption/title)]">
-      <report test="true()" id="legend_is_table_r2"> table-wrap appears to be a legend without a title <sbf:xsl-fix
+      <report test="true()" id="legend_is_table_r2" role="warning"> table-wrap appears to be a legend without a title <sbf:xsl-fix
           href="xslt-fixes/legend.xsl" mode="legend_title_in_table"/>
       </report>
     </rule>
@@ -737,7 +737,7 @@
       context="
         p[@style-type = 'indent']
         [following-sibling::*[1]/self::table-wrap[@content-type = 'formula-index']]">
-      <report id="disp-formula_in_p_with_table-wrap_legend_r1" test="true()"> This seems to be a disp-formula with
+      <report id="disp-formula_in_p_with_table-wrap_legend_r1" test="true()" role="warning"> This seems to be a disp-formula with
         legend. Please mark it up accordingly. <sbf:xsl-fix href="xslt-fixes/legend.xsl"
           mode="disp-formula_with_legend_from_p"/>
       </report>
@@ -749,7 +749,7 @@
       context="
         array
         [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .), 'i')]][preceding-sibling::*[2]/self::disp-formula]">
-      <report id="disp-formula_with_array_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element inside
+      <report id="disp-formula_with_array_legend_r1" test="true()" role="warning"> Put this '<name/>' into a 'legend' element inside
         the preceding 'disp-formula'. The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found
         in the preceding 'p'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_array"/>
       </report>
@@ -762,7 +762,7 @@
         table-wrap[@content-type = 'formula-index']
         [preceding-sibling::*[1]/self::disp-formula]
         [caption/title]">
-      <report id="disp-formula_with_table-wrap_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element
+      <report id="disp-formula_with_table-wrap_legend_r1" test="true()" role="warning"> Put this '<name/>' into a 'legend' element
         inside the preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
         'caption/title'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_table-wrap"/>
       </report>
@@ -774,7 +774,7 @@
       context="
         def-list
         [preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .), 'i')]][preceding-sibling::*[2]/self::p/disp-formula]">
-      <report id="disp-formula_with_def-list_legend_r1" test="true()"> Put this '<name/>' into a 'legend' element inside
+      <report id="disp-formula_with_def-list_legend_r1" test="true()" role="warning"> Put this '<name/>' into a 'legend' element inside
         the preceding 'disp-formula'. The 'title' schould be "<value-of select="preceding-sibling::*[1]"/>" and is found
         in the preceding 'p'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="disp-formula_add_legend_from_def-list"/>
       </report>
@@ -783,7 +783,7 @@
 
   <pattern id="deprecated_doc-ident">
     <rule id="deprecated_doc-ident_rule1" context="doc-ident[sdo]">
-      <report id="deprecated_doc-ident_r1" test="true()"> Please use std-ident since doc-ident will be deprecated in
+      <report id="deprecated_doc-ident_r1" test="true()" role="warning"> Please use std-ident since doc-ident will be deprecated in
         future NISO STS versions. <sbf:xsl-fix href="xslt-fixes/nesting.xsl" mode="remove_doc-ident"/>
       </report>
     </rule>
@@ -794,7 +794,7 @@
       context="
         p/table-wrap[caption/title]
         [@content-type = 'formula-index'][../preceding-sibling::*[1]/self::p/disp-formula]">
-      <report test="true()" id="NEN_disp-formula_legend_1_r1"> Put this '<name/>' into a 'legend' element inside the
+      <report test="true()" id="NEN_disp-formula_legend_1_r1" role="warning"> Put this '<name/>' into a 'legend' element inside the
         preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
         'caption/title'. 
       <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend"/>
@@ -807,7 +807,7 @@
       context="table-wrap[caption/title]
         [@content-type = 'formula-index']
         [preceding-sibling::*[1]/self::list/list-item/p/disp-formula]">
-      <report test="true()" id="NEN_disp-formula_legend_2_r1"> Put this '<name/>' into a 'legend' element inside the
+      <report test="true()" id="NEN_disp-formula_legend_2_r1" role="warning"> Put this '<name/>' into a 'legend' element inside the
         preceding 'disp-formula'. The 'title' schould be "<value-of select="caption/title"/>" and is found in
         'caption/title'. 
       <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="NEN_add_disp-formula_legend_2" depends-on="NEN_disp-formula_legend_1_r1"/>
@@ -817,7 +817,7 @@
   
 <pattern id="text_in_nat-meta">
   <rule id="text_in_nat-meta_rule1" context="nat-meta">
-    <report test="text()[normalize-space(.)]" id="text_in_nat-meta_r1">
+    <report test="text()[normalize-space(.)]" id="text_in_nat-meta_r1" role="error">
       Found text: '<value-of select="text()[normalize-space(.)]"/>'. Only elements are allowed in '<name/>'. Text was deleted
       <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete_text_in_nat-meta"/>
     </report>
@@ -828,7 +828,7 @@
     <let name="emphasis" value="'bold|italic|monospace|underline|sans-serif'" />
     <rule id="completly_emphasized_xref_rule1" context="xref[count(*) = 1][matches(name(*), $emphasis)]
       [not(text()[normalize-space(.)])]">
-      <report test="true()" id="completly_emphasized_xref_r1">
+      <report test="true()" id="completly_emphasized_xref_r1" role="warning">
         This <name/> seems to be emphasized. Please put the emphasis before the <name/>.
         <sbf:xsl-fix href="xslt-fixes/emphasis.xsl" mode="emphasize_xref"/>
       </report>
@@ -837,7 +837,7 @@
   
   <pattern id="empty_doc-ref">
     <rule id="empty_doc-ref_rule1" context="doc-ref[.='']">
-      <report test="true()" id="empty_doc-ref_r1">
+      <report test="true()" id="empty_doc-ref_r1" role="warning">
         Found empty <name/>.
         <sbf:xsl-fix href="xslt-fixes/doc-ref.xsl" mode="fill_doc-ref"/>
       </report>
@@ -846,7 +846,7 @@
   
   <pattern id="empty_release-date">
     <rule id="empty_release-date_rule1" context="release-date[.='']">
-      <report test="true()" id="empty_release-date_r1">
+      <report test="true()" id="empty_release-date_r1" role="warning">
         Found empty <name/>.
         <sbf:xsl-fix href="xslt-fixes/doc-ref.xsl" mode="fill_release-date"/>
       </report>
@@ -955,6 +955,7 @@
                              [not(table/tfoot)]
                              [count(descendant::col) = 2]
                              [not(descendant::*[@colspan])]
+                             [not(descendant::*[@rowspan])]
                              [matches(descendant::td[1], concat('^',isosts:i18n-strings('note-label', .)), 'i')]">
      <report test="true()" id="AFNOR_non-normative-note_in_table-wrap_r1" role="warning">
         non-normative-notes seem to be encoded inside <name/>.
@@ -982,7 +983,7 @@
 <!--  suppress milestone check/fixes until https://gitlab-ext.le-tex.de/din-xml/xproc-frontend/-/issues/1 is solved -->
   <pattern id="milestone_is_amendement">
     <rule id="milestone_is_amendement_rule1" context="milestone-start[@rationale = 'A1'] | milestone-end[preceding::milestone-start[1]/@rationale = 'A1']">
-      <report id="milestone_is_amendement_r1" test="false()">
+      <report id="milestone_is_amendement_r1" test="false()" role="warning">
         It seems like this '<name/>' should be change markup.
       </report>
     </rule>
@@ -999,7 +1000,7 @@
   
   <pattern id="duplicate_id">
   <rule context="*[@id]" id="duplicate_id_rule1">
-    <report test="count(key('by-id', @id)) gt 1" id="duplicate_id_id_a1">
+    <report test="count(key('by-id', @id)) gt 1" id="duplicate_id_id_a1" role="error">
       Duplicated id in element '<name/>'. Found: <value-of select="@id"/> At: <value-of select="key('by-id', @id) ! path(.)"/>
       <sbf:xsl-fix href="xslt-fixes/ids.xsl" mode="change_id" />
     </report>
@@ -1008,7 +1009,7 @@
   
   <pattern id="termEntry_missing_id">
   <rule context="tbx:termEntry" id="termEntry_missing_id_rule1">
-    <report test="empty(@id)" id="termEntry_missing_id_r1">
+    <report test="empty(@id)" id="termEntry_missing_id_r1" role="error">
      This <name/> is missing an ID.
       <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="add_id" />
     </report>
@@ -1017,7 +1018,7 @@
   
   <pattern id="entailedTerm_wrong_target_attr">
   <rule context="tbx:entailedTerm[@xtarget]" id="entailedTerm_wrong_target_attr_rule1">
-    <report test="key('by-id',substring-after(@xtarget, '#'))" id="entailedTerm_wrong_target_attr_r1">
+    <report test="key('by-id',substring-after(@xtarget, '#'))" id="entailedTerm_wrong_target_attr_r1" role="error">
      This <name/> should use '@target' instead of '@xtarget'
       <sbf:xsl-fix href="xslt-fixes/term.xsl" mode="xtarget_to_target" depends-on="termEntry_missing_id_r1"/>
     </report>
@@ -1059,7 +1060,7 @@
   
   <pattern id="xref_table-fn_no_rid">
     <rule context="xref[@ref-type = 'table-fn'][not(.='')]" id="xref_table-fn_no_rid_rule1">
-      <assert test="@rid" id="xref_table-fn_no_rid_r1">
+      <assert test="@rid" id="xref_table-fn_no_rid_r1" role="error">
         This <name/> needs a @rid 
         <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="add_rid"/>
       </assert>
@@ -1072,7 +1073,7 @@
      [matches(., isosts:i18n-strings-no-lang('dimension-heading'))]
      [following-sibling::*[1]/self::fig]">
      <report id="dimensions_not_in_caption_r" 
-       test="true()">
+       test="true()" role="warning">
        This <name/> should have an @content-type="units" and be put in the caption of the following fig.
        <sbf:xsl-fix href="xslt-fixes/caption.xsl" mode="add_p_to_caption"/>
      </report>
@@ -1083,13 +1084,13 @@
     <rule id="legend_in_tr_rule1" context="tr[last()]">
       <report test="descendant::p[1]
         [lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]" 
-        id="legend_in_tr_r1">
+        id="legend_in_tr_r1" role="warning">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="tr_to_legend"/>
       </report>
       <report test="descendant::p[1]
         [lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))]" 
-        id="legend_in_tr_r2">
+        id="legend_in_tr_r2" role="warning">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="tr_to_legend"/>
       </report>
@@ -1098,11 +1099,11 @@
   
   <pattern id="disp-formula_legend_in_def-list">
     <rule id="disp-formula_legend_in_def-list_rule1" context="def-list[preceding-sibling::disp-formula]">
-      <report test="preceding-sibling::p[matches(., isosts:i18n-strings('where-heading', .))]" id="disp-formula_legend_in_def-list_r1">
+      <report test="preceding-sibling::p[matches(., isosts:i18n-strings('where-heading', .))]" id="disp-formula_legend_in_def-list_r1" role="warning">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend"/>
       </report>
-      <report test="preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]" id="disp-formula_legend_in_def-list_r2">
+      <report test="preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]" id="disp-formula_legend_in_def-list_r2" role="warning">
         This <name/> seems to be a legend.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="p_and_def-list_to_legend_no_lang"/>
       </report>
@@ -1112,7 +1113,7 @@
   
   <pattern id="DIN_fig_legend_in_table-wrap">
     <rule id="DIN_fig_legend_in_table-wrap_rule1" context="fig[def-list[@list-type = 'key'][following-sibling::*[1]/self::table-wrap[descendant::disp-formula]]]">
-      <report test="following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]" id="DIN_fig_legend_in_table-wrap_r1">
+      <report test="following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]" id="DIN_fig_legend_in_table-wrap_r1" role="warning">
         There seems to be multiple legends here.
         <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="multiple_legends"/>
       </report>
@@ -1205,7 +1206,7 @@
   
   <pattern id="DIN_unusual_target">
     <rule id="DIN_unusual_target_rule1" context="*[@rid]">
-      <report test="key('by-id', @rid)/self::target[parent::label]" id="DIN_unusual_target_r1">
+      <report test="key('by-id', @rid)/self::target[parent::label]" id="DIN_unusual_target_r1" role="warning">
         This <name/> references a target inside a label. It should reference the preceeding element: <value-of select="name(key('by-id', @rid)/../..)"/>
         <sbf:xsl-fix href="xslt-fixes/rid.xsl" mode="change_rid"/>
       </report>
@@ -1234,7 +1235,7 @@
       [key('by-id', @rid)/self::term-sec]">
       <assert id="OSD_xref_custom-type_termEntry_a1" 
         test="@ref-type = 'custom'
-        and @custom-type = 'term-entry'">
+        and @custom-type = 'term-entry'" role="error">
         This '<name/>' is referencing a 'term-sec' and does not adhere to the OSD style.
         It should have an '@ref-type="custom"' and an '@custom-type="term-entry"'.
         <sbf:xsl-fix href="xslt-fixes/xref.xsl" mode="to_OSD_style"/>
@@ -1244,7 +1245,7 @@
 
   <pattern id="pi-in-break">
     <rule context="break" id="pi-in-break_rule1">
-      <report test="exists(processing-instruction())" id="pi-in-break_r1">Any content, including processing instructions, are not allowed in break. 
+      <report test="exists(processing-instruction())" id="pi-in-break_r1" role="error">Any content, including processing instructions, are not allowed in break. 
         <sbf:xsl-fix href="xslt-fixes/inline.xsl" mode="pi-in-break"/>
       </report>
     </rule>
@@ -1255,7 +1256,7 @@
                     [not(@*)]
                     [following-sibling::*[local-name()=$p-level-elements] or preceding-sibling::*[local-name()=$p-level-elements]]" 
           id="delete-empty-p_rule1">
-      <report test="true()" id="delete-empty-p_r1">
+      <report test="true()" id="delete-empty-p_r1" role="warning">
         Found empty p
         <sbf:xsl-fix href="xslt-fixes/text.xsl" mode="delete-empty-p"/>
       </report>
@@ -1264,7 +1265,7 @@
   
   <pattern id="norm-refs-p-to-ref-list">
     <rule id="norm-refs-p-to-ref-list_rule1" context="sec[@sec-type='norm-refs'][not(descendant::ref-list)][*[last()][self::p][count(node())=count(std[std-ref][title])]]">
-      <report id="norm-refs-p-to-ref-list_r1" test="true()">
+      <report id="norm-refs-p-to-ref-list_r1" test="true()" role="error">
         paragraphs in normative references should be ref-list
         <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="norm-refs-p-to-ref-list"/>
       </report>
@@ -1311,25 +1312,25 @@
   <pattern id="p-in-ref">
     <let name="ref-allowed-child-elements" value="('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 
                                                    'mixed-citation', 'std', 'non-normative-note', 'normative-note', 
-                                                   'non-normative-example', 'normative-example', 'notes-group')"></let>
-    <rule id="p-in-ref_rule1" context="ref[*[not(local-name()=$ref-allowed-child-elements)]]">
+                                                   'non-normative-example', 'normative-example', 'notes-group')"/>
+    <rule id="p-in-ref_rule1" context="ref[*[not(local-name()=$ref-allowed-child-elements)] or text()[normalize-space()]]">
       <report test="not(preceding-sibling::ref[*[local-name()=$ref-allowed-child-elements]])" 
               id="p-in-ref_r1" role="error">
-        Element <value-of select="*[not(local-name()=$ref-allowed-child-elements)]/name()"/> not allowed in <name/>.
+        <value-of select="(*[not(local-name()=$ref-allowed-child-elements)]/name(),'Text')[1]"/> not allowed in <name/>.
         <sbf:xsl-fix href="xslt-fixes/ref-list.xsl" mode="p-in-ref"/>
       </report>
       <report test="preceding-sibling::ref[*[local-name()=$ref-allowed-child-elements]]" 
               id="p-in-ref_r2" role="fatal">
-        Element <value-of select="*[not(local-name()=$ref-allowed-child-elements)]/name()"/> not allowed in <name/>.
+        <value-of select="(*[not(local-name()=$ref-allowed-child-elements)]/name(),'Text')[1]"/> not allowed in <name/>.
       </report>
     </rule>
   </pattern>
   
-  <pattern id="unknown-element-br">
-    <rule id="unknown-element-br_rule1" context="br">
-      <report id="unknown-element-br_r1" test="true()" role="fatal">
+  <pattern id="unknown-element">
+    <rule id="unknown-element_rule1" context="br | ital | equation">
+      <report id="unknown-element_r1" test="true()" role="fatal">
         Element <name/> does not exist.
-        <sbf:xsl-fix href="xslt-fixes/break.xsl" mode="unknown-element-br"/>
+        <sbf:xsl-fix href="xslt-fixes/unknown-element.xsl" mode="unknown-element"/>
       </report>
     </rule>
   </pattern>
