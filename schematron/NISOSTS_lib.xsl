@@ -159,6 +159,13 @@
       select="exists($tw/caption/title[lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))])"
     />
   </xsl:function>
+  
+  <xsl:function name="isosts:contains-legend-title">
+    <xsl:param name="elt"/>
+    <xsl:sequence select="
+        $elt/descendant::p[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))
+        or lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]"/>
+  </xsl:function>
 
   <xsl:function name="isosts:numbering-type" as="xs:string">
     <xsl:param name="marker" as="xs:string*"/>

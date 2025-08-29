@@ -429,27 +429,30 @@
 
 <xsl:template match="table-wrap-foot/p" mode="table-wrap-foot_p_to_legend"/>
 
-<xsl:template match="table-wrap[descendant::tr[descendant::p[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))
-    or lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]]
-  [last()]]" 
+<xsl:template match="table-wrap[table/(tfoot/tr,tbody/tr, tr)[last()][isosts:contains-legend-title(.)]]" 
   mode="tr_to_legend">
-    <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
+    <xsl:variable name="before-legend" as="element(*)*" select="editing-instruction | object-id | label | caption"/>
+    <xsl:variable name="last-row" select="table/(tfoot/tr,tbody/tr, tr)[last()][isosts:contains-legend-title(.)]" as="element()*"/>
     <xsl:copy>
       <xsl:apply-templates select="@*, $before-legend" mode="#current"/>
       <legend>
         <title>
-          <xsl:value-of select="descendant::tr[last()]/descendant::p[1]"/>
+          <xsl:value-of select="$last-row/descendant::p[1]"/>
         </title>
-        <xsl:apply-templates select="descendant::tr[last()]/td/p[not(position() = 1)]" mode="#current"/>
+        <xsl:apply-templates select="$last-row/td/p[not(position() = 1)]" mode="#current"/>
       </legend>
-      <xsl:apply-templates select="node() except $before-legend" mode="#current"/>
+      <xsl:apply-templates select="node() except $before-legend" mode="#current">
+        <xsl:with-param name="remove-by-id" select="$last-row/generate-id()" tunnel="yes"/>
+      </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="tr[descendant::p[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))
-    or lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]]
-    [last()]" 
-    mode="tr_to_legend"/>
+  <xsl:template match="tr[isosts:contains-legend-title(.)]" mode="tr_to_legend">
+    <xsl:param name="remove-by-id" tunnel="yes"/>
+    <xsl:if test="generate-id() ne $remove-by-id">
+      <xsl:next-match/>
+    </xsl:if>
+  </xsl:template>
   
   
 <xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
