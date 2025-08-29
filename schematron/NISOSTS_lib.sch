@@ -1078,7 +1078,7 @@
  </pattern>
  
   <pattern id="legend_in_tr">
-    <rule id="legend_in_tr_rule1" context="tr[last()]">
+    <rule id="legend_in_tr_rule1" context="table/tr[last()]|tbody[empty(../tfoot)]/tr[last()]|tfoot/tr[last()]">
       <report test="descendant::p[1]
         [lower-case(isosts:i18n-strings-no-lang('key-heading')) = lower-case(normalize-space(.))]" 
         id="legend_in_tr_r1" role="warning">
