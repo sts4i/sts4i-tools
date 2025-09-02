@@ -36,7 +36,7 @@
     </p>
   </xsl:template>
   
-  <xsl:template match="sec/title" mode="normalize-meta-note">
+  <xsl:template match="sec/title" priority="2" mode="normalize-meta-note">
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="meta-note"/>
       <xsl:for-each select="../label[normalize-space(string(.))]">
