@@ -235,8 +235,8 @@
                 </xsl:for-each-group>
               </sbf:fixes-list>
             </xsl:template>
-            <xsl:function name="sbf:prepend-prerequisites" as="element(sbf:xsl-fix)+">
-              <xsl:param name="fix" as="element(sbf:xsl-fix)+"/>
+            <xsl:function name="sbf:prepend-prerequisites" as="element(sbf:xsl-fix)*">
+              <xsl:param name="fix" as="element(sbf:xsl-fix)*"/>
               <xsl:param name="svrl" as="document-node(element(svrl:schematron-output))"/>
               <xsl:param name="schematron" as="document-node(element(sch:schema))"/>
               <xsl:for-each select="$fix/@depends-on (: id of an sch:assert or sch:report with an sbf:xsl-fix :)">
