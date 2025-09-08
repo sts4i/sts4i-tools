@@ -47,5 +47,25 @@
       <xsl:apply-templates select="parent::*:mtable/@* | @* | node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="*[*:mtext[not(text()[normalize-space()])]
+                              [text()]
+                              [preceding-sibling::*:mtext or following-sibling::*:mtext]]" mode="join-mtexts">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:for-each-group select="node()[not(self::text()[not(normalize-space())])]" group-adjacent="name(.)">
+        <xsl:choose>
+          <xsl:when test="current-group()[1]/local-name()='mtext'">
+            <xsl:element name="{current-group()[1]/name()}">
+              <xsl:apply-templates select="current-group()/node()" mode="#current"/>
+            </xsl:element>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="current-group()" mode="#current"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>

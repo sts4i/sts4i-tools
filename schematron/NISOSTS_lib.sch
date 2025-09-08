@@ -1294,15 +1294,23 @@
 
   <!-- remove empty mtext or mtable -->
   <pattern id="empty-math-elements">
-    <rule id="empty-math-elements_rule1" 
-          context="*[local-name()=('mtext','mtable')][not(*:mtr)]">
+    <rule id="empty-math-elements_rule1" context="*:mtext[not(text()[normalize-space()])]
+                                                   [text()]
+                                                   [preceding-sibling::*:mtext or following-sibling::*:mtext]" role="warning">
+      <report test="true()" id="empty-math-elements_r1_1">
+        Empty <name/> is not allowed. Joining with <name/>-siblings.
+        <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="join-mtexts"/>
+      </report>
+    </rule>
+    <rule id="empty-math-elements_rule2" 
+          context="*[local-name()=('mtable')][not(*:mtr)]">
       <report test="self::*[local-name()=('mtext','mtable')]
                     [not(* or text()[normalize-space()])]
-                    [not(parent::*/local-name() = $wrapper-element-names)]" id="empty-math-elements_r1" role="error">
+                    [not(parent::*/local-name() = $wrapper-element-names)]" id="empty-math-elements_r2_1" role="error">
         Empty <name/> is not allowed and would not have any effect.
         <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="empty-math-elements"/> 
       </report>
-      <report id="empty-math-elements_r2" role="error" test="self::*:mtable[not(*:mtr)][not(parent::*/local-name() = $wrapper-element-names) or count(*)=1]">
+      <report id="empty-math-elements_r2_2" role="error" test="self::*:mtable[not(*:mtr)][not(parent::*/local-name() = $wrapper-element-names) or count(*)=1]">
         mtable must include table rows.
         <sbf:xsl-fix href="xslt-fixes/mml.xsl" mode="empty-math-elements"/> 
       </report>
