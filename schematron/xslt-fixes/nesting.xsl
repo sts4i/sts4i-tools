@@ -46,6 +46,8 @@
   <xsl:template match="metas" mode="create-adoptions">
     <xsl:param name="entire-standard" as="element(standard)" tunnel="yes"/>
     <xsl:variable name="std-meta-type" as="xs:string" select="isosts:std-meta-type(*[1])"/>
+    <xsl:variable name="non-meta-front-matter" select="$entire-standard/front/*[not(ends-with(name(), '-meta'))]
+                                                                 [isosts:front-matter-origin-type(.) = $std-meta-type]"/>
     <xsl:choose>
       <xsl:when test="following-sibling::metas">
         <adoption>
@@ -54,8 +56,7 @@
           </xsl:if>
           <adoption-front>
             <xsl:apply-templates select="*" mode="#current"/>
-            <xsl:apply-templates select="$entire-standard/front/*[not(ends-with(name(), '-meta'))]
-                                                                 [isosts:front-matter-origin-type(.) = $std-meta-type]" 
+            <xsl:apply-templates select="$non-meta-front-matter" 
                                  mode="#current"/>
           </adoption-front>
           <xsl:apply-templates select="following-sibling::metas[1]" mode="#current"/>
@@ -68,14 +69,23 @@
           </xsl:if>
           <front>
             <xsl:apply-templates select="*" mode="#current"/>
-            <xsl:apply-templates select="$entire-standard/front/*[not(ends-with(name(), '-meta'))]
-                                                                 [isosts:front-matter-origin-type(.) = $std-meta-type]" 
+            <xsl:apply-templates select="$non-meta-front-matter" 
                                  mode="#current"/>
           </front>
-          <xsl:apply-templates select="$entire-standard/(body | back)" mode="#current"/>
+          <xsl:apply-templates select="$entire-standard/body" mode="#current">
+            <xsl:with-param name="undefined-frontmatter" select="$entire-standard/front/*[not(ends-with(name(), '-meta'))] except $non-meta-front-matter"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="$entire-standard/back" mode="#current"/>
         </standard>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="body" mode="create-adoptions">
+    <xsl:param name="undefined-frontmatter" as="element()*"/>
+    <body>
+      <xsl:apply-templates select="@*, $undefined-frontmatter, node()" mode="#current"/>
+    </body>
   </xsl:template>
 
   <xsl:template name="top-level-atts-and-ns">
@@ -132,5 +142,4 @@
   
   <xsl:template match="doc-ident[sdo]" mode="remove_doc-ident"/>
   
-
 </xsl:stylesheet>
