@@ -12,28 +12,43 @@
 
   <xsl:mode name="iso-like-ids"/>
   
-  <xsl:function name="isosts:is-affected-sec" as="xs:boolean">
-    <xsl:param name="node"/>
-    <xsl:sequence select="exists($node[$is-doc-providing-unique-labels][self::sec or self::app]
-                                      [label[text()]][@id][@id ne isosts:id-string-by-label(.)])"/>
-  </xsl:function>
-  
-  <xsl:key name="affected-sec-by-rid" match="*[isosts:is-affected-sec(.)]"
-    use="@id"/>
-  
-  <xsl:variable name="label-pool" select="//*[self::sec or self::app]
-                                      [label[text()]][@id][@id ne isosts:id-string-by-label(.)]/label[text()]"/>
-  
-  <xsl:variable name="is-doc-providing-unique-labels" as="xs:boolean">
-    <xsl:sequence select="count($label-pool/string(.)) = count(distinct-values($label-pool/string(.)))"/>
+  <xsl:variable name="id-pool" as="element()?">
+    <xsl:variable name="prelim" as="element()">
+      <prelim>
+        <xsl:for-each select="//*[self::sec or self::app][label[text()]][@id][@id ne isosts:id-string-by-label(.)]">
+          <id val="{@id}">
+            <xsl:sequence select="isosts:id-string-by-label(.)"/>
+          </id>
+        </xsl:for-each>
+      </prelim>
+    </xsl:variable>
+    <ids>
+      <xsl:for-each select="$prelim/id">
+        <xsl:choose>
+          <xsl:when test="current() = preceding-sibling::*">
+            <xsl:copy>
+              <xsl:sequence select="current()/@*, concat(text(), '_', generate-id())"/>
+            </xsl:copy>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="current()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </ids>
   </xsl:variable>
   
-  <xsl:template match="*[isosts:is-affected-sec(.)]/@id" mode="iso-like-ids">
-    <xsl:attribute name="id" select="isosts:id-string-by-label(..)"/>
+  <xsl:function name="isosts:map-id">
+    <xsl:param name="id" as="attribute()"/>
+    <xsl:sequence select="$id-pool/id[@val = $id]"/>
+  </xsl:function>
+  
+  <xsl:template match="*[@id = $id-pool/id/@val]/@id" mode="iso-like-ids">
+    <xsl:attribute name="id" select="isosts:map-id(.)"/>
   </xsl:template>
   
-  <xsl:template match="xref[exists(key('affected-sec-by-rid', @rid))]/@rid" mode="iso-like-ids">
-    <xsl:attribute name="rid" select="isosts:id-string-by-label(key('affected-sec-by-rid', .))"/>
+  <xsl:template match="xref[@id = $id-pool/id/@val]/@rid" mode="iso-like-ids">
+    <xsl:attribute name="rid" select="isosts:map-id(.)"/>
   </xsl:template>
   
 </xsl:stylesheet>

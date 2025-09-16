@@ -169,9 +169,9 @@
       <assert test="@id = isosts:id-string-by-label(.)" role="warning" id="NISOSTS_iso-like-ids_1_1"
         diagnostics="NISOSTS_iso-like-ids_1_1_de">A section or appendix id must be 'sec_' + label (modulo text such as
         'Annex '). 
-        <sbf:xsl-fix href="xslt-fixes/iso-like-ids.xsl" mode="iso-like-ids"
+        <!--<sbf:xsl-fix href="xslt-fixes/iso-like-ids.xsl" mode="iso-like-ids"
           depends-on="NISOSTS_fn-in-fn-group_2"
-        /></assert>
+        />--></assert>
     </rule>
   </pattern>
 
