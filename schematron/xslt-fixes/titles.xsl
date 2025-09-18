@@ -25,7 +25,7 @@
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
-  <xsl:template match="*[name() = ('title', 'th')][bold]" mode="bold-in-title">
+  <!--<xsl:template match="*[name() = ('title', 'th')][bold]" mode="bold-in-title">
     <xsl:copy>
       <xsl:apply-templates select="@*" mode="#current"/>
       <xsl:try>
@@ -56,13 +56,13 @@
         </xsl:catch>
       </xsl:try>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
   <xsl:template match="bold" mode="bold-in-title-with-formula">
     <xsl:apply-templates mode="bold-in-title"/>
   </xsl:template>
 
-  <xsl:template
+  <!--<xsl:template
     match="
       *[name() = ('title', 'th')]
       [bold]/text()[../name() = ('title', 'th') (: this predicate suppresses an error message in Saxon 10.6 that tried to match text() in italic :)]
@@ -71,9 +71,9 @@
       isosts:title-node-type(., ()) = 'ws']"
     mode="bold-in-title-with-formula">
     <xsl:value-of select="replace(., '^(\s+)(.+)', '$2')"/>
-  </xsl:template>
+  </xsl:template>-->
 
-  <xsl:function name="isosts:title-node-type" as="xs:string+">
+  <!--<xsl:function name="isosts:title-node-type" as="xs:string+">
     <xsl:param name="n" as="node()?"/>
     <xsl:param name="seen" as="node()*"/>
     <xsl:choose>
@@ -151,7 +151,7 @@
         <xsl:sequence select="'unknown'"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:function>
+  </xsl:function>-->
 
   <xsl:variable name="annex-type-regex" as="xs:string" select="'^\s*(\((normative?|informative?)\))[\s\p{Zs}]+$'"/>
 
