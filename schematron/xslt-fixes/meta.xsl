@@ -16,7 +16,7 @@
     <meta-note content-type="standard.text">
       <xsl:apply-templates select="../following-sibling::sec[@sec-type='titlepage']/node()" mode="normalize-meta-note"/>
     </meta-note>
-    <xsl:next-match></xsl:next-match>
+    <xsl:next-match/>
   </xsl:template>
   
   <xsl:template match="std-meta[empty(preceding-sibling::*:std-meta)][not(custom-meta-group)]
@@ -30,10 +30,54 @@
     </xsl:copy>
   </xsl:template>
   
+<!--  assumption: all xref that are pointing to fig-group in meta-note are in this context as well. Otherwise this fix should 
+    be outsourced in a following fix/mode that acts globally -->
   <xsl:template match="sec/*[empty(self::p)]" mode="normalize-meta-note">
     <p>
-      <xsl:apply-templates select="." mode="meta-note"/>
+      <xsl:next-match/>
     </p>
+  </xsl:template>
+  
+<!--  remove fn-group if all content is getting resolved -->
+  <xsl:template match="sec/fn-group[fn][every $id in fn/@id satisfies ..//xref[@ref-type='fn'][@rid = $id]]
+                      |sec/fn-group/fn[@id = ../..//xref[@ref-type='fn']/@rid]" priority="2" mode="normalize-meta-note"/>
+  
+<!-- create fn for every xref in future meta-note -->
+  <xsl:template match="sec//xref[@rid][@ref-type[.='fn']]" mode="normalize-meta-note">
+    <xsl:variable name="self" select="."/>
+    <xsl:variable name="fn-index">
+        <xsl:for-each select="key('by-rid', @rid)">
+          <xsl:if test=". is $self">
+            <xsl:sequence select="position() - 1"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+    <xsl:variable name="fn" select="key('by-id', @rid)[parent::fn-group]"/>
+    <xsl:choose>
+      <xsl:when test="$fn">
+        <fn id="{if ($fn-index > 0) then concat(@rid, '-', ($fn-index)) else @rid}">
+          <xsl:apply-templates select="$fn/@* except $fn/@id" mode="#current"/>
+          <xsl:apply-templates select="$fn/node()" mode="#current">
+            <xsl:with-param name="fn-index" select="$fn-index" tunnel="yes"/>
+          </xsl:apply-templates>
+        </fn>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:next-match/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+<!-- alter duplicated fn content ids as well -->
+  <xsl:template match="sec/fn-group/fn/*//@id" priority="2" mode="normalize-meta-note">
+    <xsl:param name="fn-index" tunnel="yes" select="0"/>
+    <xsl:choose>
+      <xsl:when test="$fn-index > 0">
+        <xsl:attribute name="id" select="concat(., '-', $fn-index)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:next-match/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="sec/title" priority="2" mode="normalize-meta-note">
