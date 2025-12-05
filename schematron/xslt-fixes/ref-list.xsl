@@ -131,6 +131,15 @@
     </xsl:copy>
   </xsl:template>
   
+  <xsl:template match="*[body][not(back)]/body" mode="add-empty-bibl">
+    <xsl:next-match/>
+    <back>
+      <ref-list content-type="bibl" specific-use="list.of.documents">
+        <title>Bibliography</title>
+      </ref-list>
+    </back>
+  </xsl:template>
+  
   <xsl:template match="ref[*[not(local-name()=('editing-instruction', 'label', 'citation-alternatives', 'element-citation', 'mixed-citation', 
                                                'std', 'non-normative-note', 'normative-note', 'non-normative-example', 'normative-example', 
                                                'notes-group'))]]
