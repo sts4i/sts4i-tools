@@ -107,14 +107,13 @@
     <xsl:variable name="up-to" as="element(*)" select="(*[self::std-ident | self::std-org | self::content-language])[last()]"/>
     <xsl:copy>
       <xsl:copy-of select="@*, node()[$up-to >> .], $up-to"/>
-      <xsl:apply-templates select="std-ident//std-id[@std-id-type = ('dated', 'undated')]" mode="#current"/>
+      <xsl:for-each select="std-ident//std-id[@std-id-type = ('dated', 'undated')]">
+        <std-ref type="{@std-id-type}">
+          <xsl:value-of select="."/>
+        </std-ref>    
+      </xsl:for-each>
       <xsl:copy-of select="node()[. >> $up-to]"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="std-id" mode="std-ref-from-std-id">
-    <std-ref type="{@std-id-type}">
-      <xsl:value-of select="."/>
-    </std-ref>
-  </xsl:template>
 </xsl:stylesheet>
