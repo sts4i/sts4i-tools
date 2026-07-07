@@ -38,7 +38,33 @@
   <xsl:template match="@content-type[.=('Units','units')]" mode="units-content-type">
     <xsl:attribute name="{name()}" select="'dimension'"/>
   </xsl:template>
-   
- 
+  
+  <xsl:template match="fig-group/fig/caption/p[@content-type='dimension']" mode="fig-group-dimension">
+    <xsl:param name="display-fig-group-dimension" select="false()" as="xs:boolean"/>
+    <xsl:if test="$display-fig-group-dimension">
+      <xsl:next-match/>
+    </xsl:if>
+  </xsl:template> 
+  
+  <xsl:template match="fig-group/caption" mode="fig-group-dimension">
+    <xsl:copy>
+      <xsl:apply-templates select="@* | node()" mode="#current"/>
+      <xsl:apply-templates select="parent::fig-group/fig/caption/p[@content-type='dimension']" mode="#current">
+        <xsl:with-param name="display-fig-group-dimension" select="true()" as="xs:boolean"/>
+      </xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="fig-group[not(caption)][fig/caption/p[@content-type='dimension']]" mode="fig-group-dimension">
+    <xsl:copy>
+      <xsl:apply-templates select="@* | label" mode="#current"/>
+      <caption>
+        <xsl:apply-templates select="fig/caption/p[@content-type='dimension']" mode="#current">
+          <xsl:with-param name="display-fig-group-dimension" select="true()" as="xs:boolean"/>
+        </xsl:apply-templates>
+      </caption>
+      <xsl:apply-templates select="node() except label" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
  
 </xsl:stylesheet>
