@@ -8,9 +8,9 @@
 
   <xsl:template match="fn-group" mode="ungroup-fn unwrap-fn-group"/>
 
-  <xsl:template match="xref[@ref-type = ('fn', 'table-fn')]
+  <xsl:template match="xref[tokenize(@ref-type,'\s+') = ('fn', 'table-fn')]
                            [. is (key('by-rid', @rid) (: all xrefs that point to fn with ID @rid :)
-                                   [@ref-type = ('fn', 'table-fn')]
+                                   [tokenize(@ref-type,'\s+') = ('fn', 'table-fn')]
                                    [not(ancestor::fn) (: ignore refs from one fn to another :)]
                                    [if (exists(key('by-id', @rid)/ancestor::table-wrap))
                                     then boolean(
@@ -28,9 +28,9 @@
     <xsl:apply-templates select="key('by-id', @rid)" mode="#current"/>
   </xsl:template>
   
-  <xsl:template match="xref[@ref-type = ('fn', 'table-fn')]
+  <xsl:template match="xref[tokenize(@ref-type,'\s+') = ('fn', 'table-fn')]
                            [. is (key('by-rid', @rid) (: all xrefs that point to fn with ID @rid :)
-                                   [@ref-type = ('fn', 'table-fn')]
+                                   [tokenize(@ref-type,'\s+') = ('fn', 'table-fn')]
                                    [not(ancestor::fn) (: ignore refs from one fn to another :)]
                                    [if (exists(key('by-id', @rid)/ancestor::table-wrap))
                                     then boolean(
