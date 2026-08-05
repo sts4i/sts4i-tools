@@ -173,21 +173,13 @@
         <p:add-attribute name="add-uri-to-error" match="/*" attribute-name="xml:base">
           <p:with-option name="attribute-value" select="$output-file-uri"/>
         </p:add-attribute>
-
-        <tr:oxy-validate-with-schematron name="single-sch" assert-valid="false">
-          <p:with-param name="allow-foreign" select="'true'"/>
-          <p:with-param name="target-niso-version" select="$target-niso-version"/>
-          <p:input port="source">
-            <p:pipe port="result" step="add-base-uri"/>
-<!--            <p:pipe port="matched" step="actual-standard-doc"/>-->
-          </p:input>
-          <p:input port="schema">
-            <p:pipe port="schematron" step="batch-val"/>
-          </p:input>
-        </tr:oxy-validate-with-schematron>
-        <p:xslt name="add-srcpath">
+        <p:sink/>
+<p:xslt name="add-srcpath">
           <p:input port="parameters"><p:empty/></p:input>
-          <p:input port="stylesheet">
+  <p:input port="source">
+  <p:pipe port="result" step="add-base-uri"/>
+  </p:input>
+  <p:input port="stylesheet">
             <p:inline>
               <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
                 <xsl:template match="node() | @*">
@@ -215,6 +207,18 @@
           <p:with-option name="active" select="$debug"/>
           <p:with-option name="base-uri" select="$debug-dir-uri"/>
         </tr:store-debug>
+        <tr:oxy-validate-with-schematron name="single-sch" assert-valid="false">
+          <p:with-param name="allow-foreign" select="'true'"/>
+          <p:with-param name="target-niso-version" select="$target-niso-version"/>
+          <p:input port="source">
+            <p:pipe port="result" step="add-srcpath"/>
+<!--            <p:pipe port="matched" step="actual-standard-doc"/>-->
+          </p:input>
+          <p:input port="schema">
+            <p:pipe port="schematron" step="batch-val"/>
+          </p:input>
+        </tr:oxy-validate-with-schematron>
+        
         <p:sink/>
         <p:xslt name="add-id-to-fix">
           <p:input port="parameters"><p:empty/></p:input>
