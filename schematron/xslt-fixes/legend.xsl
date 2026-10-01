@@ -439,7 +439,7 @@
         <title>
           <xsl:value-of select="$last-row/descendant::p[1]"/>
         </title>
-        <xsl:apply-templates select="$last-row/td/p[not(position() = 1)]" mode="#current"/>
+        <xsl:apply-templates select="$last-row/descendant::p[not(position() = 1)][not(ancestor::p[ancestor::tr intersect $last-row])]" mode="#current"/>
       </legend>
       <xsl:apply-templates select="node() except $before-legend" mode="#current">
         <xsl:with-param name="remove-by-id" select="$last-row/generate-id()" tunnel="yes"/>
