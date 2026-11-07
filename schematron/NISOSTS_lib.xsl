@@ -70,11 +70,11 @@
 
   <xsl:variable name="space_regEx" select="'[\s\p{Zs}&#x200B;&#x2060;]+'"/>
 
-  <xsl:variable name="table_label_regEx" select="concat('^\s*(Table(au)?|Таблица|Tabel(le)?)', $space_regEx)"/>
+  <xsl:variable name="table_label_regEx" select="concat('^\s*(Tab(le(au)?|\.)|Таблица|Tabel(le)?)', $space_regEx)"/>
 
-  <xsl:variable name="annex_label_regEx" select="concat('^\s*(Annexe?|Приложение|Aa?nhang)', $space_regEx)"/>
+  <xsl:variable name="annex_label_regEx" select="concat('^\s*(Annexe?|Приложение|Aa?nhang|Appendix)', $space_regEx)"/>
 
-  <xsl:variable name="figur_label_regEx" select="concat('^\s*(Figure|Bild|Figuur|Рисунок)', $space_regEx)"/>
+  <xsl:variable name="figur_label_regEx" select="concat('^\s*(Fig(ure|\.)|Bild|Abbildung|Figuur|Рисунок)', $space_regEx)"/>
 
   <xsl:variable name="image_file_extension_regEx" select="'\.(png|jpg|svg|tif|gif)$'"/>
 
@@ -156,7 +156,7 @@
   <xsl:function name="isosts:is-legend-table" as="xs:boolean">
     <xsl:param name="tw" as="element(table-wrap)"/>
     <xsl:sequence
-      select="exists($tw/caption/title[lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))])"
+      select="exists($tw/caption[empty(*[not(self::title)])]/title[lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))]) and empty($tw/*[not(self::caption or self::table)])"
     />
   </xsl:function>
   

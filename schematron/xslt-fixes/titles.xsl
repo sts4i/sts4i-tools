@@ -166,41 +166,43 @@
   <xsl:template match="app[empty(annex-type)]/title[node()[1]/self::text()[matches(., $annex-type-regex)]]/node()[1]"
     mode="annex-type"/>
 
-
   <xsl:variable name="label-regex" as="xs:string" select="'^\s*(([NZ]?[A-Z]|\d+)(\.\d+)*)[\s\p{Zs}]+$'"/>
+  <xsl:variable name="table-num-regex" as="xs:string" select="'\s*(([NZ]?[A-Z]|\d+)(\.\d+)*)([\s\p{Zs}]+|$)'"/>
 
-  <xsl:template
-    match="title[empty(../label | ../self::caption/../label)][node()[1]/self::text()[matches(., $label-regex)]]/node()[1]"
-    mode="label"/>
+  <xsl:template match="title[empty(../label | ../self::caption/../label)][node()[1]/self::text()[matches(., $label-regex)]]/node()[1]"
+                mode="label"/>
 
   <xsl:template match="title[empty(../label | parent::caption)][node()[1]/self::text()[matches(., $label-regex)]]"
-    mode="label">
+                mode="label">
     <label>
       <xsl:value-of select="replace(node()[1], $label-regex, '$1')"/>
     </label>
     <xsl:next-match/>
   </xsl:template>
 
-
-
-  <xsl:template match="caption[empty(../label)][title/node()[1]/self::text()[matches(., $label-regex)]]" mode="label">
+  <xsl:template match="caption[empty(../label)][title/node()[1]/self::text()[matches(., $label-regex)]]" 
+                mode="label">
     <label>
       <xsl:value-of select="replace(title/node()[1], $label-regex, '$1')"/>
     </label>
     <xsl:next-match/>
   </xsl:template>
 
-  <xsl:template match="caption[not(../label)][title/node()[1]/self::text()[matches(., $table_label_regEx)]]" mode="label">
+  <xsl:template match="caption[not(../label)][title/node()[1]/self::text()[matches(., concat($table_label_regEx,$table-num-regex))]]" 
+                mode="label">
     <label>
-      <xsl:value-of select="normalize-space(replace(title/node()[1], $table_label_regEx, '$1'))"/>
+      <xsl:value-of select="normalize-space(replace(title/node()[1], concat('(',$table_label_regEx,$table-num-regex,').*$'), '$1', 's'))"/>
     </label>
+    <xsl:next-match/>
   </xsl:template>
 
-  <xsl:template
-    match="title[empty(../label | ../self::caption/../label)][node()[1]/self::text()[matches(., $table_label_regEx)]]/node()[1]"
-    mode="label"/>
-
-
+  <xsl:template match="caption/title[empty(../label | ../self::caption/../label)][node()[1]/self::text()[matches(., concat($table_label_regEx,$table-num-regex))]]/node()[1]"
+                mode="label">
+    <xsl:variable name="text" select="replace(., concat('(',$table_label_regEx,$table-num-regex,')'), '')"/>
+    <xsl:if test="normalize-space($text) ne ''">
+      <xsl:value-of select="concat(normalize-space($text),if (following-sibling::node()) then substring-after($text,normalize-space($text)) else '')"/>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template
     match="

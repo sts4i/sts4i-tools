@@ -664,9 +664,7 @@
 
   <pattern id="legend_title_in_table-wrap">
     <rule id="legend_title_in_table-wrap_rule1"
-      context="
-        legend[*[1]/self::table-wrap/caption/title]
-        [isosts:is-legend-table(table-wrap[1])]">
+      context="legend[empty(*[not(self::table-wrap[isosts:is-legend-table(.)])])]">
       <report id="legend_title_in_table-wrap_r1" role="error" test="true()"> Found 'legend' where 'title' is in
         'table-wrap/caption'. <sbf:xsl-fix href="xslt-fixes/legend.xsl" mode="table-wrap-title-to-legend"/>
       </report>

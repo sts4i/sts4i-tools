@@ -110,21 +110,20 @@
       </def>
     </def-item>
   </xsl:template>
-  <xsl:template mode="table-key" match="table-wrap-foot/fn[empty(label)]"/>
+  <xsl:template mode="table-key" match="table-wrap[caption][table-wrap-foot[fn[1][lower-case(isosts:i18n-strings('key-heading', .)) = lower-case(normalize-space(.))]]]/table-wrap-foot/fn[empty(label)]"/>
 
   <xsl:template match="fn" mode="table-key-to-legend">
     <xsl:apply-templates select="p[1]" mode="#current"/>
   </xsl:template>
 
 
-  <xsl:template match="
-      legend[*[1]/self::table-wrap/caption/title]
-      [isosts:is-legend-table(table-wrap[1])]"
-    mode="table-wrap-title-to-legend">
+  <xsl:template match="legend[empty(*[not(self::table-wrap[isosts:is-legend-table(.)])])]"
+                mode="table-wrap-title-to-legend">
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*" mode="#current"/>
+      <xsl:apply-templates select="table-wrap[1]/caption/title" mode="#current"/>
       <array>
-        <xsl:apply-templates select="table-wrap[1]/(@* except @position, table)" mode="#current"/>
+        <xsl:apply-templates select="table-wrap/(@* except @position), table-wrap/table" mode="#current"/>
       </array>
     </xsl:copy>
   </xsl:template>
@@ -184,7 +183,8 @@
 
   <xsl:template
     match="
-      table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
+      fig[table-wrap/@content-type = 'key']
+      [table-wrap[empty(caption/title)]]/table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
       [lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"
     mode="legend_title_in_table"/>
 
@@ -400,7 +400,8 @@
 
   <xsl:template
     match="
-      table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
+      fig[table-wrap/@content-type ='fig-index']
+      [empty(table-wrap/caption/title)]/table-wrap/table/*/tr[. is (ancestor::table[1]/(thead | tbody)/tr[1])[1]]
       [lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"
     mode="AFNOR_table-wrap_fig_legend"/>
   
@@ -408,12 +409,13 @@
   
    <xsl:template
     match="
-      table-wrap[@content-type = 'fig-index']/table[1][count(*/tr) = 1]"
+      fig[table-wrap/@content-type ='fig-index']
+      [empty(table-wrap/caption/title)]/table-wrap[@content-type = 'fig-index']/table[1][count(*/tr) = 1][lower-case(normalize-space(.)) = isosts:i18n-strings('key-heading', .) ! lower-case(.)]"
     mode="AFNOR_table-wrap_fig_legend"/>
   
   
  <xsl:template match="table-wrap[table-wrap-foot/p[matches(., isosts:i18n-strings-no-lang('key-heading'))]]" 
-   mode="table-wrap-foot_p_to_legend">
+               mode="table-wrap-foot_p_to_legend">
     <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
     <xsl:copy>
     <xsl:apply-templates select="@*, $before-legend" mode="#current"/>
@@ -427,10 +429,10 @@
     </xsl:copy>
  </xsl:template>
 
-<xsl:template match="table-wrap-foot/p" mode="table-wrap-foot_p_to_legend"/>
+  <xsl:template match="table-wrap-foot/p[matches(., isosts:i18n-strings-no-lang('key-heading')) or preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('key-heading'))]]" mode="table-wrap-foot_p_to_legend"/>
 
-<xsl:template match="table-wrap[table/(tfoot/tr,tbody/tr, tr)[last()][isosts:contains-legend-title(.)]]
-                               [count(table/(tfoot/tr,tbody/tr, tr)[isosts:contains-legend-title(.)]) lt 2]" 
+  <xsl:template match="table-wrap[table/(tfoot/tr,tbody/tr, tr)[last()][isosts:contains-legend-title(.)]]
+                                 [count(table/(tfoot/tr,tbody/tr, tr)[isosts:contains-legend-title(.)]) lt 2]" 
   mode="tr_to_legend">
     <xsl:variable name="before-legend" as="element(*)*" select="editing-instruction | object-id | label | caption"/>
     <xsl:variable name="last-row" select="table/(tfoot/tr,tbody/tr, tr)[last()][isosts:contains-legend-title(.)]" as="element()*"/>
@@ -455,10 +457,9 @@
     </xsl:if>
   </xsl:template>
   
-  
-<xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
-  [following-sibling::def-list]" 
-  mode="p_and_def-list_to_legend">
+  <xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
+                                   [following-sibling::*[position() &lt;= 2]/self::def-list]" 
+                mode="p_and_def-list_to_legend">
   <xsl:copy>
   <xsl:apply-templates select="@*, node()" mode="#current"/>
     <legend>
@@ -470,7 +471,7 @@
    </xsl:copy>
 </xsl:template>
   
-  <xsl:template match="disp-formula[preceding-sibling::p[matches(., isosts:i18n-strings('where-heading', .))]]
+  <xsl:template match="disp-formula[preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
   [following-sibling::*[1]/self::def-list]" 
   mode="p_and_def-list_to_legend">
   <xsl:copy>
@@ -483,18 +484,17 @@
   
   
   <xsl:template mode="p_and_def-list_to_legend" 
-   match="p[matches(., isosts:i18n-strings('where-heading', .))]
+   match="p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]
    [preceding-sibling::*[1]/self::disp-formula]"/>
   
-  <xsl:template match="def-list[preceding-sibling::p[matches(., isosts:i18n-strings('where-heading', .))]]
-    [preceding-sibling::*[position() &lt;= 2]/self::disp-formula]" 
-    mode="p_and_def-list_to_legend"/>
-  
-  
+  <xsl:template match="def-list[preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]
+                               [preceding-sibling::*[2]/self::disp-formula] | 
+                       def-list[preceding-sibling::*[1]/self::disp-formula[preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]]]"
+                mode="p_and_def-list_to_legend"/>
   
   <xsl:template match="disp-formula[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]]
-  [following-sibling::def-list]" 
-  mode="p_and_def-list_to_legend_no_lang">
+                                   [following-sibling::*[position() &lt;= 2]/self::def-list]" 
+                mode="p_and_def-list_to_legend_no_lang">
   <xsl:copy>
   <xsl:apply-templates select="@*, node()" mode="#current"/>
     <legend>
@@ -507,29 +507,30 @@
 </xsl:template>
   
   <xsl:template mode="p_and_def-list_to_legend_no_lang" 
-   match="p[matches(., isosts:i18n-strings-no-lang('where-heading'))]
-   [preceding-sibling::*[1]/self::disp-formula]"/>
+                match="p[matches(., isosts:i18n-strings-no-lang('where-heading'))]
+                        [following-sibling::*[1]/self::def-list]
+                        [preceding-sibling::*[1]/self::disp-formula]"/>
   
-  <xsl:template match="def-list[preceding-sibling::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]]
-    [preceding-sibling::*[position() &lt;= 2]/self::disp-formula]" 
-    mode="p_and_def-list_to_legend_no_lang"/>
-  
-  
+  <xsl:template match="def-list[preceding-sibling::*[1]/self::p[matches(., isosts:i18n-strings-no-lang('where-heading'))]]
+                               [preceding-sibling::*[2]/self::disp-formula]" 
+                mode="p_and_def-list_to_legend_no_lang"/>
   
   <xsl:template match="fig[def-list[@list-type = 'key'][following-sibling::*[1]/self::table-wrap[descendant::disp-formula]]]
-    [following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]]" mode="multiple_legends">
+                          [following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))]
+                                                          [following-sibling::*[1]/self::def-list]]" mode="multiple_legends">
     <xsl:variable name="before-legend" as="element(*)*" select="editing-instructions | object-id | label | caption"/>
     <xsl:copy>
       <xsl:apply-templates select="@*, $before-legend" mode="#current"/>
       <legend>
-        <title>
-          <xsl:value-of select="def-list[@list-type = 'key']"/>
-        </title>
-        <xsl:apply-templates select="def-list[@list-type = 'key']/following-sibling::*[1]" mode="add_table-wrap_with_legend"/>
+        <xsl:apply-templates select="def-list[@list-type = 'key']/(label | title)" mode="#current"/>
+        <xsl:apply-templates select="def-list[@list-type = 'key']" mode="rm-title"/>
+        <xsl:apply-templates select="def-list[@list-type = 'key']/following-sibling::*[1][self::table-wrap[descendant::disp-formula]]" mode="add_table-wrap_with_legend"/>
       </legend>
-      <xsl:apply-templates select="node() except $before-legend" mode="#current"/>
+      <xsl:apply-templates select="node() except ($before-legend | def-list[@list-type = 'key'])" mode="#current"/>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="def-list[@list-type = 'key']/label | def-list[@list-type = 'key']/title" mode="rm-title"/>
   
   <xsl:template match="table-wrap[descendant::disp-formula][preceding-sibling::*[1]/self::def-list[@list-type = 'key']]
     [parent::fig[following-sibling::*[1]/self::p[matches(., isosts:i18n-strings('where-heading', .))][following-sibling::*[1]/self::def-list]]]" mode="add_table-wrap_with_legend">
@@ -538,7 +539,7 @@
       <xsl:apply-templates select="@*, $before-legend" mode="#current"/>
       <legend>
         <title>
-          <xsl:value-of select="../following-sibling::*[1]"/>
+          <xsl:apply-templates select="../following-sibling::*[1]/node()" mode="#current"/>
         </title>
         <xsl:apply-templates select="../following-sibling::*[1]/following-sibling::*[1]" mode="#current"/>
       </legend>
