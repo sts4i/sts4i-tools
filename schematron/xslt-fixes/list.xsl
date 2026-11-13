@@ -33,5 +33,7 @@
       </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="list-item/p/@specific-use[matches(.,'^Listen(nummer|fortsetzung)')]" mode="remove-list-specific-use"/>
 
 </xsl:stylesheet>
